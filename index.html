@@ -1,0 +1,2441 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Polski B1 · Duolingo-style Exam Prep</title>
+<style>
+/* ======================== RESET & BASE ======================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f7f7f7;
+  --card: #ffffff;
+  --primary: #58cc02;
+  --primary-dark: #46a302;
+  --accent: #1cb0f6;
+  --accent-dark: #1899d6;
+  --gold: #ff9600;
+  --red: #ff4b4b;
+  --text: #4b4b4b;
+  --text-dark: #222;
+  --text-light: #afafaf;
+  --border: #e5e5e5;
+  --success: #58cc02;
+  --error: #ff4b4b;
+  --heart: #ff4b4b;
+  --xp-color: #ff9600;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.12);
+  --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  --progress-dot-bg: var(--border);
+  --skill-card-bg: var(--card);
+  --option-bg: #fafafa;
+  --polish-bg: #fafafa;
+  --polish-border: var(--accent);
+  --sample-bg: #f8faf8;
+  --sample-border: #d4edda;
+  --highlight-bg: #fff8e1;
+  --highlight-border: var(--gold);
+  --example-bg: #f0fff0;
+  --th-bg: #f0f9ff;
+  --toggle-icon: '🌙';
+  --correct-bg: #eaf7d6;
+  --wrong-bg: #ffe6e6;
+  --selected-bg: #e8f7ff;
+  --hover-bg: #f0f0f0;
+  --tak-bg: #eaf7d6;
+  --nie-bg: #ffe6e6;
+  --writing-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg: #1a1a2e;
+  --card: #16213e;
+  --primary: #78e008;
+  --primary-dark: #58cc02;
+  --accent: #4fc3f7;
+  --accent-dark: #29b6f6;
+  --gold: #ffb300;
+  --red: #ff5252;
+  --text: #c8c8d0;
+  --text-dark: #e8e8f0;
+  --text-light: #8888a0;
+  --border: #2a2a4a;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.4);
+  --progress-dot-bg: #2a2a4a;
+  --skill-card-bg: #1e2a4a;
+  --option-bg: #1e2a4a;
+  --polish-bg: #1a1a3e;
+  --polish-border: #4fc3f7;
+  --sample-bg: #1a2a1a;
+  --sample-border: #2a5a2a;
+  --highlight-bg: #2a2a0a;
+  --highlight-border: #ffb300;
+  --example-bg: #0a2a0a;
+  --th-bg: #1a2a3e;
+  --toggle-icon: '☀️';
+  --correct-bg: #1a3a1a;
+  --wrong-bg: #3a1a1a;
+  --selected-bg: #1a2a4a;
+  --hover-bg: #2a2a4a;
+  --tak-bg: #1a3a1a;
+  --nie-bg: #3a1a1a;
+  --writing-bg: #1a1a3e;
+}
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+input, textarea { font-family: inherit; }
+
+/* ======================== LAYOUT ======================== */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  background: var(--bg);
+}
+
+/* ======================== TOP BAR ======================== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 8px;
+}
+.top-bar .brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.top-bar .brand span { color: var(--gold); }
+.top-bar .stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.stat-item .icon { font-size: 18px; }
+.stat-item.xp { color: var(--xp-color); }
+.stat-item.hearts { color: var(--heart); }
+.stat-item.streak { color: var(--gold); }
+
+/* ======================== PROGRESS ======================== */
+.progress-strip {
+  display: flex;
+  gap: 4px;
+  padding: 8px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+.progress-dot {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--progress-dot-bg);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--text-light);
+  transition: 0.2s;
+  cursor: pointer;
+}
+.progress-dot.done { background: var(--primary); color: #fff; }
+.progress-dot.wrong { background: var(--error); color: #fff; }
+.progress-dot.active { 
+  background: var(--accent); color: #fff;
+  box-shadow: 0 0 0 3px rgba(28,176,246,0.3);
+}
+
+/* ======================== CONTENT AREA ======================== */
+.content-wrap {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ======================== UNITS / SKILL TREE ======================== */
+.unit-tree { padding-bottom: 20px; }
+.unit-tree h2 { font-size: 20px; color: var(--text-dark); margin-bottom: 16px; }
+.unit-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.unit-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+.skill-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--skill-card-bg);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: 0.15s;
+  border-left: 4px solid var(--border);
+}
+.skill-card:hover { background: var(--hover-bg); transform: translateX(2px); }
+.skill-card.completed { border-left-color: var(--primary); opacity: 0.7; }
+.skill-card.locked { border-left-color: var(--border); opacity: 0.5; cursor: default; }
+.skill-card.available { border-left-color: var(--accent); }
+.skill-card .skill-icon { font-size: 28px; flex-shrink: 0; }
+.skill-card .skill-info { flex: 1; min-width: 0; }
+.skill-card .skill-name { font-weight: 700; font-size: 15px; color: var(--text-dark); }
+.skill-card .skill-desc { font-size: 12px; color: var(--text-light); }
+.skill-card .skill-status { font-size: 12px; font-weight: 600; }
+.skill-card .skill-status.done { color: var(--primary); }
+.skill-card .skill-status.locked-txt { color: var(--text-light); }
+.skill-card .skill-status.active-txt { color: var(--accent); }
+.skill-bar {
+  height: 4px; border-radius: 2px; background: var(--border); margin-top: 4px;
+  overflow: hidden;
+}
+.skill-bar-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: 0.3s; }
+
+/* ======================== EXERCISE CARDS ======================== */
+.exercise-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.exercise-card .hint {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.exercise-card .question {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.exercise-card .polish-text {
+  font-size: 16px;
+  color: var(--text-dark);
+  line-height: 1.6;
+  padding: 14px;
+  background: var(--polish-bg);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  border-left: 3px solid var(--polish-border);
+}
+.options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--option-bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  color: var(--text-dark);
+  text-align: left;
+  transition: 0.15s;
+  width: 100%;
+}
+.option-btn:hover { background: var(--hover-bg); }
+.option-btn.selected { border-color: var(--accent); background: var(--selected-bg); }
+.option-btn.correct { border-color: var(--primary); background: var(--correct-bg); }
+.option-btn.wrong { border-color: var(--error); background: var(--wrong-bg); }
+.option-btn .letter {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px;
+  background: var(--border); color: var(--text); flex-shrink: 0;
+}
+.option-btn.selected .letter { background: var(--accent); color: #fff; }
+.option-btn.correct .letter { background: var(--primary); color: #fff; }
+.option-btn.wrong .letter { background: var(--error); color: #fff; }
+
+/* fill-in */
+.fill-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.fill-input input {
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  width: 180px;
+  transition: 0.2s;
+}
+.fill-input input:focus { border-color: var(--accent); outline: none; }
+.fill-input input.correct { border-color: var(--primary); background: var(--correct-bg); }
+.fill-input input.wrong { border-color: var(--error); background: var(--wrong-bg); }
+
+/* matching */
+.match-pair {
+  display: flex;
+  gap: 8px; margin-bottom: 8px;
+  align-items: center;
+}
+.match-left, .match-right {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.15s;
+  background: var(--option-bg);
+}
+.match-left:hover, .match-right:hover { background: var(--hover-bg); }
+.match-left.selected, .match-right.selected { border-color: var(--accent); background: var(--selected-bg); }
+.match-left.matched, .match-right.matched { 
+  border-color: var(--primary); background: var(--correct-bg);
+  cursor: default; opacity: 0.8;
+}
+.match-left.wrong, .match-right.wrong { 
+  border-color: var(--error); background: var(--wrong-bg);
+}
+
+/* TAK/NIE */
+.tak-nie { display: flex; gap: 8px; margin-bottom: 16px; justify-content: center; }
+.tak-nie button {
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  transition: 0.15s;
+}
+.tak-nie button.tak-btn { background: var(--tak-bg); color: var(--primary-dark); border: 2px solid var(--primary); }
+.tak-nie button.nie-btn { background: var(--nie-bg); color: var(--error); border: 2px solid var(--error); }
+.tak-nie button.selected { opacity: 0.6; }
+.tak-nie button.correct { opacity: 1; box-shadow: 0 0 0 3px var(--primary); }
+.tak-nie button.wrong { opacity: 1; box-shadow: 0 0 0 3px var(--error); }
+
+/* writing */
+.writing-area {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  resize: vertical;
+  margin-bottom: 12px;
+  line-height: 1.5;
+  background: var(--writing-bg);
+  color: var(--text-dark);
+}
+.writing-area:focus { border-color: var(--accent); outline: none; }
+.sample-answer {
+  background: var(--sample-bg);
+  border: 1px solid var(--sample-border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+.sample-answer strong { color: var(--primary-dark); }
+
+/* ======================== FEEDBACK ======================== */
+.feedback {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn { 
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.feedback .icon { font-size: 48px; margin-bottom: 8px; }
+.feedback .msg { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.feedback .sub { font-size: 14px; color: var(--text-light); }
+.feedback .xp-gain { color: var(--xp-color); font-weight: 700; font-size: 15px; margin-top: 8px; }
+
+/* ======================== BOTTOM BUTTON ======================== */
+.bottom-btn-wrap {
+  padding: 12px 16px 20px;
+  flex-shrink: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+}
+.check-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  transition: 0.15s;
+  letter-spacing: 0.3px;
+}
+.check-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.check-btn:disabled { background: var(--border); color: var(--text-light); cursor: default; transform: none; }
+.check-btn.secondary { background: var(--accent); }
+.check-btn.secondary:hover { background: var(--accent-dark); }
+.check-btn.danger { background: var(--error); }
+.check-btn.danger:hover { background: #e03a3a; }
+
+/* ======================== LEVEL UP MODAL ======================== */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.2s;
+}
+.modal-box {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  text-align: center;
+  max-width: 340px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  animation: popIn 0.3s;
+}
+.modal-box .big-icon { font-size: 64px; margin-bottom: 8px; }
+.modal-box h2 { font-size: 22px; margin-bottom: 8px; }
+.modal-box p { font-size: 15px; color: var(--text-light); margin-bottom: 16px; }
+.modal-box button {
+  padding: 12px 32px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+/* ======================== LEARN SECTION ======================== */
+.learn-content { line-height: 1.7; }
+.learn-content h3 { font-size: 18px; color: var(--text-dark); margin: 16px 0 8px; }
+.learn-content h3:first-child { margin-top: 0; }
+.learn-content p { margin-bottom: 8px; }
+.learn-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.learn-content td, .learn-content th {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: center;
+}
+.learn-content th {
+  background: var(--th-bg);
+  font-weight: 700;
+  color: var(--text-dark);
+}
+.learn-content .example {
+  background: var(--example-bg);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-style: italic;
+  margin: 8px 0;
+}
+.learn-content .highlight {
+  background: var(--highlight-bg);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--highlight-border);
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+/* ======================== SCROLLBAR ======================== */
+.content-wrap::-webkit-scrollbar { width: 4px; }
+.content-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ======================== RESPONSIVE ======================== */
+@media (max-width: 400px) {
+  .top-bar .brand { font-size: 15px; }
+  .stat-item { font-size: 12px; }
+  .skill-card { padding: 12px; }
+  .exercise-card { padding: 16px; }
+  .exercise-card .question { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="brand">🇵🇱 Polski <span>B1</span></div>
+    <div class="stats">
+      <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;" id="themeToggle">🌙</div>
+      <div class="stat-item xp"><span class="icon">⚡</span><span id="xpDisplay">0</span></div>
+      <div class="stat-item hearts"><span class="icon">❤️</span><span id="heartsDisplay">5</span></div>
+      <div class="stat-item streak"><span class="icon">🔥</span><span id="streakDisplay">0</span></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS STRIP -->
+  <div class="progress-strip" id="progressStrip"></div>
+
+  <!-- CONTENT -->
+  <div class="content-wrap" id="contentWrap"></div>
+
+  <!-- BOTTOM BUTTON -->
+  <div class="bottom-btn-wrap" id="bottomWrap">
+    <button class="check-btn" id="mainBtn" onclick="handleMainAction()">Let's go! 🚀</button>
+  </div>
+</div>
+
+<!-- LEVEL UP MODAL -->
+<div class="modal-overlay" id="levelModal" style="display:none;">
+  <div class="modal-box">
+    <div class="big-icon">🎉</div>
+    <h2 id="levelTitle">Level Up!</h2>
+    <p id="levelMsg">You're making great progress!</p>
+    <button onclick="closeLevelModal()">Awesome! 🚀</button>
+  </div>
+</div>
+
+<script>
+// ========================================================================
+// DATA — All exercises, lessons, and vocabulary derived from the materials
+// ========================================================================
+
+const SKILLS = [
+  { id: 'grammar-nouns', icon: '📚', name: 'Rzeczownik — rodzaj & liczba', 
+    desc: 'Rodzaj rzeczownika, liczba pojedyncza i mnoga', unit: 1, order: 1, type: 'lesson' },
+  { id: 'grammar-cases-nom', icon: '🏠', name: 'Mianownik — Kto? Co?',
+    desc: 'Mianownik: podstawowa forma, końcówki', unit: 1, order: 2, type: 'lesson' },
+  { id: 'ex-nom-pl', icon: '✍️', name: 'Ćwiczenia: Mianownik l.mn.', 
+    desc: 'Formy mianownika liczby mnogiej', unit: 1, order: 3, type: 'exercise' },
+  { id: 'grammar-gen', icon: '📦', name: 'Dopełniacz — Kogo? Czego?',
+    desc: 'Dopełniacz: końcówki -a/-u, użycie z przeczeniem', unit: 2, order: 1, type: 'lesson' },
+  { id: 'ex-gen', icon: '✍️', name: 'Ćwiczenia: Dopełniacz',
+    desc: 'Dopełniacz w zdaniach', unit: 2, order: 2, type: 'exercise' },
+  { id: 'grammar-dat', icon: '🎁', name: 'Celownik — Komu? Czemu?',
+    desc: 'Celownik: końcówki -owi/-u/-e', unit: 2, order: 3, type: 'lesson' },
+  { id: 'ex-dat', icon: '✍️', name: 'Ćwiczenia: Celownik',
+    desc: 'Celownik w zdaniach', unit: 2, order: 4, type: 'exercise' },
+  { id: 'grammar-acc', icon: '🎯', name: 'Biernik — Kogo? Co?',
+    desc: 'Biernik: rodzaj męski żeński i nijaki', unit: 3, order: 1, type: 'lesson' },
+  { id: 'ex-acc', icon: '✍️', name: 'Ćwiczenia: Biernik',
+    desc: 'Biernik w zdaniach', unit: 3, order: 2, type: 'exercise' },
+  { id: 'grammar-inst', icon: '🔧', name: 'Narzędnik — Z kim? Z czym?',
+    desc: 'Narzędnik: końcówki -em/-ą', unit: 3, order: 3, type: 'lesson' },
+  { id: 'ex-inst', icon: '✍️', name: 'Ćwiczenia: Narzędnik',
+    desc: 'Narzędnik w zdaniach', unit: 3, order: 4, type: 'exercise' },
+  { id: 'grammar-loc', icon: '📍', name: 'Miejscownik — O kim? O czym?',
+    desc: 'Miejscownik: końcówki -e/-u, wymiany głosek', unit: 4, order: 1, type: 'lesson' },
+  { id: 'ex-loc', icon: '✍️', name: 'Ćwiczenia: Miejscownik',
+    desc: 'Miejscownik w zdaniach', unit: 4, order: 2, type: 'exercise' },
+  { id: 'grammar-voc', icon: '📢', name: 'Wołacz — Zwroty do adresata',
+    desc: 'Wołacz w listach i oficjalnych zwrotach', unit: 4, order: 3, type: 'lesson' },
+  { id: 'ex-voc', icon: '✍️', name: 'Ćwiczenia: Wołacz',
+    desc: 'Formy wołacza', unit: 4, order: 4, type: 'exercise' },
+  { id: 'ex-cases-mix', icon: '🔄', name: 'Wszystkie przypadki — mix',
+    desc: 'Różne przypadki w zdaniach', unit: 5, order: 1, type: 'exercise' },
+  { id: 'grammar-adj', icon: '🎨', name: 'Przymiotnik — odmiana',
+    desc: 'Odmiana przymiotników przez przypadki', unit: 5, order: 2, type: 'lesson' },
+  { id: 'ex-adj', icon: '✍️', name: 'Ćwiczenia: Przymiotniki',
+    desc: 'Przymiotniki w zdaniach', unit: 5, order: 3, type: 'exercise' },
+  { id: 'grammar-aspect', icon: '⏳', name: 'Czasownik — aspekt',
+    desc: 'Aspekt dokonany i niedokonany', unit: 5, order: 4, type: 'lesson' },
+  { id: 'ex-aspect', icon: '✍️', name: 'Ćwiczenia: Aspekt',
+    desc: 'Dokonany czy niedokonany?', unit: 5, order: 5, type: 'exercise' },
+  // Unit 6: Vocab & Reading
+  { id: 'vocab-house', icon: '🏡', name: 'Przedmioty w domu',
+    desc: 'Słownictwo: meble, sprzęty domowe', unit: 6, order: 1, type: 'lesson' },
+  { id: 'ex-vocab-house', icon: '✍️', name: 'Ćwiczenia: W domu',
+    desc: 'Co to za przedmiot?', unit: 6, order: 2, type: 'exercise' },
+  { id: 'vocab-appearance', icon: '👤', name: 'Wygląd człowieka',
+    desc: 'Opis wyglądu: wzrost, włosy, oczy', unit: 6, order: 3, type: 'lesson' },
+  { id: 'ex-vocab-appearance', icon: '✍️', name: 'Ćwiczenia: Wygląd',
+    desc: 'Opisz osobę', unit: 6, order: 4, type: 'exercise' },
+  { id: 'exam-read-1', icon: '📖', name: 'Czytanie — test 1',
+    desc: 'Fragmenty tekstów, wybierz odpowiedź', unit: 7, order: 1, type: 'exercise' },
+  { id: 'exam-read-2', icon: '📖', name: 'Czytanie — test 2 (TAK/NIE)',
+    desc: 'Zrozumienie tekstu, TAK czy NIE?', unit: 7, order: 2, type: 'exercise' },
+  { id: 'exam-read-3', icon: '📖', name: 'Czytanie — dopasowanie',
+    desc: 'Nagłówki do tekstów', unit: 7, order: 3, type: 'exercise' },
+  // Unit 8: Writing
+  { id: 'writing-letters', icon: '✉️', name: 'Pisanie — Listy',
+    desc: 'List formalny i nieformalny: zwroty', unit: 8, order: 1, type: 'lesson' },
+  { id: 'ex-writing-form', icon: '✍️', name: 'Pisanie — formy wypowiedzi',
+    desc: 'Dopasuj formę do opisu', unit: 8, order: 2, type: 'exercise' },
+  { id: 'writing-practice-1', icon: '✏️', name: 'Pisanie — Ćwiczenie 1',
+    desc: 'Napisz pozdrowienia / zaproszenie', unit: 8, order: 3, type: 'exercise' },
+  { id: 'writing-practice-2', icon: '✏️', name: 'Pisanie — Ćwiczenie 2',
+    desc: 'Napisz opis osoby / opowiadanie', unit: 8, order: 4, type: 'exercise' },
+  { id: 'exam-listening', icon: '🎧', name: 'Słuchanie — kontekst',
+    desc: 'Gdzie pada ta wypowiedź?', unit: 7, order: 4, type: 'exercise' },
+  { id: 'vocab-markers', icon: '🏷️', name: 'Słowa-markery do argumentacji',
+    desc: 'Przydatne zwroty do eseju', unit: 8, order: 5, type: 'lesson' },
+  { id: 'ex-dialogues-1', icon: '💬', name: 'Dialogi — Rozmowy 1',
+    desc: 'Sytuacje z życia: pogotowie, zakupy, wizyta', unit: 7, order: 5, type: 'exercise' },
+  { id: 'ex-dialogues-2', icon: '💬', name: 'Dialogi — Rozmowy 2',
+    desc: 'Sytuacje z życia: zaproszenia, podróż, praca', unit: 7, order: 6, type: 'exercise' },
+  { id: 'ex-dialogues-3', icon: '💬', name: 'Dialogi — Rozmowy 3',
+    desc: 'Sytuacje z życia: problemy, emocje, kłopoty', unit: 8, order: 6, type: 'exercise' },
+  { id: 'ex-vocab-extended', icon: '🗂️', name: 'Słownictwo — rozszerzone',
+    desc: 'Dom: kuchnia, salon, łazienka. Wygląd: cechy charakteru', unit: 6, order: 5, type: 'exercise' },
+];
+
+// ---- Grammar Lessons ----
+function renderLesson(lessonId) {
+  switch(lessonId) {
+    case 'grammar-nouns':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Rzeczownik — Rodzaj i liczba</div>
+        <h3>Rodzaj rzeczownika (Rodzaj)</h3>
+        <p>W języku polskim są trzy rodzaje w liczbie pojedynczej:</p>
+        <table>
+          <tr><th>Rodzaj</th><th>Zaimek</th><th>Końcówka</th><th>Przykład</th></tr>
+          <tr><td>męski (męski)</td><td>ten</td><td>spółgłoska</td><td>syn, pies, brat, dom</td></tr>
+          <tr><td>żeński (żeński)</td><td>ta</td><td>-a</td><td>mama, ulica, córka, kawa</td></tr>
+          <tr><td>nijaki (nijaki)</td><td>to</td><td>-o, -e, -ę</td><td>kino, mieszkanie, imię</td></tr>
+        </table>
+        <div class="highlight">💡 Uwaga! Niektóre rzeczowniki męskie kończą się na -a (mężczyzna, kolega, dentysta).</div>
+        <h3>Liczba mnoga (Liczba mnoga)</h3>
+        <p>W liczbie mnogiej wyróżniamy:</p>
+        <table>
+          <tr><th>Rodzaj</th><th>Zaimek</th><th>Przykład</th></tr>
+          <tr><td>męskoosobowy (męskoosobowy)</td><td>ci</td><td>ci mężczyźni, ci studenci</td></tr>
+          <tr><td>niemęskoosobowy (niemęskoosobowy)</td><td>te</td><td>te kobiety, te domy, te dzieci</td></tr>
+        </table>
+        <div class="example">Przykłady:
+- student → studenci (męskoosobowy)
+- kobieta → kobiety (niemęskoosobowy)
+- dziecko → dzieci (niemęskoosobowy)
+- dom → domy (niemęskoosobowy)
+        </div>
+      </div>`;
+    case 'grammar-cases-nom':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Mianownik (Nominative)</div>
+        <p>Mianownik odpowiada na pytania <strong>kto? co?</strong> — to podstawowa forma rzeczownika.</p>
+        <h3>Końcówki liczby mnogiej</h3>
+        <table>
+          <tr><th>Rodzaj w lp.</th><th>Końcówka lm.</th><th>Przykład</th></tr>
+          <tr><td>męski na -k, -g</td><td>-i</td><td>żarówka → żarówki, kosmetyk → kosmetyki</td></tr>
+          <tr><td>męski na -ń, -sz, -cz, -rz, -ż, -l, -j, -c, -dz, -ś, -ć, -ź</td><td>-e</td><td>grosz → grosze, pokój → pokoje</td></tr>
+          <tr><td>męskoosobowy</td><td>-owie, -y, -i, -e</td><td>pan → panowie, Polak → Polacy</td></tr>
+          <tr><td>żeński / nijaki (standard)</td><td>-y, -i, -a</td><td>dziura → dziury, ubranie → ubrania</td></tr>
+        </table>
+        <div class="highlight">⚠️ Wyjątki: brat → bracia, ksiądz → księża, rok → lata, człowiek → ludzie</div>
+        <p>Rzeczowniki męskoosobowe mają specjalne formy:</p>
+        <div class="example">
+nauczyciel → nauczyciele<br>
+lekarz → lekarze<br>
+student → studenci<br>
+artysta → artyści<br>
+chłopiec → chłopcy
+        </div>
+      </div>`;
+    case 'grammar-gen':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Dopełniacz (Genitive) — Kogo? Czego?</div>
+        <p>Dopełniacz używa się po: <strong>bez, dla, do, od, z, naprzeciwko, obok</strong>
+        i z przeczeniem: <em>Nie mam... Nie widzę...</em></p>
+        <table>
+          <tr><th>Rodzaj</th><th>Końcówka lp.</th><th>Przykład</th></tr>
+          <tr><td>męski</td><td>-a / -u</td><td>syna, sportu</td></tr>
+          <tr><td>żeński</td><td>-y / -i</td><td>mamy, ulicy</td></tr>
+          <tr><td>nijaki</td><td>-a</td><td>nazwiska, mieszkania</td></tr>
+        </table>
+        <div class="highlight">Końcówka -u dla męskich: krótkie słowa (sok → soku), zapożyczenia (bar → baru), 
+        dni tygodnia (wtorek → wtorku), niepoliczalne (cukier → cukru), środki transportu (autobus → autobusu).</div>
+        <p>Czasowniki z dopełniaczem: <strong>bać się, szukać, słuchać, uczyć się, życzyć</strong></p>
+        <div class="example">
+- Uczę się języka polskiego.<br>
+- Szukam książki.<br>
+- Nie mam czasu.<br>
+- Słucham muzyki.
+        </div>
+      </div>`;
+    case 'grammar-dat':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Celownik (Dative) — Komu? Czemu?</div>
+        <p>Celownik po: <strong>dzięki, ku, przeciw</strong>. Z czasownikami: <strong>dać, dziękować, pomagać, powiedzieć, obiecać</strong>.</p>
+        <table>
+          <tr><th>Rodzaj</th><th>Końcówka</th><th>Przykład</th></tr>
+          <tr><td>męski</td><td>-owi / -u</td><td>mężowi, bratu, psu</td></tr>
+          <tr><td>żeński</td><td>-i/-y / -e/-ie</td><td>babei, ulicy, koleżance</td></tr>
+          <tr><td>nijaki</td><td>-u</td><td>dziecku</td></tr>
+        </table>
+        <div class="highlight">Wymiany głosek: ch→sz (mucha → musze), d→dz (woda → wodzie), 
+        g→dz (kolega → koledze), k→c (matka → matce), r→rz (siostra → siostrze)</div>
+      </div>`;
+    case 'grammar-acc':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Biernik (Accusative) — Kogo? Co?</div>
+        <p>Biernik po: <strong>na, pod, przez, nad, w</strong>. Z czasownikami: <strong>mieć, lubić, jeść, kupować, czytać, znać, oglądać, prosić</strong>.</p>
+        <table>
+          <tr><th>Rodzaj</th><th>Końcówka lp.</th><th>Przykład</th></tr>
+          <tr><td>męski osobowy</td><td>-a (jak dopełniacz)</td><td>mam psa, widzę studenta</td></tr>
+          <tr><td>męski nieosobowy</td><td>— (jak mianownik)</td><td>mam dom, lubię sport</td></tr>
+          <tr><td>żeński</td><td>-ę</td><td>mam mamę, lubię kawę</td></tr>
+          <tr><td>nijaki</td><td>— (jak mianownik)</td><td>mam mieszkanie, lubię kino</td></tr>
+        </table>
+        <div class="highlight">⚠️ Przeczenie zmienia biernik na dopełniacz:
+        <em>Mam książkę. → Nie mam książki.</em></div>
+      </div>`;
+    case 'grammar-inst':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Narzędnik (Instrumental) — Z kim? Z czym?</div>
+        <p>Po: <strong>nad, pod, przed, za, między</strong>. Po czasownikach typu <em>być, zostać, pracować jako</em>.</p>
+        <table>
+          <tr><th>Rodzaj</th><th>Końcówka</th><th>Przykład</th></tr>
+          <tr><td>męski / nijaki</td><td>-em</td><td>studentem, mieszkaniem</td></tr>
+          <tr><td>żeński</td><td>-ą</td><td>studentką, mamą</td></tr>
+          <tr><td>lm. męskoosobowy</td><td>-ami</td><td>studentami</td></tr>
+          <tr><td>lm. niemęskoosobowy</td><td>-ami</td><td>mieszkaniami, kobietami</td></tr>
+        </table>
+        <div class="example">Jestem studentem. Ona jest lekarką. Idę z kolegą. 
+        Pracuję jako nauczyciel. Interesuję się muzyką.</div>
+      </div>`;
+    case 'grammar-loc':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Miejscownik (Locative) — O kim? O czym?</div>
+        <p>Po przyimkach: <strong>na, po, o, przy, w(e)</strong>.</p>
+        <table>
+          <tr><th>Końcówka</th><th>Kiedy?</th><th>Przykład</th></tr>
+          <tr><td>-e</td><td>twarda spółgłoska</td><td>okno → na oknie, sklep → w sklepie</td></tr>
+          <tr><td>-u</td><td>miękka lub k, g, ch</td><td>mieszkanie → w mieszkaniu, rok → w roku</td></tr>
+          <tr><td>-i/-y</td><td>żeńskie na -nia, -ca</td><td>kuchnia → w kuchni, praca → w pracy</td></tr>
+        </table>
+        <div class="highlight">Wymiany głosek w miejscowniku:
+- ch→sz: mucha → o musze
+- d→dz: woda → w wodzie
+- g→dz: noga → o nodze
+- k→c: matka → o matce
+- r→rz: rower → na rowerze
+- st→ść: miasto → w mieście
+- t→ć: uniwersytet → na uniwersytecie
+- ł→l: stół → na stole
+        </div>
+      </div>`;
+    case 'grammar-voc':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Wołacz (Vocative) — Zwroty do adresata</div>
+        <p>Wołacza używamy, gdy się do kogoś zwracamy. W mowie potocznej często zastępuje go mianownik. 
+        W oficjalnych sytuacjach — używamy wołacza!</p>
+        <table>
+          <tr><th>Rodzaj / Końcówka</th><th>Końcówka wołacza</th><th>Przykład</th></tr>
+          <tr><td>męski twardy</td><td>-ie</td><td>Marcin → Marcinie, Filip → Filipie</td></tr>
+          <tr><td>męski miękki / -k, -g, -ch</td><td>-u</td><td>Tomasz → Tomaszu, Marek → Marku</td></tr>
+          <tr><td>żeński na -a</td><td>-o</td><td>Beata → Beato, mama → mamo</td></tr>
+          <tr><td>żeński zdrobn. -ia</td><td>-u</td><td>Basia → Basiu, Kasia → Kasiu</td></tr>
+          <tr><td>nijaki</td><td>— (jak mianownik)</td><td>dziecko!, mieszkanie!</td></tr>
+        </table>
+        <div class="example">
+- Cześć, Marcinie! (a nie: Cześć, Marcin!)<br>
+- Dzień dobry, panie profesorze!<br>
+- Szanowna Pani Prezes!<br>
+- Kochana babciu!<br>
+- Moi Drodzy!
+        </div>
+      </div>`;
+    case 'grammar-adj':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Przymiotnik — odmiana przez przypadki</div>
+        <p>Przymiotnik zgadza się z rzeczownikiem w rodzaju, liczbie i przypadku.</p>
+        <table>
+          <tr><th>Przypadek</th><th>męski</th><th>żeński</th><th>nijaki</th></tr>
+          <tr><td>Mianownik</td><td>nowy</td><td>nowa</td><td>nowe</td></tr>
+          <tr><td>Dopełniacz</td><td>nowego</td><td>nowej</td><td>nowego</td></tr>
+          <tr><td>Celownik</td><td>nowemu</td><td>nowej</td><td>nowemu</td></tr>
+          <tr><td>Biernik</td><td>nowego/nowy</td><td>nową</td><td>nowe</td></tr>
+          <tr><td>Narzędnik</td><td>nowym</td><td>nową</td><td>nowym</td></tr>
+          <tr><td>Miejscownik</td><td>nowym</td><td>nowej</td><td>nowym</td></tr>
+        </table>
+        <div class="example">
+- nowy dom → w nowym domu<br>
+- dobra książka → dobrej książki<br>
+- stare miasto → w starym mieście
+        </div>
+      </div>`;
+    case 'grammar-aspect':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">📘 Aspekt czasownika: dokonany i niedokonany</div>
+        <table>
+          <tr><th>Niedokonany (imperfective)</th><th>Dokonany (perfective)</th></tr>
+          <tr><td>Proces / czynność w trakcie</td><td>Wynik / zakończenie</td></tr>
+          <tr><td>Co robić? / Co robiłeś?</td><td>Co zrobić? / Co zrobiłeś?</td></tr>
+          <tr><td>robić, pisać, czytać, jeść</td><td>zrobić, napisać, przeczytać, zjeść</td></tr>
+        </table>
+        <div class="highlight">Często niedokonany + dokonany tworzą parę:
+        czytać → przeczytać, pisać → napisać, pić → wypić,
+        jeść → zjeść, widzieć → zobaczyć, brać → wziąć.</div>
+        <div class="example">
+- Wczoraj <strong>czytałem</strong> książkę. (proces — niedokonany)<br>
+- Wczoraj <strong>przeczytałem</strong> książkę. (rezultat — dokonany)<br>
+- Codziennie <strong>piję</strong> kawę. (zwyczaj — niedokonany)<br>
+- Teraz <strong>wypiłem</strong> kawę. (zakończone — dokonany)
+        </div>
+      </div>`;
+    case 'vocab-house':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">🏡 Przedmioty w domu</div>
+        <table>
+          <tr><th>Polski</th><th>Polski</th><th>Polski</th></tr>
+          <tr><td>łóżko — bed</td><td>krzesło — chair</td><td>stół — table</td></tr>
+          <tr><td>szafa — wardrobe</td><td>biurko — desk</td><td>fotel — armchair</td></tr>
+          <tr><td>kanapa — sofa</td><td>półka — shelf</td><td>komoda — chest</td></tr>
+          <tr><td>lodówka — fridge</td><td>kuchenka — stove</td><td>zmywarka — dishwasher</td></tr>
+          <tr><td>czajnik — kettle</td><td>garnek — pot</td><td>patelnia — frying pan</td></tr>
+          <tr><td>talerz — plate</td><td>szklanka — glass</td><td>kubek — mug</td></tr>
+          <tr><td>ręcznik — towel</td><td>mydełko — soap</td><td>szczotka — brush</td></tr>
+        </table>
+      </div>`;
+    case 'vocab-appearance':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">👤 Wygląd człowieka</div>
+        <h3>Wzrost i sylwetka</h3>
+        <p>wysoki, średniego wzrostu, niski, szczupły, gruby, umięśniony</p>
+        <h3>Włosy</h3>
+        <p>krótkie, długie, kręcone, proste, ciemne, jasne, rude, siwe, blond, brązowe, czarne</p>
+        <h3>Twarz</h3>
+        <p>okrągła, owalna, pociągła, piegi, zmarszczki, broda, wąsy</p>
+        <h3>Oczy</h3>
+        <p>niebieskie, zielone, brązowe, szare, duże, małe</p>
+        <div class="example">
+<strong>Opis osoby:</strong> Mój przyjaciel Adam jest wysokim, szczupłym 28-latkiem. Ma duże niebieskie oczy, 
+kręcone ciemne włosy, prosty nos. Jest pianistą — ma delikatne dłonie z długimi palcami.
+Zawsze elegancko ubrany, bardzo życzliwy i inteligentny.
+        </div>
+      </div>`;
+    case 'writing-letters':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">✉️ Jak napisać list po polsku?</div>
+        <h3>List nieformalny (do znajomego/rodziny)</h3>
+        <div class="example">
+Miejscowość, data<br><br>
+Kochana Haniu! / Cześć Marku! / Moi Drodzy!<br><br>
+(wstęp) Przepraszam, że tak długo nie pisałem…<br>
+(rozwinięcie) Chciałem Ci opowiedzieć o…<br>
+(zakończenie) Kończę, bo… Serdecznie pozdrawiam / Ściskam Cię mocno.<br><br>
+Podpis: <em>Tomek / Twoja kochająca siostra</em>
+        </div>
+        <h3>List formalny (do instytucji/przełożonego)</h3>
+        <div class="example">
+Miejscowość, data<br><br>
+Szanowny Panie Dyrektorze! / Szanowni Państwo!<br><br>
+Zwracam się z prośbą o… / Niniejszym informuję, że…<br>
+(uzasadnienie) Chciałbym uzasadnić swoją prośbę…<br>
+Z góry dziękuję za pozytywne rozpatrzenie.<br><br>
+Z poważaniem,<br>
+<em>Imię i Nazwisko</em>
+        </div>
+        <h3>Inne formy pisemne na B1:</h3>
+        <p><strong>Życzenia:</strong> Z okazji urodzin / ślubu / imienin życzę Ci…</p>
+        <p><strong>Pozdrowienia:</strong> Moc pozdrowień znad morza / z gór przesyła…</p>
+        <p><strong>Zaproszenie:</strong> Zapraszam Cię serdecznie na moje urodziny…</p>
+        <p><strong>Ogłoszenie:</strong> Sprzedam / wynajmę / zgubiono / znaleziono…</p>
+        <p><strong>Opowiadanie:</strong> Zdarzyło się to pewnego dnia… Nagle… W końcu…</p>
+        <p><strong>Opis:</strong> Mój najlepszy przyjaciel ma na imię… Jest wysokiego wzrostu…</p>
+        <p><strong>Sprawozdanie:</strong> W zeszłym miesiącu byliśmy na wycieczce w…</p>
+        <p><strong>Recenzja:</strong> W sobotę obejrzałem film… Bardzo mi się podobał, ponieważ…</p>
+        <p><strong>Esej:</strong> Ostatnio wszyscy mówią o… Moim zdaniem… Uważam, że…</p>
+      </div>`;
+    case 'vocab-markers':
+      return `<div class="learn-content exercise-card">
+        <div class="hint">🏷️ Słowa-markery do tekstu argumentacyjnego</div>
+        <h3>Wprowadzanie tematu</h3>
+        <p><em>Ostatnio wszyscy mówią o… Jest to temat… Warto zastanowić się nad… Chciałbym poruszyć kwestię…</em></p>
+        <h3>Wyrażanie opinii</h3>
+        <p><em>Moim zdaniem… Według mnie… Uważam, że… Sądzę, że… Wydaje mi się, że… 
+        Jestem przekonany, że… Myślę, że…</em></p>
+        <h3>Argumentowanie</h3>
+        <p><em>Po pierwsze… Po drugie… Przede wszystkim… Ponadto… Co więcej… 
+        Należy podkreślić, że… Z jednej strony… z drugiej strony…</em></p>
+        <h3>Kontrast i przyznanie racji</h3>
+        <p><em>Jednakże… Mimo to… Chociaż… Niestety… Pomimo tego… 
+        Owszem…, ale… Trudno się zgodzić z…</em></p>
+        <h3>Podsumowanie</h3>
+        <p><em>Podsumowując… Reasumując… Ogólnie można powiedzieć… 
+        Na zakończenie chciałbym stwierdzić…</em></p>
+        <div class="example">
+<strong>Przykład:</strong> 
+<em>"W ostatnich latach wszyscy mówią o ochronie środowiska. 
+Moim zdaniem każdy z nas może coś zmienić. Po pierwsze, warto segregować śmieci. 
+Co więcej, ograniczenie zużycia plastiku to dobry krok. Niestety, nie wszyscy są tego świadomi. 
+Podsumowując, małe zmiany w codziennym życiu mają duże znaczenie."</em>
+        </div>
+      </div>`;
+    default:
+      return `<div class="exercise-card"><div class="hint">📘 Lekcja</div><p>Treść w przygotowaniu.</p></div>`;
+  }
+}
+
+// ---- Exercises ----
+const EXERCISES = {
+  // Unit 1: Mianownik
+  'ex-nom-pl': {
+    title: 'Mianownik liczby mnogiej',
+    questions: [
+      { type: 'choice', 
+        question: 'Jaka jest poprawna forma liczby mnogiej od "student"?',
+        polish: 'To są _____.',
+        options: ['studenty', 'studenci', 'studentowie', 'student'],
+        correct: 1,
+        explanation: 'studenci — forma męskoosobowa.' },
+      { type: 'choice',
+        question: 'Jaka jest poprawna forma liczby mnogiej od "pan"?',
+        polish: 'Ci _____ przyszli na spotkanie.',
+        options: ['pany', 'panowie', 'pani', 'panie'],
+        correct: 1,
+        explanation: 'pan → panowie.' },
+      { type: 'choice',
+        question: 'Jaka jest poprawna forma liczby mnogiej od "książka"?',
+        polish: 'Lubię czytać _____.',
+        options: ['książki', 'książek', 'książkami', 'książkach'],
+        correct: 0,
+        explanation: 'książka → książki (niemęskoosobowy, -k → -i)' },
+      { type: 'choice',
+        question: 'Jaka jest poprawna forma liczby mnogiej od "człowiek"?',
+        options: ['człowieki', 'ludzie', 'człowiekowie', 'ludzi'],
+        correct: 1,
+        explanation: 'Wyjątek: człowiek → ludzie.' },
+      { type: 'fill',
+        question: 'Wpisz poprawną formę liczby mnogiej:',
+        polish: 'To są moi _____ (kolega).',
+        answer: 'koledzy',
+        alt: ['kolegowie'],
+        explanation: 'kolega → koledzy (męskoosobowy, -ga → -dzy).' },
+      { type: 'fill',
+        question: 'Wpisz poprawną formę:',
+        polish: 'Na stole leżą _____ (klucz).',
+        answer: 'klucze',
+        explanation: 'klucz → klucze (końcówka -e po -cz).' },
+    ]
+  },
+  // Unit 2: Dopełniacz
+  'ex-gen': {
+    title: 'Ćwiczenia — Dopełniacz',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij dopełniacz:',
+        polish: 'Nie mam _____ (samochód).',
+        answer: 'samochodu',
+        explanation: 'samochód → samochodu (męski, -u)' },
+      { type: 'fill',
+        question: 'Uzupełnij dopełniacz:',
+        polish: 'Szukam _____ (książka).',
+        answer: 'książki',
+        explanation: 'książka → książki (żeński, -a → -i)' },
+      { type: 'fill',
+        question: 'Uzupełnij dopełniacz:',
+        polish: 'Słucham _____ (muzyka).',
+        answer: 'muzyki',
+        explanation: 'muzyka → muzyki' },
+      { type: 'fill',
+        question: 'Uzupełnij dopełniacz:',
+        polish: 'Uczę się _____ (język polski).',
+        answer: 'języka polskiego',
+        explanation: 'język polski → języka polskiego' },
+      { type: 'fill',
+        question: 'Uzupełnij dopełniacz:',
+        polish: 'Boje się _____ (pies).',
+        answer: 'psa',
+        explanation: 'pies → psa (ruchome e wypada)' },
+      { type: 'choice',
+        question: 'Która forma jest poprawna?',
+        polish: 'Nie widzę _____ na biurku.',
+        options: ['książka', 'książkę', 'książki', 'książką'],
+        correct: 2,
+        explanation: 'Przeczenie → dopełniacz: nie widzę książki.' },
+    ]
+  },
+  // Unit 2: Celownik
+  'ex-dat': {
+    title: 'Ćwiczenia — Celownik',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij celownik:',
+        polish: 'Dziękuję _____ (kolega) za pomoc.',
+        answer: 'koledze',
+        explanation: 'kolega → koledze (g→dz)' },
+      { type: 'fill',
+        question: 'Uzupełnij celownik:',
+        polish: 'Pomagam _____ (mama) w kuchni.',
+        answer: 'mamie',
+        explanation: 'mama → mamie' },
+      { type: 'fill',
+        question: 'Uzupełnij celownik:',
+        polish: 'Dam _____ (brat) prezent.',
+        answer: 'bratu',
+        explanation: 'brat → bratu (męski, -u)' },
+      { type: 'fill',
+        question: 'Uzupełnij celownik:',
+        polish: 'Powiedz _____ (siostra) prawdę.',
+        answer: 'siostrze',
+        explanation: 'siostra → siostrze (r→rz)' },
+      { type: 'fill',
+        question: 'Uzupełnij celownik:',
+        polish: 'Daj _____ (dziecko) zabawkę.',
+        answer: 'dziecku',
+        explanation: 'dziecko → dziecku' },
+      { type: 'choice',
+        question: 'Która forma celownika jest poprawna?',
+        polish: 'Obiecałem _____, że przyjdę.',
+        options: ['męża', 'mężem', 'mężowi', 'mężu'],
+        correct: 2,
+        explanation: 'mąż → mężowi (końcówka -owi)' },
+    ]
+  },
+  // Unit 3: Biernik
+  'ex-acc': {
+    title: 'Ćwiczenia — Biernik',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij biernik:',
+        polish: 'Mam _____ (siostra).',
+        answer: 'siostrę',
+        explanation: 'siostra → siostrę (-a → -ę)' },
+      { type: 'fill',
+        question: 'Uzupełnij biernik:',
+        polish: 'Lubię _____ (kawa).',
+        answer: 'kawę',
+        explanation: 'kawa → kawę' },
+      { type: 'fill',
+        question: 'Uzupełnij biernik:',
+        polish: 'Widzę _____ (student). (= one male student)',
+        answer: 'studenta',
+        explanation: 'student → studenta (męski osobowy → -a)' },
+      { type: 'fill',
+        question: 'Uzupełnij biernik:',
+        polish: 'Czytam _____ (książka).',
+        answer: 'książkę',
+        explanation: 'książka → książkę' },
+      { type: 'choice',
+        question: 'Która forma biernika jest poprawna do zdania przeczącego?',
+        polish: 'Nie lubię _____.',
+        options: ['kawę', 'kawy', 'kawą', 'kawo'],
+        correct: 1,
+        explanation: 'Przeczenie → dopełniacz: nie lubię kawy.' },
+      { type: 'fill',
+        question: 'Uzupełnij biernik (męski nieosobowy):',
+        polish: 'Kupuję _____ (nowy dom).',
+        answer: 'nowy dom',
+        explanation: 'nowy dom → nowy dom (męski nieosobowy = mianownik)' },
+    ]
+  },
+  // Unit 3: Narzędnik
+  'ex-inst': {
+    title: 'Ćwiczenia — Narzędnik',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij narzędnik:',
+        polish: 'Jestem _____ (student).',
+        answer: 'studentem',
+        explanation: 'student → studentem' },
+      { type: 'fill',
+        question: 'Uzupełnij narzędnik:',
+        polish: 'Ona jest _____ (lekarka).',
+        answer: 'lekarką',
+        explanation: 'lekarka → lekarką' },
+      { type: 'fill',
+        question: 'Uzupełnij narzędnik:',
+        polish: 'Idę z _____ (kolega) do kina.',
+        answer: 'kolegą',
+        explanation: 'kolega → kolegą' },
+      { type: 'fill',
+        question: 'Uzupełnij narzędnik:',
+        polish: 'Ona interesuje się _____ (muzyka klasyczna).',
+        answer: 'muzyką klasyczną',
+        explanation: 'muzyka klasyczna → muzyką klasyczną' },
+      { type: 'fill',
+        question: 'Uzupełnij narzędnik lm.:',
+        polish: 'Spotykam się z _____ (przyjaciele).',
+        answer: 'przyjaciółmi',
+        explanation: 'przyjaciele → przyjaciółmi (wyjątek)' },
+    ]
+  },
+  // Unit 4: Miejscownik
+  'ex-loc': {
+    title: 'Ćwiczenia — Miejscownik',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij miejscownik:',
+        polish: 'Jestem w _____ (sklep).',
+        answer: 'sklepie',
+        explanation: 'sklep → w sklepie (twarda → -e)' },
+      { type: 'fill',
+        question: 'Uzupełnij miejscownik:',
+        polish: 'Mówimy o _____ (film).',
+        answer: 'filmie',
+        explanation: 'film → o filmie' },
+      { type: 'fill',
+        question: 'Uzupełnij miejscownik:',
+        polish: 'Mieszkam w _____ (miasto).',
+        answer: 'mieście',
+        explanation: 'miasto → w mieście (st→ść)' },
+      { type: 'fill',
+        question: 'Uzupełnij miejscownik:',
+        polish: 'Jestem na _____ (uniwersytet).',
+        answer: 'uniwersytecie',
+        explanation: 'uniwersytet → na uniwersytecie (t→ć)' },
+      { type: 'fill',
+        question: 'Uzupełnij miejscownik:',
+        polish: 'Myślę o _____ (wakacje).',
+        answer: 'wakacjach',
+        explanation: 'lm: wakacje → o wakacjach' },
+    ]
+  },
+  // Unit 4: Wołacz
+  'ex-voc': {
+    title: 'Ćwiczenia — Wołacz',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij wołacz:',
+        polish: 'Dzień dobry, _____ (pani profesor)!',
+        answer: 'pani profesor',
+        explanation: 'pani profesor → pani profesor (wołacz = mianownik dla "pani")' },
+      { type: 'fill',
+        question: 'Uzupełnij wołacz:',
+        polish: 'Cześć, _____ (Marcin)!',
+        answer: 'Marcinie',
+        explanation: 'Marcin → Marcinie (męski twardy → -ie)' },
+      { type: 'fill',
+        question: 'Uzupełnij wołacz:',
+        polish: 'Kochana _____ (babcia)!',
+        answer: 'babciu',
+        explanation: 'babcia → babciu (-ia → -iu)' },
+      { type: 'fill',
+        question: 'Uzupełnij wołacz:',
+        polish: 'Szanowny _____ (pan dyrektor)!',
+        answer: 'panie dyrektorze',
+        explanation: 'pan dyrektor → panie dyrektorze' },
+      { type: 'fill',
+        question: 'Uzupełnij wołacz:',
+        polish: '_____ (Marek), chodź tutaj!',
+        answer: 'Marku',
+        explanation: 'Marek → Marku (-ek → -ku, wypada ruchome e)' },
+    ]
+  },
+  // Unit 5: Mix przypadków
+  'ex-cases-mix': {
+    title: 'Wszystkie przypadki — ćwiczenie mieszane',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij odpowiednim przypadkiem:',
+        polish: 'Nie mam _____ (samochód). [Dopełniacz]',
+        answer: 'samochodu',
+        explanation: 'samochód → samochodu (D.lp męski)' },
+      { type: 'fill',
+        question: 'Uzupełnij:',
+        polish: 'Jestem _____ (nauczyciel). [Narzędnik]',
+        answer: 'nauczycielem',
+        explanation: 'nauczyciel → nauczycielem' },
+      { type: 'fill',
+        question: 'Uzupełnij:',
+        polish: 'Pomagam _____ (rodzice). [Celownik lm]',
+        answer: 'rodzicom',
+        explanation: 'rodzice → rodzicom (C.lm)' },
+      { type: 'fill',
+        question: 'Uzupełnij:',
+        polish: 'Widzę _____ (ładna dziewczyna). [Biernik]',
+        answer: 'ładną dziewczynę',
+        explanation: 'ładna dziewczyna → ładną dziewczynę' },
+      { type: 'fill',
+        question: 'Uzupełnij:',
+        polish: 'Mieszkam w _____ (Gdańsk). [Miejscownik]',
+        answer: 'Gdańsku',
+        explanation: 'Gdańsk → w Gdańsku (-sk → -u)' },
+      { type: 'fill',
+        question: 'Uzupełnij:',
+        polish: 'Cześć, _____ (Kasia)! [Wołacz]',
+        answer: 'Kasiu',
+        explanation: 'Kasia → Kasiu' },
+    ]
+  },
+  // Unit 5: Przymiotniki
+  'ex-adj': {
+    title: 'Ćwiczenia — Przymiotniki',
+    questions: [
+      { type: 'fill',
+        question: 'Uzupełnij przymiotnik:',
+        polish: 'To jest _____ (nowy) dom.',
+        answer: 'nowy',
+        explanation: 'nowy dom (męski, mianownik)' },
+      { type: 'fill',
+        question: 'Uzupełnij przymiotnik:',
+        polish: 'Nie mam _____ (nowy) samochodu.',
+        answer: 'nowego',
+        explanation: 'nowego samochodu (dopełniacz)' },
+      { type: 'fill',
+        question: 'Uzupełnij przymiotnik:',
+        polish: 'Mieszkam w _____ (stary) mieszkaniu.',
+        answer: 'starym',
+        explanation: 'starym mieszkaniu (miejscownik)' },
+      { type: 'fill',
+        question: 'Uzupełnij przymiotnik:',
+        polish: 'Ona jest _____ (miły) osobą.',
+        answer: 'miłą',
+        explanation: 'miłą osobą (narzędnik, żeński)' },
+      { type: 'fill',
+        question: 'Uzupełnij przymiotnik:',
+        polish: 'Szukam _____ (dobry) restauracji.',
+        answer: 'dobrej',
+        explanation: 'dobrej restauracji (dopełniacz, żeński)' },
+    ]
+  },
+  // Unit 5: Aspekt
+  'ex-aspect': {
+    title: 'Ćwiczenia — Aspekt (dokonany/niedokonany)',
+    questions: [
+      { type: 'choice',
+        question: 'Które zdanie jest POPRAWNE?',
+        options: ['Wczoraj przeczytałem książkę.', 'Wczoraj czytałem książkę i skończyłem ją.'],
+        correct: 0,
+        explanation: '"przeczytałem" (dokonany) oznacza, że skończyłem. Jeśli dodajemy "i skończyłem" → lepiej dokonany.' },
+      { type: 'choice',
+        question: '"Codziennie _____ kawę." — jaka forma?',
+        options: ['piję', 'wypiję', 'napić się'],
+        correct: 0,
+        explanation: 'Codziennie = zwyczaj → niedokonany "piję".' },
+      { type: 'fill',
+        question: 'Uzupełnij poprawną formą (niedokonany lub dokonany):',
+        polish: 'Wczoraj _____ (napisać) list do kolegi.',
+        answer: 'napisałem',
+        alt: ['napisałam'],
+        explanation: 'Wczoraj i zakończone → dokonany: napisałem.' },
+      { type: 'fill',
+        question: 'Uzupełnij:',
+        polish: 'W tej chwili _____ (jeść) obiad.',
+        answer: 'jem',
+        explanation: 'W tej chwili (teraz) → niedokonany: jem.' },
+      { type: 'choice',
+        question: 'Która para aspektowa jest poprawna?',
+        options: ['robić → zrobić', 'robić → porobić', 'robić → robić się'],
+        correct: 0,
+        explanation: 'robić (ndk) → zrobić (dk) to poprawna para.' },
+    ]
+  },
+  // Unit 6: Vocab house
+  'ex-vocab-house': {
+    title: 'Przedmioty w domu',
+    questions: [
+      { type: 'choice',
+        question: 'Co to jest? "Śpimy na tym."',
+        options: ['krzesło', 'łóżko', 'stół', 'szafa'],
+        correct: 1,
+        explanation: 'Łóżko — bed.' },
+      { type: 'choice',
+        question: 'Co to jest? "Jemy na tym."',
+        options: ['łóżko', 'biurko', 'stół', 'półka'],
+        correct: 2,
+        explanation: 'Stół — table.' },
+      { type: 'choice',
+        question: 'Gdzie trzymamy ubrania?',
+        options: ['w lodówce', 'w szafie', 'w zmywarce', 'na półce'],
+        correct: 1,
+        explanation: 'Szafa — wardrobe.' },
+      { type: 'choice',
+        question: 'Co to jest? "Pijemy z tego."',
+        options: ['talerz', 'garnek', 'szklanka', 'patelnia'],
+        correct: 2,
+        explanation: 'Szklanka — glass.' },
+      { type: 'fill',
+        question: 'Jak nazywa się przedmiot, którym się czeszesz?',
+        polish: 'Używam _____ do czesania.',
+        answer: 'szczotki',
+        alt: ['grzebienia'],
+        explanation: 'szczotka/grzebień (hairbrush/comb).' },
+    ]
+  },
+  // Unit 6: Wygląd
+  'ex-vocab-appearance': {
+    title: 'Wygląd człowieka',
+    questions: [
+      { type: 'choice',
+        question: '"Ona ma długie, kręcone włosy." To znaczy, że jej włosy są:',
+        options: ['proste i długie', 'kręcone i długie', 'krótkie i kręcone', 'proste i krótkie'],
+        correct: 1,
+        explanation: 'długie = long, kręcone = curly.' },
+      { type: 'choice',
+        question: '"Mój przyjaciel jest wysokim, szczupłym mężczyzną." To znaczy:',
+        options: ['niski i gruby', 'wysoki i gruby', 'wysoki i szczupły', 'niski i szczupły'],
+        correct: 2,
+        explanation: 'wysoki = tall, szczupły = slim.' },
+      { type: 'choice',
+        question: 'Jakie oczy ma osoba z niebieskimi oczami?',
+        options: ['brązowe', 'zielone', 'niebieskie', 'szare'],
+        correct: 2,
+        explanation: 'niebieskie = blue.' },
+      { type: 'fill',
+        question: 'Uzupełnij opis:',
+        polish: 'Mój brat jest _____. Ma 190 cm wzrostu.',
+        answer: 'wysoki',
+        explanation: 'wysoki (tall).' },
+    ]
+  },
+  // Unit 7: Czytanie
+  'exam-read-1': {
+    title: 'Czytanie — Fragmenty tekstów (wybierz odpowiedź)',
+    questions: [
+      { type: 'choice',
+        question: '"Mam przyjemność zaprosić Państwa na koncert, który odbędzie się w sobotę 15 marca o godzinie 19:00 w Sali Koncertowej." To jest:',
+        options: ['ogłoszenie', 'zaproszenie', 'sprawozdanie', 'recenzja'],
+        correct: 1,
+        explanation: 'To wyraźne zaproszenie na koncert.' },
+      { type: 'choice',
+        question: '"Sprzedam rower górski, używany jeden sezon, w dobrym stanie. Cena do negocjacji. Tel. 600-700-800." To jest:',
+        options: ['zawiadomienie', 'ogłoszenie', 'list', 'życzenia'],
+        correct: 1,
+        explanation: 'Ogłoszenie sprzedaży.' },
+      { type: 'choice',
+        question: '"Zwiedziliśmy Wawel i Stare Miasto. Potem spacerowaliśmy po Rynku. Wieczorem poszliśmy do restauracji. Kraków bardzo mi się podobał." To jest:',
+        options: ['opis', 'sprawozdanie', 'recenzja', 'zaproszenie'],
+        correct: 1,
+        explanation: 'Sprawozdanie — relacja z wydarzeń.' },
+      { type: 'choice',
+        question: '"W sobotę w klubie wystąpił mój ulubiony zespół. Koncert zaczął się o 20:00. Publiczność świetnie się bawiła. Bardzo mi się podobało!" To jest:',
+        options: ['sprawozdanie', 'recenzja', 'opis', 'ogłoszenie'],
+        correct: 1,
+        explanation: 'Recenzja — własna opinia o wydarzeniu.' },
+      { type: 'choice',
+        question: '"Droga Tereso! Piszê, ¿eby serdecznie podziêkowaæ za zaproszenie. Mama wróci³a wczoraj do domu szczêœliwa." To jest:',
+        options: ['list formalny', 'list prywatny', 'ogłoszenie', 'życzenia'],
+        correct: 1,
+        explanation: 'List prywatny (prywatny nieformalny z elementami formalnymi).' },
+    ]
+  },
+  'exam-read-2': {
+    title: 'Czytanie — TAK / NIE (zgodność z tekstem)',
+    questions: [
+      { type: 'taknie',
+        question: 'Przeczytaj tekst i oceń zdania:',
+        polish: `W ramach akcji "Torby bumerangi" klienci mogą pożyczyć torbę w sklepie i oddać ją następnym razem. 
+        Akcja pomaga dbać o środowisko. Włączenie się do projektu jest proste — wystarczy wziąć torbę przy kasie. 
+        Wykorzystywane są zarówno nowe, jak i używane torby. Pomysł powstał w Polsce.`,
+        items: [
+          { text: 'Do tej pory mało sklepów bierze udział w akcji.', correct: false },
+          { text: 'Akcja pomaga dbać o środowisko.', correct: true },
+          { text: 'Włączenie się do projektu jest skomplikowane.', correct: false },
+          { text: 'Wykorzystywane są tylko nowe torby.', correct: false },
+          { text: 'Pomysł powstał w Polsce.', correct: true },
+          { text: 'Klienci mogą pożyczyć torbę i oddać później.', correct: true },
+        ]
+      },
+    ]
+  },
+  'exam-read-3': {
+    title: 'Czytanie — Dopasowanie nagłówków',
+    questions: [
+      { type: 'match',
+        question: 'Dopasuj nagłówek do opisu:',
+        pairs: [
+          { left: 'Opis mieszkania do wynajęcia', right: 'Mam ładny, słoneczny balkon i dwa pokoje. Czynsz niski.' },
+          { left: 'Przepis kulinarny', right: 'Najpierw pokrój cebulę w kostkę, potem usmaż na złoto.' },
+          { left: 'Zaproszenie na ślub', right: 'Mamy zaszczyt zaprosić na nasz ślub 8 września.' },
+          { left: 'Wyniki meczu', right: 'Polska wygrała 3:1 z Niemcami w emocjonującym meczu.' },
+        ],
+        explanation: 'Każdy nagłówek pasuje do konkretnego typu tekstu.' },
+    ]
+  },
+  // Unit 7: Listening context
+  'exam-listening': {
+    title: 'Słuchanie — Gdzie pada ta wypowiedź?',
+    questions: [
+      { type: 'choice',
+        question: '"Proszę o dowód osobisty i kwotę 200 złotych." Ta wypowiedź jest typowa:',
+        options: ['w banku', 'w sklepie', 'w bibliotece', 'na poczcie'],
+        correct: 0,
+        explanation: 'Prośba o dowód i kwota — typowe w banku lub na poczcie. W kontekście B1: bank.' },
+      { type: 'choice',
+        question: '"Poproszę dwie bułki i chleb razowy." Ta wypowiedź jest typowa:',
+        options: ['w piekarni', 'w aptece', 'w kwiaciarni', 'w drogerii'],
+        correct: 0,
+        explanation: 'Piekarnia — bakery.' },
+      { type: 'choice',
+        question: '"Proszę usiąść, rozebrać się do pasa. Co panu dolega?" Ta wypowiedź jest typowa:',
+        options: ['na basenie', 'u lekarza', 'w sklepie', 'w pracy'],
+        correct: 1,
+        explanation: 'U lekarza — at the doctor\'s.' },
+      { type: 'choice',
+        question: '"Czy to wszystko? Czy życzy pan sobie coś jeszcze?" Ta wypowiedź jest typowa:',
+        options: ['w muzeum', 'w sklepie', 'w szkole', 'w autobusie'],
+        correct: 1,
+        explanation: 'W sklepie przy kasie.' },
+      { type: 'choice',
+        question: '"Proszę o bilet miesięczny, ulgowy." Ta wypowiedź jest typowa:',
+        options: ['u lekarza', 'w kasie biletowej', 'w bibliotece', 'w sklepie'],
+        correct: 1,
+        explanation: 'Kasa biletowa — ticket office.' },
+      { type: 'choice',
+        question: '"Życzę państwu miłego pobytu i smacznego!" Ta wypowiedź jest typowa:',
+        options: ['w restauracji', 'w hotelu', 'w kinie', 'w sklepie'],
+        correct: 0,
+        explanation: 'Kelner w restauracji.' },
+    ]
+  },
+  // Unit 8: Writing forms
+  'ex-writing-form': {
+    title: 'Dopasuj formę wypowiedzi do opisu',
+    questions: [
+      { type: 'match',
+        question: 'Dopasuj formę pisemną do jej opisu:',
+        pairs: [
+          { left: 'Życzenia', right: 'Wyraz pamięci z okazji urodzin, imienin, świąt.' },
+          { left: 'Zaproszenie', right: 'Informacja o wydarzeniu i prośba o przybycie.' },
+          { left: 'Ogłoszenie', right: 'Informacja o sprzedaży, zgubie, pracy.' },
+          { left: 'Opowiadanie', right: 'Ciąg wydarzeń, wstęp-rozwinięcie-zakończenie, czas przeszły.' },
+          { left: 'List formalny', right: 'Szanowni Państwo! Z poważaniem...' },
+          { left: 'Recenzja', right: 'Własna opinia o filmie, książce, koncercie.' },
+        ],
+        explanation: 'Każda forma ma charakterystyczne cechy.' },
+    ]
+  },
+  // Writing practice 1
+  'writing-practice-1': {
+    title: 'Pisanie — Ćwiczenie 1',
+    questions: [
+      { type: 'writing',
+        question: 'Napisz krótkie pozdrowienia z wakacji do swojego kolegi/koleżanki (ok. 25-30 słów). Użyj wołacza!',
+        polish: 'Napisz w polu poniżej:',
+        sample: `Zakopane, 10 lipca 2025 r.\n\nCześć Marku!\nPrzesyłam serdeczne pozdrowienia z gór! Pogoda jest piękna, a widoki niesamowite. Wrócę za tydzień.\n\nPozdrawiam,\nAndrzej`,
+        hint: 'Pamiętaj: miejsce i data, zwrot do adresata (wołacz!), treść, podpis.' },
+      { type: 'writing',
+        question: 'Napisz zaproszenie na swoje urodziny do kolegi (ok. 30 słów).',
+        polish: 'Napisz w polu poniżej:',
+        sample: `Gdańsk, 15 marca 2025 r.\n\nKochany Tomku!\nZapraszam Cię serdecznie na moje urodziny w sobotę 22 marca o godz. 18:00. Będzie fajnie!\n\nDo zobaczenia!\nAndrzej`,
+        hint: 'Kto zaprasza, kogo, na jaką okazję, gdzie i kiedy.' },
+    ]
+  },
+  'writing-practice-2': {
+    title: 'Pisanie — Ćwiczenie 2',
+    questions: [
+      { type: 'writing',
+        question: 'Opisz swojego najlepszego przyjaciela / najlepszą przyjaciółkę (ok. 100 słów).',
+        polish: 'Uwzględnij: imię, wiek, wygląd (wzrost, włosy, oczy), cechy charakteru.',
+        sample: `Mój najlepszy przyjaciel ma na imię Adam. Ma 28 lat i jest wysokim, szczupłym mężczyzną. Ma duże niebieskie oczy i krótkie, kręcone ciemne włosy. Adam jest pianistą i ma delikatne dłonie. Jest bardzo życzliwy, inteligentny i zawsze mogę na niego liczyć. Lubimy razem chodzić do kina i grać w szachy.\n\nPoznaliśmy się trzy lata temu na kursie języka niemieckiego. Od razu wiedziałem, że będziemy dobrymi przyjaciółmi.`,
+        hint: 'Opis osoby: wstęp (kto), rozwinięcie (wygląd, charakter), zakończenie (ocena, uczucia).' },
+      { type: 'writing',
+        question: 'Napisz krótkie opowiadanie (ok. 80-100 słów) zaczynające się od słów: "Pewnego dnia..."',
+        polish: 'Użyj czasu przeszłego.',
+        sample: `Pewnego dnia, gdy wracałem z pracy, zobaczyłem małego, rudego kota na ulicy. Kot wyglądał na zagubionego i przestraszonego. Podszedłem do niego i zacząłem go głaskać. Nie miał obroży, więc zabrałem go do domu. Dałem mu mleko i zrobiłem legowisko z koca. Nazwałem go Rudek. Od tego dnia mieszkamy razem. Było to najlepsze spotkanie w moim życiu!`,
+        hint: 'Opowiadanie: wstęp (kiedy/gdzie), rozwinięcie (co się wydarzyło, nagle...), zakończenie.' },
+    ]
+  },
+  'ex-dialogues-1': {
+    title: 'Dialogi — Rozmowy 1 (sytuacje codzienne)',
+    questions: [
+      { type: 'choice',
+        question: '— "Dzień dobry, jestem świadkiem wypadku drogowego, proszę o natychmiastowe wezwanie karetki." — Kim jest rozmówca?',
+        options: ['lekarzem', 'świadkiem wypadku', 'policjantem', 'kierowcą'],
+        correct: 1,
+        explanation: 'Rozmówca jest świadkiem wypadku i wzywa pomoc.' },
+      { type: 'choice',
+        question: '— "Zdecydowałam się na pedicure, ale wykonanie było bardzo niedokładne." — Gdzie była rozmówczyni?',
+        options: ['w salonie urody', 'u lekarza', 'w sklepie', 'na basenie'],
+        correct: 0,
+        explanation: 'Rozmówczyni była w salonie urody (beauty salon).' },
+      { type: 'choice',
+        question: '— "Dworzec kolejowy znajduje się około 15 minut spacerem stąd. Skręci Pan w lewo na skrzyżowaniu." — Czego dotyczy rozmowa?',
+        options: ['rezerwacji hotelu', 'pytania o drogę', 'zakupu biletu', 'godzin otwarcia'],
+        correct: 1,
+        explanation: 'Osoba pyta o drogę do dworca kolejowego.' },
+      { type: 'choice',
+        question: '— "Niestety, w tym terminie będę w pracy i nie będę mógł być na Waszym weselu." — O co chodzi w rozmowie?',
+        options: ['odmowa przyjścia na ślub', 'zaproszenie na kolację', 'podziękowanie za prezent', 'przeprosiny za spóźnienie'],
+        correct: 0,
+        explanation: 'Rozmówca nie może przyjść na wesele z powodu pracy.' },
+      { type: 'choice',
+        question: '— "Hej, dzwonię, żeby Cię zaprosić na mój ślub. Będziemy się brać za parę miesięcy." — Jaki jest cel rozmowy?',
+        options: ['podziękować za pomoc', 'zaprosić na ślub', 'poinformować o przeprowadzce', 'umówić się na kawę'],
+        correct: 1,
+        explanation: 'Celem jest zaproszenie przyjaciela na ślub.' },
+      { type: 'choice',
+        question: '— "Niestety, nie mogę zmienić planów naszej firmy, ponieważ zarządzam ważnym projektem." — Dlaczego rozmówca odmawia?',
+        options: ['bo nie chce iść', 'bo ma pracę', 'bo jest chory', 'bo nie lubi wesel'],
+        correct: 1,
+        explanation: 'Rozmówca zarządza ważnym projektem, więc nie może wziąć urlopu.' },
+    ]
+  },
+  'ex-dialogues-2': {
+    title: 'Dialogi — Rozmowy 2 (praca, podróże, zakupy)',
+    questions: [
+      { type: 'choice',
+        question: '— "Chcę wynająć auto na weekend. Czy mogę dokonać rezerwacji?" — Gdzie odbywa się rozmowa?',
+        options: ['w salonie samochodowym', 'w wypożyczalni samochodów', 'na stacji benzynowej', 'w warsztacie'],
+        correct: 1,
+        explanation: 'Rozmówca chce wynająć auto — wypożyczalnia samochodów.' },
+      { type: 'choice',
+        question: '— "Bardzo mi przykro, że nie zdała Pani egzaminu. Proszę się nie martwić, następnym razem się uda!" — To są:',
+        options: ['życzenia', 'gratulacje', 'pocieszenie', 'przeprosiny'],
+        correct: 2,
+        explanation: 'Rozmówca pociesza koleżankę, która nie zdała egzaminu.' },
+      { type: 'choice',
+        question: '— "Proszę mi podać dokładną lokalizację wypadku i ilość poszkodowanych." — Kto to mówi?',
+        options: ['policjant', 'lekarz', 'dyspozytor pogotowia', 'kierowca'],
+        correct: 2,
+        explanation: 'Dyspozytor pogotowia prosi o lokalizację wypadku.' },
+      { type: 'choice',
+        question: '— "Gratuluję! To wspaniała wiadomość! Jesteście dobraną parą!" — Z jakiej okazji?',
+        options: ['urodzin', 'ślubu', 'awansu', 'przeprowadzki'],
+        correct: 1,
+        explanation: 'Rozmówca gratuluje z okazji ślubu.' },
+      { type: 'choice',
+        question: '— "Chciałbym kupić nowy telefon, ale mam trudność z wyborem. Czy może mi Pan pomóc?" — Kogo potrzebuje rozmówca?',
+        options: ['lekarza', 'sprzedawcy', 'nauczyciela', 'mechanika'],
+        correct: 1,
+        explanation: 'Rozmówca prosi sprzedawcę o pomoc w wyborze telefonu.' },
+    ]
+  },
+  'ex-dialogues-3': {
+    title: 'Dialogi — Rozmowy 3 (problemy, emocje, kłopoty)',
+    questions: [
+      { type: 'choice',
+        question: '— "Pana współlokator zbyt głośno włączył film. Próbuje Pan z nim porozmawiać i osiągnąć kompromis." — Jaki jest problem?',
+        options: ['hałas', 'brud', 'czynsz', 'jedzenie'],
+        correct: 0,
+        explanation: 'Współlokator za głośno ogląda film.' },
+      { type: 'choice',
+        question: '— "Ktoś ukradł Pani rower w godzinach pracy. Dzwoni Pani na policję." — Co się stało?',
+        options: ['rower się zepsuł', 'rower został skradziony', 'rower został sprzedany', 'rower jest w naprawie'],
+        correct: 1,
+        explanation: 'Rower został skradziony (stolen).' },
+      { type: 'choice',
+        question: '— "Pani sąsiad często pozostawia śmieci na klatce schodowej, przez co panuje okropny zapach." — Jaki jest problem?',
+        options: ['sąsiad gra głośno muzykę', 'sąsiad zostawia śmieci', 'sąsiad pali papierosy', 'sąsiad robi remont'],
+        correct: 1,
+        explanation: 'Sąsiad zostawia śmieci na klatce schodowej.' },
+      { type: 'choice',
+        question: '— "Dzień dobry, list polecony. Niestety nie ma Pana w domu, zostawiam awizo." — Co oznacza "awizo"?',
+        options: ['list został wyrzucony', 'list można odebrać na poczcie', 'list wróci do nadawcy', 'list zaginął'],
+        correct: 1,
+        explanation: 'Awizo to zawiadomienie, że przesyłkę można odebrać na poczcie.' },
+      { type: 'choice',
+        question: '— "Muszę jechać w delegację, ale nagle zachorowałem. Czy mogłabyś zastąpić mnie na spotkaniu?" — O co prosi rozmówca?',
+        options: ['o leki', 'o zastępstwo', 'o podwózkę', 'o radę'],
+        correct: 1,
+        explanation: 'Rozmówca prosi o zastępstwo w pracy.' },
+    ]
+  },
+  'ex-vocab-extended': {
+    title: 'Słownictwo — dom + wygląd (rozszerzone)',
+    questions: [
+      { type: 'choice',
+        question: 'Gdzie znajdziesz: "kuchenkę, lodówkę, zlew"?',
+        options: ['w łazience', 'w kuchni', 'w salonie', 'w sypialni'],
+        correct: 1,
+        explanation: 'W kuchni — kuchenka (stove), lodówka (fridge), zlew (sink).' },
+      { type: 'choice',
+        question: 'Gdzie znajdziesz: "wannę, prysznic, umywalkę"?',
+        options: ['w kuchni', 'w łazience', 'w salonie', 'w sypialni'],
+        correct: 1,
+        explanation: 'W łazience — wanna (bathtub), prysznic (shower), umywalka (sink).' },
+      { type: 'choice',
+        question: '"Kołdra, poduszka, prześcieradło" to rzeczy w:',
+        options: ['kuchni', 'sypialni', 'łazience', 'salonie'],
+        correct: 1,
+        explanation: 'W sypialni — kołdra (duvet), poduszka (pillow).' },
+      { type: 'choice',
+        question: '"Ona jest wysportowana, ma proste włosy i piwne oczy." To opis:',
+        options: ['charakteru', 'wyglądu', 'zainteresowań'],
+        correct: 1,
+        explanation: 'Opis wyglądu — wysportowana (athletic), piwne oczy (hazel eyes).' },
+      { type: 'choice',
+        question: '"On jest otwarty, szczery, spokojny, cierpliwy i pracowity." To są:',
+        options: ['cechy wyglądu', 'cechy charakteru', 'zainteresowania'],
+        correct: 1,
+        explanation: 'Cechy charakteru (personality traits).' },
+      { type: 'choice',
+        question: '"Prysznic, kabina prysznicowa, kran, umywalka, ręcznik" — wszystko to jest w:',
+        options: ['kuchni', 'łazience', 'salonie', 'garażu'],
+        correct: 1,
+        explanation: 'Wszystkie te rzeczy są w łazience (bathroom).' },
+    ]
+  },
+};
+
+// ========================================================================
+// WORD BANK — nouns with all 7 cases for dynamic exercise generation
+// ========================================================================
+const WORD_BANK = {
+  // męski osobowy (m-os) — mianownik lm. -i/-y
+  'student':    { g: 'm-os', nom:'student', gen:'studenta', dat:'studentowi', acc:'studenta', inst:'studentem', loc:'studencie', voc:'studencie', pl_nom:'studenci', pl_gen:'studentów' },
+  'nauczyciel': { g: 'm-os', nom:'nauczyciel', gen:'nauczyciela', dat:'nauczycielowi', acc:'nauczyciela', inst:'nauczycielem', loc:'nauczycielu', voc:'nauczycielu', pl_nom:'nauczyciele', pl_gen:'nauczycieli' },
+  'lekarz':     { g: 'm-os', nom:'lekarz', gen:'lekarza', dat:'lekarzowi', acc:'lekarza', inst:'lekarzem', loc:'lekarzu', voc:'lekarzu', pl_nom:'lekarze', pl_gen:'lekarzy' },
+  'kolega':     { g: 'm-os', nom:'kolega', gen:'kolegi', dat:'koledze', acc:'kolegę', inst:'kolegą', loc:'koledze', voc:'kolego', pl_nom:'koledzy', pl_gen:'kolegów' },
+  'mężczyzna':  { g: 'm-os', nom:'mężczyzna', gen:'mężczyzny', dat:'mężczyźnie', acc:'mężczyznę', inst:'mężczyzną', loc:'mężczyźnie', voc:'mężczyzno', pl_nom:'mężczyźni', pl_gen:'mężczyzn' },
+  'chłopiec':   { g: 'm-os', nom:'chłopiec', gen:'chłopca', dat:'chłopcu', acc:'chłopca', inst:'chłopcem', loc:'chłopcu', voc:'chłopcze', pl_nom:'chłopcy', pl_gen:'chłopców' },
+  'brat':       { g: 'm-os', nom:'brat', gen:'brata', dat:'bratu', acc:'brata', inst:'bratem', loc:'bracie', voc:'bracie', pl_nom:'bracia', pl_gen:'braci' },
+  // męski nieosobowy (m-nieos)
+  'dom':        { g: 'm-nieos', nom:'dom', gen:'domu', dat:'domowi', acc:'dom', inst:'domem', loc:'domu', voc:'domu', pl_nom:'domy', pl_gen:'domów' },
+  'samochód':   { g: 'm-nieos', nom:'samochód', gen:'samochodu', dat:'samochodowi', acc:'samochód', inst:'samochodem', loc:'samochodzie', voc:'samochodzie', pl_nom:'samochody', pl_gen:'samochodów' },
+  'telefon':    { g: 'm-nieos', nom:'telefon', gen:'telefonu', dat:'telefonowi', acc:'telefon', inst:'telefonem', loc:'telefonie', voc:'telefonie', pl_nom:'telefony', pl_gen:'telefonów' },
+  'stół':       { g: 'm-nieos', nom:'stół', gen:'stołu', dat:'stołowi', acc:'stół', inst:'stołem', loc:'stole', voc:'stole', pl_nom:'stoły', pl_gen:'stołów' },
+  'klucz':      { g: 'm-nieos', nom:'klucz', gen:'klucza', dat:'kluczowi', acc:'klucz', inst:'kluczem', loc:'kluczu', voc:'kluczu', pl_nom:'klucze', pl_gen:'kluczy' },
+  'czas':       { g: 'm-nieos', nom:'czas', gen:'czasu', dat:'czasowi', acc:'czas', inst:'czasem', loc:'czasie', voc:'czasie', pl_nom:'czasy', pl_gen:'czasów' },
+  'bilet':      { g: 'm-nieos', nom:'bilet', gen:'biletu', dat:'biletowi', acc:'bilet', inst:'biletem', loc:'bilecie', voc:'bilecie', pl_nom:'bilety', pl_gen:'biletów' },
+  'długopis':   { g: 'm-nieos', nom:'długopis', gen:'długopisu', dat:'długopisowi', acc:'długopis', inst:'długopisem', loc:'długopisie', voc:'długopisie', pl_nom:'długopisy', pl_gen:'długopisów' },
+  'film':       { g: 'm-nieos', nom:'film', gen:'filmu', dat:'filmowi', acc:'film', inst:'filmem', loc:'filmie', voc:'filmie', pl_nom:'filmy', pl_gen:'filmów' },
+  'zeszyt':     { g: 'm-nieos', nom:'zeszyt', gen:'zeszytu', dat:'zeszytowi', acc:'zeszyt', inst:'zeszytem', loc:'zeszycie', voc:'zeszycie', pl_nom:'zeszyty', pl_gen:'zeszytów' },
+  'komputer':   { g: 'm-nieos', nom:'komputer', gen:'komputera', dat:'komputerowi', acc:'komputer', inst:'komputerem', loc:'komputerze', voc:'komputerze', pl_nom:'komputery', pl_gen:'komputerów' },
+  // żeński (f)
+  'mama':       { g: 'f', nom:'mama', gen:'mamy', dat:'mamie', acc:'mamę', inst:'mamą', loc:'mamie', voc:'mamo', pl_nom:'mamy', pl_gen:'mam' },
+  'siostra':    { g: 'f', nom:'siostra', gen:'siostry', dat:'siostrze', acc:'siostrę', inst:'siostrą', loc:'siostrze', voc:'siostro', pl_nom:'siostry', pl_gen:'sióstr' },
+  'kawa':       { g: 'f', nom:'kawa', gen:'kawy', dat:'kawie', acc:'kawę', inst:'kawą', loc:'kawie', voc:'kawo', pl_nom:'kawy', pl_gen:'kaw' },
+  'książka':    { g: 'f', nom:'książka', gen:'książki', dat:'książce', acc:'książkę', inst:'książką', loc:'książce', voc:'książko', pl_nom:'książki', pl_gen:'książek' },
+  'praca':      { g: 'f', nom:'praca', gen:'pracy', dat:'pracy', acc:'pracę', inst:'pracą', loc:'pracy', voc:'pracy', pl_nom:'prace', pl_gen:'prac' },
+  'szkoła':     { g: 'f', nom:'szkoła', gen:'szkoły', dat:'szkole', acc:'szkołę', inst:'szkołą', loc:'szkole', voc:'szkoło', pl_nom:'szkoły', pl_gen:'szkół' },
+  'kuchnia':    { g: 'f', nom:'kuchnia', gen:'kuchni', dat:'kuchni', acc:'kuchnię', inst:'kuchnią', loc:'kuchni', voc:'kuchnio', pl_nom:'kuchnie', pl_gen:'kuchni' },
+  'ulica':      { g: 'f', nom:'ulica', gen:'ulicy', dat:'ulicy', acc:'ulicę', inst:'ulicą', loc:'ulicy', voc:'ulico', pl_nom:'ulice', pl_gen:'ulic' },
+  'restauracja':{ g: 'f', nom:'restauracja', gen:'restauracji', dat:'restauracji', acc:'restaurację', inst:'restauracją', loc:'restauracji', voc:'restauracjo', pl_nom:'restauracje', pl_gen:'restauracji' },
+  'muzyka':     { g: 'f', nom:'muzyka', gen:'muzyki', dat:'muzyce', acc:'muzykę', inst:'muzyką', loc:'muzyce', voc:'muzyko', pl_nom:'muzyki', pl_gen:'muzyk' },
+  'herbata':    { g: 'f', nom:'herbata', gen:'herbaty', dat:'herbacie', acc:'herbatę', inst:'herbatą', loc:'herbacie', voc:'herbato', pl_nom:'herbaty', pl_gen:'herbat' },
+  'woda':       { g: 'f', nom:'woda', gen:'wody', dat:'wodzie', acc:'wodę', inst:'wodą', loc:'wodzie', voc:'wodo', pl_nom:'wody', pl_gen:'wód' },
+  // nijaki (n)
+  'dziecko':    { g: 'n', nom:'dziecko', gen:'dziecka', dat:'dziecku', acc:'dziecko', inst:'dzieckiem', loc:'dziecku', voc:'dziecko', pl_nom:'dzieci', pl_gen:'dzieci' },
+  'mieszkanie': { g: 'n', nom:'mieszkanie', gen:'mieszkania', dat:'mieszkaniu', acc:'mieszkanie', inst:'mieszkaniem', loc:'mieszkaniu', voc:'mieszkanie', pl_nom:'mieszkania', pl_gen:'mieszkań' },
+  'kino':       { g: 'n', nom:'kino', gen:'kina', dat:'kinu', acc:'kino', inst:'kinem', loc:'kinie', voc:'kino', pl_nom:'kina', pl_gen:'kin' },
+  'okno':       { g: 'n', nom:'okno', gen:'okna', dat:'oknu', acc:'okno', inst:'oknem', loc:'oknie', voc:'okno', pl_nom:'okna', pl_gen:'okien' },
+  'krzesło':    { g: 'n', nom:'krzesło', gen:'krzesła', dat:'krzesłu', acc:'krzesło', inst:'krzesłem', loc:'krześle', voc:'krzesło', pl_nom:'krzesła', pl_gen:'krzeseł' },
+  'biurko':     { g: 'n', nom:'biurko', gen:'biurka', dat:'biurku', acc:'biurko', inst:'biurkiem', loc:'biurku', voc:'biurko', pl_nom:'biurka', pl_gen:'biurek' },
+  'zadanie':    { g: 'n', nom:'zadanie', gen:'zadania', dat:'zadaniu', acc:'zadanie', inst:'zadaniem', loc:'zadaniu', voc:'zadanie', pl_nom:'zadania', pl_gen:'zadań' },
+  // extra vocab for mix
+  'pies':       { g: 'm-os', nom:'pies', gen:'psa', dat:'psu', acc:'psa', inst:'psem', loc:'psie', voc:'psie', pl_nom:'psy', pl_gen:'psów' },
+  'kot':        { g: 'm-os', nom:'kot', gen:'kota', dat:'kotu', acc:'kota', inst:'kotem', loc:'kocie', voc:'kocie', pl_nom:'koty', pl_gen:'kotów' },
+  'rower':      { g: 'm-nieos', nom:'rower', gen:'roweru', dat:'rowerowi', acc:'rower', inst:'rowerem', loc:'rowerze', voc:'rowerze', pl_nom:'rowery', pl_gen:'rowerów' },
+  'sklep':      { g: 'm-nieos', nom:'sklep', gen:'sklepu', dat:'sklepowi', acc:'sklep', inst:'sklepem', loc:'sklepie', voc:'sklepie', pl_nom:'sklepy', pl_gen:'sklepów' },
+  'kwiat':      { g: 'm-nieos', nom:'kwiat', gen:'kwiatu', dat:'kwiatowi', acc:'kwiat', inst:'kwiatem', loc:'kwiatku', voc:'kwiatku', pl_nom:'kwiaty', pl_gen:'kwiatów' },
+  'list':       { g: 'm-nieos', nom:'list', gen:'listu', dat:'listowi', acc:'list', inst:'listem', loc:'liście', voc:'liście', pl_nom:'listy', pl_gen:'listów' },
+  'prezent':    { g: 'm-nieos', nom:'prezent', gen:'prezentu', dat:'prezentowi', acc:'prezent', inst:'prezentem', loc:'prezencie', voc:'prezencie', pl_nom:'prezenty', pl_gen:'prezentów' },
+  'jabłko':     { g: 'n', nom:'jabłko', gen:'jabłka', dat:'jabłku', acc:'jabłko', inst:'jabłkiem', loc:'jabłku', voc:'jabłko', pl_nom:'jabłka', pl_gen:'jabłek' },
+};
+
+// ========================================================================
+// EXERCISE TEMPLATES — dynamic generation for case exercises
+// ========================================================================
+const CASE_TEMPLATES = {
+  'gen': {
+    title: 'Dopełniacz — Kogo? Czego?',
+    rules: 'Dopełniacz: Nie ma + Dopełniacz. Szukać, słuchać, uczyć się, bać się + Dopełniacz.',
+    templates: [
+      { sentence: 'Uczę się {{word.gen}}.', words: ['język polski', 'niemiecki', 'hiszpański', 'angielski'], note: 'uczyć się + D. (to study)' },
+      { sentence: 'Nie mam {{word.gen}}.', words: ['samochód', 'telefon', 'czas', 'długopis', 'komputer', 'rower', 'bilet'], note: 'Nie ma + D. (negation)' },
+      { sentence: 'Szukam {{word.gen}}.', words: ['książka', 'praca', 'mieszkanie', 'klucz', 'informacja', 'prezent'], note: 'szukać + D. (to look for)' },
+      { sentence: 'Słucham {{word.gen}}.', words: ['muzyka', 'radio', 'piosenka', 'audycja', 'wykład'], note: 'słuchać + D. (to listen)' },
+      { sentence: 'Boje się {{word.gen}}.', words: ['pies', 'kot', 'ciemność', 'pająk', 'burza'], note: 'bać się + D. (to be afraid of)' },
+      { sentence: 'Nie lubię {{word.gen}}.', words: ['kawa', 'herbata', 'zima', 'deszcz', 'poniedziałek'], note: 'nie lubić + D.' },
+    ]
+  },
+  'dat': {
+    title: 'Celownik — Komu? Czemu?',
+    rules: 'Celownik: dać, dziękować, pomagać, powiedzieć, obiecać + C.',
+    templates: [
+      { sentence: 'Dziękuję {{word.dat}}.', words: ['kolega', 'siostra', 'mama', 'brat', 'nauczyciel', 'lekarz'], note: 'dziękować + C. (to thank)' },
+      { sentence: 'Pomagam {{word.dat}}.', words: ['mama', 'tata', 'siostra', 'kolega', 'przyjaciel', 'dziecko'], note: 'pomagać + C. (to help)' },
+      { sentence: 'Dam {{word.dat}} prezent.', words: ['brat', 'siostra', 'mama', 'koleżanka', 'chłopiec', 'dziewczyna'], note: 'dać + C. (to give)' },
+      { sentence: 'Powiedz {{word.dat}} prawdę.', words: ['mama', 'kolega', 'siostra', 'lekarz', 'przyjaciel'], note: 'powiedzieć + C. (to tell)' },
+      { sentence: 'Obiecuję {{word.dat}} pomoc.', words: ['siostra', 'brat', 'kolega', 'mama', 'student'], note: 'obiecać + C. (to promise)' },
+    ]
+  },
+  'acc': {
+    title: 'Biernik — Kogo? Co?',
+    rules: 'Biernik: mieć, lubić, jeść, kupować, czytać, znać, oglądać + B.',
+    templates: [
+      { sentence: 'Mam {{word.acc}}.', words: ['samochód', 'telefon', 'rower', 'komputer', 'mieszkanie', 'bilet'], note: 'mieć + B. (to have)' },
+      { sentence: 'Lubię {{word.acc}}.', words: ['kawa', 'herbata', 'film', 'muzyka', 'książka', 'kino', 'zadanie'], note: 'lubić + B. (to like)' },
+      { sentence: 'Czytam {{word.acc}}.', words: ['książka', 'list', 'gazeta', 'artykuł', 'opowiadanie'], note: 'czytać + B. (to read)' },
+      { sentence: 'Kupuję {{word.acc}}.', words: ['prezent', 'kwiat', 'bilet', 'samochód', 'komputer', 'jedzenie'], note: 'kupować + B. (to buy)' },
+      { sentence: 'Znam {{word.acc}}.', words: ['student', 'lekarz', 'nauczyciel', 'kolega', 'piosenka', 'miasto'], note: 'znać + B. (to know)' },
+    ]
+  },
+  'inst': {
+    title: 'Narzędnik — Z kim? Z czym?',
+    rules: 'Narzędnik: być kimś, interesować się czymś, z + N.',
+    templates: [
+      { sentence: 'Jestem {{word.inst}}.', words: ['student', 'nauczyciel', 'lekarz', 'kolega', 'chłopiec'], note: 'być + N. (to be a...)' },
+      { sentence: 'Ona jest {{word.inst}}.', words: ['student', 'lekarz', 'nauczyciel', 'siostra'], note: 'być + N. (she is a...)' },
+      { sentence: 'Idę z {{word.inst}} do kina.', words: ['kolega', 'siostra', 'mama', 'brat', 'przyjaciel'], note: 'z + N. (with someone)' },
+      { sentence: 'Interesuję się {{word.inst}}.', words: ['muzyka', 'film', 'sport', 'fotografia', 'historia'], note: 'interesować się + N. (interested in)' },
+    ]
+  },
+  'loc': {
+    title: 'Miejscownik — O kim? O czym?',
+    rules: 'Miejscownik: w, na, o, po, przy + Msc.',
+    templates: [
+      { sentence: 'Jestem w {{word.loc}}.', words: ['sklep', 'kino', 'szkoła', 'dom', 'praca', 'restauracja', 'mieszkanie'], note: 'w + Msc. (in a place)' },
+      { sentence: 'Myślę o {{word.loc}}.', words: ['wakacje', 'przyszłość', 'praca', 'egzamin', 'wycieczka', 'rodzina'], note: 'myśleć o + Msc.' },
+      { sentence: 'Mówimy o {{word.loc}}.', words: ['film', 'książka', 'koncert', 'podróż', 'problem', 'plan'], note: 'mówić o + Msc. (to talk about)' },
+      { sentence: 'Jestem na {{word.loc}}.', words: ['uczelnia', 'poczta', 'dworzec', 'stacja', 'plaża', 'koncert'], note: 'na + Msc. (at a place)' },
+    ]
+  },
+  'voc': {
+    title: 'Wołacz — Zwroty do adresata',
+    rules: 'Wołacza używamy zwracając się do kogoś.',
+    templates: [
+      { sentence: 'Cześć, {{word.voc}}!', words: ['Marcin', 'Tomasz', 'Filip', 'Marek', 'Kasia', 'Basia', 'Ewa', 'Piotr'], note: 'Nieoficjalny zwrot' },
+      { sentence: 'Dzień dobry, {{word.voc}}!', words: ['pan profesor', 'pani profesor', 'pan doktor', 'pani dyrektor'], note: 'Oficjalny zwrot' },
+      { sentence: 'Kochana {{word.voc}}!', words: ['mama', 'babcia', 'siostra', 'ciocia'], note: 'Rodzina — żeński' },
+      { sentence: 'Szanowny {{word.voc}}!', words: ['pan dyrektor', 'pan prezes', 'pan minister'], note: 'List formalny' },
+    ]
+  },
+};
+
+// Helper: get random item from array
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// Helper: get a word form from bank, handling multi-word entries
+function getForm(wordKey, caseName) {
+  // Handle multi-word like 'język polski'
+  const parts = wordKey.split(' ');
+  if (parts.length === 2) {
+    const w1 = WORD_BANK[parts[0]];
+    const w2 = WORD_BANK[parts[1]];
+    if (w1 && w2) return (w1[caseName] || w1.nom) + ' ' + (w2[caseName] || w2.nom);
+    return wordKey;
+  }
+  const w = WORD_BANK[wordKey];
+  if (!w) return wordKey;
+  return w[caseName] || w.nom;
+}
+
+// Generate a full exercise from templates
+function generateExercise(skillId) {
+  const templateGroup = CASE_TEMPLATES[skillId];
+  if (!templateGroup) return null;
+
+  const questions = [];
+  // Pick 5-6 templates randomly (or use all if fewer)
+  const available = [...templateGroup.templates];
+  const count = Math.min(available.length, 5 + Math.floor(Math.random() * 2));
+  
+  for (let i = 0; i < count; i++) {
+    const tpl = available.splice(Math.floor(Math.random() * available.length), 1)[0];
+    if (!tpl) break;
+    
+    const wordKey = pick(tpl.words);
+    const correctForm = getForm(wordKey, 'word');
+    
+    // Generate wrong options from other words in the pool
+    const wrongPool = tpl.words.filter(w => w !== wordKey);
+    const wrongForms = [];
+    const usedForms = new Set([correctForm]);
+    
+    // Get up to 3 wrong forms
+    for (let j = 0; j < Math.min(3, wrongPool.length); j++) {
+      const wrongWord = wrongPool[j];
+      const wrongForm = getForm(wrongWord, 'word');
+      if (!usedForms.has(wrongForm)) {
+        wrongForms.push(wrongForm);
+        usedForms.add(wrongForm);
+      }
+    }
+    
+    // Pad with nominative forms if needed
+    while (wrongForms.length < 3) {
+      const w = pick(tpl.words);
+      const f = getForm(w, 'nom');
+      if (!usedForms.has(f)) {
+        wrongForms.push(f);
+        usedForms.add(f);
+      }
+    }
+    
+    // Shuffle options
+    const options = [correctForm, ...wrongForms.slice(0, 3)];
+    const shuffled = options.sort(() => Math.random() - 0.5);
+    const correctIdx = shuffled.indexOf(correctForm);
+    
+    questions.push({
+      type: 'choice',
+      question: `Uzupełnij: ${tpl.sentence.replace('{{word.gen}}', '_____').replace('{{word.dat}}', '_____').replace('{{word.acc}}', '_____').replace('{{word.inst}}', '_____').replace('{{word.loc}}', '_____').replace('{{word.voc}}', '_____')}`,
+      options: shuffled,
+      correct: correctIdx,
+      explanation: `${tpl.note}: ${correctForm}`,
+    });
+  }
+  
+  return {
+    title: templateGroup.title,
+    questions: questions,
+  };
+}
+
+
+// ========================================================================
+// APP STATE
+// ========================================================================
+let state = {
+  xp: 0,
+  hearts: 5,
+  streak: 0,
+  level: 1,
+  completedSkills: {},
+  skillProgress: {},
+  currentSkillIndex: null,
+  currentQ: 0,
+  totalQuestions: 0,
+  correctInLesson: 0,
+  progressDots: [],
+  phase: 'tree', // 'tree' | 'lesson' | 'exercise'
+};
+
+// Safe storage wrapper — falls back to memory when localStorage is blocked (file:// on mobile)
+const Storage = {
+  _data: {},
+  _available: (function(){ try { localStorage.setItem('_test','1'); localStorage.removeItem('_test'); return true; } catch(e){ return false; } })(),
+  get(key) {
+    if (!this._available) return this._data[key] || null;
+    try { return localStorage.getItem(key); } catch(e) { return this._data[key] || null; }
+  },
+  set(key, val) {
+    this._data[key] = val;
+    if (this._available) { try { localStorage.setItem(key, val); } catch(e) {} }
+  },
+  remove(key) {
+    delete this._data[key];
+    if (this._available) { try { localStorage.removeItem(key); } catch(e) {} }
+  }
+};
+
+function loadState() {
+  try {
+    const saved = Storage.get('polskiB1');
+    if (saved) Object.assign(state, JSON.parse(saved));
+  } catch(e) {}
+  // Load theme
+  const theme = Storage.get('polskiB1Theme');
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+  unlockedSkills = null;
+}
+function saveState() {
+  Storage.set('polskiB1', JSON.stringify({
+    xp: state.xp, hearts: state.hearts, streak: state.streak,
+    level: state.level, completedSkills: state.completedSkills,
+    skillProgress: state.skillProgress,
+  }));
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  Storage.set('polskiB1Theme', next);
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+}
+
+// ========================================================================
+// RENDER HELPERS
+// ========================================================================
+
+function $(id) { return document.getElementById(id); }
+
+function render() {
+  loadState();
+  renderTopBar();
+  if (state.phase === 'tree') renderTree();
+  else if (state.phase === 'lesson') renderLessonUI();
+  else if (state.phase === 'exercise') renderExercise();
+  else renderTree();
+}
+
+function renderTopBar() {
+  $('xpDisplay').textContent = state.xp;
+  $('heartsDisplay').textContent = state.hearts;
+  $('streakDisplay').textContent = state.streak;
+  // Set theme toggle icon
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    const theme = document.documentElement.getAttribute('data-theme');
+    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+let unlockedSkills = null;
+function getUnlockedSkills() {
+  if (unlockedSkills) return unlockedSkills;
+  // unlock logic: unit 1 all open, others need prev skill completed
+  const unlocked = new Set();
+  for (const s of SKILLS) {
+    if (s.unit === 1) { unlocked.add(s.id); continue; }
+    // Check if previous skill in same unit is completed, or if any skill in prev unit is completed
+    const prevUnitSkills = SKILLS.filter(x => x.unit === s.unit - 1);
+    const prevInUnit = SKILLS.filter(x => x.unit === s.unit && x.order < s.order);
+    if (prevUnitSkills.some(x => state.completedSkills[x.id]) ||
+        prevInUnit.some(x => state.completedSkills[x.id])) {
+      unlocked.add(s.id);
+    }
+  }
+  // First skill of any unit is unlocked if prev unit has any progress
+  for (const s of SKILLS) {
+    if (s.order === 1 && s.unit > 1) {
+      const prevUnitSkills = SKILLS.filter(x => x.unit === s.unit - 1);
+      const anyPrevUnitCompleted = prevUnitSkills.some(x => state.completedSkills[x.id]);
+      if (anyPrevUnitCompleted) unlocked.add(s.id);
+    }
+  }
+  // First unit always unlocked
+  SKILLS.filter(s => s.unit === 1).forEach(s => unlocked.add(s.id));
+  unlockedSkills = unlocked;
+  return unlocked;
+}
+
+function renderTree() {
+  state.phase = 'tree';
+  const wrap = $('contentWrap');
+  const unlocked = getUnlockedSkills();
+  const units = [...new Set(SKILLS.map(s => s.unit))];
+
+  let html = '<div class="unit-tree">';
+  // Level & stats summary
+  const totalSkills = SKILLS.length;
+  const completedCount = Object.keys(state.completedSkills).length;
+  const pct = totalSkills > 0 ? Math.round(completedCount / totalSkills * 100) : 0;
+  html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <h2 style="margin:0;">📚 Kurs</h2>
+    <span style="font-size:14px;color:var(--text-light);font-weight:600;">
+      ${completedCount}/${totalSkills} &middot; ${pct}%
+    </span>
+  </div>`;
+  html += `<div style="height:8px;border-radius:4px;background:var(--border);margin-bottom:16px;overflow:hidden;">
+    <div style="height:100%;width:${pct}%;background:var(--primary);border-radius:4px;transition:0.5s;"></div>
+  </div>`;
+
+  for (const u of units) {
+    const unitSkills = SKILLS.filter(s => s.unit === u);
+    const unitCompleted = unitSkills.filter(s => state.completedSkills[s.id]).length;
+    html += `<div class="unit-group">
+      <div class="unit-label">Unit ${u} — ${unitCompleted}/${unitSkills.length}</div>`;
+    for (const s of unitSkills) {
+      const done = state.completedSkills[s.id];
+      const locked = !unlocked.has(s.id);
+      const progress = state.skillProgress[s.id] || 0;
+      const cls = done ? 'completed' : locked ? 'locked' : 'available';
+      const icon = done ? '✅' : locked ? '🔒' : s.icon;
+      html += `<div class="skill-card ${cls}" onclick="${locked ? '' : `startSkill('${s.id}')`}">
+        <div class="skill-icon">${icon}</div>
+        <div class="skill-info">
+          <div class="skill-name">${s.name}</div>
+          <div class="skill-desc">${s.desc}</div>
+          ${s.type === 'exercise' && !done ? `<div class="skill-bar"><div class="skill-bar-fill" style="width:${progress}%"></div></div>` : ''}
+        </div>
+        <div class="skill-status ${done ? 'done' : locked ? 'locked-txt' : 'active-txt'}">
+          ${done ? '✓ Ukończono' : locked ? '🔒' : '▶ Rozpocznij'}
+        </div>
+      </div>`;
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  wrap.innerHTML = html;
+
+  $('progressStrip').innerHTML = '';
+  $('mainBtn').textContent = '📊 Kurs';
+  $('mainBtn').onclick = () => { renderTree(); };
+  $('mainBtn').disabled = true;
+}
+
+// ========================================================================
+// SKILL / LESSON
+// ========================================================================
+
+function startSkill(skillId) {
+  const skill = SKILLS.find(s => s.id === skillId);
+  if (!skill) return;
+  state.currentSkillIndex = skillId;
+  
+  // Reset progress display
+  state.currentQ = 0;
+  state.correctInLesson = 0;
+
+  if (skill.type === 'lesson') {
+    state.phase = 'lesson';
+    renderLessonUI();
+  } else {
+    state.phase = 'exercise';
+    // Try dynamic generation first (case exercises)
+    let ex = null;
+    if (typeof CASE_TEMPLATES !== 'undefined' && CASE_TEMPLATES[skillId]) {
+      ex = generateExercise(skillId);
+    }
+    if (!ex) {
+      ex = EXERCISES[skillId];
+    }
+    if (!ex) { 
+      state.phase = 'tree';
+      render();
+      return;
+    }
+    state.totalQuestions = ex.questions.length;
+    state.progressDots = ex.questions.map(() => 'pending');
+    renderExercise();
+  }
+}
+
+function renderLessonUI() {
+  const skill = SKILLS.find(s => s.id === state.currentSkillIndex);
+  if (!skill) { renderTree(); return; }
+
+  const wrap = $('contentWrap');
+  wrap.innerHTML = renderLessonContent(skill.id);
+
+  $('progressStrip').innerHTML = '';
+  $('mainBtn').textContent = '✓ Rozumiem, lecimy dalej';
+  $('mainBtn').disabled = false;
+  $('mainBtn').onclick = () => {
+    if (state.phase !== 'lesson') { renderTree(); return; }
+    // Mark lesson as complete + XP
+    if (!state.completedSkills[skill.id]) {
+      state.completedSkills[skill.id] = true;
+      state.xp += 25;
+      checkLevelUp();
+      saveState();
+    }
+    // Find next skill in same unit
+    const unitSkills = SKILLS.filter(s => s.unit === skill.unit).sort((a,b) => a.order - b.order);
+    const idx = unitSkills.findIndex(s => s.id === skill.id);
+    if (idx < unitSkills.length - 1) {
+      startSkill(unitSkills[idx+1].id);
+    } else {
+      const allSkills = SKILLS.filter(s => s.unit >= skill.unit);
+      const allIdx = allSkills.findIndex(s => s.id === skill.id);
+      if (allIdx < allSkills.length - 1) {
+        startSkill(allSkills[allIdx+1].id);
+      } else {
+        renderTree();
+      }
+    }
+    renderTopBar();
+  };
+}
+
+function renderLessonContent(skillId) {
+  // Get the lesson HTML from the switch-based lesson renderer
+  return getLessonHtml(skillId);
+}
+
+function getLessonHtml(lessonId) {
+  // Call the HTML-generating renderLesson defined in the DATA section
+  return renderLesson(lessonId);
+}
+
+function getExerciseData() {
+  const skill = SKILLS.find(s => s.id === state.currentSkillIndex);
+  if (!skill || !EXERCISES[skill.id]) return null;
+  return { skill, exercise: EXERCISES[skill.id] };
+}
+
+// ========================================================================
+// EXERCISE RENDER
+// ========================================================================
+
+let exerciseState = {
+  selected: null,
+  inputs: {},
+  matches: {},
+  matchLeftSelected: null,
+  showFeedback: false,
+  answered: false,
+};
+
+function renderExercise() {
+  const data = getExerciseData();
+  if (!data) { renderTree(); return; }
+  const { skill, exercise } = data;
+  
+  // Setup progress dots
+  const dotsHtml = exercise.questions.map((q, i) => {
+    const cls = state.progressDots[i] === 'done' ? 'done' : 
+                state.progressDots[i] === 'wrong' ? 'wrong' :
+                i === state.currentQ ? 'active' : '';
+    return `<div class="progress-dot ${cls}">${i+1}</div>`;
+  }).join('');
+  $('progressStrip').innerHTML = dotsHtml;
+
+  const q = exercise.questions[state.currentQ];
+  if (!q) {
+    finishExercise();
+    return;
+  }
+
+  // Reset exercise state for this question
+  exerciseState = { selected: null, inputs: {}, matches: {}, matchLeftSelected: null, showFeedback: false, answered: false };
+
+  const wrap = $('contentWrap');
+  let html = `<div class="exercise-card">
+    <div class="hint">${exercise.title} &middot; Pytanie ${state.currentQ + 1} z ${exercise.questions.length}</div>
+    <div class="question">${q.question}</div>`;
+
+  if (q.polish) {
+    html += `<div class="polish-text">${q.polish.replace(/\n/g, '<br>')}</div>`;
+  }
+
+  // Render by type
+  if (q.type === 'choice' && q.options) {
+    html += '<div class="options" id="optionsContainer">';
+    const letters = ['a', 'b', 'c', 'd'];
+    q.options.forEach((opt, i) => {
+      html += `<button class="option-btn" onclick="selectOption(${i})" id="opt_${i}">
+        <span class="letter">${letters[i]}</span> ${opt}
+      </button>`;
+    });
+    html += '</div>';
+  } else if (q.type === 'fill') {
+    html += `<div class="fill-input">
+      <input type="text" id="fillInput" placeholder="Wpisz odpowiedź..." autocomplete="off" autocapitalize="off">
+    </div>`;
+  } else if (q.type === 'taknie' && q.items) {
+    html += '<div id="taknieContainer">';
+    q.items.forEach((item, i) => {
+      html += `<div style="margin-bottom:12px;padding:10px;background:var(--option-bg);border-radius:8px;border:1px solid var(--border);">
+        <div style="font-size:14px;margin-bottom:6px;">${i+1}. ${item.text}</div>
+        <div class="tak-nie">
+          <button class="tak-btn" onclick="selectTakNie(${i}, true)" id="tn_${i}_tak">TAK</button>
+          <button class="nie-btn" onclick="selectTakNie(${i}, false)" id="tn_${i}_nie">NIE</button>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  } else if (q.type === 'match' && q.pairs) {
+    const shuffledLeft = [...q.pairs].sort(() => Math.random() - 0.5);
+    const shuffledRight = [...q.pairs].sort(() => Math.random() - 0.5);
+    html += `<div id="matchContainer">`;
+    html += `<div style="display:flex;gap:12px;margin-bottom:8px;">
+      <div style="flex:1;font-weight:700;font-size:13px;text-align:center;color:var(--accent);">Nagłówek</div>
+      <div style="flex:1;font-weight:700;font-size:13px;text-align:center;color:var(--accent);">Treść</div>
+    </div>`;
+    shuffledLeft.forEach((pair, i) => {
+      exerciseState.matches['l'+i] = { pair, matched: false };
+      html += `<div class="match-pair" id="mp_${i}">
+        <div class="match-left" onclick="selectMatchLeft(${i})" id="ml_${i}">${pair.left}</div>
+        <div class="match-right" onclick="selectMatchRight(${i})" id="mr_${i}">${shuffledRight[i].right}</div>
+      </div>`;
+    });
+    html += '</div>';
+  } else if (q.type === 'writing') {
+    html += `<textarea class="writing-area" id="writingArea" placeholder="Napisz tutaj..." ${q.hint ? '' : ''}></textarea>`;
+    if (q.hint) {
+      html += `<div style="font-size:13px;color:var(--text-light);margin-bottom:8px;">💡 ${q.hint}</div>`;
+    }
+  }
+
+  html += '</div>';
+  wrap.innerHTML = html;
+
+  // Bottom button
+  $('mainBtn').textContent = 'Sprawdź ✓';
+  $('mainBtn').disabled = false;
+  $('mainBtn').onclick = checkAnswer;
+  $('mainBtn').className = 'check-btn';
+
+  if (q.type === 'fill') {
+    setTimeout(() => {
+      const inp = document.getElementById('fillInput');
+      if (inp) { inp.focus(); inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); }); }
+    }, 100);
+  }
+}
+
+// ========================================================================
+// ANSWER HANDLING
+// ========================================================================
+
+function selectOption(idx) {
+  if (exerciseState.answered) return;
+  exerciseState.selected = idx;
+  document.querySelectorAll('.option-btn').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+}
+
+function selectTakNie(qIdx, val) {
+  if (exerciseState.answered) return;
+  exerciseState.selected = exerciseState.selected || {};
+  exerciseState.selected[qIdx] = val;
+  const takBtn = document.getElementById(`tn_${qIdx}_tak`);
+  const nieBtn = document.getElementById(`tn_${qIdx}_nie`);
+  if (takBtn) takBtn.classList.toggle('selected', val === true);
+  if (nieBtn) nieBtn.classList.toggle('selected', val === false);
+}
+
+function selectMatchLeft(idx) {
+  if (exerciseState.answered) return;
+  const el = document.getElementById(`ml_${idx}`);
+  if (!el || el.classList.contains('matched')) return;
+  exerciseState.matchLeftSelected = idx;
+  document.querySelectorAll('.match-left').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectMatchRight(idx) {
+  if (exerciseState.answered) return;
+  const leftIdx = exerciseState.matchLeftSelected;
+  if (leftIdx === null) return;
+  if (document.getElementById(`ml_${leftIdx}`)?.classList.contains('matched')) return;
+  
+  // Check match: find pair data
+  const data = getExerciseData();
+  const q = data.exercise.questions[state.currentQ];
+  const pairData = q.pairs;
+  const leftText = document.getElementById(`ml_${leftIdx}`).textContent;
+  const rightText = document.getElementById(`mr_${idx}`).textContent;
+  
+  const leftPair = pairData.find(p => p.left === leftText);
+  const rightPair = pairData.find(p => p.right === rightText);
+  
+  if (leftPair && rightPair && leftPair.right === rightText) {
+    // Correct match
+    document.getElementById(`ml_${leftIdx}`).classList.remove('selected');
+    document.getElementById(`ml_${leftIdx}`).classList.add('matched');
+    document.getElementById(`mr_${idx}`).classList.add('matched');
+    exerciseState.matches['m' + leftIdx + '_' + idx] = true;
+  } else {
+    // Wrong
+    document.getElementById(`ml_${leftIdx}`).classList.add('wrong');
+    document.getElementById(`mr_${idx}`).classList.add('wrong');
+    setTimeout(() => {
+      document.getElementById(`ml_${leftIdx}`)?.classList.remove('wrong', 'selected');
+      document.getElementById(`mr_${idx}`)?.classList.remove('wrong');
+    }, 400);
+  }
+  exerciseState.matchLeftSelected = null;
+  
+  // Check if all matched
+  const allMatched = pairData.every(p => {
+    const leftEl = [...document.querySelectorAll('.match-left')].find(el => el.textContent === p.left);
+    return leftEl?.classList.contains('matched');
+  });
+  if (allMatched) {
+    setTimeout(() => checkAnswer(), 300);
+  }
+}
+
+function checkAnswer() {
+  if (exerciseState.answered) return;
+  
+  const data = getExerciseData();
+  if (!data) return;
+  const { exercise } = data;
+  const q = exercise.questions[state.currentQ];
+  let isCorrect = false;
+  let feedbackMsg = '';
+  let expText = q.explanation || '';
+
+  if (q.type === 'choice') {
+    if (exerciseState.selected === null) return;
+    isCorrect = exerciseState.selected === q.correct;
+    document.querySelectorAll('.option-btn').forEach((el, i) => {
+      if (i === q.correct) el.classList.add('correct');
+      if (i === exerciseState.selected && !isCorrect) el.classList.add('wrong');
+    });
+    const letters = ['a', 'b', 'c', 'd'];
+    feedbackMsg = isCorrect ? '✅ Dobrze!' : `❌ Nie. Prawidłowa odpowiedź: ${letters[q.correct]}) ${q.options[q.correct]}`;
+  } else if (q.type === 'fill') {
+    const inp = document.getElementById('fillInput');
+    if (!inp) return;
+    const val = inp.value.trim().toLowerCase();
+    if (!val) return;
+    const correct = q.answer.toLowerCase();
+    const alts = (q.alt || []).map(a => a.toLowerCase());
+    isCorrect = val === correct || alts.includes(val);
+    inp.classList.add(isCorrect ? 'correct' : 'wrong');
+    feedbackMsg = isCorrect ? '✅ Dobrze!' : `❌ Nie. Poprawna: ${q.answer}`;
+  } else if (q.type === 'taknie') {
+    if (!exerciseState.selected || Object.keys(exerciseState.selected).length < q.items.length) return;
+    isCorrect = true;
+    let wrongCount = 0;
+    q.items.forEach((item, i) => {
+      const userAns = exerciseState.selected[i];
+      const correctBtn = document.getElementById(`tn_${i}_${item.correct ? 'tak' : 'nie'}`);
+      if (correctBtn) correctBtn.classList.add('correct');
+      if (userAns !== item.correct) {
+        const wrongBtn = document.getElementById(`tn_${i}_${userAns ? 'tak' : 'nie'}`);
+        if (wrongBtn) wrongBtn.classList.add('wrong');
+        wrongCount++;
+      }
+    });
+    isCorrect = wrongCount === 0;
+    feedbackMsg = isCorrect ? '✅ Wszystkie poprawne!' : `❌ ${wrongCount} błędów.`;
+  } else if (q.type === 'match') {
+    const allMatched = [...document.querySelectorAll('.match-left')].every(el => el.classList.contains('matched'));
+    isCorrect = allMatched;
+    feedbackMsg = isCorrect ? '✅ Wszystkie dopasowane!' : '❌ Spróbuj dopasować wszystkie pary.';
+  } else if (q.type === 'writing') {
+    // Writing is always "correct" if they wrote something
+    const area = document.getElementById('writingArea');
+    if (!area || area.value.trim().length < 10) {
+      feedbackMsg = '✏️ Napisz coś (minimum 10 znaków).';
+      showTempFeedback(feedbackMsg);
+      return;
+    }
+    isCorrect = true;
+    feedbackMsg = '✏️ Dobrze! Porównaj ze wzorem poniżej:';
+    expText = '';
+    // Show sample answer
+    const wrap = $('contentWrap');
+    const sampleDiv = document.createElement('div');
+    sampleDiv.className = 'sample-answer';
+    sampleDiv.innerHTML = `<strong>📝 Wzór:</strong><br>${(q.sample || '').replace(/\n/g, '<br>')}`;
+    wrap.appendChild(sampleDiv);
+  }
+
+  exerciseState.answered = true;
+  $('mainBtn').disabled = true;
+
+  if (isCorrect) {
+    state.correctInLesson++;
+    state.progressDots[state.currentQ] = 'done';
+    state.xp += 10;
+    // Track progress in skill
+    const sid = state.currentSkillIndex;
+    state.skillProgress[sid] = (state.skillProgress[sid] || 0) + (100 / state.totalQuestions);
+  } else {
+    state.progressDots[state.currentQ] = 'wrong';
+    state.hearts = Math.max(0, state.hearts - 1);
+    // For taknie, deduct less
+  }
+  saveState();
+  renderTopBar();
+
+  // Show feedback
+  showTempFeedback(feedbackMsg + (expText ? `<br><span style="font-size:13px;color:var(--text-light)">💡 ${expText}</span>` : ''));
+
+  // Update button to next
+  $('mainBtn').textContent = state.currentQ < state.totalQuestions - 1 ? 'Dalej →' : 'Zakończ 📊';
+  $('mainBtn').disabled = false;
+  $('mainBtn').onclick = () => {
+    if (state.currentQ < state.totalQuestions - 1) {
+      state.currentQ++;
+      renderExercise();
+    } else {
+      finishExercise();
+    }
+  };
+}
+
+function showTempFeedback(msg) {
+  // Remove old feedback
+  const old = document.querySelector('.feedback');
+  if (old) old.remove();
+  
+  const isCorrect = msg.includes('✅') || msg.includes('✏️ Dobrze');
+  const fdiv = document.createElement('div');
+  fdiv.className = 'feedback';
+  fdiv.innerHTML = `<div class="icon">${isCorrect ? '🎉' : '💪'}</div>
+    <div class="msg" style="color:${isCorrect ? 'var(--primary-dark)' : 'var(--red)'}">${msg}</div>
+    <div class="sub">${isCorrect ? `+10 XP` : 'Spróbuj jeszcze raz!'}</div>`;
+  const wrap = $('contentWrap');
+  wrap.insertBefore(fdiv, wrap.firstChild);
+  fdiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function finishExercise() {
+  const sid = state.currentSkillIndex;
+  const data = getExerciseData();
+  const total = data?.exercise?.questions?.length || 0;
+  const correct = state.correctInLesson;
+  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+
+  // If 60%+ correct, mark as completed
+  if (pct >= 60) {
+    state.completedSkills[sid] = true;
+    const bonus = Math.round((pct / 100) * 30);
+    state.xp += bonus;
+    state.streak++;
+    saveState();
+    renderTopBar();
+    showTempFeedback(`🎉 Świetnie! ${correct}/${total} poprawnych (${pct}%)<br>+${bonus} XP bonus! 🔥 Streak: ${state.streak}`);
+    checkLevelUp();
+  } else {
+    state.hearts = Math.max(0, state.hearts - 1);
+    saveState();
+    renderTopBar();
+    showTempFeedback(`💪 ${correct}/${total} poprawnych. Spróbuj ponownie!`);
+  }
+
+  $('progressStrip').innerHTML = '';
+  $('mainBtn').textContent = '← Powrót do kursu';
+  $('mainBtn').disabled = false;
+  $('mainBtn').onclick = () => { 
+    state.phase = 'tree'; 
+    render(); 
+  };
+  $('mainBtn').className = 'check-btn secondary';
+}
+
+function checkLevelUp() {
+  const levels = [0, 100, 250, 500, 800, 1200, 1800, 2500, 3500, 5000];
+  for (let i = levels.length - 1; i >= 0; i--) {
+    if (state.xp >= levels[i]) {
+      if (i + 1 > state.level) {
+        state.level = i + 1;
+        $('levelTitle').textContent = `🎉 Level ${state.level}!`;
+        $('levelMsg').textContent = `Zdobyłeś ${state.xp} XP! Świetna robota!`;
+        $('levelModal').style.display = 'flex';
+      }
+      break;
+    }
+  }
+}
+
+function closeLevelModal() {
+  $('levelModal').style.display = 'none';
+}
+
+// ========================================================================
+// INIT
+// ========================================================================
+
+function handleMainAction() {
+  // Default fallback
+  renderTree();
+}
+
+loadState();
+render();
+</script>
+</body>
+</html>
