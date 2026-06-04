@@ -22,7 +22,6 @@
   --border: #e5e5e5;
   --success: #58cc02;
   --error: #ff4b4b;
-  --heart: #ff4b4b;
   --xp-color: #ff9600;
   --radius: 16px;
   --radius-sm: 12px;
@@ -511,7 +510,6 @@ input, textarea { font-family: inherit; }
     <div class="stats">
       <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;" id="themeToggle">🌙</div>
       <div class="stat-item xp"><span class="icon">⚡</span><span id="xpDisplay">0</span></div>
-      <div class="stat-item hearts"><span class="icon">❤️</span><span id="heartsDisplay">5</span></div>
       <div class="stat-item streak"><span class="icon">🔥</span><span id="streakDisplay">0</span></div>
     </div>
   </div>
@@ -1649,6 +1647,81 @@ const WORD_BANK = {
 };
 
 // ========================================================================
+// ADJECTIVE BANK — forms for all cases & genders
+// Format: { m_nom, m_gen, m_dat, m_acc, m_inst, m_loc, f_nom, ..., n_nom, ... }
+// ========================================================================
+const ADJ_BANK = {
+  'nowy':    { m:{nom:'nowy',gen:'nowego',dat:'nowemu',acc:['nowego','nowy'],inst:'nowym',loc:'nowym'},
+                f:{nom:'nowa',gen:'nowej',dat:'nowej',acc:'nową',inst:'nową',loc:'nowej'},
+                n:{nom:'nowe',gen:'nowego',dat:'nowemu',acc:'nowe',inst:'nowym',loc:'nowym'} },
+  'dobry':   { m:{nom:'dobry',gen:'dobrego',dat:'dobremu',acc:['dobrego','dobry'],inst:'dobrym',loc:'dobrym'},
+                f:{nom:'dobra',gen:'dobrej',dat:'dobrej',acc:'dobrą',inst:'dobrą',loc:'dobrej'},
+                n:{nom:'dobre',gen:'dobrego',dat:'dobremu',acc:'dobre',inst:'dobrym',loc:'dobrym'} },
+  'stary':   { m:{nom:'stary',gen:'starego',dat:'staremu',acc:['starego','stary'],inst:'starym',loc:'starym'},
+                f:{nom:'stara',gen:'starej',dat:'starej',acc:'starą',inst:'starą',loc:'starej'},
+                n:{nom:'stare',gen:'starego',dat:'staremu',acc:'stare',inst:'starym',loc:'starym'} },
+  'mały':    { m:{nom:'mały',gen:'małego',dat:'małemu',acc:['małego','mały'],inst:'małym',loc:'małym'},
+                f:{nom:'mała',gen:'małej',dat:'małej',acc:'małą',inst:'małą',loc:'małej'},
+                n:{nom:'małe',gen:'małego',dat:'małemu',acc:'małe',inst:'małym',loc:'małym'} },
+  'ładny':   { m:{nom:'ładny',gen:'ładnego',dat:'ładnemu',acc:['ładnego','ładny'],inst:'ładnym',loc:'ładnym'},
+                f:{nom:'ładna',gen:'ładnej',dat:'ładnej',acc:'ładną',inst:'ładną',loc:'ładnej'},
+                n:{nom:'ładne',gen:'ładnego',dat:'ładnemu',acc:'ładne',inst:'ładnym',loc:'ładnym'} },
+  'wysoki':  { m:{nom:'wysoki',gen:'wysokiego',dat:'wysokiemu',acc:['wysokiego','wysoki'],inst:'wysokim',loc:'wysokim'},
+                f:{nom:'wysoka',gen:'wysokiej',dat:'wysokiej',acc:'wysoką',inst:'wysoką',loc:'wysokiej'},
+                n:{nom:'wysokie',gen:'wysokiego',dat:'wysokiemu',acc:'wysokie',inst:'wysokim',loc:'wysokim'} },
+  'miły':    { m:{nom:'miły',gen:'miłego',dat:'miłemu',acc:['miłego','miły'],inst:'miłym',loc:'miłym'},
+                f:{nom:'miła',gen:'miłej',dat:'miłej',acc:'miłą',inst:'miłą',loc:'miłej'},
+                n:{nom:'miłe',gen:'miłego',dat:'miłemu',acc:'miłe',inst:'miłym',loc:'miłym'} },
+  'ważny':   { m:{nom:'ważny',gen:'ważnego',dat:'ważnemu',acc:['ważnego','ważny'],inst:'ważnym',loc:'ważnym'},
+                f:{nom:'ważna',gen:'ważnej',dat:'ważnej',acc:'ważną',inst:'ważną',loc:'ważnej'},
+                n:{nom:'ważne',gen:'ważnego',dat:'ważnemu',acc:'ważne',inst:'ważnym',loc:'ważnym'} },
+  'ciekawy': { m:{nom:'ciekawy',gen:'ciekawego',dat:'ciekawemu',acc:['ciekawego','ciekawy'],inst:'ciekawym',loc:'ciekawym'},
+                f:{nom:'ciekawa',gen:'ciekawej',dat:'ciekawej',acc:'ciekawą',inst:'ciekawą',loc:'ciekawej'},
+                n:{nom:'ciekawe',gen:'ciekawego',dat:'ciekawemu',acc:'ciekawe',inst:'ciekawym',loc:'ciekawym'} },
+  'trudny':  { m:{nom:'trudny',gen:'trudnego',dat:'trudnemu',acc:['trudnego','trudny'],inst:'trudnym',loc:'trudnym'},
+                f:{nom:'trudna',gen:'trudnej',dat:'trudnej',acc:'trudną',inst:'trudną',loc:'trudnej'},
+                n:{nom:'trudne',gen:'trudnego',dat:'trudnemu',acc:'trudne',inst:'trudnym',loc:'trudnym'} },
+};
+
+// Helper to get adjective form
+function getAdjForm(adjKey, gender, caseName) {
+  const adj = ADJ_BANK[adjKey];
+  if (!adj) return adjKey;
+  const g = adj[gender];
+  if (!g) return adjKey;
+  const val = g[caseName];
+  if (Array.isArray(val)) return val[0]; // for m-acc: first is personal, second is impersonal
+  return val || adjKey;
+}
+
+// Helper to get noun gender
+function getNounGender(wordKey) {
+  const w = WORD_BANK[wordKey];
+  if (!w) return 'm-nieos';
+  if (w.g === 'm-os' || w.g === 'm-nieos') return 'm';
+  if (w.g === 'f') return 'f';
+  return 'n';
+}
+
+// ADJECTIVE TEMPLATES
+const ADJ_TEMPLATES = {
+  'ex-adj': {
+    title: 'Przymiotnik — odmiana przez przypadki',
+    templates: [
+      { sentence: 'To jest {{adj:m:nom}} {{word:nom}}.', adjPool: ['nowy','stary','mały','ładny','wysoki'], words: ['dom','samochód','telefon','stół'], note: 'Mianownik, r. męski' },
+      { sentence: 'To jest {{adj:f:nom}} {{word:nom}}.', adjPool: ['nowy','dobry','stary','mały','ładny'], words: ['kawa','książka','praca','szkoła','ulica'], note: 'Mianownik, r. żeński' },
+      { sentence: 'To jest {{adj:n:nom}} {{word:nom}}.', adjPool: ['nowy','stary','mały','ładny','ważny'], words: ['mieszkanie','zadanie','okno','biurko','krzesło'], note: 'Mianownik, r. nijaki' },
+      { sentence: 'Nie mam {{adj:m:gen}} {{word:gen}}.', adjPool: ['nowy','stary','wysoki','mały'], words: ['samochód','telefon','dom','komputer'], note: 'Dopełniacz, r. męski' },
+      { sentence: 'Szukam {{adj:f:gen}} {{word:gen}}.', adjPool: ['nowy','stary','dobry','ciekawy'], words: ['książka','praca','restauracja','kawa'], note: 'Dopełniacz, r. żeński' },
+      { sentence: 'Jestem w {{adj:m:loc}} {{word:loc}}.', adjPool: ['nowy','stary','mały','wysoki'], words: ['dom','sklep','samochód','pokój'], note: 'Miejscownik, r. męski' },
+      { sentence: 'Mieszkam w {{adj:n:loc}} {{word:loc}}.', adjPool: ['nowy','stary','mały','ładny'], words: ['mieszkanie','krzesło','biurko'], note: 'Miejscownik, r. nijaki' },
+      { sentence: 'Widzę {{adj:f:acc}} {{word:acc}}.', adjPool: ['nowy','stary','ładny','wysoki'], words: ['kawa','książka','mama','szkoła'], note: 'Biernik, r. żeński' },
+      { sentence: 'Ona jest {{adj:f:inst}} {{word:inst}}.', adjPool: ['nowy','stary','miły','ważny'], words: ['studentka','siostra','lekarka'], note: 'Narzędnik, r. żeński' },
+    ]
+  }
+};
+
+// ========================================================================
 // EXERCISE TEMPLATES — dynamic generation for case exercises
 // ========================================================================
 const CASE_TEMPLATES = {
@@ -1829,7 +1902,6 @@ function generateExercise(skillId) {
 // ========================================================================
 let state = {
   xp: 0,
-  hearts: 5,
   streak: 0,
   level: 1,
   completedSkills: {},
@@ -1839,7 +1911,9 @@ let state = {
   totalQuestions: 0,
   correctInLesson: 0,
   progressDots: [],
-  phase: 'tree', // 'tree' | 'lesson' | 'exercise'
+  phase: 'tree', // 'tree' | 'lesson' | 'exercise' | 'review' | 'flashcard'
+  errorQueue: [], // {skillId, wordKey, caseName, question, correctAnswer, context}
+  reviewCorrectCount: {}, // key -> count of consecutive correct answers
 };
 
 // Safe storage wrapper — falls back to memory when localStorage is blocked (file:// on mobile)
@@ -1876,9 +1950,10 @@ function loadState() {
 }
 function saveState() {
   Storage.set('polskiB1', JSON.stringify({
-    xp: state.xp, hearts: state.hearts, streak: state.streak,
+    xp: state.xp, streak: state.streak,
     level: state.level, completedSkills: state.completedSkills,
     skillProgress: state.skillProgress,
+    errorQueue: state.errorQueue,
   }));
 }
 
@@ -1904,12 +1979,13 @@ function render() {
   if (state.phase === 'tree') renderTree();
   else if (state.phase === 'lesson') renderLessonUI();
   else if (state.phase === 'exercise') renderExercise();
+  else if (state.phase === 'review') renderReview();
+  else if (state.phase === 'flashcard') renderFlashcard();
   else renderTree();
 }
 
 function renderTopBar() {
   $('xpDisplay').textContent = state.xp;
-  $('heartsDisplay').textContent = state.hearts;
   $('streakDisplay').textContent = state.streak;
   // Set theme toggle icon
   const themeToggle = document.getElementById('themeToggle');
@@ -1955,6 +2031,26 @@ function renderTree() {
   const units = [...new Set(SKILLS.map(s => s.unit))];
 
   let html = '<div class="unit-tree">';
+  // Flashcard button (always at top)
+  html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:8px;">';
+  html += '<div class="skill-icon">🃏</div>';
+  html += '<div class="skill-info"><div class="skill-name">Fiszki — słownictwo</div>';
+  html += '<div class="skill-desc">Przeglądaj wszystkie słowa z bazy</div></div>';
+  html += '<div class="skill-status active-txt">▶ Przeglądaj</div></div>';
+    // Exam simulation button
+  html += '<div class="skill-card available" onclick="startExam()" style="margin-bottom:8px;border-left-color:var(--gold);">';
+  html += '<div class="skill-icon">🎯</div>';
+  html += '<div class="skill-info"><div class="skill-name">Egzamin próbny</div>';
+  html += '<div class="skill-desc">10 pytań, 15 minut. Sprawdź gotowość!</div></div>';
+  html += '<div class="skill-status active-txt" style="color:var(--gold);">▶ Start</div></div>';
+  // Error review button
+  if (state.errorQueue && state.errorQueue.length > 0) {
+    html += '<div class="skill-card available" onclick="startReview()" style="margin-bottom:8px;border-left-color:var(--error);">';
+    html += '<div class="skill-icon">🔁</div>';
+    html += '<div class="skill-info"><div class="skill-name">Powtórka błędów</div>';
+    html += '<div class="skill-desc">' + state.errorQueue.length + ' słów do powtórzenia</div></div>';
+    html += '<div class="skill-status active-txt" style="color:var(--error);font-weight:700;">' + state.errorQueue.length + ' ⚠️</div></div>';
+  }
   // Level & stats summary
   const totalSkills = SKILLS.length;
   const completedCount = Object.keys(state.completedSkills).length;
@@ -2021,10 +2117,13 @@ function startSkill(skillId) {
     renderLessonUI();
   } else {
     state.phase = 'exercise';
-    // Try dynamic generation first (case exercises)
+    // Try dynamic generation first (case or adjective exercises)
     let ex = null;
     if (typeof CASE_TEMPLATES !== 'undefined' && CASE_TEMPLATES[skillId]) {
       ex = generateExercise(skillId);
+    }
+    if (!ex && typeof ADJ_TEMPLATES !== 'undefined' && ADJ_TEMPLATES[skillId]) {
+      ex = generateAdjExercise(skillId);
     }
     if (!ex) {
       ex = EXERCISES[skillId];
@@ -2036,6 +2135,7 @@ function startSkill(skillId) {
     }
     state.totalQuestions = ex.questions.length;
     state.progressDots = ex.questions.map(() => 'pending');
+    window._currentExerciseData = ex;
     renderExercise();
   }
 }
@@ -2106,7 +2206,112 @@ let exerciseState = {
   answered: false,
 };
 
+
+// ========================================================================
+// EXAM MODE — render a single question from the exam bank
+// ========================================================================
+function renderExamQuestion() {
+  var qs = state._examQuestions;
+  if (!qs || state.currentQ >= qs.length) { finishExam(); return; }
+  var q = qs[state.currentQ];
+  
+  var dots = qs.map(function(_, i) {
+    var cls = state.progressDots[i] === 'done' ? 'done' : state.progressDots[i] === 'wrong' ? 'wrong' : i === state.currentQ ? 'active' : '';
+    return '<div class="progress-dot ' + cls + '">' + (i+1) + '</div>';
+  });
+  document.getElementById('progressStrip').innerHTML = dots.join('');
+  
+  var min = Math.floor(state._examTimeLeft / 60);
+  var sec = state._examTimeLeft % 60;
+  var timeStr = min + ':' + (sec < 10 ? '0' : '') + sec;
+  
+  var typeLabel = q.skillType || 'Egzamin';
+  var html = '<div class="exercise-card"><div class="hint" style="display:flex;justify-content:space-between;">';
+  html += '<span>🎯 ' + typeLabel + ' &middot; ' + (state.currentQ+1) + '/' + qs.length + '</span>';
+  html += '<span id="examTimer" style="color:var(--error);font-weight:700;">⏱ ' + timeStr + '</span></div>';
+  html += '<div class="question">' + (q.question || '') + '</div>';
+  if (q.polish) html += '<div class="polish-text">' + q.polish + '</div>';
+  
+  if (q.type === 'choice' && q.options) {
+    html += '<div class="options">';
+    var letters = ['a','b','c','d'];
+    q.options.forEach(function(opt, i) {
+      html += '<button class="option-btn" onclick="examSelect(' + i + ')" id="exam_opt_' + i + '"><span class="letter">' + letters[i] + '</span> ' + opt + '</button>';
+    });
+    html += '</div>';
+    window._examSelected = null;
+  } else if (q.type === 'fill') {
+    html += '<div class="fill-input"><input type="text" id="examInput" placeholder="Wpisz odpowiedź..." autocomplete="off" style="width:100%;"></div>';
+    setTimeout(function() {
+      var inp = document.getElementById('examInput');
+      if (inp) { inp.focus(); inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') examCheck(); }); }
+    }, 100);
+  }
+  html += '</div>';
+  document.getElementById('contentWrap').innerHTML = html;
+  
+  document.getElementById('mainBtn').textContent = 'Sprawdź ✓';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn';
+  document.getElementById('mainBtn').onclick = examCheck;
+}
+
+function examSelect(idx) {
+  window._examSelected = idx;
+  document.querySelectorAll('.option-btn').forEach(function(el, i) {
+    el.classList.toggle('selected', i === idx);
+  });
+}
+
+function examCheck() {
+  var qs = state._examQuestions;
+  var q = qs[state.currentQ];
+  var isCorrect = false;
+  
+  if (q.type === 'choice') {
+    if (window._examSelected === null || window._examSelected === undefined) return;
+    isCorrect = window._examSelected === q.correct;
+    document.querySelectorAll('.option-btn').forEach(function(el, i) {
+      if (i === q.correct) el.classList.add('correct');
+      if (i === window._examSelected && !isCorrect) el.classList.add('wrong');
+    });
+  } else if (q.type === 'fill') {
+    var inp = document.getElementById('examInput');
+    if (!inp || !inp.value.trim()) return;
+    isCorrect = inp.value.trim().toLowerCase() === (q.answer || '').toLowerCase();
+    inp.classList.add(isCorrect ? 'correct' : 'wrong');
+    inp.disabled = true;
+  }
+  
+  if (isCorrect) {
+    state.progressDots[state.currentQ] = 'done';
+    state._examCorrect = (state._examCorrect || 0) + 1;
+    state.correctInLesson = (state.correctInLesson || 0) + 1;
+  } else {
+    state.progressDots[state.currentQ] = 'wrong';
+  }
+  
+  document.getElementById('mainBtn').disabled = true;
+  
+  if (state.currentQ < qs.length - 1) {
+    document.getElementById('mainBtn').textContent = 'Dalej →';
+    document.getElementById('mainBtn').disabled = false;
+    document.getElementById('mainBtn').onclick = function() {
+      state.currentQ++;
+      renderExamQuestion();
+    };
+  } else {
+    document.getElementById('mainBtn').textContent = 'Zakończ egzamin 📊';
+    document.getElementById('mainBtn').disabled = false;
+    document.getElementById('mainBtn').onclick = finishExam;
+  }
+}
 function renderExercise() {
+  // Exam mode: use stored questions instead of exercise data
+  if (state._examQuestions) {
+    renderExamQuestion();
+    return;
+  }
   const data = getExerciseData();
   if (!data) { renderTree(); return; }
   const { skill, exercise } = data;
@@ -2359,8 +2564,18 @@ function checkAnswer() {
     state.skillProgress[sid] = (state.skillProgress[sid] || 0) + (100 / state.totalQuestions);
   } else {
     state.progressDots[state.currentQ] = 'wrong';
-    state.hearts = Math.max(0, state.hearts - 1);
-    // For taknie, deduct less
+    // Track error for review — if the current exercise has word data
+    if (window._currentExerciseData) {
+      const q = window._currentExerciseData.questions[state.currentQ];
+      const errEntry = {
+        skillId: state.currentSkillIndex,
+        question: q.question,
+        correctAnswer: q.type === 'choice' ? q.options[q.correct] : q.answer,
+        context: q.explanation || '',
+        timestamp: Date.now(),
+      };
+      state.errorQueue.push(errEntry);
+    }
   }
   saveState();
   renderTopBar();
@@ -2369,16 +2584,34 @@ function checkAnswer() {
   showTempFeedback(feedbackMsg + (expText ? `<br><span style="font-size:13px;color:var(--text-light)">💡 ${expText}</span>` : ''));
 
   // Update button to next
-  $('mainBtn').textContent = state.currentQ < state.totalQuestions - 1 ? 'Dalej →' : 'Zakończ 📊';
-  $('mainBtn').disabled = false;
-  $('mainBtn').onclick = () => {
-    if (state.currentQ < state.totalQuestions - 1) {
+  // In exam mode, override handler
+  if (state._examQuestions) {
+    $('mainBtn').textContent = 'Dalej →';
+    $('mainBtn').disabled = false;
+    $('mainBtn').onclick = function() {
       state.currentQ++;
-      renderExercise();
-    } else {
-      finishExercise();
-    }
-  };
+      if (state.currentQ < state._examQuestions.length - 1) {
+        state._examIndex = state.currentQ;
+        renderExercise();
+      } else {
+        state._examIndex = state.currentQ;
+        renderExercise();
+        document.getElementById('mainBtn').textContent = 'Zakończ egzamin 📊';
+        document.getElementById('mainBtn').onclick = finishExam;
+      }
+    };
+  } else {
+    $('mainBtn').textContent = state.currentQ < state.totalQuestions - 1 ? 'Dalej →' : 'Zakończ 📊';
+    $('mainBtn').disabled = false;
+    $('mainBtn').onclick = () => {
+      if (state.currentQ < state.totalQuestions - 1) {
+        state.currentQ++;
+        renderExercise();
+      } else {
+        finishExercise();
+      }
+    };
+  }
 }
 
 function showTempFeedback(msg) {
@@ -2415,7 +2648,6 @@ function finishExercise() {
     showTempFeedback(`🎉 Świetnie! ${correct}/${total} poprawnych (${pct}%)<br>+${bonus} XP bonus! 🔥 Streak: ${state.streak}`);
     checkLevelUp();
   } else {
-    state.hearts = Math.max(0, state.hearts - 1);
     saveState();
     renderTopBar();
     showTempFeedback(`💪 ${correct}/${total} poprawnych. Spróbuj ponownie!`);
@@ -2453,6 +2685,466 @@ function closeLevelModal() {
 // ========================================================================
 // INIT
 // ========================================================================
+
+
+
+// ========================================================================
+// ADJECTIVE EXERCISE GENERATOR
+// ========================================================================
+function generateAdjExercise(skillId) {
+  const templateGroup = ADJ_TEMPLATES[skillId];
+  if (!templateGroup) return null;
+
+  const questions = [];
+  const available = [...templateGroup.templates];
+  const targetCount = Math.min(available.length, 5);
+  const usedWords = new Set();
+  const usedAdjs = new Set();
+
+  for (let i = 0; i < targetCount; i++) {
+    const tpl = available.splice(Math.floor(Math.random() * available.length), 1)[0];
+    if (!tpl) break;
+
+    // Pick unused adjective
+    let adjKey;
+    const shuffledAdj = [...tpl.adjPool].sort(() => Math.random() - 0.5);
+    for (const a of shuffledAdj) {
+      if (!usedAdjs.has(a)) { adjKey = a; usedAdjs.add(a); break; }
+    }
+    if (!adjKey) adjKey = tpl.adjPool[Math.floor(Math.random() * tpl.adjPool.length)];
+
+    // Pick unused noun
+    let wordKey;
+    const shuffledWords = [...tpl.words].sort(() => Math.random() - 0.5);
+    for (const w of shuffledWords) {
+      if (!usedWords.has(w)) { wordKey = w; usedWords.add(w); break; }
+    }
+    if (!wordKey) wordKey = tpl.words[Math.floor(Math.random() * tpl.words.length)];
+
+    // Extract case and gender from template
+    // Format: {{adj:gender:case}} {{word:case}}
+    const match = tpl.sentence.match(/\{\{adj:(\w):(\w+)\}\}/);
+    const gender = match ? match[1] : 'm';
+    const caseName = match ? match[2] : 'nom';
+    const wordCase = tpl.sentence.match(/\{\{word:(\w+)\}\}/);
+    const wordCaseName = wordCase ? wordCase[1] : 'nom';
+
+    const correctAdj = getAdjForm(adjKey, gender, caseName);
+    const correctNoun = getForm(wordKey, wordCaseName);
+    const correctForm = correctAdj + ' ' + correctNoun;
+
+    // Generate wrong adjective forms (different gender or case)
+    const wrongGenders = { m: 'f', f: 'n', n: 'm' };
+    const wrongGender = wrongGenders[gender] || 'm';
+    const wrongAdj1 = getAdjForm(adjKey, wrongGender, caseName);
+    const wrongAdj2 = getAdjForm(adjKey, gender, 'nom');
+    const wrongForms = [
+      wrongAdj1 + ' ' + correctNoun,
+      wrongAdj2 + ' ' + correctNoun,
+    ];
+    const uniqueWrong = [...new Set(wrongForms.filter(f => f !== correctForm))];
+    while (uniqueWrong.length < 3) {
+      const wg = ['m','f','n'][Math.floor(Math.random()*3)];
+      const wc = ['nom','gen','dat','acc','inst','loc'][Math.floor(Math.random()*6)];
+      const f = getAdjForm(adjKey, wg, wc) + ' ' + correctNoun;
+      if (f !== correctForm && !uniqueWrong.includes(f)) uniqueWrong.push(f);
+    }
+
+    const blankSentence = tpl.sentence.replace(/\{\{adj:\w:\w+\}\}/g, '______').replace(/\{\{word:\w+\}\}/g, '______');
+
+    if (i % 2 === 0) {
+      const options = [correctForm, ...uniqueWrong.slice(0, 3)];
+      const shuffled = options.sort(() => Math.random() - 0.5);
+      questions.push({
+        type: 'choice',
+        question: 'Uzupełnij: ' + blankSentence,
+        options: shuffled,
+        correct: shuffled.indexOf(correctForm),
+        explanation: adjKey + ' (' + gender + ', ' + caseName + '): ' + correctForm,
+      });
+    } else {
+      questions.push({
+        type: 'fill',
+        question: 'Uzupełnij poprawną formą: ' + blankSentence,
+        polish: '',
+        answer: correctForm,
+        explanation: adjKey + ' (' + gender + ', ' + caseName + '): ' + correctForm,
+      });
+    }
+  }
+
+  return { title: templateGroup.title, questions: questions };
+}
+
+
+// ========================================================================
+// PREPOSITIONS + CASES — which preposition goes with which case
+// ========================================================================
+const PREPOSITIONS = [
+  { prep: 'do', cases: 'Dopełniacz (kogo? czego?)', example: 'do domu, do szkoły, do sklepu', note: 'do + D. (to/towards)' },
+  { prep: 'dla', cases: 'Dopełniacz (kogo? czego?)', example: 'dla mamy, dla ciebie', note: 'dla + D. (for someone)' },
+  { prep: 'bez', cases: 'Dopełniacz (kogo? czego?)', example: 'bez cukru, bez problemu', note: 'bez + D. (without)' },
+  { prep: 'od', cases: 'Dopełniacz (kogo? czego?)', example: 'od rana, od kolegi', note: 'od + D. (from)' },
+  { prep: 'z', cases: 'Narzędnik (z kim? z czym?)', example: 'z bratem, z mamą', note: 'z + N. (with someone)' },
+  { prep: 'nad', cases: 'Narzędnik (z kim? z czym?)', example: 'nad morzem, nad jeziorem', note: 'nad + N. (above/at, location)' },
+  { prep: 'pod', cases: 'Narzędnik (z kim? z czym?)', example: 'pod stołem, pod domem', note: 'pod + N. (under, location)' },
+  { prep: 'przed', cases: 'Narzędnik (z kim? z czym?) / Biernik', example: 'przed domem, przed komputerem', note: 'przed + N. (in front of)' },
+  { prep: 'za', cases: 'Narzędnik (z kim? z czym?)', example: 'za domem, za drzwiami', note: 'za + N. (behind)' },
+  { prep: 'na', cases: 'Miejscownik (o kim? o czym?) / Biernik', example: 'na stole, na ulicy, na koncert', note: 'na + Msc. (location) / B. (direction)' },
+  { prep: 'w', cases: 'Miejscownik (o kim? o czym?) / Biernik', example: 'w domu, w szkole, w Gdańsku', note: 'w + Msc. (in) / B. (into)' },
+  { prep: 'o', cases: 'Miejscownik (o kim? o czym?)', example: 'o filmie, o muzyce', note: 'o + Msc. (about)' },
+  { prep: 'przy', cases: 'Miejscownik (o kim? o czym?)', example: 'przy stole, przy oknie', note: 'przy + Msc. (by/near)' },
+  { prep: 'po', cases: 'Miejscownik (o kim? o czym?)', example: 'po pracy, po obiedzie', note: 'po + Msc. (after)' },
+  { prep: 'między', cases: 'Narzędnik (z kim? z czym?)', example: 'między domem a sklepem', note: 'między + N. (between)' },
+  { prep: 'przez', cases: 'Biernik (kogo? co?)', example: 'przez ulicę, przez okno', note: 'przez + B. (through/across)' },
+];
+
+function generatePrepExercise() {
+  const questions = [];
+  const available = [...PREPOSITIONS];
+  const used = [];
+  const count = Math.min(available.length, 8);
+  
+  for (let i = 0; i < count; i++) {
+    const idx = Math.floor(Math.random() * available.length);
+    const item = available.splice(idx, 1)[0];
+    if (!item) break;
+    used.push(item.prep);
+    
+    // Generate wrong prepositions from the pool (different cases)
+    const wrongPool = PREPOSITIONS.filter(p => p.cases !== item.cases && !used.includes(p.prep));
+    const wrongPreps = [];
+    for (let j = 0; j < Math.min(3, wrongPool.length); j++) {
+      if (wrongPool[j].prep !== item.prep) wrongPreps.push(wrongPool[j].prep);
+    }
+    // Pad
+    const allPreps = ['w','na','z','do','od','przed','za','pod','nad','przy','po','dla','bez','przez','między','o'];
+    while (wrongPreps.length < 3) {
+      const p = allPreps[Math.floor(Math.random() * allPreps.length)];
+      if (p !== item.prep && !wrongPreps.includes(p)) wrongPreps.push(p);
+    }
+    
+    const options = [item.prep, ...wrongPreps.slice(0, 3)];
+    const shuffled = options.sort(() => Math.random() - 0.5);
+    
+    questions.push({
+      type: 'choice',
+      question: 'Jaki przyimek łączy się z ' + item.cases + '?',
+      polish: 'Przykład: ' + item.example,
+      options: shuffled,
+      correct: shuffled.indexOf(item.prep),
+      explanation: item.note,
+    });
+  }
+  
+  return { title: 'Przyimki + przypadki', questions: questions };
+}
+
+// ========================================================================
+// EXAM SIMULATION — timed mock test
+// ========================================================================
+let examTimer = null;
+
+function generateExam() {
+  const questions = [];
+  
+  // Grammar questions (from dynamic generators)
+  const cases = ['gen','dat','acc','inst','loc'];
+  for (const c of cases) {
+    const ex = generateExercise(c);
+    if (ex && ex.questions.length > 0) {
+      const q = ex.questions[Math.floor(Math.random() * ex.questions.length)];
+      q.skillType = 'Gramatyka';
+      questions.push(q);
+    }
+  }
+  
+  // Adjective question
+  const adjEx = generateAdjExercise('ex-adj');
+  if (adjEx && adjEx.questions.length > 0) {
+    let q = adjEx.questions[Math.floor(Math.random() * adjEx.questions.length)];
+    q.skillType = 'Przymiotniki';
+    questions.push(q);
+  }
+  
+  // Preposition question
+  const prepEx = generatePrepExercise();
+  if (prepEx && prepEx.questions.length > 0) {
+    let q = prepEx.questions[Math.floor(Math.random() * prepEx.questions.length)];
+    q.skillType = 'Przyimki';
+    questions.push(q);
+  }
+  
+  // Dialogues
+  const dialogSkills = ['ex-dialogues-1','ex-dialogues-2','ex-dialogues-3'];
+  for (const ds of dialogSkills) {
+    const ex = EXERCISES[ds];
+    if (ex && ex.questions.length > 0) {
+      const q = { ...ex.questions[Math.floor(Math.random() * ex.questions.length)] };
+      q.skillType = 'Dialogi';
+      questions.push(q);
+    }
+  }
+  
+  // Reading
+  const readSkills = ['exam-read-1','exam-listening'];
+  for (const rs of readSkills) {
+    const ex = EXERCISES[rs];
+    if (ex && ex.questions.length > 0) {
+      const q = { ...ex.questions[Math.floor(Math.random() * ex.questions.length)] };
+      q.skillType = 'Czytanie';
+      questions.push(q);
+    }
+  }
+  
+  // Shuffle and trim to 10
+  const shuffled = questions.sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 10);
+}
+
+function startExam() {
+  const examQs = generateExam();
+  if (examQs.length === 0) { showTempFeedback('Brak pytań. Najpierw odblokuj lekcje.'); return; }
+  
+  state._examQuestions = examQs;
+  state._examIndex = 0;
+  state._examCorrect = 0;
+  state._examTimeLeft = 900; // 15 minutes in seconds
+  state.phase = 'exercise';
+  state.currentQ = 0;
+  state.totalQuestions = examQs.length;
+  state.progressDots = examQs.map(() => 'pending');
+  state.correctInLesson = 0;
+  
+  // Start timer
+  if (examTimer) clearInterval(examTimer);
+  examTimer = setInterval(function() {
+    state._examTimeLeft--;
+    var min = Math.floor(state._examTimeLeft / 60);
+    var sec = state._examTimeLeft % 60;
+    var timeStr = min + ':' + (sec < 10 ? '0' : '') + sec;
+    var timerEl = document.getElementById('examTimer');
+    if (timerEl) timerEl.textContent = '⏱ ' + timeStr;
+    if (state._examTimeLeft <= 0) {
+      clearInterval(examTimer);
+      finishExam();
+    }
+  }, 1000);
+  
+  state.phase = 'exercise';
+  renderExercise();
+  // Override button text with timer info
+  proceedNext();
+}
+
+function proceedNext() {
+  if (state._examIndex >= state._examQuestions.length - 1) {
+    document.getElementById('mainBtn').textContent = 'Zakończ egzamin 📊';
+    document.getElementById('mainBtn').disabled = false;
+    document.getElementById('mainBtn').onclick = finishExam;
+  }
+}
+
+function finishExam() {
+  if (examTimer) clearInterval(examTimer);
+  var correct = state._examCorrect || 0;
+  var total = state._examQuestions ? state._examQuestions.length : 0;
+  var pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  var passed = pct >= 60;
+  
+  state.phase = 'tree';
+  state.xp += passed ? 50 : 10;
+  saveState();
+  
+  var wrap = document.getElementById('contentWrap');
+  wrap.innerHTML = '<div class="exercise-card" style="text-align:center;">' +
+    '<div style="font-size:48px;margin:12px 0;">' + (passed ? '🎉' : '💪') + '</div>' +
+    '<h3 style="font-size:22px;margin:8px 0;">' + (passed ? 'Zdałeś!' : 'Spróbuj jeszcze raz') + '</h3>' +
+    '<p style="font-size:18px;font-weight:700;color:var(--primary-dark);">' + correct + '/' + total + ' (' + pct + '%)</p>' +
+    (passed ? '<p style="color:var(--text-light);">+50 XP</p>' : '<p style="color:var(--text-light);">+10 XP za wysiłek</p>') +
+    '<p style="color:var(--text-light);margin-top:8px;font-size:14px;">' +
+    (pct < 40 ? 'Skoncentruj się na gramatyce.' : pct < 60 ? 'Jeszcze trochę praktyki!' : 'Jesteś gotowy na prawdziwy egzamin!') +
+    '</p></div>';
+  
+  document.getElementById('progressStrip').innerHTML = '';
+  document.getElementById('mainBtn').textContent = '← Powrót do kursu';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn secondary';
+  document.getElementById('mainBtn').onclick = function() { render(); };
+  renderTopBar();
+  delete state._examQuestions;
+  delete state._examIndex;
+  delete state._examCorrect;
+  delete state._examTimeLeft;
+}
+
+// Override checkAnswer temporarily to handle exam mode
+var _origCheckAnswer = null;
+// ========================================================================
+// REVIEW MODE — Retry wrong answers
+// ========================================================================
+function startReview() {
+  if (state.errorQueue.length === 0) {
+    showTempFeedback('🎉 Brak błędów do powtórki!');
+    return;
+  }
+  state.phase = 'review';
+  state.currentQ = 0;
+  state.totalQuestions = state.errorQueue.length;
+  state.progressDots = state.errorQueue.map(() => 'pending');
+  state.correctInLesson = 0;
+  renderReview();
+}
+
+function renderReview() {
+  const items = state.errorQueue;
+  if (state.currentQ >= items.length) {
+    finishReview();
+    return;
+  }
+  const item = items[state.currentQ];
+  
+  // Build progress dots
+  const dots = items.map((_, i) => {
+    const cls = state.progressDots[i] === 'done' ? 'done' : state.progressDots[i] === 'wrong' ? 'wrong' : i === state.currentQ ? 'active' : '';
+    return '<div class="progress-dot ' + cls + '">' + (i+1) + '</div>';
+  });
+  document.getElementById('progressStrip').innerHTML = dots.join('');
+  
+  const wrap = document.getElementById('contentWrap');
+  wrap.innerHTML = '<div class="exercise-card"><div class="hint">🔁 Powtórka błędów &middot; ' + (state.currentQ+1) + ' z ' + items.length + '</div>' +
+    '<div class="question">' + item.question + '</div>' +
+    '<div class="polish-text" style="font-size:13px;">💡 ' + item.context + '</div>' +
+    '<div class="fill-input"><input type="text" id="reviewInput" placeholder="Wpisz poprawną formę..." autocomplete="off" style="width:100%;"></div></div>';
+  
+  document.getElementById('mainBtn').textContent = 'Sprawdź ✓';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn';
+  document.getElementById('mainBtn').onclick = checkReviewAnswer;
+  
+  setTimeout(function() {
+    var inp = document.getElementById('reviewInput');
+    if (inp) { inp.focus(); inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') checkReviewAnswer(); }); }
+  }, 100);
+}
+
+function checkReviewAnswer() {
+  var inp = document.getElementById('reviewInput');
+  if (!inp) return;
+  var val = inp.value.trim().toLowerCase();
+  if (!val) return;
+  
+  var item = state.errorQueue[state.currentQ];
+  var correct = item.correctAnswer.toLowerCase();
+  var isCorrect = val === correct;
+  
+  var key = state.currentQ;
+  if (isCorrect) {
+    state.progressDots[state.currentQ] = 'done';
+    state.correctInLesson++;
+    state.xp += 15;
+    state.reviewCorrectCount[key] = (state.reviewCorrectCount[key] || 0) + 1;
+    // Remove from queue after 3 consecutive correct
+    if (state.reviewCorrectCount[key] >= 3) {
+      state.errorQueue.splice(state.currentQ, 1);
+      state.currentQ--;
+    }
+  } else {
+    state.progressDots[state.currentQ] = 'wrong';
+    state.reviewCorrectCount[key] = 0;
+  }
+  
+  inp.classList.add(isCorrect ? 'correct' : 'wrong');
+  inp.disabled = true;
+  saveState();
+  renderTopBar();
+  
+  showTempFeedback(isCorrect ? '✅ Dobrze!' : '❌ Poprawna: ' + item.correctAnswer);
+  
+  document.getElementById('mainBtn').textContent = state.currentQ < state.totalQuestions - 1 ? 'Dalej →' : 'Zakończ';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').onclick = function() {
+    state.currentQ++;
+    if (state.currentQ >= state.errorQueue.length || state.currentQ >= state.totalQuestions) {
+      finishReview();
+    } else {
+      renderReview();
+    }
+  };
+}
+
+function finishReview() {
+  var correct = state.correctInLesson;
+  var total = state.totalQuestions;
+  state.phase = 'tree';
+  saveState();
+  document.getElementById('progressStrip').innerHTML = '';
+  showTempFeedback('🔁 Powtórka zakończona! ' + correct + '/' + total + ' 👍');
+  document.getElementById('mainBtn').textContent = '← Powrót do kursu';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn secondary';
+  document.getElementById('mainBtn').onclick = function() { render(); };
+  renderTopBar();
+}
+
+// ========================================================================
+// FLASHCARD MODE — Browse words from word bank
+// ========================================================================
+function startFlashcard() {
+  state.phase = 'flashcard';
+  state.currentQ = 0;
+  renderFlashcard();
+}
+
+function renderFlashcard() {
+  // Collect all unique words from WORD_BANK
+  var words = Object.keys(WORD_BANK);
+  if (state.currentQ >= words.length) state.currentQ = 0;
+  
+  var wordKey = words[state.currentQ];
+  var data = WORD_BANK[wordKey];
+  if (!data) { state.currentQ++; renderFlashcard(); return; }
+  
+  var genders = { 'm-os': 'męski osobowy', 'm-nieos': 'męski nieosobowy', 'f': 'żeński', 'n': 'nijaki' };
+  
+  document.getElementById('progressStrip').innerHTML = '';
+  
+  var wrap = document.getElementById('contentWrap');
+  wrap.innerHTML = '<div class="exercise-card" style="text-align:center;">' +
+    '<div class="hint">🃏 Fiszki &middot; ' + (state.currentQ+1) + ' z ' + words.length + '</div>' +
+    '<div style="font-size:48px;margin:12px 0;">📖</div>' +
+    '<div style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:12px 0;">' + wordKey + '</div>' +
+    '<div style="font-size:14px;color:var(--text-light);margin-bottom:16px;">rodzaj: ' + (genders[data.g] || data.g) + '</div>' +
+    '<table style="width:100%;border-collapse:collapse;font-size:14px;margin:12px 0;">' +
+    '<tr><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Przypadek</th>' +
+    '<th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Forma</th><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Pytanie</th></tr>' +
+    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Mianownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.nom + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kto? co?</td></tr>' +
+    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Dopełniacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.gen + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? czego?</td></tr>' +
+    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Celownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.dat + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">komu? czemu?</td></tr>' +
+    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Biernik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.acc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? co?</td></tr>' +
+    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Narzędnik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.inst + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">z kim? z czym?</td></tr>' +
+    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Miejscownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.loc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">o kim? o czym?</td></tr>' +
+    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Wołacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.voc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">zwrot</td></tr>' +
+    '</table></div>';
+  
+  document.getElementById('mainBtn').textContent = 'Następne →';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn secondary';
+  document.getElementById('mainBtn').onclick = function() {
+    state.currentQ++;
+    renderFlashcard();
+  };
+  // Also add a "back" button quickly
+  var backBtn = document.createElement('button');
+  backBtn.textContent = '← Poprzednie';
+  backBtn.style.cssText = 'padding:12px;background:var(--card);border:2px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-weight:600;color:var(--text);margin-right:8px;cursor:pointer;';
+  backBtn.onclick = function() {
+    if (state.currentQ > 0) state.currentQ--;
+    renderFlashcard();
+  };
+  var btnWrap = document.getElementById('bottomWrap');
+  // Don't add back button for now, just use the main one
+}
 
 function handleMainAction() {
   // Default fallback
