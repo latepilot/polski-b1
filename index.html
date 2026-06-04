@@ -538,6 +538,7 @@ input, textarea { font-family: inherit; }
 
 <script src="data/decl.js"></script>
 <script src="data/vocab.js"></script>
+<script src="data/personal.js"></script>
 <script>
 // ========================================================================
 // DATA — All exercises, lessons, and vocabulary derived from the materials
@@ -1682,6 +1683,204 @@ function generateExercise(skillId) {
 }
 
 
+
+// ========================================================================
+// PERSONAL VOCABULARY — Cram mode + Edit
+// ========================================================================
+
+function startCram() {
+  if (typeof PERS_VOCAB === 'undefined' || PERS_VOCAB.length === 0) {
+    showTempFeedback('Brak słów w Personal. Dodaj je najpierw.');
+    return;
+  }
+  state._cramWords = PERS_VOCAB.slice(); // copy
+  state._cramIndex = 0;
+  state._cramFlipped = false;
+  state._cramKnown = [];
+  state._cramUnknown = [];
+  state._cramCycle = []; // unknown words get cycled back
+  state.phase = 'cram';
+  state.progressDots = [];
+  renderCram();
+}
+
+function renderCram() {
+  // If current index is past the end, cycle unknown words
+  if (state._cramIndex >= state._cramWords.length) {
+    if (state._cramUnknown.length > 0) {
+      state._cramWords = state._cramUnknown.slice();
+      state._cramUnknown = [];
+      state._cramIndex = 0;
+    } else {
+      finishCram();
+      return;
+    }
+  }
+  
+  var word = state._cramWords[state._cramIndex];
+  if (!word) { finishCram(); return; }
+  
+  var total = state._cramKnown.length + state._cramUnknown.length + (state._cramWords.length - state._cramIndex);
+  var done = state._cramKnown.length;
+  
+  if (!state._cramFlipped) {
+    // Show Polish side
+    document.getElementById('progressStrip').innerHTML = '';
+    var wrap = document.getElementById('contentWrap');
+    wrap.innerHTML = '<div class="exercise-card" style="text-align:center;min-height:250px;display:flex;flex-direction:column;justify-content:center;">' +
+      '<div class="hint">📇 Cram &middot; ' + done + '/' + total + ' poznanych</div>' +
+      '<div style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Kliknij aby zobaczyć tłumaczenie</div>' +
+      '<div class="polish-text" style="font-size:28px;font-weight:700;color:var(--primary-dark);padding:30px 20px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);" onclick="flipCram()">' +
+      word.pl + '</div></div>';
+    
+    document.getElementById('mainBtn').textContent = '👁️ Pokaż tłumaczenie';
+    document.getElementById('mainBtn').disabled = false;
+    document.getElementById('mainBtn').className = 'check-btn secondary';
+    document.getElementById('mainBtn').onclick = flipCram;
+  } else {
+    // Show both sides + Known/Unknown buttons
+    document.getElementById('progressStrip').innerHTML = '';
+    var wrap = document.getElementById('contentWrap');
+    wrap.innerHTML = '<div class="exercise-card" style="text-align:center;min-height:280px;display:flex;flex-direction:column;justify-content:center;">' +
+      '<div class="hint">📇 Cram &middot; ' + done + '/' + total + ' poznanych</div>' +
+      '<div style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:8px 0;">' + word.pl + '</div>' +
+      '<div style="font-size:20px;color:var(--text);margin:8px 0;padding:12px;background:var(--option-bg);border-radius:var(--radius-sm);">' + word.ru + '</div></div>' +
+      '<div style="display:flex;gap:8px;margin-top:0;">' +
+      '<button class="check-btn secondary" onclick="cramAnswer(false)" id="cramNoBtn" style="flex:1;background:var(--error);">❌ Jeszcze nie</button>' +
+      '<button class="check-btn" onclick="cramAnswer(true)" id="cramYesBtn" style="flex:1;">✅ Znam</button></div>';
+    
+    document.getElementById('mainBtn').textContent = '';
+    document.getElementById('mainBtn').disabled = true;
+  }
+}
+
+function flipCram() {
+  state._cramFlipped = true;
+  renderCram();
+}
+
+function cramAnswer(known) {
+  var word = state._cramWords[state._cramIndex];
+  if (!word) return;
+  
+  if (known) {
+    state._cramKnown.push(word);
+  } else {
+    state._cramUnknown.push(word);
+  }
+  
+  state._cramIndex++;
+  state._cramFlipped = false;
+  renderCram();
+}
+
+function finishCram() {
+  var known = state._cramKnown ? state._cramKnown.length : 0;
+  var total = (state._cramKnown ? state._cramKnown.length : 0) + (state._cramUnknown ? state._cramUnknown.length : 0);
+  var pct = total > 0 ? Math.round(known / total * 100) : 0;
+  
+  state.phase = 'tree';
+  state.xp += Math.round(known / 2);
+  saveState();
+  
+  var wrap = document.getElementById('contentWrap');
+  wrap.innerHTML = '<div class="exercise-card" style="text-align:center;">' +
+    '<div style="font-size:48px;margin:12px 0;">' + (pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '💪') + '</div>' +
+    '<h3 style="font-size:20px;margin:8px 0;">' + known + '/' + total + ' (' + pct + '%)</h3>' +
+    '<p style="color:var(--text-light);">' + (pct >= 80 ? 'Świetnie!' : pct >= 50 ? 'Dobra robota!' : 'Jeszcze trochę!') + '</p></div>';
+  
+  document.getElementById('progressStrip').innerHTML = '';
+  document.getElementById('mainBtn').textContent = '← Powrót do kursu';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn secondary';
+  document.getElementById('mainBtn').onclick = function() { render(); };
+  renderTopBar();
+  
+  delete state._cramWords;
+  delete state._cramIndex;
+  delete state._cramFlipped;
+  delete state._cramKnown;
+  delete state._cramUnknown;
+  delete state._cramCycle;
+}
+
+function startPersonalEdit() {
+  state.phase = 'personal-edit';
+  renderPersonalEdit();
+}
+
+function renderPersonalEdit() {
+  if (typeof PERS_VOCAB === 'undefined') { render(); return; }
+  
+  var wrap = document.getElementById('contentWrap');
+  var html = '<div class="exercise-card"><div class="hint">✏️ Edytuj Personal</div>' +
+    '<div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">' + PERS_VOCAB.length + ' słów. Kliknij aby edytować, ✕ aby usunąć.</div>';
+  
+  // List all words
+  html += '<div style="max-height:400px;overflow-y:auto;margin-bottom:12px;">';
+  for (var i = 0; i < PERS_VOCAB.length; i++) {
+    var w = PERS_VOCAB[i];
+    html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--border);">' +
+      '<div style="flex:1;font-weight:600;">' + (w.pl.length > 35 ? w.pl.substring(0, 32) + '...' : w.pl) + '</div>' +
+      '<div style="flex:1;font-size:13px;color:var(--text-light);">' + (w.ru.length > 35 ? w.ru.substring(0, 32) + '...' : w.ru) + '</div>' +
+      '<button onclick="editPersWord(' + i + ')" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;">✏️</button>' +
+      '<button onclick="deletePersWord(' + i + ')" style="background:none;border:1px solid var(--error);border-radius:6px;padding:4px 8px;font-size:12px;color:var(--error);">✕</button></div>';
+  }
+  html += '</div>';
+  
+  // Add new word form
+  html += '<div style="border-top:2px solid var(--primary);padding-top:12px;margin-top:8px;">' +
+    '<div style="font-weight:700;font-size:14px;margin-bottom:8px;color:var(--primary-dark);">+ Dodaj nowe słowo</div>' +
+    '<input type="text" id="newPlInput" placeholder="Polskie słowo..." style="width:100%;padding:10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;margin-bottom:6px;">' +
+    '<input type="text" id="newRuInput" placeholder="Tłumaczenie..." style="width:100%;padding:10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;margin-bottom:8px;">' +
+    '<button class="check-btn" onclick="addPersWord()" style="padding:10px;">Dodaj</button></div>' +
+    '<div style="margin-top:10px;font-size:12px;color:var(--text-light);">💾 Zmiany zapisują się w przeglądarce. Aby zsynchronizować na GitHub, daj znać.</div>' +
+    '</div>';
+  
+  wrap.innerHTML = html;
+  
+  document.getElementById('progressStrip').innerHTML = '';
+  document.getElementById('mainBtn').textContent = '← Powrót do kursu';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn secondary';
+  document.getElementById('mainBtn').onclick = function() { render(); };
+}
+
+function addPersWord() {
+  var pl = document.getElementById('newPlInput').value.trim();
+  var ru = document.getElementById('newRuInput').value.trim();
+  if (!pl || !ru) { showTempFeedback('Wypełnij oba pola!'); return; }
+  
+  var newId = 1;
+  for (var i = 0; i < PERS_VOCAB.length; i++) {
+    if (PERS_VOCAB[i].id >= newId) newId = PERS_VOCAB[i].id + 1;
+  }
+  PERS_VOCAB.push({id: newId, pl: pl, ru: ru});
+  savePersVocab();
+  renderPersonalEdit();
+}
+
+function deletePersWord(idx) {
+  PERS_VOCAB.splice(idx, 1);
+  savePersVocab();
+  renderPersonalEdit();
+}
+
+function editPersWord(idx) {
+  var w = PERS_VOCAB[idx];
+  var newPl = prompt('Edytuj polskie słowo:', w.pl);
+  if (newPl && newPl.trim()) w.pl = newPl.trim();
+  var newRu = prompt('Edytuj tłumaczenie:', w.ru);
+  if (newRu && newRu.trim()) w.ru = newRu.trim();
+  savePersVocab();
+  renderPersonalEdit();
+}
+
+function savePersVocab() {
+  try {
+    localStorage.setItem('polskiB1_pers', JSON.stringify(PERS_VOCAB));
+  } catch(e) {}
+}
 // ========================================================================
 // APP STATE
 // ========================================================================
@@ -1731,7 +1930,22 @@ function loadState() {
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
   }
-  unlockedSkills = null;
+    unlockedSkills = null;
+  // Load personal vocab from localStorage (overrides from file)
+  if (typeof PERS_VOCAB !== 'undefined') {
+    try {
+      var savedPers = localStorage.getItem('polskiB1_pers');
+      if (savedPers) {
+        var parsed = JSON.parse(savedPers);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          PERS_VOCAB.length = 0;
+          for (var pi = 0; pi < parsed.length; pi++) {
+            PERS_VOCAB.push(parsed[pi]);
+          }
+        }
+      }
+    } catch(e) {}
+  }
 }
 function saveState() {
   Storage.set('polskiB1', JSON.stringify({
@@ -1766,6 +1980,8 @@ function render() {
   else if (state.phase === 'exercise') renderExercise();
   else if (state.phase === 'review') renderReview();
   else if (state.phase === 'flashcard') renderFlashcard();
+  else if (state.phase === 'cram') renderCram();
+  else if (state.phase === 'personal-edit') renderPersonalEdit();
   else renderTree();
 }
 
@@ -1828,6 +2044,20 @@ function renderTree() {
   html += '<div class="skill-info"><div class="skill-name">Egzamin próbny</div>';
   html += '<div class="skill-desc">10 pytań, 15 minut. Sprawdź gotowość!</div></div>';
   html += '<div class="skill-status active-txt" style="color:var(--gold);">▶ Start</div></div>';
+  // Personal vocabulary section
+  var persCount = typeof PERS_VOCAB !== 'undefined' ? PERS_VOCAB.length : 0;
+  if (persCount > 0) {
+    html += '<div class="skill-card available" onclick="startCram()" style="margin-bottom:4px;border-left-color:var(--gold);">';
+    html += '<div class="skill-icon">📇</div>';
+    html += '<div class="skill-info"><div class="skill-name">Personal — Cram</div>';
+    html += '<div class="skill-desc">' + persCount + ' słów. Trenuj: poznaj → zapamiętaj</div></div>';
+    html += '<div class="skill-status active-txt">🔁 Cram</div></div>';
+    html += '<div class="skill-card available" onclick="startPersonalEdit()" style="margin-bottom:8px;">';
+    html += '<div class="skill-icon">✏️</div>';
+    html += '<div class="skill-info"><div class="skill-name">Personal — edytuj</div>';
+    html += '<div class="skill-desc">Dodaj/usuń/edytuj słowa</div></div>';
+    html += '<div class="skill-status active-txt">></div></div>';
+  }
   // Error review button
   if (state.errorQueue && state.errorQueue.length > 0) {
     html += '<div class="skill-card available" onclick="startReview()" style="margin-bottom:8px;border-left-color:var(--error);">';
