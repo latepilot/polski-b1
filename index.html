@@ -1741,55 +1741,80 @@ function generateExercise(skillId) {
   const templateGroup = CASE_TEMPLATES[skillId];
   if (!templateGroup) return null;
 
-  const questions = [];
-  // Pick 5-6 templates randomly (or use all if fewer)
-  const available = [...templateGroup.templates];
-  const count = Math.min(available.length, 5 + Math.floor(Math.random() * 2));
+  // Find which case this template uses (extract from first template)
+  const caseMatch = templateGroup.templates[0].sentence.match(/\{\{word\.(\w+)\}\}/);
+  const caseName = caseMatch ? caseMatch[1] : 'nom';
   
-  for (let i = 0; i < count; i++) {
+  const questions = [];
+  const available = [...templateGroup.templates];
+  const usedWords = new Set();
+  const targetCount = Math.min(available.length, 5);
+  
+  for (let i = 0; i < targetCount; i++) {
     const tpl = available.splice(Math.floor(Math.random() * available.length), 1)[0];
     if (!tpl) break;
     
-    const wordKey = pick(tpl.words);
-    const correctForm = getForm(wordKey, 'word');
+    // Pick a word NOT already used in this session
+    let wordKey;
+    const shuffledWords = [...tpl.words].sort(() => Math.random() - 0.5);
+    for (const w of shuffledWords) {
+      if (!usedWords.has(w)) {
+        wordKey = w;
+        usedWords.add(w);
+        break;
+      }
+    }
+    if (!wordKey) wordKey = pick(tpl.words);
     
-    // Generate wrong options from other words in the pool
-    const wrongPool = tpl.words.filter(w => w !== wordKey);
-    const wrongForms = [];
+    const correctForm = getForm(wordKey, caseName);
     const usedForms = new Set([correctForm]);
     
-    // Get up to 3 wrong forms
-    for (let j = 0; j < Math.min(3, wrongPool.length); j++) {
-      const wrongWord = wrongPool[j];
-      const wrongForm = getForm(wrongWord, 'word');
+    // Generate wrong forms from different words
+    const wrongWords = tpl.words.filter(w => w !== wordKey).sort(() => Math.random() - 0.5);
+    const wrongForms = [];
+    for (let j = 0; j < wrongWords.length && wrongForms.length < 3; j++) {
+      const wrongForm = getForm(wrongWords[j], caseName);
       if (!usedForms.has(wrongForm)) {
         wrongForms.push(wrongForm);
         usedForms.add(wrongForm);
       }
     }
-    
-    // Pad with nominative forms if needed
+    // Pad with other-case forms
+    const otherCases = ['nom','gen','dat','acc','inst','loc','voc'].filter(c => c !== caseName);
     while (wrongForms.length < 3) {
+      const otherCase = otherCases[wrongForms.length % otherCases.length];
       const w = pick(tpl.words);
-      const f = getForm(w, 'nom');
+      const f = getForm(w, otherCase);
       if (!usedForms.has(f)) {
         wrongForms.push(f);
         usedForms.add(f);
       }
     }
     
-    // Shuffle options
-    const options = [correctForm, ...wrongForms.slice(0, 3)];
-    const shuffled = options.sort(() => Math.random() - 0.5);
-    const correctIdx = shuffled.indexOf(correctForm);
+    // Build question text with blank
+    const blankSentence = tpl.sentence.replace(new RegExp('\\{\\{word\\.\\w+\\}\\}', 'g'), '______');
     
-    questions.push({
-      type: 'choice',
-      question: `Uzupełnij: ${tpl.sentence.replace('{{word.gen}}', '_____').replace('{{word.dat}}', '_____').replace('{{word.acc}}', '_____').replace('{{word.inst}}', '_____').replace('{{word.loc}}', '_____').replace('{{word.voc}}', '_____')}`,
-      options: shuffled,
-      correct: correctIdx,
-      explanation: `${tpl.note}: ${correctForm}`,
-    });
+    // Alternate: choice/fill 50/50
+    if (i % 2 === 0) {
+      const options = [correctForm, ...wrongForms.slice(0, 3)];
+      const shuffled = options.sort(() => Math.random() - 0.5);
+      const correctIdx = shuffled.indexOf(correctForm);
+      questions.push({
+        type: 'choice',
+        question: `Uzupełnij: ${blankSentence}`,
+        options: shuffled,
+        correct: correctIdx,
+        explanation: `${tpl.note}: ${correctForm}`,
+      });
+    } else {
+      questions.push({
+        type: 'fill',
+        question: `Uzupełnij poprawną formą: ${blankSentence}`,
+        polish: '',
+        answer: correctForm,
+        explanation: `${tpl.note}: ${correctForm}`,
+      });
+    }
   }
   
   return {
