@@ -120,6 +120,8 @@ let PERS_VOCAB = [
   {id: 117, pl: 'Właściwie „Właściwie to nie byłem pewien, czy chcę tam pójść.”', ru: 'в принципе, фактически, на самом деле «Вообще-то я не был уверен, хочу ли туда идти.»'},
   {id: 118, pl: 'Według mnie', ru: 'По-моему'},
   {id: 119, pl: 'wykwintny', ru: 'изысканный'},
+  {id: 120, pl: 'niechęć / nie chce mi się', ru: 'нежелание / не хотеть'},
+  {id: 121, pl: 'niepożądany', ru: 'нежелательный'},
 ];
 function nextPersId() {
   var maxId = 0;
