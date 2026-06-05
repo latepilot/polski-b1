@@ -1774,19 +1774,6 @@ function cramAnswer(known) {
   state._cramIndex++;
   state._cramFlipped = false;
   renderCram();
-}function cramAnswer(known) {
-  var word = state._cramWords[state._cramIndex];
-  if (!word) return;
-  
-  if (known) {
-    state._cramKnown.push(word);
-  } else {
-    state._cramUnknown.push(word);
-  }
-  
-  state._cramIndex++;
-  state._cramFlipped = false;
-  renderCram();
 }
 
 function finishCram() {
@@ -3240,62 +3227,6 @@ function hideFlashcardWord() {
   state.hiddenFlashcardWords.push(word);
   saveState();
   flashcardNext();
-}function toggleFcShuffle() {
-  state.fcShuffle = !state.fcShuffle;
-  state.currentQ = 0;
-  state._fcFlipped = false;
-  saveState();
-  renderFlashcard();
-}
-
-function flashcardFlip() {
-  state._fcFlipped = true;
-  renderFlashcard();
-}
-
-function flashcardNext() {
-  state._fcFlipped = false;
-  state.currentQ++;
-  renderFlashcard();
-}
-
-function hideFlashcardWord() {
-  var hidden = new Set(state.hiddenFlashcardWords || []);
-  var visible = [];
-  if (typeof PERS_VOCAB !== 'undefined') {
-    for (var pi = 0; pi < PERS_VOCAB.length; pi++) {
-      var w = PERS_VOCAB[pi].pl;
-      if (!hidden.has(w)) visible.push(w);
-    }
-  }
-  if (typeof VOCAB_LIST !== 'undefined') {
-    var existing = new Set(visible);
-    for (var vi = 0; vi < VOCAB_LIST.length; vi++) {
-      if (!hidden.has(VOCAB_LIST[vi].pl) && !existing.has(VOCAB_LIST[vi].pl)) visible.push(VOCAB_LIST[vi].pl);
-    }
-  }
-  var word = visible[state.currentQ];
-  if (!word) { flashcardNext(); return; }
-  
-  if (!state.hiddenFlashcardWords) state.hiddenFlashcardWords = [];
-  state.hiddenFlashcardWords.push(word);
-  saveState();
-  flashcardNext();
-}function hideFlashcardWord() {
-  var allWords = typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.map(function(e) { return e.pl; }) : Object.keys(WORD_BANK);
-  var hidden = new Set(state.hiddenFlashcardWords || []);
-  var words = allWords.filter(function(w) { return !hidden.has(w); });
-  var word = words[state.currentQ];
-  if (!word) return;
-  
-  if (!state.hiddenFlashcardWords) state.hiddenFlashcardWords = [];
-  state.hiddenFlashcardWords.push(word);
-  saveState();
-  
-  // Check if we're past the end
-  var newWords = allWords.filter(function(w) { return !new Set(state.hiddenFlashcardWords).has(w); });
-  if (state.currentQ >= newWords.length) state.currentQ = Math.max(0, newWords.length - 1);
-  renderFlashcard();
 }
 
 function handleMainAction() {
