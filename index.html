@@ -1896,8 +1896,9 @@ let state = {
   correctInLesson: 0,
   progressDots: [],
   phase: 'tree', // 'tree' | 'lesson' | 'exercise' | 'review' | 'flashcard'
-  errorQueue: [], // {skillId, wordKey, caseName, question, correctAnswer, context}
-  reviewCorrectCount: {}, // key -> count of consecutive correct answers
+  errorQueue: [],
+  reviewCorrectCount: {},
+  hiddenFlashcardWords: [], // words removed from flashcard rotation
 };
 
 // Safe storage wrapper — falls back to memory when localStorage is blocked (file:// on mobile)
@@ -1953,6 +1954,7 @@ function saveState() {
     level: state.level, completedSkills: state.completedSkills,
     skillProgress: state.skillProgress,
     errorQueue: state.errorQueue,
+    hiddenFlashcardWords: state.hiddenFlashcardWords,
   }));
 }
 
@@ -2033,11 +2035,20 @@ function renderTree() {
 
   let html = '<div class="unit-tree">';
   // Flashcard button (always at top)
-  html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:8px;">';
+  var hiddenCount = state.hiddenFlashcardWords ? state.hiddenFlashcardWords.length : 0;
+  html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:4px;">';
   html += '<div class="skill-icon">🃏</div>';
   html += '<div class="skill-info"><div class="skill-name">Fiszki — słownictwo</div>';
-  html += '<div class="skill-desc">Przeglądaj wszystkie słowa z bazy</div></div>';
+  html += '<div class="skill-desc">2000 słów' + (hiddenCount > 0 ? ' (' + hiddenCount + ' ukrytych)' : '') + '</div></div>';
   html += '<div class="skill-status active-txt">▶ Przeglądaj</div></div>';
+  // Restore hidden words button
+  if (hiddenCount > 0) {
+    html += '<div class="skill-card available" onclick="restoreHiddenFlashcard()" style="margin-bottom:8px;border-left-color:var(--gold);">';
+    html += '<div class="skill-icon">↩️</div>';
+    html += '<div class="skill-info"><div class="skill-name">Przywróć ukryte słowa</div>';
+    html += '<div class="skill-desc">' + hiddenCount + ' słów ukrytych. Kliknij aby przywrócić</div></div>';
+    html += '<div class="skill-status active-txt" style="color:var(--gold);">' + hiddenCount + '</div></div>';
+  }
     // Exam simulation button
   html += '<div class="skill-card available" onclick="startExam()" style="margin-bottom:8px;border-left-color:var(--gold);">';
   html += '<div class="skill-icon">🎯</div>';
@@ -3052,36 +3063,89 @@ function startFlashcard() {
   renderFlashcard();
 }
 
+
+function restoreHiddenFlashcard() {
+  if (!state.hiddenFlashcardWords || state.hiddenFlashcardWords.length === 0) return;
+  state.hiddenFlashcardWords = [];
+  saveState();
+  render();
+}
 function renderFlashcard() {
-  // Collect all unique words from VOCAB_LIST
-  var words = typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.map(function(e) { return e.pl; }) : Object.keys(WORD_BANK);
+  // Collect all unique words from VOCAB_LIST, filter hidden
+  var allWords = typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.map(function(e) { return e.pl; }) : Object.keys(WORD_BANK);
+  var hidden = new Set(state.hiddenFlashcardWords || []);
+  var words = allWords.filter(function(w) { return !hidden.has(w); });
+  
+  if (words.length === 0) {
+    document.getElementById('contentWrap').innerHTML = '<div class="exercise-card" style="text-align:center;"><div class="hint">🃏 Fiszki</div><div style="font-size:48px;margin:12px 0;">✅</div><div style="font-size:18px;font-weight:600;">Wszystkie słowa ukryte!</div><div style="font-size:13px;color:var(--text-light);margin-top:8px;">' + hidden.size + ' słów ukryto. Przywróć je w menu.</div></div>';
+    document.getElementById('progressStrip').innerHTML = '';
+    document.getElementById('mainBtn').textContent = '← Powrót';
+    document.getElementById('mainBtn').disabled = false;
+    document.getElementById('mainBtn').className = 'check-btn secondary';
+    document.getElementById('mainBtn').onclick = function() { render(); };
+    return;
+  }
+  
   if (state.currentQ >= words.length) state.currentQ = 0;
   
   var wordKey = words[state.currentQ];
-  var data = WORD_BANK[wordKey];
-  if (!data) { state.currentQ++; renderFlashcard(); return; }
+  var totalVisible = words.length;
+  var totalHidden = hidden.size;
   
+  var data = WORD_BANK[wordKey];
   var genders = { 'm-os': 'męski osobowy', 'm-nieos': 'męski nieosobowy', 'f': 'żeński', 'n': 'nijaki' };
   
   document.getElementById('progressStrip').innerHTML = '';
   
-  var wrap = document.getElementById('contentWrap');
-  wrap.innerHTML = '<div class="exercise-card" style="text-align:center;">' +
-    '<div class="hint">🃏 Fiszki &middot; ' + (state.currentQ+1) + ' z ' + words.length + '</div>' +
-    '<div style="font-size:48px;margin:12px 0;">📖</div>' +
-    '<div style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:12px 0;">' + wordKey + '</div>' +
-    '<div style="font-size:14px;color:var(--text-light);margin-bottom:16px;">rodzaj: ' + (genders[data.g] || data.g) + '</div>' +
-    '<table style="width:100%;border-collapse:collapse;font-size:14px;margin:12px 0;">' +
-    '<tr><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Przypadek</th>' +
-    '<th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Forma</th><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Pytanie</th></tr>' +
-    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Mianownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.nom + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kto? co?</td></tr>' +
-    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Dopełniacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.gen + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? czego?</td></tr>' +
-    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Celownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.dat + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">komu? czemu?</td></tr>' +
-    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Biernik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.acc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? co?</td></tr>' +
-    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Narzędnik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.inst + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">z kim? z czym?</td></tr>' +
-    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Miejscownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.loc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">o kim? o czym?</td></tr>' +
-    '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Wołacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.voc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">zwrot</td></tr>' +
-    '</table></div>';
+  var html = '<div class="exercise-card" style="text-align:center;">' +
+    '<div class="hint">🃏 Fiszki &middot; ' + (state.currentQ+1) + ' z ' + totalVisible + ' (' + totalHidden + ' ukrytych)</div>';
+  
+  if (data) {
+    html += '<div style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:12px 0;">' + wordKey + '</div>' +
+      '<div style="font-size:14px;color:var(--text-light);margin-bottom:16px;">rodzaj: ' + (genders[data.g] || data.g) + '</div>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:14px;margin:12px 0;">' +
+      '<tr><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Przypadek</th>' +
+      '<th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Forma</th><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Pytanie</th></tr>' +
+      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Mianownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.nom + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kto? co?</td></tr>' +
+      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Dopełniacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.gen + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? czego?</td></tr>' +
+      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Celownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.dat + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">komu? czemu?</td></tr>' +
+      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Biernik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.acc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? co?</td></tr>' +
+      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Narzędnik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.inst + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">z kim? z czym?</td></tr>' +
+      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Miejscownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.loc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">o kim? o czym?</td></tr>' +
+      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Wołacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.voc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">zwrot</td></tr>' +
+      '</table>';
+  } else {
+    // Look up translation from VOCAB_LIST
+    var translation = '';
+    if (typeof VOCAB_LIST !== 'undefined') {
+      for (var vi = 0; vi < VOCAB_LIST.length; vi++) {
+        if (VOCAB_LIST[vi].pl === wordKey && VOCAB_LIST[vi].ru) {
+          translation = VOCAB_LIST[vi].ru;
+          break;
+        }
+      }
+    }
+    html += '<div style="font-size:24px;font-weight:600;margin:12px 0;">' + wordKey + '</div>';
+    if (translation) {
+      html += '<div style="font-size:16px;color:var(--text);margin-bottom:12px;padding:10px;background:var(--option-bg);border-radius:var(--radius-sm);">' + translation + '</div>';
+    } else {
+      // Try personal vocab
+      if (typeof PERS_VOCAB !== 'undefined') {
+        for (var pi = 0; pi < PERS_VOCAB.length; pi++) {
+          if (PERS_VOCAB[pi].pl === wordKey) {
+            html += '<div style="font-size:16px;color:var(--text);margin-bottom:12px;padding:10px;background:var(--option-bg);border-radius:var(--radius-sm);">' + PERS_VOCAB[pi].ru + '</div>';
+            break;
+          }
+        }
+      }
+    }
+  }
+  
+  html += '<div style="margin-top:8px;">' +
+    '<button onclick="hideFlashcardWord()" style="background:var(--card);border:1px solid var(--error);border-radius:var(--radius-sm);padding:8px 16px;font-size:13px;color:var(--error);cursor:pointer;">✕ Nie pokazuj</button>' +
+    '</div></div>';
+  
+  document.getElementById('contentWrap').innerHTML = html;
   
   document.getElementById('mainBtn').textContent = 'Następne →';
   document.getElementById('mainBtn').disabled = false;
@@ -3090,16 +3154,23 @@ function renderFlashcard() {
     state.currentQ++;
     renderFlashcard();
   };
-  // Also add a "back" button quickly
-  var backBtn = document.createElement('button');
-  backBtn.textContent = '← Poprzednie';
-  backBtn.style.cssText = 'padding:12px;background:var(--card);border:2px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-weight:600;color:var(--text);margin-right:8px;cursor:pointer;';
-  backBtn.onclick = function() {
-    if (state.currentQ > 0) state.currentQ--;
-    renderFlashcard();
-  };
-  var btnWrap = document.getElementById('bottomWrap');
-  // Don't add back button for now, just use the main one
+}
+
+function hideFlashcardWord() {
+  var allWords = typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.map(function(e) { return e.pl; }) : Object.keys(WORD_BANK);
+  var hidden = new Set(state.hiddenFlashcardWords || []);
+  var words = allWords.filter(function(w) { return !hidden.has(w); });
+  var word = words[state.currentQ];
+  if (!word) return;
+  
+  if (!state.hiddenFlashcardWords) state.hiddenFlashcardWords = [];
+  state.hiddenFlashcardWords.push(word);
+  saveState();
+  
+  // Check if we're past the end
+  var newWords = allWords.filter(function(w) { return !new Set(state.hiddenFlashcardWords).has(w); });
+  if (state.currentQ >= newWords.length) state.currentQ = Math.max(0, newWords.length - 1);
+  renderFlashcard();
 }
 
 function handleMainAction() {
