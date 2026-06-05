@@ -3141,15 +3141,10 @@ function renderFlashcard() {
   html += '</div>';
   document.getElementById('contentWrap').innerHTML = html;
   
-  if (!flipped) {
-    document.getElementById('mainBtn').textContent = '';
-    document.getElementById('mainBtn').disabled = true;
-  } else {
-    document.getElementById('mainBtn').textContent = 'Następne →';
-    document.getElementById('mainBtn').disabled = false;
-    document.getElementById('mainBtn').className = 'check-btn secondary';
-    document.getElementById('mainBtn').onclick = flashcardNext;
-  }
+  document.getElementById('mainBtn').textContent = 'Następne →';
+  document.getElementById('mainBtn').disabled = false;
+  document.getElementById('mainBtn').className = 'check-btn secondary';
+  document.getElementById('mainBtn').onclick = flashcardNext;
 }
 
 function toggleFcDirection() {
