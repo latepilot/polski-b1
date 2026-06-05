@@ -511,7 +511,7 @@ input, textarea { font-family: inherit; }
       <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;" id="themeToggle">🌙</div>
       <div class="stat-item xp"><span class="icon">⚡</span><span id="xpDisplay">0</span></div>
       <div class="stat-item streak"><span class="icon">🔥</span><span id="streakDisplay">0</span></div>
-      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);padding:2px 8px;" title="Główna">🏠</div>
+      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);padding:2px 8px;" title="Główna">⌂</div>
     </div>
   </div>
 
@@ -523,17 +523,17 @@ input, textarea { font-family: inherit; }
 
   <!-- BOTTOM BUTTON -->
   <div class="bottom-btn-wrap" id="bottomWrap">
-    <button class="check-btn" id="mainBtn" onclick="handleMainAction()">Let's go! 🚀</button>
+    <button class="check-btn" id="mainBtn" onclick="handleMainAction()">Let's go! →</button>
   </div>
 </div>
 
 <!-- LEVEL UP MODAL -->
 <div class="modal-overlay" id="levelModal" style="display:none;">
   <div class="modal-box">
-    <div class="big-icon">🎉</div>
+    <div class="big-icon">★</div>
     <h2 id="levelTitle">Level Up!</h2>
     <p id="levelMsg">You're making great progress!</p>
-    <button onclick="closeLevelModal()">Awesome! 🚀</button>
+    <button onclick="closeLevelModal()">Awesome! →</button>
   </div>
 </div>
 
@@ -546,39 +546,39 @@ input, textarea { font-family: inherit; }
 // ========================================================================
 
 const SKILLS = [
-  { id: 'grammar-nouns', icon: '📚', name: 'Rzeczownik — rodzaj & liczba', 
+  { id: 'grammar-nouns', icon: '▤', name: 'Rzeczownik — rodzaj & liczba', 
     desc: 'Rodzaj rzeczownika, liczba pojedyncza i mnoga', unit: 1, order: 1, type: 'lesson' },
-  { id: 'grammar-cases-nom', icon: '🏠', name: 'Mianownik — Kto? Co?',
+  { id: 'grammar-cases-nom', icon: '⌂', name: 'Mianownik — Kto? Co?',
     desc: 'Mianownik: podstawowa forma, końcówki', unit: 1, order: 2, type: 'lesson' },
   { id: 'ex-nom-pl', icon: '✍️', name: 'Ćwiczenia: Mianownik l.mn.', 
     desc: 'Formy mianownika liczby mnogiej', unit: 1, order: 3, type: 'exercise' },
-  { id: 'grammar-gen', icon: '📦', name: 'Dopełniacz — Kogo? Czego?',
+  { id: 'grammar-gen', icon: '▤', name: 'Dopełniacz — Kogo? Czego?',
     desc: 'Dopełniacz: końcówki -a/-u, użycie z przeczeniem', unit: 2, order: 1, type: 'lesson' },
   { id: 'ex-gen', icon: '✍️', name: 'Ćwiczenia: Dopełniacz',
     desc: 'Dopełniacz w zdaniach', unit: 2, order: 2, type: 'exercise' },
-  { id: 'grammar-dat', icon: '🎁', name: 'Celownik — Komu? Czemu?',
+  { id: 'grammar-dat', icon: '★', name: 'Celownik — Komu? Czemu?',
     desc: 'Celownik: końcówki -owi/-u/-e', unit: 2, order: 3, type: 'lesson' },
   { id: 'ex-dat', icon: '✍️', name: 'Ćwiczenia: Celownik',
     desc: 'Celownik w zdaniach', unit: 2, order: 4, type: 'exercise' },
-  { id: 'grammar-acc', icon: '🎯', name: 'Biernik — Kogo? Co?',
+  { id: 'grammar-acc', icon: '◎', name: 'Biernik — Kogo? Co?',
     desc: 'Biernik: rodzaj męski żeński i nijaki', unit: 3, order: 1, type: 'lesson' },
   { id: 'ex-acc', icon: '✍️', name: 'Ćwiczenia: Biernik',
     desc: 'Biernik w zdaniach', unit: 3, order: 2, type: 'exercise' },
-  { id: 'grammar-inst', icon: '🔧', name: 'Narzędnik — Z kim? Z czym?',
+  { id: 'grammar-inst', icon: '⚙', name: 'Narzędnik — Z kim? Z czym?',
     desc: 'Narzędnik: końcówki -em/-ą', unit: 3, order: 3, type: 'lesson' },
   { id: 'ex-inst', icon: '✍️', name: 'Ćwiczenia: Narzędnik',
     desc: 'Narzędnik w zdaniach', unit: 3, order: 4, type: 'exercise' },
-  { id: 'grammar-loc', icon: '📍', name: 'Miejscownik — O kim? O czym?',
+  { id: 'grammar-loc', icon: '⚑', name: 'Miejscownik — O kim? O czym?',
     desc: 'Miejscownik: końcówki -e/-u, wymiany głosek', unit: 4, order: 1, type: 'lesson' },
   { id: 'ex-loc', icon: '✍️', name: 'Ćwiczenia: Miejscownik',
     desc: 'Miejscownik w zdaniach', unit: 4, order: 2, type: 'exercise' },
-  { id: 'grammar-voc', icon: '📢', name: 'Wołacz — Zwroty do adresata',
+  { id: 'grammar-voc', icon: '☏', name: 'Wołacz — Zwroty do adresata',
     desc: 'Wołacz w listach i oficjalnych zwrotach', unit: 4, order: 3, type: 'lesson' },
   { id: 'ex-voc', icon: '✍️', name: 'Ćwiczenia: Wołacz',
     desc: 'Formy wołacza', unit: 4, order: 4, type: 'exercise' },
-  { id: 'ex-cases-mix', icon: '🔄', name: 'Wszystkie przypadki — mix',
+  { id: 'ex-cases-mix', icon: '⟳', name: 'Wszystkie przypadki — mix',
     desc: 'Różne przypadki w zdaniach', unit: 5, order: 1, type: 'exercise' },
-  { id: 'grammar-adj', icon: '🎨', name: 'Przymiotnik — odmiana',
+  { id: 'grammar-adj', icon: '◈', name: 'Przymiotnik — odmiana',
     desc: 'Odmiana przymiotników przez przypadki', unit: 5, order: 2, type: 'lesson' },
   { id: 'ex-adj', icon: '✍️', name: 'Ćwiczenia: Przymiotniki',
     desc: 'Przymiotniki w zdaniach', unit: 5, order: 3, type: 'exercise' },
@@ -587,19 +587,19 @@ const SKILLS = [
   { id: 'ex-aspect', icon: '✍️', name: 'Ćwiczenia: Aspekt',
     desc: 'Dokonany czy niedokonany?', unit: 5, order: 5, type: 'exercise' },
   // Unit 6: Vocab & Reading
-  { id: 'vocab-house', icon: '🏡', name: 'Przedmioty w domu',
+  { id: 'vocab-house', icon: '⌂', name: 'Przedmioty w domu',
     desc: 'Słownictwo: meble, sprzęty domowe', unit: 6, order: 1, type: 'lesson' },
   { id: 'ex-vocab-house', icon: '✍️', name: 'Ćwiczenia: W domu',
     desc: 'Co to za przedmiot?', unit: 6, order: 2, type: 'exercise' },
-  { id: 'vocab-appearance', icon: '👤', name: 'Wygląd człowieka',
+  { id: 'vocab-appearance', icon: '◎', name: 'Wygląd człowieka',
     desc: 'Opis wyglądu: wzrost, włosy, oczy', unit: 6, order: 3, type: 'lesson' },
   { id: 'ex-vocab-appearance', icon: '✍️', name: 'Ćwiczenia: Wygląd',
     desc: 'Opisz osobę', unit: 6, order: 4, type: 'exercise' },
-  { id: 'exam-read-1', icon: '📖', name: 'Czytanie — test 1',
+  { id: 'exam-read-1', icon: '☰', name: 'Czytanie — test 1',
     desc: 'Fragmenty tekstów, wybierz odpowiedź', unit: 7, order: 1, type: 'exercise' },
-  { id: 'exam-read-2', icon: '📖', name: 'Czytanie — test 2 (TAK/NIE)',
+  { id: 'exam-read-2', icon: '☰', name: 'Czytanie — test 2 (TAK/NIE)',
     desc: 'Zrozumienie tekstu, TAK czy NIE?', unit: 7, order: 2, type: 'exercise' },
-  { id: 'exam-read-3', icon: '📖', name: 'Czytanie — dopasowanie',
+  { id: 'exam-read-3', icon: '☰', name: 'Czytanie — dopasowanie',
     desc: 'Nagłówki do tekstów', unit: 7, order: 3, type: 'exercise' },
   // Unit 8: Writing
   { id: 'writing-letters', icon: '✉️', name: 'Pisanie — Listy',
@@ -610,17 +610,17 @@ const SKILLS = [
     desc: 'Napisz pozdrowienia / zaproszenie', unit: 8, order: 3, type: 'exercise' },
   { id: 'writing-practice-2', icon: '✏️', name: 'Pisanie — Ćwiczenie 2',
     desc: 'Napisz opis osoby / opowiadanie', unit: 8, order: 4, type: 'exercise' },
-  { id: 'exam-listening', icon: '🎧', name: 'Słuchanie — kontekst',
+  { id: 'exam-listening', icon: '♪', name: 'Słuchanie — kontekst',
     desc: 'Gdzie pada ta wypowiedź?', unit: 7, order: 4, type: 'exercise' },
-  { id: 'vocab-markers', icon: '🏷️', name: 'Słowa-markery do argumentacji',
+  { id: 'vocab-markers', icon: '§️', name: 'Słowa-markery do argumentacji',
     desc: 'Przydatne zwroty do eseju', unit: 8, order: 5, type: 'lesson' },
-  { id: 'ex-dialogues-1', icon: '💬', name: 'Dialogi — Rozmowy 1',
+  { id: 'ex-dialogues-1', icon: '☏', name: 'Dialogi — Rozmowy 1',
     desc: 'Sytuacje z życia: pogotowie, zakupy, wizyta', unit: 7, order: 5, type: 'exercise' },
-  { id: 'ex-dialogues-2', icon: '💬', name: 'Dialogi — Rozmowy 2',
+  { id: 'ex-dialogues-2', icon: '☏', name: 'Dialogi — Rozmowy 2',
     desc: 'Sytuacje z życia: zaproszenia, podróż, praca', unit: 7, order: 6, type: 'exercise' },
-  { id: 'ex-dialogues-3', icon: '💬', name: 'Dialogi — Rozmowy 3',
+  { id: 'ex-dialogues-3', icon: '☏', name: 'Dialogi — Rozmowy 3',
     desc: 'Sytuacje z życia: problemy, emocje, kłopoty', unit: 8, order: 6, type: 'exercise' },
-  { id: 'ex-vocab-extended', icon: '🗂️', name: 'Słownictwo — rozszerzone',
+  { id: 'ex-vocab-extended', icon: '▤️', name: 'Słownictwo — rozszerzone',
     desc: 'Dom: kuchnia, salon, łazienka. Wygląd: cechy charakteru', unit: 6, order: 5, type: 'exercise' },
 ];
 
@@ -629,7 +629,7 @@ function renderLesson(lessonId) {
   switch(lessonId) {
     case 'grammar-nouns':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Rzeczownik — Rodzaj i liczba</div>
+        <div class="hint">🔒  Rzeczownik — Rodzaj i liczba</div>
         <h3>Rodzaj rzeczownika (Rodzaj)</h3>
         <p>W języku polskim są trzy rodzaje w liczbie pojedynczej:</p>
         <table>
@@ -638,7 +638,7 @@ function renderLesson(lessonId) {
           <tr><td>żeński (żeński)</td><td>ta</td><td>-a</td><td>mama, ulica, córka, kawa</td></tr>
           <tr><td>nijaki (nijaki)</td><td>to</td><td>-o, -e, -ę</td><td>kino, mieszkanie, imię</td></tr>
         </table>
-        <div class="highlight">💡 Uwaga! Niektóre rzeczowniki męskie kończą się na -a (mężczyzna, kolega, dentysta).</div>
+        <div class="highlight">⚑ Uwaga! Niektóre rzeczowniki męskie kończą się na -a (mężczyzna, kolega, dentysta).</div>
         <h3>Liczba mnoga (Liczba mnoga)</h3>
         <p>W liczbie mnogiej wyróżniamy:</p>
         <table>
@@ -655,7 +655,7 @@ function renderLesson(lessonId) {
       </div>`;
     case 'grammar-cases-nom':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Mianownik (Nominative)</div>
+        <div class="hint">🔒  Mianownik (Nominative)</div>
         <p>Mianownik odpowiada na pytania <strong>kto? co?</strong> — to podstawowa forma rzeczownika.</p>
         <h3>Końcówki liczby mnogiej</h3>
         <table>
@@ -677,7 +677,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-gen':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Dopełniacz (Genitive) — Kogo? Czego?</div>
+        <div class="hint">🔒  Dopełniacz (Genitive) — Kogo? Czego?</div>
         <p>Dopełniacz używa się po: <strong>bez, dla, do, od, z, naprzeciwko, obok</strong>
         i z przeczeniem: <em>Nie mam... Nie widzę...</em></p>
         <table>
@@ -698,7 +698,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-dat':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Celownik (Dative) — Komu? Czemu?</div>
+        <div class="hint">🔒  Celownik (Dative) — Komu? Czemu?</div>
         <p>Celownik po: <strong>dzięki, ku, przeciw</strong>. Z czasownikami: <strong>dać, dziękować, pomagać, powiedzieć, obiecać</strong>.</p>
         <table>
           <tr><th>Rodzaj</th><th>Końcówka</th><th>Przykład</th></tr>
@@ -711,7 +711,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-acc':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Biernik (Accusative) — Kogo? Co?</div>
+        <div class="hint">🔒  Biernik (Accusative) — Kogo? Co?</div>
         <p>Biernik po: <strong>na, pod, przez, nad, w</strong>. Z czasownikami: <strong>mieć, lubić, jeść, kupować, czytać, znać, oglądać, prosić</strong>.</p>
         <table>
           <tr><th>Rodzaj</th><th>Końcówka lp.</th><th>Przykład</th></tr>
@@ -725,7 +725,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-inst':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Narzędnik (Instrumental) — Z kim? Z czym?</div>
+        <div class="hint">🔒  Narzędnik (Instrumental) — Z kim? Z czym?</div>
         <p>Po: <strong>nad, pod, przed, za, między</strong>. Po czasownikach typu <em>być, zostać, pracować jako</em>.</p>
         <table>
           <tr><th>Rodzaj</th><th>Końcówka</th><th>Przykład</th></tr>
@@ -739,7 +739,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-loc':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Miejscownik (Locative) — O kim? O czym?</div>
+        <div class="hint">🔒  Miejscownik (Locative) — O kim? O czym?</div>
         <p>Po przyimkach: <strong>na, po, o, przy, w(e)</strong>.</p>
         <table>
           <tr><th>Końcówka</th><th>Kiedy?</th><th>Przykład</th></tr>
@@ -760,7 +760,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-voc':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Wołacz (Vocative) — Zwroty do adresata</div>
+        <div class="hint">🔒  Wołacz (Vocative) — Zwroty do adresata</div>
         <p>Wołacza używamy, gdy się do kogoś zwracamy. W mowie potocznej często zastępuje go mianownik. 
         W oficjalnych sytuacjach — używamy wołacza!</p>
         <table>
@@ -781,7 +781,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-adj':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Przymiotnik — odmiana przez przypadki</div>
+        <div class="hint">🔒  Przymiotnik — odmiana przez przypadki</div>
         <p>Przymiotnik zgadza się z rzeczownikiem w rodzaju, liczbie i przypadku.</p>
         <table>
           <tr><th>Przypadek</th><th>męski</th><th>żeński</th><th>nijaki</th></tr>
@@ -800,7 +800,7 @@ chłopiec → chłopcy
       </div>`;
     case 'grammar-aspect':
       return `<div class="learn-content exercise-card">
-        <div class="hint">📘 Aspekt czasownika: dokonany i niedokonany</div>
+        <div class="hint">🔒  Aspekt czasownika: dokonany i niedokonany</div>
         <table>
           <tr><th>Niedokonany (imperfective)</th><th>Dokonany (perfective)</th></tr>
           <tr><td>Proces / czynność w trakcie</td><td>Wynik / zakończenie</td></tr>
@@ -819,7 +819,7 @@ chłopiec → chłopcy
       </div>`;
     case 'vocab-house':
       return `<div class="learn-content exercise-card">
-        <div class="hint">🏡 Przedmioty w domu</div>
+        <div class="hint">⌂ Przedmioty w domu</div>
         <table>
           <tr><th>Polski</th><th>Polski</th><th>Polski</th></tr>
           <tr><td>łóżko — bed</td><td>krzesło — chair</td><td>stół — table</td></tr>
@@ -833,7 +833,7 @@ chłopiec → chłopcy
       </div>`;
     case 'vocab-appearance':
       return `<div class="learn-content exercise-card">
-        <div class="hint">👤 Wygląd człowieka</div>
+        <div class="hint">◎ Wygląd człowieka</div>
         <h3>Wzrost i sylwetka</h3>
         <p>wysoki, średniego wzrostu, niski, szczupły, gruby, umięśniony</p>
         <h3>Włosy</h3>
@@ -883,7 +883,7 @@ Z poważaniem,<br>
       </div>`;
     case 'vocab-markers':
       return `<div class="learn-content exercise-card">
-        <div class="hint">🏷️ Słowa-markery do tekstu argumentacyjnego</div>
+        <div class="hint">§️ Słowa-markery do tekstu argumentacyjnego</div>
         <h3>Wprowadzanie tematu</h3>
         <p><em>Ostatnio wszyscy mówią o… Jest to temat… Warto zastanowić się nad… Chciałbym poruszyć kwestię…</em></p>
         <h3>Wyrażanie opinii</h3>
@@ -907,7 +907,7 @@ Podsumowując, małe zmiany w codziennym życiu mają duże znaczenie."</em>
         </div>
       </div>`;
     default:
-      return `<div class="exercise-card"><div class="hint">📘 Lekcja</div><p>Treść w przygotowaniu.</p></div>`;
+      return `<div class="exercise-card"><div class="hint">🔒  Lekcja</div><p>Treść w przygotowaniu.</p></div>`;
   }
 }
 
@@ -1730,7 +1730,7 @@ function renderCram() {
   
   document.getElementById('progressStrip').innerHTML = '';
   
-  var shuffleIcon = state.fcShuffle ? '🔀' : '📇';
+  var shuffleIcon = state.fcShuffle ? '⇌' : '☰';
   var html = '<div class="exercise-card" style="text-align:center;min-height:260px;">' +
     '<div class="hint">' + shuffleIcon + ' Cram &middot; ' + done + '/' + total + ' poznanych</div>';
   
@@ -1741,13 +1741,13 @@ function renderCram() {
     // Show translation
     html += '<div style="font-size:18px;color:var(--text);margin:8px 0 16px;padding:12px;background:var(--option-bg);border-radius:var(--radius-sm);">' + word.ru + '</div>';
   } else {
-    html += '<div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">👆 Kliknij słowo aby zobaczyć tłumaczenie</div>';
+    html += '<div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">↑ Kliknij słowo aby zobaczyć tłumaczenie</div>';
   }
   
   // Always visible: Znam / Jeszcze nie buttons
   html += '<div style="display:flex;gap:8px;margin-top:4px;">' +
-    '<button onclick="cramAnswer(false)" style="flex:1;padding:14px;background:var(--card);border:2px solid var(--error);border-radius:var(--radius-sm);font-size:16px;font-weight:700;color:var(--error);cursor:pointer;">❌ Jeszcze nie</button>' +
-    '<button onclick="cramAnswer(true)" style="flex:1;padding:14px;background:var(--primary);border:2px solid var(--primary);border-radius:var(--radius-sm);font-size:16px;font-weight:700;color:#fff;cursor:pointer;">✅ Znam</button></div>' +
+    '<button onclick="cramAnswer(false)" style="flex:1;padding:14px;background:var(--card);border:2px solid var(--error);border-radius:var(--radius-sm);font-size:16px;font-weight:700;color:var(--error);cursor:pointer;">✕ Jeszcze nie</button>' +
+    '<button onclick="cramAnswer(true)" style="flex:1;padding:14px;background:var(--primary);border:2px solid var(--primary);border-radius:var(--radius-sm);font-size:16px;font-weight:700;color:#fff;cursor:pointer;">✓ Znam</button></div>' +
     '</div>';
   
   document.getElementById('contentWrap').innerHTML = html;
@@ -1800,7 +1800,7 @@ function finishCram() {
   
   var wrap = document.getElementById('contentWrap');
   wrap.innerHTML = '<div class="exercise-card" style="text-align:center;">' +
-    '<div style="font-size:48px;margin:12px 0;">' + (pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '💪') + '</div>' +
+    '<div style="font-size:48px;margin:12px 0;">' + (pct >= 80 ? '★' : pct >= 50 ? '✓' : '✦') + '</div>' +
     '<h3 style="font-size:20px;margin:8px 0;">' + known + '/' + total + ' (' + pct + '%)</h3>' +
     '<p style="color:var(--text-light);">' + (pct >= 80 ? 'Świetnie!' : pct >= 50 ? 'Dobra robota!' : 'Jeszcze trochę!') + '</p></div>';
   
@@ -1849,7 +1849,7 @@ function renderPersonalEdit() {
     '<input type="text" id="newPlInput" placeholder="Polskie słowo..." style="width:100%;padding:10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;margin-bottom:6px;">' +
     '<input type="text" id="newRuInput" placeholder="Tłumaczenie..." style="width:100%;padding:10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;margin-bottom:8px;">' +
     '<button class="check-btn" onclick="addPersWord()" style="padding:10px;">Dodaj</button></div>' +
-    '<div style="margin-top:10px;font-size:12px;color:var(--text-light);">💾 Zmiany zapisują się w przeglądarce. Aby zsynchronizować na GitHub, daj znać.</div>' +
+    '<div style="margin-top:10px;font-size:12px;color:var(--text-light);">⎙ Zmiany zapisują się w przeglądarce. Aby zsynchronizować na GitHub, daj znać.</div>' +
     '</div>';
   
   wrap.innerHTML = html;
@@ -2071,7 +2071,7 @@ function renderTree() {
   html += '<div class="skill-icon">🃏</div>';
   html += '<div class="skill-info"><div class="skill-name">Fiszki — słownictwo</div>';
   html += '<div class="skill-desc">2000 słów' + (hiddenCount > 0 ? ' (' + hiddenCount + ' ukrytych)' : '') + '</div></div>';
-  html += '<div class="skill-status active-txt">▶ Przeglądaj</div></div>';
+  html += '<div class="skill-status active-txt">→ Przeglądaj</div></div>';
   // Restore hidden words button
   if (hiddenCount > 0) {
     html += '<div class="skill-card available" onclick="restoreHiddenFlashcard()" style="margin-bottom:8px;border-left-color:var(--gold);">';
@@ -2082,18 +2082,18 @@ function renderTree() {
   }
     // Exam simulation button
   html += '<div class="skill-card available" onclick="startExam()" style="margin-bottom:8px;border-left-color:var(--gold);">';
-  html += '<div class="skill-icon">🎯</div>';
+  html += '<div class="skill-icon">◎</div>';
   html += '<div class="skill-info"><div class="skill-name">Egzamin próbny</div>';
   html += '<div class="skill-desc">10 pytań, 15 minut. Sprawdź gotowość!</div></div>';
-  html += '<div class="skill-status active-txt" style="color:var(--gold);">▶ Start</div></div>';
+  html += '<div class="skill-status active-txt" style="color:var(--gold);">→ Start</div></div>';
   // Personal vocabulary section
   var persCount = typeof PERS_VOCAB !== 'undefined' ? PERS_VOCAB.length : 0;
   if (persCount > 0) {
     html += '<div class="skill-card available" onclick="startCram()" style="margin-bottom:4px;border-left-color:var(--gold);">';
-    html += '<div class="skill-icon">📇</div>';
+    html += '<div class="skill-icon">☰</div>';
     html += '<div class="skill-info"><div class="skill-name">Personal — Cram</div>';
     html += '<div class="skill-desc">' + persCount + ' słów. Trenuj: poznaj → zapamiętaj</div></div>';
-    html += '<div class="skill-status active-txt">🔁 Cram</div></div>';
+    html += '<div class="skill-status active-txt">♺ Cram</div></div>';
     html += '<div class="skill-card available" onclick="startPersonalEdit()" style="margin-bottom:8px;">';
     html += '<div class="skill-icon">✏️</div>';
     html += '<div class="skill-info"><div class="skill-name">Personal — edytuj</div>';
@@ -2103,7 +2103,7 @@ function renderTree() {
   // Error review button
   if (state.errorQueue && state.errorQueue.length > 0) {
     html += '<div class="skill-card available" onclick="startReview()" style="margin-bottom:8px;border-left-color:var(--error);">';
-    html += '<div class="skill-icon">🔁</div>';
+    html += '<div class="skill-icon">♺</div>';
     html += '<div class="skill-info"><div class="skill-name">Powtórka błędów</div>';
     html += '<div class="skill-desc">' + state.errorQueue.length + ' słów do powtórzenia</div></div>';
     html += '<div class="skill-status active-txt" style="color:var(--error);font-weight:700;">' + state.errorQueue.length + ' ⚠️</div></div>';
@@ -2113,7 +2113,7 @@ function renderTree() {
   const completedCount = Object.keys(state.completedSkills).length;
   const pct = totalSkills > 0 ? Math.round(completedCount / totalSkills * 100) : 0;
   html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-    <h2 style="margin:0;">📚 Kurs</h2>
+    <h2 style="margin:0;">▤ Kurs</h2>
     <span style="font-size:14px;color:var(--text-light);font-weight:600;">
       ${completedCount}/${totalSkills} &middot; ${pct}%
     </span>
@@ -2123,7 +2123,7 @@ function renderTree() {
   </div>`;
   // Toggle: pokaż / ukryj zablokowane
   html += '<div class="skill-card available" onclick="toggleShowAllSkills()" style="margin-bottom:8px;border-left-color:var(--accent);">';
-  html += '<div class="skill-icon">' + (showingAll ? '📂' : '📁') + '</div>';
+  html += '<div class="skill-icon">' + (showingAll ? '▸' : '▾') + '</div>';
   html += '<div class="skill-info"><div class="skill-name">' + (showingAll ? 'Zwiń wszystko' : 'Pokaż wszystkie kursy') + '</div>';
   html += '<div class="skill-desc">' + (showingAll ? 'Ukryj zablokowane lekcje' : 'Pokaż wszystkie 37 lekcji, również zablokowane') + '</div></div>';
   html += '<div class="skill-status active-txt">' + (showingAll ? '▲' : '▼') + '</div></div>';
@@ -2141,7 +2141,7 @@ function renderTree() {
       var isLocked = locked && !showingAll;
   const cls = done ? 'completed' : isLocked ? 'locked' : 'available';
       var canClick = isLocked ? false : true;
-  const icon = done ? '✅' : isLocked ? '🔒' : s.icon;
+  const icon = done ? '✓' : isLocked ? '🔒' : s.icon;
       html += `<div class="skill-card ${cls}" onclick="${isLocked ? '' : `startSkill('${s.id}')`}">
         <div class="skill-icon">${icon}</div>
         <div class="skill-info">
@@ -2150,7 +2150,7 @@ function renderTree() {
           ${s.type === 'exercise' && !done ? `<div class="skill-bar"><div class="skill-bar-fill" style="width:${progress}%"></div></div>` : ''}
         </div>
         <div class="skill-status ${done ? 'done' : locked ? 'locked-txt' : 'active-txt'}">
-          ${done ? '✓ Ukończono' : locked ? '🔒' : '▶ Rozpocznij'}
+          ${done ? '✓ Ukończono' : locked ? '🔒' : '→ Rozpocznij'}
         </div>
       </div>`;
     }
@@ -2160,7 +2160,7 @@ function renderTree() {
   wrap.innerHTML = html;
 
   $('progressStrip').innerHTML = '';
-  $('mainBtn').textContent = '📊 Kurs';
+  $('mainBtn').textContent = '▤ Kurs';
   $('mainBtn').onclick = () => { renderTree(); };
   $('mainBtn').disabled = true;
 }
@@ -2293,7 +2293,7 @@ function renderExamQuestion() {
   
   var typeLabel = q.skillType || 'Egzamin';
   var html = '<div class="exercise-card"><div class="hint" style="display:flex;justify-content:space-between;">';
-  html += '<span>🎯 ' + typeLabel + ' &middot; ' + (state.currentQ+1) + '/' + qs.length + '</span>';
+  html += '<span>◎ ' + typeLabel + ' &middot; ' + (state.currentQ+1) + '/' + qs.length + '</span>';
   html += '<span id="examTimer" style="color:var(--error);font-weight:700;">⏱ ' + timeStr + '</span></div>';
   html += '<div class="question">' + (q.question || '') + '</div>';
   if (q.polish) html += '<div class="polish-text">' + q.polish + '</div>';
@@ -2367,7 +2367,7 @@ function examCheck() {
       renderExamQuestion();
     };
   } else {
-    document.getElementById('mainBtn').textContent = 'Zakończ egzamin 📊';
+    document.getElementById('mainBtn').textContent = 'Zakończ egzamin ▤';
     document.getElementById('mainBtn').disabled = false;
     document.getElementById('mainBtn').onclick = finishExam;
   }
@@ -2454,7 +2454,7 @@ function renderExercise() {
   } else if (q.type === 'writing') {
     html += `<textarea class="writing-area" id="writingArea" placeholder="Napisz tutaj..." ${q.hint ? '' : ''}></textarea>`;
     if (q.hint) {
-      html += `<div style="font-size:13px;color:var(--text-light);margin-bottom:8px;">💡 ${q.hint}</div>`;
+      html += `<div style="font-size:13px;color:var(--text-light);margin-bottom:8px;">⚑ ${q.hint}</div>`;
     }
   }
 
@@ -2568,7 +2568,7 @@ function checkAnswer() {
       if (i === exerciseState.selected && !isCorrect) el.classList.add('wrong');
     });
     const letters = ['a', 'b', 'c', 'd'];
-    feedbackMsg = isCorrect ? '✅ Dobrze!' : `❌ Nie. Prawidłowa odpowiedź: ${letters[q.correct]}) ${q.options[q.correct]}`;
+    feedbackMsg = isCorrect ? '✓ Dobrze!' : `✕ Nie. Prawidłowa odpowiedź: ${letters[q.correct]}) ${q.options[q.correct]}`;
   } else if (q.type === 'fill') {
     const inp = document.getElementById('fillInput');
     if (!inp) return;
@@ -2578,7 +2578,7 @@ function checkAnswer() {
     const alts = (q.alt || []).map(a => a.toLowerCase());
     isCorrect = val === correct || alts.includes(val);
     inp.classList.add(isCorrect ? 'correct' : 'wrong');
-    feedbackMsg = isCorrect ? '✅ Dobrze!' : `❌ Nie. Poprawna: ${q.answer}`;
+    feedbackMsg = isCorrect ? '✓ Dobrze!' : `✕ Nie. Poprawna: ${q.answer}`;
   } else if (q.type === 'taknie') {
     if (!exerciseState.selected || Object.keys(exerciseState.selected).length < q.items.length) return;
     isCorrect = true;
@@ -2594,11 +2594,11 @@ function checkAnswer() {
       }
     });
     isCorrect = wrongCount === 0;
-    feedbackMsg = isCorrect ? '✅ Wszystkie poprawne!' : `❌ ${wrongCount} błędów.`;
+    feedbackMsg = isCorrect ? '✓ Wszystkie poprawne!' : `✕ ${wrongCount} błędów.`;
   } else if (q.type === 'match') {
     const allMatched = [...document.querySelectorAll('.match-left')].every(el => el.classList.contains('matched'));
     isCorrect = allMatched;
-    feedbackMsg = isCorrect ? '✅ Wszystkie dopasowane!' : '❌ Spróbuj dopasować wszystkie pary.';
+    feedbackMsg = isCorrect ? '✓ Wszystkie dopasowane!' : '✕ Spróbuj dopasować wszystkie pary.';
   } else if (q.type === 'writing') {
     // Writing is always "correct" if they wrote something
     const area = document.getElementById('writingArea');
@@ -2614,7 +2614,7 @@ function checkAnswer() {
     const wrap = $('contentWrap');
     const sampleDiv = document.createElement('div');
     sampleDiv.className = 'sample-answer';
-    sampleDiv.innerHTML = `<strong>📝 Wzór:</strong><br>${(q.sample || '').replace(/\n/g, '<br>')}`;
+    sampleDiv.innerHTML = `<strong>✎ Wzór:</strong><br>${(q.sample || '').replace(/\n/g, '<br>')}`;
     wrap.appendChild(sampleDiv);
   }
 
@@ -2651,7 +2651,7 @@ function checkAnswer() {
   renderTopBar();
 
   // Show feedback
-  showTempFeedback(feedbackMsg + (expText ? `<br><span style="font-size:13px;color:var(--text-light)">💡 ${expText}</span>` : ''));
+  showTempFeedback(feedbackMsg + (expText ? `<br><span style="font-size:13px;color:var(--text-light)">⚑ ${expText}</span>` : ''));
 
   // Update button to next
   // In exam mode, override handler
@@ -2666,12 +2666,12 @@ function checkAnswer() {
       } else {
         state._examIndex = state.currentQ;
         renderExercise();
-        document.getElementById('mainBtn').textContent = 'Zakończ egzamin 📊';
+        document.getElementById('mainBtn').textContent = 'Zakończ egzamin ▤';
         document.getElementById('mainBtn').onclick = finishExam;
       }
     };
   } else {
-    $('mainBtn').textContent = state.currentQ < state.totalQuestions - 1 ? 'Dalej →' : 'Zakończ 📊';
+    $('mainBtn').textContent = state.currentQ < state.totalQuestions - 1 ? 'Dalej →' : 'Zakończ ▤';
     $('mainBtn').disabled = false;
     $('mainBtn').onclick = () => {
       if (state.currentQ < state.totalQuestions - 1) {
@@ -2689,10 +2689,10 @@ function showTempFeedback(msg) {
   const old = document.querySelector('.feedback');
   if (old) old.remove();
   
-  const isCorrect = msg.includes('✅') || msg.includes('✏️ Dobrze');
+  const isCorrect = msg.includes('✓') || msg.includes('✏️ Dobrze');
   const fdiv = document.createElement('div');
   fdiv.className = 'feedback';
-  fdiv.innerHTML = `<div class="icon">${isCorrect ? '🎉' : '💪'}</div>
+  fdiv.innerHTML = `<div class="icon">${isCorrect ? '★' : '✦'}</div>
     <div class="msg" style="color:${isCorrect ? 'var(--primary-dark)' : 'var(--red)'}">${msg}</div>
     <div class="sub">${isCorrect ? `+10 XP` : 'Spróbuj jeszcze raz!'}</div>`;
   const wrap = $('contentWrap');
@@ -2715,12 +2715,12 @@ function finishExercise() {
     state.streak++;
     saveState();
     renderTopBar();
-    showTempFeedback(`🎉 Świetnie! ${correct}/${total} poprawnych (${pct}%)<br>+${bonus} XP bonus! 🔥 Streak: ${state.streak}`);
+    showTempFeedback(`★ Świetnie! ${correct}/${total} poprawnych (${pct}%)<br>+${bonus} XP bonus! 🔥 Streak: ${state.streak}`);
     checkLevelUp();
   } else {
     saveState();
     renderTopBar();
-    showTempFeedback(`💪 ${correct}/${total} poprawnych. Spróbuj ponownie!`);
+    showTempFeedback(`✦ ${correct}/${total} poprawnych. Spróbuj ponownie!`);
   }
 
   $('progressStrip').innerHTML = '';
@@ -2739,7 +2739,7 @@ function checkLevelUp() {
     if (state.xp >= levels[i]) {
       if (i + 1 > state.level) {
         state.level = i + 1;
-        $('levelTitle').textContent = `🎉 Level ${state.level}!`;
+        $('levelTitle').textContent = `★ Level ${state.level}!`;
         $('levelMsg').textContent = `Zdobyłeś ${state.xp} XP! Świetna robota!`;
         $('levelModal').style.display = 'flex';
       }
@@ -2945,7 +2945,7 @@ function startExam() {
 
 function proceedNext() {
   if (state._examIndex >= state._examQuestions.length - 1) {
-    document.getElementById('mainBtn').textContent = 'Zakończ egzamin 📊';
+    document.getElementById('mainBtn').textContent = 'Zakończ egzamin ▤';
     document.getElementById('mainBtn').disabled = false;
     document.getElementById('mainBtn').onclick = finishExam;
   }
@@ -2965,7 +2965,7 @@ function finishExam() {
   
   var wrap = document.getElementById('contentWrap');
   wrap.innerHTML = '<div class="exercise-card" style="text-align:center;">' +
-    '<div style="font-size:48px;margin:12px 0;">' + (passed ? '🎉' : '💪') + '</div>' +
+    '<div style="font-size:48px;margin:12px 0;">' + (passed ? '★' : '✦') + '</div>' +
     '<h3 style="font-size:22px;margin:8px 0;">' + (passed ? 'Zdałeś!' : 'Spróbuj jeszcze raz') + '</h3>' +
     '<p style="font-size:18px;font-weight:700;color:var(--primary-dark);">' + correct + '/' + total + ' (' + pct + '%)</p>' +
     (passed ? '<p style="color:var(--text-light);">+50 XP</p>' : '<p style="color:var(--text-light);">+10 XP za wysiłek</p>') +
@@ -2992,7 +2992,7 @@ var _origCheckAnswer = null;
 // ========================================================================
 function startReview() {
   if (state.errorQueue.length === 0) {
-    showTempFeedback('🎉 Brak błędów do powtórki!');
+    showTempFeedback('★ Brak błędów do powtórki!');
     return;
   }
   state.phase = 'review';
@@ -3019,9 +3019,9 @@ function renderReview() {
   document.getElementById('progressStrip').innerHTML = dots.join('');
   
   const wrap = document.getElementById('contentWrap');
-  wrap.innerHTML = '<div class="exercise-card"><div class="hint">🔁 Powtórka błędów &middot; ' + (state.currentQ+1) + ' z ' + items.length + '</div>' +
+  wrap.innerHTML = '<div class="exercise-card"><div class="hint">♺ Powtórka błędów &middot; ' + (state.currentQ+1) + ' z ' + items.length + '</div>' +
     '<div class="question">' + item.question + '</div>' +
-    '<div class="polish-text" style="font-size:13px;">💡 ' + item.context + '</div>' +
+    '<div class="polish-text" style="font-size:13px;">⚑ ' + item.context + '</div>' +
     '<div class="fill-input"><input type="text" id="reviewInput" placeholder="Wpisz poprawną formę..." autocomplete="off" style="width:100%;"></div></div>';
   
   document.getElementById('mainBtn').textContent = 'Sprawdź ✓';
@@ -3066,7 +3066,7 @@ function checkReviewAnswer() {
   saveState();
   renderTopBar();
   
-  showTempFeedback(isCorrect ? '✅ Dobrze!' : '❌ Poprawna: ' + item.correctAnswer);
+  showTempFeedback(isCorrect ? '✓ Dobrze!' : '✕ Poprawna: ' + item.correctAnswer);
   
   document.getElementById('mainBtn').textContent = state.currentQ < state.totalQuestions - 1 ? 'Dalej →' : 'Zakończ';
   document.getElementById('mainBtn').disabled = false;
@@ -3086,7 +3086,7 @@ function finishReview() {
   state.phase = 'tree';
   saveState();
   document.getElementById('progressStrip').innerHTML = '';
-  showTempFeedback('🔁 Powtórka zakończona! ' + correct + '/' + total + ' 👍');
+  showTempFeedback('♺ Powtórka zakończona! ' + correct + '/' + total + ' ✓');
   document.getElementById('mainBtn').textContent = '← Powrót do kursu';
   document.getElementById('mainBtn').disabled = false;
   document.getElementById('mainBtn').className = 'check-btn secondary';
@@ -3134,7 +3134,7 @@ function renderFlashcard() {
   }
   
   if (visible.length === 0) {
-    document.getElementById('contentWrap').innerHTML = '<div class="exercise-card" style="text-align:center;"><div class="hint">🃏 Fiszki</div><div style="font-size:48px;margin:12px 0;">✅</div><div style="font-size:18px;font-weight:600;">Wszystkie słowa ukryte!</div></div>';
+    document.getElementById('contentWrap').innerHTML = '<div class="exercise-card" style="text-align:center;"><div class="hint">🃏 Fiszki</div><div style="font-size:48px;margin:12px 0;">✓</div><div style="font-size:18px;font-weight:600;">Wszystkie słowa ukryte!</div></div>';
     document.getElementById('progressStrip').innerHTML = '';
     document.getElementById('mainBtn').textContent = '← Powrót';
     document.getElementById('mainBtn').disabled = false;
@@ -3154,14 +3154,12 @@ function renderFlashcard() {
   var back = dir === 'pl2ru' ? entry.ru : entry.pl;
   
   document.getElementById('progressStrip').innerHTML = '';
-  
-  var shuffleIcon = state.fcShuffle ? '🔀' : '▶️';
   var html = '<div class="exercise-card" style="text-align:center;min-height:260px;">' +
     '<div class="hint" style="display:flex;justify-content:space-between;align-items:center;">' +
-    '<span>' + shuffleIcon + ' ' + (state.currentQ+1) + '/' + visible.length + ' (' + (hidden.size || 0) + ' ukrytych)</span>' +
-    '<span style="display:flex;gap:6px;">' +
-    '<span onclick="toggleFcShuffle()" style="cursor:pointer;font-size:13px;color:var(--accent);">🔀</span>' +
-    '<span onclick="toggleFcDirection()" style="cursor:pointer;font-size:13px;color:var(--accent);">↔ ' + (dir === 'pl2ru' ? 'PL→RU' : 'RU→PL') + '</span></span></div>';
+    '<span>' + (state.currentQ+1) + '/' + visible.length + ' (' + (hidden.size || 0) + ' ukrytych)</span>' +
+    '<span style="display:flex;align-items:center;gap:10px;">' +
+    '<span onclick="toggleFcShuffle()" style="cursor:pointer;font-size:24px;color:' + (state.fcShuffle ? 'var(--primary)' : 'var(--text-light)') + ';">⟳</span>' +
+    '<span onclick="toggleFcDirection()" style="cursor:pointer;font-size:28px;">' + (dir === 'pl2ru' ? '🇵🇱' : '🇷🇺') + '</span></span></div>';
   
   if (!flipped) {
     // Front — clickable word
@@ -3183,15 +3181,16 @@ function renderFlashcard() {
         html += '<div style="font-size:14px;color:var(--text-light);margin:16px 0;">—</div>';
       }
     }
-    html += '<div style="margin-top:8px;"><button onclick="hideFlashcardWord()" style="background:var(--card);border:1px solid var(--error);border-radius:var(--radius-sm);padding:6px 14px;font-size:12px;color:var(--error);cursor:pointer;">✕ Nie pokazuj</button></div>';
   }
+  // Always-visible buttons below card (front AND back)
+  html += '<div style="display:flex;gap:6px;margin-top:4px;padding:0 4px;">' +
+    '<button onclick="hideFlashcardWord()" style="flex:1;padding:14px;background:var(--card);border:2px solid var(--error);border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--error);cursor:pointer;">\u2716 Nie pokazuj</button>' +
+    '<button onclick="flashcardNext()" style="flex:2;padding:14px;background:var(--accent);border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">Nast\u0119pne \u2192</button></div>';
   html += '</div>';
   document.getElementById('contentWrap').innerHTML = html;
   
-  document.getElementById('mainBtn').textContent = 'Następne →';
-  document.getElementById('mainBtn').disabled = false;
-  document.getElementById('mainBtn').className = 'check-btn secondary';
-  document.getElementById('mainBtn').onclick = flashcardNext;
+  document.getElementById('mainBtn').textContent = '';
+  document.getElementById('mainBtn').disabled = true;
 }
 
 function toggleFcDirection() {
