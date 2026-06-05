@@ -1730,9 +1730,10 @@ function renderCram() {
   
   document.getElementById('progressStrip').innerHTML = '';
   
-  var shuffleIcon = state.fcShuffle ? '⇌' : '☰';
   var html = '<div class="exercise-card" style="text-align:center;min-height:260px;">' +
-    '<div class="hint">' + shuffleIcon + ' Cram &middot; ' + done + '/' + total + ' poznanych</div>';
+    '<div class="hint" style="display:flex;justify-content:space-between;align-items:center;">' +
+    '<span>Cram &middot; ' + done + '/' + total + ' poznanych</span>' +
+    '<span onclick="toggleFcShuffle()" style="cursor:pointer;display:inline-block;width:24px;height:24px;vertical-align:middle;background:' + (state.fcShuffle ? '#64B5F6' : '#999') + ';mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAABgAAAAAQAAAGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAACCgAwAEAAAAAQAAACAAAAAAcFS6AwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAWRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD53d3cuaW5rc2NhcGUub3JnPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgqyyWIhAAACPklEQVRYCe2VS0tVURTHr6lQEGQOgoQmJjWwptnQghxHDQwEoUGDRgXSSOSSGH6CbkJ9AadZgVggQiqEfgB1VKAEPWZhao/f/7DXZd/NPvfVPWfSXfBjP87ea6299llrFwpt+d8j0JlxAAbQ/wT6YDNjW1H188z+cUzFVmQdgUGMDjvD12h/w4ob59Icw0oJfkE0El3OjQ7a+3AbtCmUAya2YAGWQMpC6WdC+69Cr/uodd2gk5veafpyaBbKes4y+OkmzNO09jXrZMxEzj+Cr5C2J5z/wVrZLMsJem/gEI4ihAp2WHMR9A89g/C7r0PGFAF/zTvGslmQ9ybH6ZwHC5XNqz0JN+AhnAbJB7gJ63AOJC/hOXwCGZUjupYi2HWv0r8Fn6FhucKOPbDTTNC/68bK91CuM/ENbP17+mfCRY2O5b391TrpJShBLHKvmG+pcfQl17bsKR6lb+GlWyFjjHZhEf755L5mpaydTD9hNTnFx1h0kj2pH6pp5Nsa6CeTDIGyITdR5uhU26AoKHVVfGKSyRVI6Tg8BrsGFSc/pRkm0vKfUGn4BTbgAnwHc2KGfig109D3ulYhGkH7A7BCdId+D8yBiQrRC/gIDRWiZkrxZWf1Ka1Fwdq6S7HTkTwM+xFFptBvda/9tpFWUWz6MbIrUKvcVt2OpaZeSnuO39KXQ6HIqbTnWFniF6tJxhXPcaisVWMdRmXaSrccn2qV8nr0FFnkX1+uxuXgvOdA7sblwADorbinQVvaEYhF4C8StNAeJiD8uQAAAABJRU5ErkJggg==) no-repeat center;mask-size:contain;-webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAABgAAAAAQAAAGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAACCgAwAEAAAAAQAAACAAAAAAcFS6AwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAWRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD53d3cuaW5rc2NhcGUub3JnPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgqyyWIhAAACPklEQVRYCe2VS0tVURTHr6lQEGQOgoQmJjWwptnQghxHDQwEoUGDRgXSSOSSGH6CbkJ9AadZgVggQiqEfgB1VKAEPWZhao/f/7DXZd/NPvfVPWfSXfBjP87ea6299llrFwpt+d8j0JlxAAbQ/wT6YDNjW1H188z+cUzFVmQdgUGMDjvD12h/w4ob59Icw0oJfkE0El3OjQ7a+3AbtCmUAya2YAGWQMpC6WdC+69Cr/uodd2gk5veafpyaBbKes4y+OkmzNO09jXrZMxEzj+Cr5C2J5z/wVrZLMsJem/gEI4ihAp2WHMR9A89g/C7r0PGFAF/zTvGslmQ9ybH6ZwHC5XNqz0JN+AhnAbJB7gJ63AOJC/hOXwCGZUjupYi2HWv0r8Fn6FhucKOPbDTTNC/68bK91CuM/ENbP17+mfCRY2O5b391TrpJShBLHKvmG+pcfQl17bsKR6lb+GlWyFjjHZhEf755L5mpaydTD9hNTnFx1h0kj2pH6pp5Nsa6CeTDIGyITdR5uhU26AoKHVVfGKSyRVI6Tg8BrsGFSc/pRkm0vKfUGn4BTbgAnwHc2KGfig109D3ulYhGkH7A7BCdId+D8yBiQrRC/gIDRWiZkrxZWf1Ka1Fwdq6S7HTkTwM+xFFptBvda/9tpFWUWz6MbIrUKvcVt2OpaZeSnuO39KXQ6HIqbTnWFniF6tJxhXPcaisVWMdRmXaSrccn2qV8nr0FFnkX1+uxuXgvOdA7sblwADorbinQVvaEYhF4C8StNAeJiD8uQAAAABJRU5ErkJggg==) no-repeat center;-webkit-mask-size:contain;"></span></div>';
   
   // Clickable Polish word
   html += '<div onclick="cramFlip()" style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:16px 0;padding:20px 10px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);transition:0.2s;">' + word.pl + '</div>';
@@ -1897,7 +1898,7 @@ let state = {
   totalQuestions: 0,
   correctInLesson: 0,
   progressDots: [],
-  phase: 'tree', // 'tree' | 'lesson' | 'exercise' | 'review' | 'flashcard'
+  phase: 'tree', // 'tree' | 'lesson' | 'exercise' | 'review' | 'flashcard' | 'cram' | 'personal-edit' | 'hidden-words'
   errorQueue: [],
   reviewCorrectCount: {},
   hiddenFlashcardWords: [],
@@ -1996,6 +1997,7 @@ function render() {
   else if (state.phase === 'flashcard') renderFlashcard();
   else if (state.phase === 'cram') renderCram();
   else if (state.phase === 'personal-edit') renderPersonalEdit();
+  else if (state.phase === 'hidden-words') renderHiddenWords();
   else renderTree();
 }
 
@@ -2059,14 +2061,12 @@ function renderTree() {
   html += '<div class="skill-info"><div class="skill-name">Fiszki — słownictwo</div>';
   html += '<div class="skill-desc">2000 słów' + (hiddenCount > 0 ? ' (' + hiddenCount + ' ukrytych)' : '') + '</div></div>';
   html += '<div class="skill-status active-txt">→ Przeglądaj</div></div>';
-  // Restore hidden words button
-  if (hiddenCount > 0) {
-    html += '<div class="skill-card available" onclick="restoreHiddenFlashcard()" style="margin-bottom:8px;border-left-color:var(--gold);">';
-    html += '<div class="skill-icon">↩️</div>';
-    html += '<div class="skill-info"><div class="skill-name">Przywróć ukryte słowa</div>';
-    html += '<div class="skill-desc">' + hiddenCount + ' słów ukrytych. Kliknij aby przywrócić</div></div>';
-    html += '<div class="skill-status active-txt" style="color:var(--gold);">' + hiddenCount + '</div></div>';
-  }
+  // Hidden words card
+  html += '<div class="skill-card available" onclick="startHiddenWords()" style="margin-bottom:4px;border-left-color:var(--gold);">';
+  html += '<div class="skill-icon">⇧</div>';
+  html += '<div class="skill-info"><div class="skill-name">Ukryte słowa</div>';
+  html += '<div class="skill-desc">' + (hiddenCount > 0 ? hiddenCount + ' słów ukrytych' : 'Brak ukrytych słów') + '</div></div>';
+  html += '<div class="skill-status active-txt">' + (hiddenCount > 0 ? hiddenCount : '-') + '</div></div>';
     // Exam simulation button
   html += '<div class="skill-card available" onclick="startExam()" style="margin-bottom:8px;border-left-color:var(--gold);">';
   html += '<div class="skill-icon">◎</div>';
@@ -3199,8 +3199,9 @@ function toggleFcShuffle() {
   state.fcShuffle = !state.fcShuffle;
   state.currentQ = 0;
   state._fcFlipped = false;
+  state._fcVisible = null;
   saveState();
-  renderFlashcard();
+  render();
 }
 
 function flashcardFlip() {
@@ -3240,6 +3241,84 @@ function hideFlashcardWord() {
 function handleMainAction() {
   // Default fallback
   renderTree();
+}
+
+// ========================================================================
+// HIDDEN WORDS
+// ========================================================================
+
+function startHiddenWords() {
+  state.phase = 'hidden-words';
+  render();
+}
+
+function renderHiddenWords() {
+  state.phase = 'hidden-words';
+  var hidden = state.hiddenFlashcardWords || [];
+  var wrap = document.getElementById('contentWrap');
+  
+  var html = '<div class="exercise-card" style="text-align:center;">';
+  html += '<div class="hint">⇧ Ukryte słowa</div>';
+  
+  if (hidden.length === 0) {
+    html += '<div style="font-size:48px;margin:16px 0;">✓</div>';
+    html += '<div style="font-size:18px;font-weight:600;margin-bottom:8px;">Brak ukrytych słów</div>';
+    html += '<div style="font-size:14px;color:var(--text-light);margin-bottom:20px;">Wszystkie słowa są widoczne w Fiszkach.</div>';
+    html += '</div>';
+    wrap.innerHTML = html;
+    document.getElementById('progressStrip').innerHTML = '';
+    document.getElementById('mainBtn').textContent = '';
+    document.getElementById('mainBtn').disabled = true;
+    return;
+  }
+  
+  html += '<div style="font-size:14px;color:var(--text-light);margin:8px 0 12px;">' + hidden.length + ' słów ukrytych przed Fiszkami</div>';
+  
+  // Przywróć wszystkie button
+  html += '<button onclick="restoreHiddenFlashcard()" class="check-btn" style="width:100%;padding:14px;margin-bottom:16px;background:var(--gold, #d4a017);border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">↩️ Przywróć wszystkie (' + hidden.length + ')</button>';
+  
+  // Build lookup maps for translations
+  var persMap = {};
+  var vocMap = {};
+  if (typeof PERS_VOCAB !== 'undefined') {
+    for (var pi = 0; pi < PERS_VOCAB.length; pi++) {
+      persMap[PERS_VOCAB[pi].pl] = PERS_VOCAB[pi].ru;
+    }
+  }
+  if (typeof VOCAB_LIST !== 'undefined') {
+    for (var vi = 0; vi < VOCAB_LIST.length; vi++) {
+      vocMap[VOCAB_LIST[vi].pl] = VOCAB_LIST[vi].ru || '';
+    }
+  }
+  
+  // List each hidden word with restore button
+  for (var hi = 0; hi < hidden.length; hi++) {
+    var w = hidden[hi];
+    var ru = persMap[w] || vocMap[w] || '';
+    html += '<div style="display:flex;align-items:center;padding:8px 10px;margin-bottom:4px;background:var(--card);border-radius:var(--radius-sm);border-left:3px solid var(--gold, #d4a017);">';
+    html += '<div style="flex:1;text-align:left;">';
+    html += '<span style="font-weight:600;font-size:15px;">' + w + '</span>';
+    if (ru) html += ' <span style="font-size:13px;color:var(--text-light);">— ' + ru + '</span>';
+    html += '</div>';
+    html += '<button onclick="unhideWord(\'' + w.replace(/'/g, "\\'") + '\')" style="background:none;border:2px solid var(--accent);border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;padding:6px 12px;white-space:nowrap;">↩️</button>';
+    html += '</div>';
+  }
+  
+  html += '</div>';
+  
+  wrap.innerHTML = html;
+  document.getElementById('progressStrip').innerHTML = '';
+  document.getElementById('mainBtn').textContent = '';
+  document.getElementById('mainBtn').disabled = true;
+}
+
+function unhideWord(wordStr) {
+  if (!state.hiddenFlashcardWords) return;
+  var idx = state.hiddenFlashcardWords.indexOf(wordStr);
+  if (idx === -1) return;
+  state.hiddenFlashcardWords.splice(idx, 1);
+  saveState();
+  renderHiddenWords();
 }
 
 loadState();
