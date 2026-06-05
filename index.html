@@ -3115,9 +3115,16 @@ function renderFlashcard() {
     }
   }
   
-  // Shuffle if enabled
+  // Shuffle: use cached order to avoid re-shuffling on every render
   if (state.fcShuffle) {
-    visible.sort(function() { return Math.random() - 0.5; });
+    if (!state._fcVisible || state._fcVisible.length !== visible.length) {
+      state._fcVisible = visible.slice();
+      state._fcVisible.sort(function() { return Math.random() - 0.5; });
+      if (state.currentQ >= state._fcVisible.length) state.currentQ = 0;
+    }
+    visible = state._fcVisible;
+  } else {
+    state._fcVisible = null;
   }
   
   if (visible.length === 0) {
@@ -3145,29 +3152,30 @@ function renderFlashcard() {
     '<div class="hint" style="display:flex;justify-content:space-between;align-items:center;">' +
     '<span>' + (state.currentQ+1) + '/' + visible.length + ' (' + (hidden.size || 0) + ' ukrytych)</span>' +
     '<span style="display:flex;align-items:center;gap:10px;">' +
-    '<span onclick="toggleFcShuffle()" style="cursor:pointer;font-size:24px;color:' + (state.fcShuffle ? 'var(--primary)' : 'var(--text-light)') + ';">⟳</span>' +
+    '<span onclick="toggleFcShuffle()" style="cursor:pointer;display:inline-block;width:24px;height:24px;vertical-align:middle;background:' + (state.fcShuffle ? '#64B5F6' : '#999') + ';mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAABgAAAAAQAAAGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAACCgAwAEAAAAAQAAACAAAAAAcFS6AwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAWRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD53d3cuaW5rc2NhcGUub3JnPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgqyyWIhAAACPklEQVRYCe2VS0tVURTHr6lQEGQOgoQmJjWwptnQghxHDQwEoUGDRgXSSOSSGH6CbkJ9AadZgVggQiqEfgB1VKAEPWZhao/f/7DXZd/NPvfVPWfSXfBjP87ea6299llrFwpt+d8j0JlxAAbQ/wT6YDNjW1H188z+cUzFVmQdgUGMDjvD12h/w4ob59Icw0oJfkE0El3OjQ7a+3AbtCmUAya2YAGWQMpC6WdC+69Cr/uodd2gk5veafpyaBbKes4y+OkmzNO09jXrZMxEzj+Cr5C2J5z/wVrZLMsJem/gEI4ihAp2WHMR9A89g/C7r0PGFAF/zTvGslmQ9ybH6ZwHC5XNqz0JN+AhnAbJB7gJ63AOJC/hOXwCGZUjupYi2HWv0r8Fn6FhucKOPbDTTNC/68bK91CuM/ENbP17+mfCRY2O5b391TrpJShBLHKvmG+pcfQl17bsKR6lb+GlWyFjjHZhEf755L5mpaydTD9hNTnFx1h0kj2pH6pp5Nsa6CeTDIGyITdR5uhU26AoKHVVfGKSyRVI6Tg8BrsGFSc/pRkm0vKfUGn4BTbgAnwHc2KGfig109D3ulYhGkH7A7BCdId+D8yBiQrRC/gIDRWiZkrxZWf1Ka1Fwdq6S7HTkTwM+xFFptBvda/9tpFWUWz6MbIrUKvcVt2OpaZeSnuO39KXQ6HIqbTnWFniF6tJxhXPcaisVWMdRmXaSrccn2qV8nr0FFnkX1+uxuXgvOdA7sblwADorbinQVvaEYhF4C8StNAeJiD8uQAAAABJRU5ErkJggg==) no-repeat center;mask-size:contain;-webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAABgAAAAAQAAAGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAACCgAwAEAAAAAQAAACAAAAAAcFS6AwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAWRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD53d3cuaW5rc2NhcGUub3JnPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgqyyWIhAAACPklEQVRYCe2VS0tVURTHr6lQEGQOgoQmJjWwptnQghxHDQwEoUGDRgXSSOSSGH6CbkJ9AadZgVggQiqEfgB1VKAEPWZhao/f/7DXZd/NPvfVPWfSXfBjP87ea6299llrFwpt+d8j0JlxAAbQ/wT6YDNjW1H188z+cUzFVmQdgUGMDjvD12h/w4ob59Icw0oJfkE0El3OjQ7a+3AbtCmUAya2YAGWQMpC6WdC+69Cr/uodd2gk5veafpyaBbKes4y+OkmzNO09jXrZMxEzj+Cr5C2J5z/wVrZLMsJem/gEI4ihAp2WHMR9A89g/C7r0PGFAF/zTvGslmQ9ybH6ZwHC5XNqz0JN+AhnAbJB7gJ63AOJC/hOXwCGZUjupYi2HWv0r8Fn6FhucKOPbDTTNC/68bK91CuM/ENbP17+mfCRY2O5b391TrpJShBLHKvmG+pcfQl17bsKR6lb+GlWyFjjHZhEf755L5mpaydTD9hNTnFx1h0kj2pH6pp5Nsa6CeTDIGyITdR5uhU26AoKHVVfGKSyRVI6Tg8BrsGFSc/pRkm0vKfUGn4BTbgAnwHc2KGfig109D3ulYhGkH7A7BCdId+D8yBiQrRC/gIDRWiZkrxZWf1Ka1Fwdq6S7HTkTwM+xFFptBvda/9tpFWUWz6MbIrUKvcVt2OpaZeSnuO39KXQ6HIqbTnWFniF6tJxhXPcaisVWMdRmXaSrccn2qV8nr0FFnkX1+uxuXgvOdA7sblwADorbinQVvaEYhF4C8StNAeJiD8uQAAAABJRU5ErkJggg==) no-repeat center;-webkit-mask-size:contain;"></span>' +
     '<span onclick="toggleFcDirection()" style="cursor:pointer;font-size:28px;">' + (dir === 'pl2ru' ? '🇵🇱' : '🇷🇺') + '</span></span></div>';
   
-  if (!flipped) {
-    // Front — clickable word
-    html += '<div onclick="flashcardFlip()" style="font-size:32px;font-weight:700;color:var(--primary-dark);margin:20px 0;padding:30px 10px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);">' + front + '</div>';
-  } else {
-    // Back — translation
-    html += '<div style="font-size:14px;color:var(--text-light);margin-bottom:4px;">' + front + '</div>';
+  // Always show clickable word
+  html += '<div onclick="flashcardFlip()" style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:16px 0;padding:20px 10px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);transition:0.2s;">' + front + '</div>';
+
+  if (flipped) {
+    // Translation drops below
     if (back) {
-      html += '<div style="font-size:24px;font-weight:600;color:var(--text);margin:16px 0;padding:16px;background:var(--option-bg);border-radius:var(--radius-sm);word-break:break-word;">' + back + '</div>';
+      html += '<div style="font-size:18px;color:var(--text);margin:8px 0 16px;padding:12px;background:var(--option-bg);border-radius:var(--radius-sm);word-break:break-word;">' + back + '</div>';
     } else {
       // Try WORD_BANK declension
       var wb = typeof WORD_BANK !== 'undefined' ? WORD_BANK[entry.pl] : null;
       if (wb) {
-        html += '<table style="width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;"><tr><th style="padding:3px 6px;background:var(--th-bg);border:1px solid var(--border);">Przypadek</th><th style="padding:3px 6px;background:var(--th-bg);border:1px solid var(--border);">Forma</th></tr>' +
+        html += '<table style="width:100%;border-collapse:collapse;font-size:12px;margin:8px 0 16px;"><tr><th style="padding:3px 6px;background:var(--th-bg);border:1px solid var(--border);">Przypadek</th><th style="padding:3px 6px;background:var(--th-bg);border:1px solid var(--border);">Forma</th></tr>' +
           '<tr><td style="padding:3px 6px;border:1px solid var(--border);font-weight:700;">M.</td><td style="padding:3px 6px;border:1px solid var(--border);text-align:center;">' + wb.nom + '</td></tr>' +
           '<tr><td style="padding:3px 6px;border:1px solid var(--border);font-weight:700;">D.</td><td style="padding:3px 6px;border:1px solid var(--border);text-align:center;">' + wb.gen + '</td></tr>' +
           '</table>';
       } else {
-        html += '<div style="font-size:14px;color:var(--text-light);margin:16px 0;">—</div>';
+        html += '<div style="font-size:13px;color:var(--text-light);margin:8px 0 16px;">—</div>';
       }
     }
+  } else {
+    html += '<div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">\u2191 Kliknij s\u0142owo aby zobaczy\u0107 t\u0142umaczenie</div>';
   }
   // Always-visible buttons below card (front AND back)
   html += '<div style="display:flex;gap:6px;margin-top:4px;padding:0 4px;">' +
@@ -3196,7 +3204,7 @@ function toggleFcShuffle() {
 }
 
 function flashcardFlip() {
-  state._fcFlipped = true;
+  state._fcFlipped = !state._fcFlipped;
   renderFlashcard();
 }
 
