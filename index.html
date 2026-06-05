@@ -1898,7 +1898,8 @@ let state = {
   phase: 'tree', // 'tree' | 'lesson' | 'exercise' | 'review' | 'flashcard'
   errorQueue: [],
   reviewCorrectCount: {},
-  hiddenFlashcardWords: [], // words removed from flashcard rotation
+  hiddenFlashcardWords: [],
+  fcFlipDirection: 'pl2ru', // 'pl2ru' or 'ru2pl', // words removed from flashcard rotation
 };
 
 // Safe storage wrapper — falls back to memory when localStorage is blocked (file:// on mobile)
@@ -3071,13 +3072,25 @@ function restoreHiddenFlashcard() {
   render();
 }
 function renderFlashcard() {
-  // Collect all unique words from VOCAB_LIST, filter hidden
-  var allWords = typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.map(function(e) { return e.pl; }) : Object.keys(WORD_BANK);
   var hidden = new Set(state.hiddenFlashcardWords || []);
-  var words = allWords.filter(function(w) { return !hidden.has(w); });
+  var visible = [];
   
-  if (words.length === 0) {
-    document.getElementById('contentWrap').innerHTML = '<div class="exercise-card" style="text-align:center;"><div class="hint">🃏 Fiszki</div><div style="font-size:48px;margin:12px 0;">✅</div><div style="font-size:18px;font-weight:600;">Wszystkie słowa ukryte!</div><div style="font-size:13px;color:var(--text-light);margin-top:8px;">' + hidden.size + ' słów ukryto. Przywróć je w menu.</div></div>';
+  if (typeof PERS_VOCAB !== 'undefined') {
+    for (var pi = 0; pi < PERS_VOCAB.length; pi++) {
+      var w = PERS_VOCAB[pi].pl;
+      if (!hidden.has(w)) visible.push({pl: w, ru: PERS_VOCAB[pi].ru, src: 'pers'});
+    }
+  }
+  if (typeof VOCAB_LIST !== 'undefined') {
+    var existing = new Set(visible.map(function(v) { return v.pl; }));
+    for (var vi = 0; vi < VOCAB_LIST.length; vi++) {
+      var w = VOCAB_LIST[vi].pl;
+      if (!hidden.has(w) && !existing.has(w)) visible.push({pl: w, ru: VOCAB_LIST[vi].ru || '', src: 'voc'});
+    }
+  }
+  
+  if (visible.length === 0) {
+    document.getElementById('contentWrap').innerHTML = '<div class="exercise-card" style="text-align:center;"><div class="hint">🃏 Fiszki</div><div style="font-size:48px;margin:12px 0;">✅</div><div style="font-size:18px;font-weight:600;">Wszystkie słowa ukryte!</div></div>';
     document.getElementById('progressStrip').innerHTML = '';
     document.getElementById('mainBtn').textContent = '← Powrót';
     document.getElementById('mainBtn').disabled = false;
@@ -3086,77 +3099,132 @@ function renderFlashcard() {
     return;
   }
   
-  if (state.currentQ >= words.length) state.currentQ = 0;
+  if (state.currentQ >= visible.length) state.currentQ = 0;
   
-  var wordKey = words[state.currentQ];
-  var totalVisible = words.length;
-  var totalHidden = hidden.size;
+  var entry = visible[state.currentQ];
+  var flipped = state._fcFlipped || false;
+  var dir = state.fcFlipDirection || 'pl2ru';
   
-  var data = WORD_BANK[wordKey];
-  var genders = { 'm-os': 'męski osobowy', 'm-nieos': 'męski nieosobowy', 'f': 'żeński', 'n': 'nijaki' };
+  // Define front and back based on direction
+  var front = dir === 'pl2ru' ? entry.pl : entry.ru;
+  var back = dir === 'pl2ru' ? entry.ru : entry.pl;
   
   document.getElementById('progressStrip').innerHTML = '';
   
-  var html = '<div class="exercise-card" style="text-align:center;">' +
-    '<div class="hint">🃏 Fiszki &middot; ' + (state.currentQ+1) + ' z ' + totalVisible + ' (' + totalHidden + ' ukrytych)</div>';
+  var html = '<div class="exercise-card" style="text-align:center;min-height:260px;">' +
+    '<div class="hint" style="display:flex;justify-content:space-between;align-items:center;">' +
+    '<span>🃏 ' + (state.currentQ+1) + '/' + visible.length + ' (' + (hidden.size || 0) + ' ukrytych)</span>' +
+    '<span onclick="toggleFcDirection()" style="cursor:pointer;font-size:13px;color:var(--accent);">↔ ' + (dir === 'pl2ru' ? 'PL→RU' : 'RU→PL') + '</span></div>';
   
-  if (data) {
-    html += '<div style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:12px 0;">' + wordKey + '</div>' +
-      '<div style="font-size:14px;color:var(--text-light);margin-bottom:16px;">rodzaj: ' + (genders[data.g] || data.g) + '</div>' +
-      '<table style="width:100%;border-collapse:collapse;font-size:14px;margin:12px 0;">' +
-      '<tr><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Przypadek</th>' +
-      '<th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Forma</th><th style="padding:6px 8px;background:var(--th-bg);border:1px solid var(--border);text-align:left;">Pytanie</th></tr>' +
-      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Mianownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.nom + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kto? co?</td></tr>' +
-      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Dopełniacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.gen + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? czego?</td></tr>' +
-      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Celownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.dat + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">komu? czemu?</td></tr>' +
-      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Biernik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.acc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">kogo? co?</td></tr>' +
-      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Narzędnik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.inst + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">z kim? z czym?</td></tr>' +
-      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Miejscownik</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.loc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">o kim? o czym?</td></tr>' +
-      '<tr><td style="padding:6px 8px;border:1px solid var(--border);font-weight:700;">Wołacz</td><td style="padding:6px 8px;border:1px solid var(--border);">' + data.voc + '</td><td style="padding:6px 8px;border:1px solid var(--border);color:var(--text-light);">zwrot</td></tr>' +
-      '</table>';
+  if (!flipped) {
+    // Front — clickable word
+    html += '<div onclick="flashcardFlip()" style="font-size:32px;font-weight:700;color:var(--primary-dark);margin:20px 0;padding:30px 10px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);">' + front + '</div>';
   } else {
-    // Look up translation from VOCAB_LIST
-    var translation = '';
-    if (typeof VOCAB_LIST !== 'undefined') {
-      for (var vi = 0; vi < VOCAB_LIST.length; vi++) {
-        if (VOCAB_LIST[vi].pl === wordKey && VOCAB_LIST[vi].ru) {
-          translation = VOCAB_LIST[vi].ru;
-          break;
-        }
-      }
-    }
-    html += '<div style="font-size:24px;font-weight:600;margin:12px 0;">' + wordKey + '</div>';
-    if (translation) {
-      html += '<div style="font-size:16px;color:var(--text);margin-bottom:12px;padding:10px;background:var(--option-bg);border-radius:var(--radius-sm);">' + translation + '</div>';
+    // Back — translation
+    html += '<div style="font-size:14px;color:var(--text-light);margin-bottom:4px;">' + front + '</div>';
+    if (back) {
+      html += '<div style="font-size:24px;font-weight:600;color:var(--text);margin:16px 0;padding:16px;background:var(--option-bg);border-radius:var(--radius-sm);word-break:break-word;">' + back + '</div>';
     } else {
-      // Try personal vocab
-      if (typeof PERS_VOCAB !== 'undefined') {
-        for (var pi = 0; pi < PERS_VOCAB.length; pi++) {
-          if (PERS_VOCAB[pi].pl === wordKey) {
-            html += '<div style="font-size:16px;color:var(--text);margin-bottom:12px;padding:10px;background:var(--option-bg);border-radius:var(--radius-sm);">' + PERS_VOCAB[pi].ru + '</div>';
-            break;
-          }
-        }
+      // Try WORD_BANK declension
+      var wb = typeof WORD_BANK !== 'undefined' ? WORD_BANK[entry.pl] : null;
+      if (wb) {
+        html += '<table style="width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;"><tr><th style="padding:3px 6px;background:var(--th-bg);border:1px solid var(--border);">Przypadek</th><th style="padding:3px 6px;background:var(--th-bg);border:1px solid var(--border);">Forma</th></tr>' +
+          '<tr><td style="padding:3px 6px;border:1px solid var(--border);font-weight:700;">M.</td><td style="padding:3px 6px;border:1px solid var(--border);text-align:center;">' + wb.nom + '</td></tr>' +
+          '<tr><td style="padding:3px 6px;border:1px solid var(--border);font-weight:700;">D.</td><td style="padding:3px 6px;border:1px solid var(--border);text-align:center;">' + wb.gen + '</td></tr>' +
+          '</table>';
+      } else {
+        html += '<div style="font-size:14px;color:var(--text-light);margin:16px 0;">—</div>';
       }
     }
+    html += '<div style="margin-top:8px;"><button onclick="hideFlashcardWord()" style="background:var(--card);border:1px solid var(--error);border-radius:var(--radius-sm);padding:6px 14px;font-size:12px;color:var(--error);cursor:pointer;">✕ Nie pokazuj</button></div>';
   }
-  
-  html += '<div style="margin-top:8px;">' +
-    '<button onclick="hideFlashcardWord()" style="background:var(--card);border:1px solid var(--error);border-radius:var(--radius-sm);padding:8px 16px;font-size:13px;color:var(--error);cursor:pointer;">✕ Nie pokazuj</button>' +
-    '</div></div>';
-  
+  html += '</div>';
   document.getElementById('contentWrap').innerHTML = html;
   
-  document.getElementById('mainBtn').textContent = 'Następne →';
-  document.getElementById('mainBtn').disabled = false;
-  document.getElementById('mainBtn').className = 'check-btn secondary';
-  document.getElementById('mainBtn').onclick = function() {
-    state.currentQ++;
-    renderFlashcard();
-  };
+  if (!flipped) {
+    document.getElementById('mainBtn').textContent = '';
+    document.getElementById('mainBtn').disabled = true;
+  } else {
+    document.getElementById('mainBtn').textContent = 'Następne →';
+    document.getElementById('mainBtn').disabled = false;
+    document.getElementById('mainBtn').className = 'check-btn secondary';
+    document.getElementById('mainBtn').onclick = flashcardNext;
+  }
+}
+
+function toggleFcDirection() {
+  state.fcFlipDirection = (state.fcFlipDirection === 'pl2ru') ? 'ru2pl' : 'pl2ru';
+  state._fcFlipped = false;
+  saveState();
+  renderFlashcard();
+}
+
+function flashcardFlip() {
+  state._fcFlipped = true;
+  renderFlashcard();
+}
+
+function flashcardNext() {
+  state._fcFlipped = false;
+  state.currentQ++;
+  renderFlashcard();
 }
 
 function hideFlashcardWord() {
+  var hidden = new Set(state.hiddenFlashcardWords || []);
+  var visible = [];
+  if (typeof PERS_VOCAB !== 'undefined') {
+    for (var pi = 0; pi < PERS_VOCAB.length; pi++) {
+      var w = PERS_VOCAB[pi].pl;
+      if (!hidden.has(w)) visible.push(w);
+    }
+  }
+  if (typeof VOCAB_LIST !== 'undefined') {
+    var existing = new Set(visible);
+    for (var vi = 0; vi < VOCAB_LIST.length; vi++) {
+      if (!hidden.has(VOCAB_LIST[vi].pl) && !existing.has(VOCAB_LIST[vi].pl)) visible.push(VOCAB_LIST[vi].pl);
+    }
+  }
+  var word = visible[state.currentQ];
+  if (!word) { flashcardNext(); return; }
+  if (!state.hiddenFlashcardWords) state.hiddenFlashcardWords = [];
+  state.hiddenFlashcardWords.push(word);
+  saveState();
+  flashcardNext();
+}function flashcardFlip() {
+  state._fcFlipped = true;
+  renderFlashcard();
+}
+
+function flashcardNext() {
+  state._fcFlipped = false;
+  state.currentQ++;
+  renderFlashcard();
+}
+
+function hideFlashcardWord() {
+  var hidden = new Set(state.hiddenFlashcardWords || []);
+  var visible = [];
+  if (typeof PERS_VOCAB !== 'undefined') {
+    for (var pi = 0; pi < PERS_VOCAB.length; pi++) {
+      var w = PERS_VOCAB[pi].pl;
+      if (!hidden.has(w)) visible.push(w);
+    }
+  }
+  if (typeof VOCAB_LIST !== 'undefined') {
+    var existing = new Set(visible);
+    for (var vi = 0; vi < VOCAB_LIST.length; vi++) {
+      if (!hidden.has(VOCAB_LIST[vi].pl) && !existing.has(VOCAB_LIST[vi].pl)) visible.push(VOCAB_LIST[vi].pl);
+    }
+  }
+  var word = visible[state.currentQ];
+  if (!word) { flashcardNext(); return; }
+  
+  if (!state.hiddenFlashcardWords) state.hiddenFlashcardWords = [];
+  state.hiddenFlashcardWords.push(word);
+  saveState();
+  flashcardNext();
+}function hideFlashcardWord() {
   var allWords = typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.map(function(e) { return e.pl; }) : Object.keys(WORD_BANK);
   var hidden = new Set(state.hiddenFlashcardWords || []);
   var words = allWords.filter(function(w) { return !hidden.has(w); });
