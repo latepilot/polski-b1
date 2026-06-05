@@ -2059,12 +2059,6 @@ function renderTree() {
 
   var showingAll = state._showAllSkills || false;
   let html = '<div class="unit-tree">';
-  // Toggle: pokaż / ukryj zablokowane
-  html += '<div class="skill-card available" onclick="toggleShowAllSkills()" style="margin-bottom:8px;border-left-color:var(--accent);">';
-  html += '<div class="skill-icon">' + (showingAll ? '📂' : '📁') + '</div>';
-  html += '<div class="skill-info"><div class="skill-name">' + (showingAll ? 'Zwiń wszystko' : 'Pokaż wszystkie kursy') + '</div>';
-  html += '<div class="skill-desc">' + (showingAll ? 'Ukryj zablokowane lekcje' : 'Pokaż wszystkie 37 lekcji, również zablokowane') + '</div></div>';
-  html += '<div class="skill-status active-txt">' + (showingAll ? '▲' : '▼') + '</div></div>';
   // Flashcard button (always at top)
   var hiddenCount = state.hiddenFlashcardWords ? state.hiddenFlashcardWords.length : 0;
   html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:4px;">';
@@ -2121,6 +2115,13 @@ function renderTree() {
   html += `<div style="height:8px;border-radius:4px;background:var(--border);margin-bottom:16px;overflow:hidden;">
     <div style="height:100%;width:${pct}%;background:var(--primary);border-radius:4px;transition:0.5s;"></div>
   </div>`;
+  // Toggle: pokaż / ukryj zablokowane
+  html += '<div class="skill-card available" onclick="toggleShowAllSkills()" style="margin-bottom:8px;border-left-color:var(--accent);">';
+  html += '<div class="skill-icon">' + (showingAll ? '📂' : '📁') + '</div>';
+  html += '<div class="skill-info"><div class="skill-name">' + (showingAll ? 'Zwiń wszystko' : 'Pokaż wszystkie kursy') + '</div>';
+  html += '<div class="skill-desc">' + (showingAll ? 'Ukryj zablokowane lekcje' : 'Pokaż wszystkie 37 lekcji, również zablokowane') + '</div></div>';
+  html += '<div class="skill-status active-txt">' + (showingAll ? '▲' : '▼') + '</div></div>';
+
 
   for (const u of units) {
     const unitSkills = SKILLS.filter(s => s.unit === u);
