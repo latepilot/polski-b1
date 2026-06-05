@@ -2082,7 +2082,7 @@ function renderTree() {
   html += '<div class="skill-icon">🃏</div>';
   html += '<div class="skill-info"><div class="skill-name">Fiszki — słownictwo</div>';
   var totalWords = (typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.length : 0) + (typeof PERS_VOCAB !== 'undefined' ? PERS_VOCAB.length : 0);
-  html += '<div class="skill-desc">' + totalWords + ' słów' + (hiddenCount > 0 ? ' (' + hiddenCount + ' ukrytych)' : '') + '</div></div>';
+  html += '<div class="skill-desc">' + totalWords + ' słówek z przykładami' + (hiddenCount > 0 ? ' (' + hiddenCount + ' ukrytych)' : '') + '</div></div>';
   html += '<div class="skill-status active-txt">→ Przeglądaj</div></div>';
   // Hidden words card
   html += '<div class="skill-card available" onclick="startHiddenWords()" style="margin-bottom:4px;border-left-color:var(--gold);">';
