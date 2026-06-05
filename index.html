@@ -511,6 +511,7 @@ input, textarea { font-family: inherit; }
       <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;" id="themeToggle">🌙</div>
       <div class="stat-item xp"><span class="icon">⚡</span><span id="xpDisplay">0</span></div>
       <div class="stat-item streak"><span class="icon">🔥</span><span id="streakDisplay">0</span></div>
+      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);padding:2px 8px;" title="Główna">🏠</div>
     </div>
   </div>
 
@@ -1966,6 +1967,14 @@ function saveState() {
     errorQueue: state.errorQueue,
     hiddenFlashcardWords: state.hiddenFlashcardWords,
   }));
+}
+
+function goHome() {
+  // Stop any running timers
+  if (examTimer) clearInterval(examTimer);
+  state.phase = 'tree';
+  document.getElementById('progressStrip').innerHTML = '';
+  render();
 }
 
 function toggleTheme() {
