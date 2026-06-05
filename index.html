@@ -2046,13 +2046,25 @@ function getUnlockedSkills() {
   return unlocked;
 }
 
+
+function toggleShowAllSkills() {
+  state._showAllSkills = !state._showAllSkills;
+  renderTree();
+}
 function renderTree() {
   state.phase = 'tree';
   const wrap = $('contentWrap');
   const unlocked = getUnlockedSkills();
   const units = [...new Set(SKILLS.map(s => s.unit))];
 
+  var showingAll = state._showAllSkills || false;
   let html = '<div class="unit-tree">';
+  // Toggle: pokaż / ukryj zablokowane
+  html += '<div class="skill-card available" onclick="toggleShowAllSkills()" style="margin-bottom:8px;border-left-color:var(--accent);">';
+  html += '<div class="skill-icon">' + (showingAll ? '📂' : '📁') + '</div>';
+  html += '<div class="skill-info"><div class="skill-name">' + (showingAll ? 'Zwiń wszystko' : 'Pokaż wszystkie kursy') + '</div>';
+  html += '<div class="skill-desc">' + (showingAll ? 'Ukryj zablokowane lekcje' : 'Pokaż wszystkie 37 lekcji, również zablokowane') + '</div></div>';
+  html += '<div class="skill-status active-txt">' + (showingAll ? '▲' : '▼') + '</div></div>';
   // Flashcard button (always at top)
   var hiddenCount = state.hiddenFlashcardWords ? state.hiddenFlashcardWords.length : 0;
   html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:4px;">';
@@ -2119,9 +2131,11 @@ function renderTree() {
       const done = state.completedSkills[s.id];
       const locked = !unlocked.has(s.id);
       const progress = state.skillProgress[s.id] || 0;
-      const cls = done ? 'completed' : locked ? 'locked' : 'available';
-      const icon = done ? '✅' : locked ? '🔒' : s.icon;
-      html += `<div class="skill-card ${cls}" onclick="${locked ? '' : `startSkill('${s.id}')`}">
+      var isLocked = locked && !showingAll;
+  const cls = done ? 'completed' : isLocked ? 'locked' : 'available';
+      var canClick = isLocked ? false : true;
+  const icon = done ? '✅' : isLocked ? '🔒' : s.icon;
+      html += `<div class="skill-card ${cls}" onclick="${isLocked ? '' : `startSkill('${s.id}')`}">
         <div class="skill-icon">${icon}</div>
         <div class="skill-info">
           <div class="skill-name">${s.name}</div>
