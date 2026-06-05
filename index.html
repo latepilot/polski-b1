@@ -1705,7 +1705,6 @@ function startCram() {
 }
 
 function renderCram() {
-  // If current index is past the end, cycle unknown words
   if (state._cramIndex >= state._cramWords.length) {
     if (state._cramUnknown.length > 0) {
       state._cramWords = state._cramUnknown.slice();
@@ -1722,44 +1721,54 @@ function renderCram() {
   
   var total = state._cramKnown.length + state._cramUnknown.length + (state._cramWords.length - state._cramIndex);
   var done = state._cramKnown.length;
+  var flipped = state._cramFlipped || false;
   
-  if (!state._cramFlipped) {
-    // Show Polish side
-    document.getElementById('progressStrip').innerHTML = '';
-    var wrap = document.getElementById('contentWrap');
-    wrap.innerHTML = '<div class="exercise-card" style="text-align:center;min-height:250px;display:flex;flex-direction:column;justify-content:center;">' +
-      '<div class="hint">📇 Cram &middot; ' + done + '/' + total + ' poznanych</div>' +
-      '<div style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Kliknij aby zobaczyć tłumaczenie</div>' +
-      '<div class="polish-text" style="font-size:28px;font-weight:700;color:var(--primary-dark);padding:30px 20px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);" onclick="flipCram()">' +
-      word.pl + '</div></div>';
-    
-    document.getElementById('mainBtn').textContent = '👁️ Pokaż tłumaczenie';
-    document.getElementById('mainBtn').disabled = false;
-    document.getElementById('mainBtn').className = 'check-btn secondary';
-    document.getElementById('mainBtn').onclick = flipCram;
+  document.getElementById('progressStrip').innerHTML = '';
+  
+  var html = '<div class="exercise-card" style="text-align:center;min-height:260px;">' +
+    '<div class="hint">📇 Cram &middot; ' + done + '/' + total + ' poznanych</div>';
+  
+  // Clickable Polish word
+  html += '<div onclick="cramFlip()" style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:16px 0;padding:20px 10px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);transition:0.2s;">' + word.pl + '</div>';
+  
+  if (flipped) {
+    // Show translation
+    html += '<div style="font-size:18px;color:var(--text);margin:8px 0 16px;padding:12px;background:var(--option-bg);border-radius:var(--radius-sm);">' + word.ru + '</div>';
   } else {
-    // Show both sides + Known/Unknown buttons
-    document.getElementById('progressStrip').innerHTML = '';
-    var wrap = document.getElementById('contentWrap');
-    wrap.innerHTML = '<div class="exercise-card" style="text-align:center;min-height:280px;display:flex;flex-direction:column;justify-content:center;">' +
-      '<div class="hint">📇 Cram &middot; ' + done + '/' + total + ' poznanych</div>' +
-      '<div style="font-size:28px;font-weight:700;color:var(--primary-dark);margin:8px 0;">' + word.pl + '</div>' +
-      '<div style="font-size:20px;color:var(--text);margin:8px 0;padding:12px;background:var(--option-bg);border-radius:var(--radius-sm);">' + word.ru + '</div></div>' +
-      '<div style="display:flex;gap:8px;margin-top:0;">' +
-      '<button class="check-btn secondary" onclick="cramAnswer(false)" id="cramNoBtn" style="flex:1;background:var(--error);">❌ Jeszcze nie</button>' +
-      '<button class="check-btn" onclick="cramAnswer(true)" id="cramYesBtn" style="flex:1;">✅ Znam</button></div>';
-    
-    document.getElementById('mainBtn').textContent = '';
-    document.getElementById('mainBtn').disabled = true;
+    html += '<div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">👆 Kliknij słowo aby zobaczyć tłumaczenie</div>';
   }
+  
+  // Always visible: Znam / Jeszcze nie buttons
+  html += '<div style="display:flex;gap:8px;margin-top:4px;">' +
+    '<button onclick="cramAnswer(false)" style="flex:1;padding:14px;background:var(--card);border:2px solid var(--error);border-radius:var(--radius-sm);font-size:16px;font-weight:700;color:var(--error);cursor:pointer;">❌ Jeszcze nie</button>' +
+    '<button onclick="cramAnswer(true)" style="flex:1;padding:14px;background:var(--primary);border:2px solid var(--primary);border-radius:var(--radius-sm);font-size:16px;font-weight:700;color:#fff;cursor:pointer;">✅ Znam</button></div>' +
+    '</div>';
+  
+  document.getElementById('contentWrap').innerHTML = html;
+  
+  document.getElementById('mainBtn').textContent = '';
+  document.getElementById('mainBtn').disabled = true;
 }
 
-function flipCram() {
-  state._cramFlipped = true;
+function cramFlip() {
+  state._cramFlipped = !state._cramFlipped;
   renderCram();
 }
 
 function cramAnswer(known) {
+  var word = state._cramWords[state._cramIndex];
+  if (!word) return;
+  
+  if (known) {
+    state._cramKnown.push(word);
+  } else {
+    state._cramUnknown.push(word);
+  }
+  
+  state._cramIndex++;
+  state._cramFlipped = false;
+  renderCram();
+}function cramAnswer(known) {
   var word = state._cramWords[state._cramIndex];
   if (!word) return;
   
