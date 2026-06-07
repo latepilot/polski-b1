@@ -226,7 +226,8 @@ input, textarea { font-family: inherit; }
 .skill-card.completed { border-left-color: var(--primary); opacity: 0.7; }
 .skill-card.locked { border-left-color: var(--border); opacity: 0.5; cursor: default; }
 .skill-card.available { border-left-color: var(--primary); }
-.skill-card .skill-icon { font-size: 26px; flex-shrink: 0; }
+.skill-card .skill-icon { font-size: 26px; flex-shrink: 0; color: var(--primary); display: flex; align-items: center; }
+.icon-svg { width: 1em; height: 1em; fill: currentColor; display: inline-block; vertical-align: middle; pointer-events: none; flex-shrink: 0; }
 .skill-card .skill-info { flex: 1; min-width: 0; }
 .skill-card .skill-name { font-weight: 600; font-size: 14px; color: var(--text-dark); }
 .skill-card .skill-desc { font-size: 12px; color: var(--text-light); }
@@ -527,13 +528,102 @@ input, textarea { font-family: inherit; }
 </head>
 <body>
 
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <symbol id="icon-book" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V4a2 2 0 00-2-2H5zm2 6h10v2H7V8zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/>
+    </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24">
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+    </symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M2 12a10 10 0 1020 0A10 10 0 002 12zm3 0a7 7 0 1014 0A7 7 0 005 12zm4 0a3 3 0 106 0 3 3 0 00-6 0z"/>
+    </symbol>
+    <symbol id="icon-wrench" viewBox="0 0 24 24">
+      <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+    </symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/>
+    </symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24">
+      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+    </symbol>
+    <symbol id="icon-pencil" viewBox="0 0 24 24">
+      <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm17.71-10.21a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+    </symbol>
+    <symbol id="icon-envelope" viewBox="0 0 24 24">
+      <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+    </symbol>
+    <symbol id="icon-document" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V4a2 2 0 00-2-2H5zm4 7h6v2H9V9zm0 4h6v2H9v-2zm-2 4h10v2H7v-2z"/>
+    </symbol>
+    <symbol id="icon-headphone" viewBox="0 0 24 24">
+      <path d="M12 1C7.03 1 3 5.03 3 10v1H1v5h2v-6c0-3.86 3.14-7 7-7s7 3.14 7 7v6h2v-5h-2v-1c0-4.97-4.03-9-9-9zM9 11c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h1v-8H9zm6 0h-1v8h1c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2z"/>
+    </symbol>
+    <symbol id="icon-shuffle" viewBox="0 0 24 24">
+      <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+    </symbol>
+    <symbol id="icon-gem" viewBox="0 0 24 24">
+      <path d="M6 4h12l4 5-10 12L2 9l4-5z"/>
+    </symbol>
+    <symbol id="icon-hourglass" viewBox="0 0 24 24">
+      <path d="M6 2v6l4 4-4 4v6h12v-6l-4-4 4-4V2H6zm10 14.5V20H8v-3.5L12 13l4 3.5zm-4-5L8 8.5V4h8v4.5L12 11.5z"/>
+    </symbol>
+    <symbol id="icon-tag" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M21.41 11.58l-9-9A2 2 0 0011 2H4a2 2 0 00-2 2v7a2 2 0 00.59 1.42l9 9A2 2 0 0013 22a2 2 0 001.41-.59l7-7A2 2 0 0022 13a2 2 0 00-.59-1.42zM7 9a2 2 0 110-4 2 2 0 010 4z"/>
+    </symbol>
+    <symbol id="icon-card" viewBox="0 0 24 24">
+      <path d="M9 2h10a2 2 0 012 2v11H9V2zM3 8a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+    </symbol>
+    <symbol id="icon-eye-off" viewBox="0 0 24 24">
+      <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75C21.27 7.11 17 4 12 4c-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.8 11.8 0 001 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+    </symbol>
+    <symbol id="icon-lightning" viewBox="0 0 24 24">
+      <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24">
+      <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+    </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path d="M12 3a6 6 0 009 9 9 9 0 11-9-9z"/>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <path d="M12 7a5 5 0 100 10A5 5 0 0012 7zM11 2v2a1 1 0 002 0V2a1 1 0 00-2 0zm0 18v-2a1 1 0 012 0v2a1 1 0 01-2 0zM2 13h2a1 1 0 000-2H2a1 1 0 000 2zm18 0h2a1 1 0 000-2h-2a1 1 0 000 2zM5.636 5.636a1 1 0 000 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 0zm12.02 10.606a1 1 0 000 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 0zM5.636 18.364a1 1 0 001.414 0l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 000 1.414zm12.02-12.728a1 1 0 001.414 0l.707-.707a1 1 0 00-1.414-1.414l-.707.707a1 1 0 000 1.414z"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24">
+      <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24">
+      <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+    </symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24">
+      <path d="M4 16v2h16v-2H4zm5-4v7h6v-7h4l-7-8-7 8h4z"/>
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+    </symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24">
+      <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+    </symbol>
+    <symbol id="icon-chevron-up" viewBox="0 0 24 24">
+      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z"/>
+    </symbol>
+  </defs>
+</svg>
+
 <div class="app" id="app">
   <!-- TOP BAR -->
   <div class="top-bar">
     <div class="brand"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px solid var(--border-soft);vertical-align:middle;background:linear-gradient(180deg,#fff 50%,#dc143c 50%);"></span> Polski <span>B1</span></div>
     <div class="stats">
-      <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;display:flex;align-items:center;line-height:1;" id="themeToggle">☾</div>
-      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:20px;font-weight:600;padding:0 4px;display:flex;align-items:center;line-height:1;" title="Główna">☰</div>
+      <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;display:flex;align-items:center;line-height:1;" id="themeToggle"><svg class="icon-svg" aria-hidden="true"><use href="#icon-moon"/></svg></div>
+      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:20px;font-weight:600;padding:0 4px;display:flex;align-items:center;line-height:1;" title="Główna"><svg class="icon-svg" aria-hidden="true"><use href="#icon-menu"/></svg></div>
     </div>
   </div>
 
@@ -552,7 +642,7 @@ input, textarea { font-family: inherit; }
 <!-- LEVEL UP MODAL -->
 <div class="modal-overlay" id="levelModal" style="display:none;">
   <div class="modal-box">
-    <div class="big-icon">★</div>
+    <div class="big-icon" style="color:var(--gold);"><svg class="icon-svg" aria-hidden="true" style="width:1em;height:1em"><use href="#icon-star"/></svg></div>
     <h2 id="levelTitle">Level Up!</h2>
     <p id="levelMsg">You're making great progress!</p>
     <button onclick="closeLevelModal()">Awesome! →</button>
@@ -563,86 +653,90 @@ input, textarea { font-family: inherit; }
 <script src="data/vocab.js"></script>
 <script src="data/personal.js"></script>
 <script>
+function svgIcon(id) {
+  return '<svg class="icon-svg" aria-hidden="true"><use href="#' + id + '"/></svg>';
+}
+
 // ========================================================================
 // DATA — All exercises, lessons, and vocabulary derived from the materials
 // ========================================================================
 
 const SKILLS = [
-  { id: 'grammar-nouns', icon: '▤', name: 'Rzeczownik — rodzaj & liczba', 
+  { id: 'grammar-nouns', icon: 'icon-book', name: 'Rzeczownik — rodzaj & liczba', 
     desc: 'Rodzaj rzeczownika, liczba pojedyncza i mnoga', unit: 1, order: 1, type: 'lesson' },
-  { id: 'grammar-cases-nom', icon: '⌂', name: 'Mianownik — Kto? Co?',
+  { id: 'grammar-cases-nom', icon: 'icon-home', name: 'Mianownik — Kto? Co?',
     desc: 'Mianownik: podstawowa forma, końcówki', unit: 1, order: 2, type: 'lesson' },
-  { id: 'ex-nom-pl', icon: '✍️', name: 'Ćwiczenia: Mianownik l.mn.', 
+  { id: 'ex-nom-pl', icon: 'icon-pencil', name: 'Ćwiczenia: Mianownik l.mn.', 
     desc: 'Formy mianownika liczby mnogiej', unit: 1, order: 3, type: 'exercise' },
-  { id: 'grammar-gen', icon: '▤', name: 'Dopełniacz — Kogo? Czego?',
+  { id: 'grammar-gen', icon: 'icon-book', name: 'Dopełniacz — Kogo? Czego?',
     desc: 'Dopełniacz: końcówki -a/-u, użycie z przeczeniem', unit: 2, order: 1, type: 'lesson' },
-  { id: 'ex-gen', icon: '✍️', name: 'Ćwiczenia: Dopełniacz',
+  { id: 'ex-gen', icon: 'icon-pencil', name: 'Ćwiczenia: Dopełniacz',
     desc: 'Dopełniacz w zdaniach', unit: 2, order: 2, type: 'exercise' },
-  { id: 'grammar-dat', icon: '★', name: 'Celownik — Komu? Czemu?',
+  { id: 'grammar-dat', icon: 'icon-star', name: 'Celownik — Komu? Czemu?',
     desc: 'Celownik: końcówki -owi/-u/-e', unit: 2, order: 3, type: 'lesson' },
-  { id: 'ex-dat', icon: '✍️', name: 'Ćwiczenia: Celownik',
+  { id: 'ex-dat', icon: 'icon-pencil', name: 'Ćwiczenia: Celownik',
     desc: 'Celownik w zdaniach', unit: 2, order: 4, type: 'exercise' },
-  { id: 'grammar-acc', icon: '◎', name: 'Biernik — Kogo? Co?',
+  { id: 'grammar-acc', icon: 'icon-target', name: 'Biernik — Kogo? Co?',
     desc: 'Biernik: rodzaj męski żeński i nijaki', unit: 3, order: 1, type: 'lesson' },
-  { id: 'ex-acc', icon: '✍️', name: 'Ćwiczenia: Biernik',
+  { id: 'ex-acc', icon: 'icon-pencil', name: 'Ćwiczenia: Biernik',
     desc: 'Biernik w zdaniach', unit: 3, order: 2, type: 'exercise' },
-  { id: 'grammar-inst', icon: '⚙', name: 'Narzędnik — Z kim? Z czym?',
+  { id: 'grammar-inst', icon: 'icon-wrench', name: 'Narzędnik — Z kim? Z czym?',
     desc: 'Narzędnik: końcówki -em/-ą', unit: 3, order: 3, type: 'lesson' },
-  { id: 'ex-inst', icon: '✍️', name: 'Ćwiczenia: Narzędnik',
+  { id: 'ex-inst', icon: 'icon-pencil', name: 'Ćwiczenia: Narzędnik',
     desc: 'Narzędnik w zdaniach', unit: 3, order: 4, type: 'exercise' },
-  { id: 'grammar-loc', icon: '⚑', name: 'Miejscownik — O kim? O czym?',
+  { id: 'grammar-loc', icon: 'icon-pin', name: 'Miejscownik — O kim? O czym?',
     desc: 'Miejscownik: końcówki -e/-u, wymiany głosek', unit: 4, order: 1, type: 'lesson' },
-  { id: 'ex-loc', icon: '✍️', name: 'Ćwiczenia: Miejscownik',
+  { id: 'ex-loc', icon: 'icon-pencil', name: 'Ćwiczenia: Miejscownik',
     desc: 'Miejscownik w zdaniach', unit: 4, order: 2, type: 'exercise' },
-  { id: 'grammar-voc', icon: '☏', name: 'Wołacz — Zwroty do adresata',
+  { id: 'grammar-voc', icon: 'icon-phone', name: 'Wołacz — Zwroty do adresata',
     desc: 'Wołacz w listach i oficjalnych zwrotach', unit: 4, order: 3, type: 'lesson' },
-  { id: 'ex-voc', icon: '✍️', name: 'Ćwiczenia: Wołacz',
+  { id: 'ex-voc', icon: 'icon-pencil', name: 'Ćwiczenia: Wołacz',
     desc: 'Formy wołacza', unit: 4, order: 4, type: 'exercise' },
-  { id: 'ex-cases-mix', icon: '⟳', name: 'Wszystkie przypadki — mix',
+  { id: 'ex-cases-mix', icon: 'icon-shuffle', name: 'Wszystkie przypadki — mix',
     desc: 'Różne przypadki w zdaniach', unit: 5, order: 1, type: 'exercise' },
-  { id: 'grammar-adj', icon: '◈', name: 'Przymiotnik — odmiana',
+  { id: 'grammar-adj', icon: 'icon-gem', name: 'Przymiotnik — odmiana',
     desc: 'Odmiana przymiotników przez przypadki', unit: 5, order: 2, type: 'lesson' },
-  { id: 'ex-adj', icon: '✍️', name: 'Ćwiczenia: Przymiotniki',
+  { id: 'ex-adj', icon: 'icon-pencil', name: 'Ćwiczenia: Przymiotniki',
     desc: 'Przymiotniki w zdaniach', unit: 5, order: 3, type: 'exercise' },
-  { id: 'grammar-aspect', icon: '⏳', name: 'Czasownik — aspekt',
+  { id: 'grammar-aspect', icon: 'icon-hourglass', name: 'Czasownik — aspekt',
     desc: 'Aspekt dokonany i niedokonany', unit: 5, order: 4, type: 'lesson' },
-  { id: 'ex-aspect', icon: '✍️', name: 'Ćwiczenia: Aspekt',
+  { id: 'ex-aspect', icon: 'icon-pencil', name: 'Ćwiczenia: Aspekt',
     desc: 'Dokonany czy niedokonany?', unit: 5, order: 5, type: 'exercise' },
   // Unit 6: Vocab & Reading
-  { id: 'vocab-house', icon: '⌂', name: 'Przedmioty w domu',
+  { id: 'vocab-house', icon: 'icon-home', name: 'Przedmioty w domu',
     desc: 'Słownictwo: meble, sprzęty domowe', unit: 6, order: 1, type: 'lesson' },
-  { id: 'ex-vocab-house', icon: '✍️', name: 'Ćwiczenia: W domu',
+  { id: 'ex-vocab-house', icon: 'icon-pencil', name: 'Ćwiczenia: W domu',
     desc: 'Co to za przedmiot?', unit: 6, order: 2, type: 'exercise' },
-  { id: 'vocab-appearance', icon: '◎', name: 'Wygląd człowieka',
+  { id: 'vocab-appearance', icon: 'icon-target', name: 'Wygląd człowieka',
     desc: 'Opis wyglądu: wzrost, włosy, oczy', unit: 6, order: 3, type: 'lesson' },
-  { id: 'ex-vocab-appearance', icon: '✍️', name: 'Ćwiczenia: Wygląd',
+  { id: 'ex-vocab-appearance', icon: 'icon-pencil', name: 'Ćwiczenia: Wygląd',
     desc: 'Opisz osobę', unit: 6, order: 4, type: 'exercise' },
-  { id: 'exam-read-1', icon: '☰', name: 'Czytanie — test 1',
+  { id: 'exam-read-1', icon: 'icon-document', name: 'Czytanie — test 1',
     desc: 'Fragmenty tekstów, wybierz odpowiedź', unit: 7, order: 1, type: 'exercise' },
-  { id: 'exam-read-2', icon: '☰', name: 'Czytanie — test 2 (TAK/NIE)',
+  { id: 'exam-read-2', icon: 'icon-document', name: 'Czytanie — test 2 (TAK/NIE)',
     desc: 'Zrozumienie tekstu, TAK czy NIE?', unit: 7, order: 2, type: 'exercise' },
-  { id: 'exam-read-3', icon: '☰', name: 'Czytanie — dopasowanie',
+  { id: 'exam-read-3', icon: 'icon-document', name: 'Czytanie — dopasowanie',
     desc: 'Nagłówki do tekstów', unit: 7, order: 3, type: 'exercise' },
   // Unit 8: Writing
-  { id: 'writing-letters', icon: '✉️', name: 'Pisanie — Listy',
+  { id: 'writing-letters', icon: 'icon-envelope', name: 'Pisanie — Listy',
     desc: 'List formalny i nieformalny: zwroty', unit: 8, order: 1, type: 'lesson' },
-  { id: 'ex-writing-form', icon: '✍️', name: 'Pisanie — formy wypowiedzi',
+  { id: 'ex-writing-form', icon: 'icon-pencil', name: 'Pisanie — formy wypowiedzi',
     desc: 'Dopasuj formę do opisu', unit: 8, order: 2, type: 'exercise' },
-  { id: 'writing-practice-1', icon: '✏️', name: 'Pisanie — Ćwiczenie 1',
+  { id: 'writing-practice-1', icon: 'icon-pencil', name: 'Pisanie — Ćwiczenie 1',
     desc: 'Napisz pozdrowienia / zaproszenie', unit: 8, order: 3, type: 'exercise' },
-  { id: 'writing-practice-2', icon: '✏️', name: 'Pisanie — Ćwiczenie 2',
+  { id: 'writing-practice-2', icon: 'icon-pencil', name: 'Pisanie — Ćwiczenie 2',
     desc: 'Napisz opis osoby / opowiadanie', unit: 8, order: 4, type: 'exercise' },
-  { id: 'exam-listening', icon: '♪', name: 'Słuchanie — kontekst',
+  { id: 'exam-listening', icon: 'icon-headphone', name: 'Słuchanie — kontekst',
     desc: 'Gdzie pada ta wypowiedź?', unit: 7, order: 4, type: 'exercise' },
-  { id: 'vocab-markers', icon: '§️', name: 'Słowa-markery do argumentacji',
+  { id: 'vocab-markers', icon: 'icon-tag', name: 'Słowa-markery do argumentacji',
     desc: 'Przydatne zwroty do eseju', unit: 8, order: 5, type: 'lesson' },
-  { id: 'ex-dialogues-1', icon: '☏', name: 'Dialogi — Rozmowy 1',
+  { id: 'ex-dialogues-1', icon: 'icon-phone', name: 'Dialogi — Rozmowy 1',
     desc: 'Sytuacje z życia: pogotowie, zakupy, wizyta', unit: 7, order: 5, type: 'exercise' },
-  { id: 'ex-dialogues-2', icon: '☏', name: 'Dialogi — Rozmowy 2',
+  { id: 'ex-dialogues-2', icon: 'icon-phone', name: 'Dialogi — Rozmowy 2',
     desc: 'Sytuacje z życia: zaproszenia, podróż, praca', unit: 7, order: 6, type: 'exercise' },
-  { id: 'ex-dialogues-3', icon: '☏', name: 'Dialogi — Rozmowy 3',
+  { id: 'ex-dialogues-3', icon: 'icon-phone', name: 'Dialogi — Rozmowy 3',
     desc: 'Sytuacje z życia: problemy, emocje, kłopoty', unit: 8, order: 6, type: 'exercise' },
-  { id: 'ex-vocab-extended', icon: '▤️', name: 'Słownictwo — rozszerzone',
+  { id: 'ex-vocab-extended', icon: 'icon-book', name: 'Słownictwo — rozszerzone',
     desc: 'Dom: kuchnia, salon, łazienka. Wygląd: cechy charakteru', unit: 6, order: 5, type: 'exercise' },
 ];
 
@@ -2010,7 +2104,7 @@ function toggleTheme() {
   html.setAttribute('data-theme', next);
   Storage.set('polskiB1Theme', next);
   const toggle = document.getElementById('themeToggle');
-  if (toggle) toggle.textContent = next === 'dark' ? '☀' : '☾';
+  if (toggle) toggle.innerHTML = next === 'dark' ? svgIcon('icon-sun') : svgIcon('icon-moon');
 }
 
 // ========================================================================
@@ -2038,7 +2132,7 @@ function renderTopBar() {
   const themeToggle = document.getElementById('themeToggle');
   if (themeToggle) {
     const theme = document.documentElement.getAttribute('data-theme');
-    themeToggle.textContent = theme === 'dark' ? '☀' : '☾';
+    themeToggle.innerHTML = theme === 'dark' ? svgIcon('icon-sun') : svgIcon('icon-moon');
   }
 }
 
@@ -2087,20 +2181,20 @@ function renderTree() {
   // Flashcard button (always at top)
   var hiddenCount = state.hiddenFlashcardWords ? state.hiddenFlashcardWords.length : 0;
   html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:4px;">';
-  html += '<div class="skill-icon">🃏</div>';
+  html += '<div class="skill-icon">' + svgIcon('icon-card') + '</div>';
   html += '<div class="skill-info"><div class="skill-name">Fiszki — słownictwo</div>';
   var totalWords = (typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.length : 0) + (typeof PERS_VOCAB !== 'undefined' ? PERS_VOCAB.length : 0);
   html += '<div class="skill-desc">' + totalWords + ' słówek z przykładami' + (hiddenCount > 0 ? ' (' + hiddenCount + ' ukrytych)' : '') + '</div></div>';
   html += '<div class="skill-status active-txt">→ Przeglądaj</div></div>';
   // Hidden words card
   html += '<div class="skill-card available" onclick="startHiddenWords()" style="margin-bottom:4px;border-left-color:var(--gold);">';
-  html += '<div class="skill-icon">⇧</div>';
+  html += '<div class="skill-icon">' + svgIcon('icon-eye-off') + '</div>';
   html += '<div class="skill-info"><div class="skill-name">Ukryte słowa</div>';
   html += '<div class="skill-desc">' + (hiddenCount > 0 ? hiddenCount + ' słów ukrytych' : 'Brak ukrytych słów') + '</div></div>';
   html += '<div class="skill-status active-txt">' + (hiddenCount > 0 ? hiddenCount : '-') + '</div></div>';
     // Exam simulation button
   html += '<div class="skill-card available" onclick="startExam()" style="margin-bottom:8px;border-left-color:var(--gold);">';
-  html += '<div class="skill-icon">◎</div>';
+  html += '<div class="skill-icon">' + svgIcon('icon-target') + '</div>';
   html += '<div class="skill-info"><div class="skill-name">Egzamin próbny</div>';
   html += '<div class="skill-desc">10 pytań, 15 minut. Sprawdź gotowość!</div></div>';
   html += '<div class="skill-status active-txt" style="color:var(--gold);">→ Start</div></div>';
@@ -2108,12 +2202,12 @@ function renderTree() {
   var persCount = typeof PERS_VOCAB !== 'undefined' ? PERS_VOCAB.length : 0;
   if (persCount > 0) {
     html += '<div class="skill-card available" onclick="startCram()" style="margin-bottom:4px;border-left-color:var(--gold);">';
-    html += '<div class="skill-icon">☰</div>';
+    html += '<div class="skill-icon">' + svgIcon('icon-lightning') + '</div>';
     html += '<div class="skill-info"><div class="skill-name">Personal — Cram</div>';
     html += '<div class="skill-desc">' + persCount + ' słów. Trenuj: poznaj → zapamiętaj</div></div>';
-    html += '<div class="skill-status active-txt">♺ Cram</div></div>';
+    html += '<div class="skill-status active-txt">Cram</div></div>';
     html += '<div class="skill-card available" onclick="startPersonalEdit()" style="margin-bottom:8px;">';
-    html += '<div class="skill-icon">✏️</div>';
+    html += '<div class="skill-icon">' + svgIcon('icon-pencil') + '</div>';
     html += '<div class="skill-info"><div class="skill-name">Personal — edytuj</div>';
     html += '<div class="skill-desc">Dodaj/usuń/edytuj słowa</div></div>';
     html += '<div class="skill-status active-txt">></div></div>';
@@ -2121,7 +2215,7 @@ function renderTree() {
   // Error review button
   if (state.errorQueue && state.errorQueue.length > 0) {
     html += '<div class="skill-card available" onclick="startReview()" style="margin-bottom:8px;border-left-color:var(--error);">';
-    html += '<div class="skill-icon">♺</div>';
+    html += '<div class="skill-icon">' + svgIcon('icon-refresh') + '</div>';
     html += '<div class="skill-info"><div class="skill-name">Powtórka błędów</div>';
     html += '<div class="skill-desc">' + state.errorQueue.length + ' słów do powtórzenia</div></div>';
     html += '<div class="skill-status active-txt" style="color:var(--error);font-weight:700;">' + state.errorQueue.length + ' ⚠️</div></div>';
@@ -2141,10 +2235,10 @@ function renderTree() {
   </div>`;
   // Toggle: pokaż / ukryj zablokowane
   html += '<div class="skill-card available" onclick="toggleShowAllSkills()" style="margin-bottom:8px;border-left-color:var(--accent);">';
-  html += '<div class="skill-icon">' + (showingAll ? '▸' : '▾') + '</div>';
+  html += '<div class="skill-icon">' + svgIcon(showingAll ? 'icon-chevron-right' : 'icon-chevron-down') + '</div>';
   html += '<div class="skill-info"><div class="skill-name">' + (showingAll ? 'Zwiń wszystko' : 'Pokaż wszystkie kursy') + '</div>';
   html += '<div class="skill-desc">' + (showingAll ? 'Ukryj zablokowane lekcje' : 'Pokaż wszystkie 37 lekcji, również zablokowane') + '</div></div>';
-  html += '<div class="skill-status active-txt">' + (showingAll ? '▲' : '▼') + '</div></div>';
+  html += '<div class="skill-status active-txt">' + svgIcon(showingAll ? 'icon-chevron-up' : 'icon-chevron-down') + '</div></div>';
 
 
   for (const u of units) {
@@ -2159,7 +2253,7 @@ function renderTree() {
       var isLocked = locked && !showingAll;
   const cls = done ? 'completed' : isLocked ? 'locked' : 'available';
       var canClick = isLocked ? false : true;
-  const icon = done ? '✓' : isLocked ? '🔒' : s.icon;
+  const icon = done ? svgIcon('icon-check') : isLocked ? svgIcon('icon-lock') : svgIcon(s.icon);
       html += `<div class="skill-card ${cls}" onclick="${isLocked ? '' : `startSkill('${s.id}')`}">
         <div class="skill-icon">${icon}</div>
         <div class="skill-info">
@@ -2168,7 +2262,7 @@ function renderTree() {
           ${s.type === 'exercise' && !done ? `<div class="skill-bar"><div class="skill-bar-fill" style="width:${progress}%"></div></div>` : ''}
         </div>
         <div class="skill-status ${done ? 'done' : locked ? 'locked-txt' : 'active-txt'}">
-          ${done ? '✓ Ukończono' : locked ? '🔒' : '→ Rozpocznij'}
+          ${done ? svgIcon('icon-check') + ' Ukończono' : locked ? svgIcon('icon-lock') : '→ Rozpocznij'}
         </div>
       </div>`;
     }
