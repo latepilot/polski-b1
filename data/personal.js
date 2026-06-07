@@ -146,6 +146,15 @@ let PERS_VOCAB = [
   {id: 145, pl: 'nam się poszczęściło', ru: 'нам повезло'},
   {id: 146, pl: 'z góry', ru: 'сверху'},
   {id: 147, pl: 'z dołu', ru: 'снизу'},
+  {id: 148, pl: 'postrzeganie', ru: 'восприятие'},
+  {id: 149, pl: 'nieprzyjemny', ru: 'неприятный'},
+  {id: 150, pl: 'wątek', ru: 'нить / тема / сюжет'},
+  {id: 151, pl: 'tętno', ru: 'пульс'},
+  {id: 152, pl: 'niewłaściwy', ru: 'неправильный / неподобающий'},
+  {id: 153, pl: 'zdolny', ru: 'способный / талантливый'},
+  {id: 154, pl: 'przyzwyczaić się / jestem przyzwyczajony', ru: 'привыкнуть / я привык'},
+  {id: 155, pl: 'swoją drogą', ru: 'кстати (by the way)'},
+  {id: 156, pl: 'à propos', ru: 'кстати (apropos)'},
 ];
 function nextPersId() {
   var maxId = 0;
