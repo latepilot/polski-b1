@@ -47,7 +47,7 @@
   --highlight-border: var(--gold);
   --example-bg: #f6f5f4;
   --th-bg: #f6f5f4;
-  --toggle-icon: '🌙';
+  --toggle-icon: '☾';
   --correct-bg: #d9f3e1;
   --wrong-bg: #fde0ec;
   --selected-bg: #e6e0f5;
@@ -96,7 +96,7 @@
   --tak-bg: #1a3a1a;
   --nie-bg: #3a1a1a;
   --writing-bg: #2a2a2a;
-  --toggle-icon: '☀️';
+  --toggle-icon: '☀';
   --modal-overlay: rgba(0,0,0,0.6);
   --accent-ring: rgba(123,111,240,0.25);
 }
@@ -532,10 +532,8 @@ input, textarea { font-family: inherit; }
   <div class="top-bar">
     <div class="brand"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px solid var(--border-soft);vertical-align:middle;background:linear-gradient(180deg,#fff 50%,#dc143c 50%);"></span> Polski <span>B1</span></div>
     <div class="stats">
-      <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;" id="themeToggle">🌙</div>
-      <div class="stat-item xp"><span class="icon">⚡</span><span id="xpDisplay">0</span></div>
-      <div class="stat-item streak"><span class="icon">🔥</span><span id="streakDisplay">0</span></div>
-      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);padding:2px 8px;" title="Główna">⌂</div>
+      <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;display:flex;align-items:center;line-height:1;" id="themeToggle">☾</div>
+      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:20px;font-weight:600;padding:0 4px;display:flex;align-items:center;line-height:1;" title="Główna">☰</div>
     </div>
   </div>
 
@@ -2012,7 +2010,7 @@ function toggleTheme() {
   html.setAttribute('data-theme', next);
   Storage.set('polskiB1Theme', next);
   const toggle = document.getElementById('themeToggle');
-  if (toggle) toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+  if (toggle) toggle.textContent = next === 'dark' ? '☀' : '☾';
 }
 
 // ========================================================================
@@ -2036,13 +2034,11 @@ function render() {
 }
 
 function renderTopBar() {
-  $('xpDisplay').textContent = state.xp;
-  $('streakDisplay').textContent = state.streak;
   // Set theme toggle icon
   const themeToggle = document.getElementById('themeToggle');
   if (themeToggle) {
     const theme = document.documentElement.getAttribute('data-theme');
-    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    themeToggle.textContent = theme === 'dark' ? '☀' : '☾';
   }
 }
 
