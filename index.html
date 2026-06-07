@@ -234,7 +234,7 @@ input, textarea { font-family: inherit; }
 .skill-card .skill-status { font-size: 12px; font-weight: 600; }
 .skill-card .skill-status.done { color: var(--primary); }
 .skill-card .skill-status.locked-txt { color: var(--text-muted); }
-.skill-card .skill-status.active-txt { color: var(--primary); }
+.skill-card .skill-status.active-txt { color: var(--gold); }
 .skill-bar {
   height: 4px; border-radius: 2px; background: var(--border); margin-top: 4px;
   overflow: hidden;
@@ -1807,7 +1807,7 @@ function generateExercise(skillId) {
 
 function startCram() {
   if (typeof PERS_VOCAB === 'undefined' || PERS_VOCAB.length === 0) {
-    showTempFeedback('Brak słów w Personal. Dodaj je najpierw.');
+    showTempFeedback('Brak słów w Moje słowa. Dodaj je najpierw.');
     return;
   }
   state._cramWords = PERS_VOCAB.slice(); // copy
@@ -1877,10 +1877,18 @@ function renderCram() {
     '<button onclick="cramAnswer(true)" style="flex:1;padding:14px;background:var(--primary);border:2px solid var(--primary);border-radius:var(--radius-sm);font-size:16px;font-weight:700;color:#fff;cursor:pointer;">\u2713 Znam</button></div>' +
     '</div>';
   
+  // Moje słowa — edytuj card inside Cram
+  html += '<div class="skill-card available" onclick="startPersonalEdit()" style="margin-bottom:8px;">';
+  html += '<div class="skill-icon" style="font-size:22px;">' + svgIcon('icon-pencil') + '</div>';
+  html += '<div class="skill-info"><div class="skill-name" style="font-size:14px;">Moje słowa — edytuj</div>';
+  html += '<div class="skill-desc" style="font-size:12px;">Dodaj/usuń/edytuj słowa</div></div>';
+  html += '<div class="skill-status active-txt" style="font-size:12px;">></div></div>';
+  
   document.getElementById('contentWrap').innerHTML = html;
   
   document.getElementById('mainBtn').textContent = '';
   document.getElementById('mainBtn').disabled = true;
+  document.getElementById('bottomWrap').style.display = 'none';
 }
 
 function cramFlip() {
@@ -1940,9 +1948,9 @@ function startPersonalEdit() {
 
 function renderPersonalEdit() {
   if (typeof PERS_VOCAB === 'undefined') { render(); return; }
-  
+  document.getElementById('bottomWrap').style.display = '';
   var wrap = document.getElementById('contentWrap');
-  var html = '<div class="exercise-card"><div class="hint">✏️ Edytuj Personal</div>' +
+  var html = '<div class="exercise-card"><div class="hint">✏️ Edytuj Moje słowa</div>' +
     '<div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">' + PERS_VOCAB.length + ' słów. Kliknij aby edytować, ✕ aby usunąć.</div>';
   
   // List all words
@@ -2094,6 +2102,7 @@ function goHome() {
   if (examTimer) clearInterval(examTimer);
   state.phase = 'tree';
   document.getElementById('progressStrip').innerHTML = '';
+  document.getElementById('bottomWrap').style.display = '';
   render();
 }
 
@@ -2173,6 +2182,7 @@ function toggleShowAllSkills() {
 function renderTree() {
   state.phase = 'tree';
   const wrap = $('contentWrap');
+  document.getElementById('bottomWrap').style.display = '';
   const unlocked = getUnlockedSkills();
   const units = [...new Set(SKILLS.map(s => s.unit))];
 
@@ -2180,38 +2190,27 @@ function renderTree() {
   let html = '<div class="unit-tree">';
   // Flashcard button (always at top)
   var hiddenCount = state.hiddenFlashcardWords ? state.hiddenFlashcardWords.length : 0;
-  html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:4px;">';
+  html += '<div class="skill-card available" onclick="startFlashcard()" style="margin-bottom:4px;border-left-color:var(--gold);">';
   html += '<div class="skill-icon">' + svgIcon('icon-card') + '</div>';
   html += '<div class="skill-info"><div class="skill-name">Fiszki — słownictwo</div>';
   var totalWords = (typeof VOCAB_LIST !== 'undefined' ? VOCAB_LIST.length : 0) + (typeof PERS_VOCAB !== 'undefined' ? PERS_VOCAB.length : 0);
   html += '<div class="skill-desc">' + totalWords + ' słówek z przykładami' + (hiddenCount > 0 ? ' (' + hiddenCount + ' ukrytych)' : '') + '</div></div>';
   html += '<div class="skill-status active-txt">→ Przeglądaj</div></div>';
-  // Hidden words card
-  html += '<div class="skill-card available" onclick="startHiddenWords()" style="margin-bottom:4px;border-left-color:var(--gold);">';
-  html += '<div class="skill-icon">' + svgIcon('icon-eye-off') + '</div>';
-  html += '<div class="skill-info"><div class="skill-name">Ukryte słowa</div>';
-  html += '<div class="skill-desc">' + (hiddenCount > 0 ? hiddenCount + ' słów ukrytych' : 'Brak ukrytych słów') + '</div></div>';
-  html += '<div class="skill-status active-txt">' + (hiddenCount > 0 ? hiddenCount : '-') + '</div></div>';
-    // Exam simulation button
-  html += '<div class="skill-card available" onclick="startExam()" style="margin-bottom:8px;border-left-color:var(--gold);">';
-  html += '<div class="skill-icon">' + svgIcon('icon-target') + '</div>';
-  html += '<div class="skill-info"><div class="skill-name">Egzamin próbny</div>';
-  html += '<div class="skill-desc">10 pytań, 15 minut. Sprawdź gotowość!</div></div>';
-  html += '<div class="skill-status active-txt" style="color:var(--gold);">→ Start</div></div>';
   // Personal vocabulary section
   var persCount = typeof PERS_VOCAB !== 'undefined' ? PERS_VOCAB.length : 0;
   if (persCount > 0) {
     html += '<div class="skill-card available" onclick="startCram()" style="margin-bottom:4px;border-left-color:var(--gold);">';
     html += '<div class="skill-icon">' + svgIcon('icon-lightning') + '</div>';
-    html += '<div class="skill-info"><div class="skill-name">Personal — Cram</div>';
+    html += '<div class="skill-info"><div class="skill-name">Moje słowa</div>';
     html += '<div class="skill-desc">' + persCount + ' słów. Trenuj: poznaj → zapamiętaj</div></div>';
-    html += '<div class="skill-status active-txt">Cram</div></div>';
-    html += '<div class="skill-card available" onclick="startPersonalEdit()" style="margin-bottom:8px;">';
-    html += '<div class="skill-icon">' + svgIcon('icon-pencil') + '</div>';
-    html += '<div class="skill-info"><div class="skill-name">Personal — edytuj</div>';
-    html += '<div class="skill-desc">Dodaj/usuń/edytuj słowa</div></div>';
-    html += '<div class="skill-status active-txt">></div></div>';
+    html += '<div class="skill-status active-txt">→ Cram mode</div></div>';
   }
+  // Exam simulation button
+  html += '<div class="skill-card available" onclick="startExam()" style="margin-bottom:8px;border-left-color:var(--gold);">';
+  html += '<div class="skill-icon">' + svgIcon('icon-target') + '</div>';
+  html += '<div class="skill-info"><div class="skill-name">Egzamin próbny</div>';
+  html += '<div class="skill-desc">10 pytań, 15 minut. Sprawdź gotowość!</div></div>';
+  html += '<div class="skill-status active-txt" style="color:var(--gold);">→ Start</div></div>';
   // Error review button
   if (state.errorQueue && state.errorQueue.length > 0) {
     html += '<div class="skill-card available" onclick="startReview()" style="margin-bottom:8px;border-left-color:var(--error);">';
@@ -3307,10 +3306,20 @@ function renderFlashcard() {
     '<button onclick="hideFlashcardWord()" style="flex:1;padding:14px;background:var(--card);border:2px solid var(--error);border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--error);cursor:pointer;">\u2716 Nie pokazuj</button>' +
     '<button onclick="flashcardNext()" style="flex:2;padding:14px;background:var(--accent);border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">Nast\u0119pne \u2192</button></div>';
   html += '</div>';
+  // Hidden words card inside Fiszki
+  var hiddenWordsList = state.hiddenFlashcardWords || [];
+  if (hiddenWordsList.length > 0) {
+    html += '<div class="skill-card available" onclick="startHiddenWords()" style="border-left-color:var(--gold);padding:12px 14px;margin-bottom:8px;">';
+    html += '<div class="skill-icon" style="font-size:22px;">' + svgIcon('icon-eye-off') + '</div>';
+    html += '<div class="skill-info"><div class="skill-name" style="font-size:14px;">Ukryte słowa</div>';
+    html += '<div class="skill-desc" style="font-size:12px;">' + hiddenWordsList.length + ' słów ukrytych przed Fiszkami</div></div>';
+    html += '<div class="skill-status active-txt" style="font-size:12px;">' + hiddenWordsList.length + '</div></div>';
+  }
   document.getElementById('contentWrap').innerHTML = html;
   
   document.getElementById('mainBtn').textContent = '';
   document.getElementById('mainBtn').disabled = true;
+  document.getElementById('bottomWrap').style.display = 'none';
 }
 
 function toggleFcDirection() {
@@ -3374,6 +3383,7 @@ function handleMainAction() {
 
 function startHiddenWords() {
   state.phase = 'hidden-words';
+  document.getElementById('bottomWrap').style.display = '';
   render();
 }
 
