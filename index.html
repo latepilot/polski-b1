@@ -2131,7 +2131,7 @@ function renderTree() {
   const completedCount = Object.keys(state.completedSkills).length;
   const pct = totalSkills > 0 ? Math.round(completedCount / totalSkills * 100) : 0;
   html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-    <h2 style="margin:0;">▤ Kurs</h2>
+    <h2 style="margin:0;">Kurs</h2>
     <span style="font-size:14px;color:var(--text-light);font-weight:600;">
       ${completedCount}/${totalSkills} &middot; ${pct}%
     </span>
@@ -2178,7 +2178,7 @@ function renderTree() {
   wrap.innerHTML = html;
 
   $('progressStrip').innerHTML = '';
-  $('mainBtn').textContent = '▤ Kurs';
+  $('mainBtn').textContent = 'Kurs';
   $('mainBtn').onclick = () => { renderTree(); };
   $('mainBtn').disabled = true;
 }
