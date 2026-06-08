@@ -3410,7 +3410,7 @@ function renderHiddenWords() {
   html += '<div style="font-size:14px;color:var(--text-light);margin:8px 0 12px;">' + hidden.length + ' słów ukrytych przed Fiszkami</div>';
   
   // Przywróć wszystkie button
-  html += '<button onclick="restoreHiddenFlashcard()" class="check-btn" style="width:100%;padding:14px;margin-bottom:16px;background:var(--gold, #d4a017);border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">↩️ Przywróć wszystkie (' + hidden.length + ')</button>';
+  html += '<button onclick="restoreHiddenFlashcard()" class="check-btn" style="width:100%;padding:14px;margin-bottom:16px;background:var(--gold, #d4a017);border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">Przywróć wszystkie (' + hidden.length + ')</button>';
   
   // Build lookup maps for translations
   var persMap = {};
@@ -3435,7 +3435,7 @@ function renderHiddenWords() {
     html += '<span style="font-weight:600;font-size:15px;">' + w + '</span>';
     if (ru) html += ' <span style="font-size:13px;color:var(--text-light);">— ' + ru + '</span>';
     html += '</div>';
-    html += '<button onclick="unhideWord(\'' + w.replace(/'/g, "\\'") + '\')" style="background:none;border:2px solid var(--accent);border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;padding:6px 12px;white-space:nowrap;">↩️</button>';
+    html += '<button onclick="unhideWord(\'' + w.replace(/'/g, "\\'") + '\')" style="background:none;border:2px solid var(--accent);border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;padding:6px 12px;white-space:nowrap;">przywróć</button>';
     html += '</div>';
   }
   
