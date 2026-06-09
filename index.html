@@ -1859,7 +1859,8 @@ function renderCram() {
     '<span>Cram &middot; ' + done + '/' + total + ' poznanych</span>' +
     '<span style="display:flex;align-items:center;gap:10px;">' +
     '<span onclick="toggleFcShuffle()" style="cursor:pointer;display:inline-block;width:24px;height:24px;vertical-align:middle;background:' + (state.fcShuffle ? '#64B5F6' : '#999') + ';mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAABgAAAAAQAAAGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAACCgAwAEAAAAAQAAACAAAAAAcFS6AwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAWRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD53d3cuaW5rc2NhcGUub3JnPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgqyyWIhAAACPklEQVRYCe2VS0tVURTHr6lQEGQOgoQmJjWwptnQghxHDQwEoUGDRgXSSOSSGH6CbkJ9AadZgVggQiqEfgB1VKAEPWZhao/f/7DXZd/NPvfVPWfSXfBjP87ea6299llrFwpt+d8j0JlxAAbQ/wT6YDNjW1H188z+cUzFVmQdgUGMDjvD12h/w4ob59Icw0oJfkE0El3OjQ7a+3AbtCmUAya2YAGWQMpC6WdC+69Cr/uodd2gk5veafpyaBbKes4y+OkmzNO09jXrZMxEzj+Cr5C2J5z/wVrZLMsJem/gEI4ihAp2WHMR9A89g/C7r0PGFAF/zTvGslmQ9ybH6ZwHC5XNqz0JN+AhnAbJB7gJ63AOJC/hOXwCGZUjupYi2HWv0r8Fn6FhucKOPbDTTNC/68bK91CuM/ENbP17+mfCRY2O5b391TrpJShBLHKvmG+pcfQl17bsKR6lb+GlWyFjjHZhEf755L5mpaydTD9hNTnFx1h0kj2pH6pp5Nsa6CeTDIGyITdR5uhU26AoKHVVfGKSyRVI6Tg8BrsGFSc/pRkm0vKfUGn4BTbgAnwHc2KGfig109D3ulYhGkH7A7BCdId+D8yBiQrRC/gIDRWiZkrxZWf1Ka1Fwdq6S7HTkTwM+xFFptBvda/9tpFWUWz6MbIrUKvcVt2OpaZeSnuO39KXQ6HIqbTnWFniF6tJxhXPcaisVWMdRmXaSrccn2qV8nr0FFnkX1+uxuXgvOdA7sblwADorbinQVvaEYhF4C8StNAeJiD8uQAAAABJRU5ErkJggg==) no-repeat center;mask-size:contain;-webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAABgAAAAAQAAAGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAACCgAwAEAAAAAQAAACAAAAAAcFS6AwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAWRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDYuMC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD53d3cuaW5rc2NhcGUub3JnPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgqyyWIhAAACPklEQVRYCe2VS0tVURTHr6lQEGQOgoQmJjWwptnQghxHDQwEoUGDRgXSSOSSGH6CbkJ9AadZgVggQiqEfgB1VKAEPWZhao/f/7DXZd/NPvfVPWfSXfBjP87ea6299llrFwpt+d8j0JlxAAbQ/wT6YDNjW1H188z+cUzFVmQdgUGMDjvD12h/w4ob59Icw0oJfkE0El3OjQ7a+3AbtCmUAya2YAGWQMpC6WdC+69Cr/uodd2gk5veafpyaBbKes4y+OkmzNO09jXrZMxEzj+Cr5C2J5z/wVrZLMsJem/gEI4ihAp2WHMR9A89g/C7r0PGFAF/zTvGslmQ9ybH6ZwHC5XNqz0JN+AhnAbJB7gJ63AOJC/hOXwCGZUjupYi2HWv0r8Fn6FhucKOPbDTTNC/68bK91CuM/ENbP17+mfCRY2O5b391TrpJShBLHKvmG+pcfQl17bsKR6lb+GlWyFjjHZhEf755L5mpaydTD9hNTnFx1h0kj2pH6pp5Nsa6CeTDIGyITdR5uhU26AoKHVVfGKSyRVI6Tg8BrsGFSc/pRkm0vKfUGn4BTbgAnwHc2KGfig109D3ulYhGkH7A7BCdId+D8yBiQrRC/gIDRWiZkrxZWf1Ka1Fwdq6S7HTkTwM+xFFptBvda/9tpFWUWz6MbIrUKvcVt2OpaZeSnuO39KXQ6HIqbTnWFniF6tJxhXPcaisVWMdRmXaSrccn2qV8nr0FFnkX1+uxuXgvOdA7sblwADorbinQVvaEYhF4C8StNAeJiD8uQAAAABJRU5ErkJggg==) no-repeat center;-webkit-mask-size:contain;"></span>' +
-    '<span onclick="toggleFcDirection()" style="cursor:pointer;display:inline-block;width:24px;height:24px;border-radius:4px;border:1px solid var(--border-soft);vertical-align:middle;' + (dir !== 'ru2pl' ? 'background:linear-gradient(180deg,#fff 50%,#dc143c 50%);' : 'background:linear-gradient(180deg,#fff 33.3%,#0039a6 33.3%,#0039a6 66.6%,#d52b1e 66.6%);') + '"></span></span></div>';
+    '<span onclick="toggleFcDirection()" style="cursor:pointer;display:inline-block;width:24px;height:24px;border-radius:4px;border:1px solid var(--border-soft);vertical-align:middle;' + (dir !== 'ru2pl' ? 'background:linear-gradient(180deg,#fff 50%,#dc143c 50%);' : 'background:linear-gradient(180deg,#fff 33.3%,#0039a6 33.3%,#0039a6 66.6%,#d52b1e 66.6%);') + '"></span>' +
+    '<span onclick="cramHideWord()" style="cursor:pointer;display:inline-block;border:1px solid var(--error);border-radius:4px;padding:2px 8px;margin-left:4px;font-size:12px;font-weight:600;color:var(--error);line-height:20px;user-select:none;text-transform:none;">Ukryj</span></span></div>';
   
   // Clickable word
   html += '<div onclick="cramFlip()" style="font-size:28px;font-weight:700;color:var(--text-dark);margin:16px 0;padding:20px 10px;cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);transition:0.2s;">' + front + '</div>';
@@ -1884,6 +1885,16 @@ function renderCram() {
   html += '<div class="skill-desc" style="font-size:12px;">Dodaj/usuń/edytuj słowa</div></div>';
   html += '<div class="skill-status active-txt" style="font-size:12px;">></div></div>';
   
+  // Hidden words card inside Cram
+  var cramHidden = state.hiddenFlashcardWords || [];
+  if (cramHidden.length > 0) {
+    html += '<div class="skill-card available" onclick="startHiddenWords()" style="border-left-color:var(--gold);padding:12px 14px;margin-bottom:8px;">';
+    html += '<div class="skill-icon" style="font-size:22px;">' + svgIcon('icon-eye-off') + '</div>';
+    html += '<div class="skill-info"><div class="skill-name" style="font-size:14px;">Ukryte słowa</div>';
+    html += '<div class="skill-desc" style="font-size:12px;">' + cramHidden.length + ' słów ukrytych</div></div>';
+    html += '<div class="skill-status active-txt" style="font-size:12px;">' + cramHidden.length + '</div></div>';
+  }
+  
   document.getElementById('contentWrap').innerHTML = html;
   
   document.getElementById('mainBtn').textContent = '';
@@ -1893,6 +1904,17 @@ function renderCram() {
 
 function cramFlip() {
   state._cramFlipped = !state._cramFlipped;
+  renderCram();
+}
+
+function cramHideWord() {
+  var word = state._cramWords[state._cramIndex];
+  if (!word) return;
+  if (!state.hiddenFlashcardWords) state.hiddenFlashcardWords = [];
+  state.hiddenFlashcardWords.push(word.pl);
+  saveState();
+  state._cramFlipped = false;
+  state._cramIndex++;
   renderCram();
 }
 
