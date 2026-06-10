@@ -155,6 +155,9 @@ let PERS_VOCAB = [
   {id: 154, pl: 'przyzwyczaić się / jestem przyzwyczajony', ru: 'привыкнуть / я привык'},
   {id: 155, pl: 'swoją drogą', ru: 'кстати (by the way)'},
   {id: 156, pl: 'à propos', ru: 'кстати (apropos)'},
+  {id: 157, pl: 'być dumnym / jestem z tego dumny (Jestem z tego dumny.)', ru: 'гордиться / я горжусь этим'},
+  {id: 158, pl: 'zdjąć buty (Zdejmij buty przed wejściem.)', ru: 'снять обувь'},
+  {id: 159, pl: 'po raz pierwszy (Po raz pierwszy jem sushi.)', ru: 'впервые / в первый раз'},
 ];
 function nextPersId() {
   var maxId = 0;
