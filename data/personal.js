@@ -158,6 +158,12 @@ let PERS_VOCAB = [
   {id: 157, pl: 'być dumnym / jestem z tego dumny (Jestem z tego dumny.)', ru: 'гордиться / я горжусь этим'},
   {id: 158, pl: 'zdjąć buty (Zdejmij buty przed wejściem.)', ru: 'снять обувь'},
   {id: 159, pl: 'po raz pierwszy (Po raz pierwszy jem sushi.)', ru: 'впервые / в первый раз'},
+  {id: 160, pl: 'i tak chcę (I tak chcę to zrobić.)', ru: 'и я всё равно хочу / и так хочу'},
+  {id: 161, pl: 'niech grają, ile chcą', ru: 'пусть играют сколько хотят'},
+  {id: 162, pl: 'postać', ru: 'фигура, персонаж, облик'},
+  {id: 163, pl: 'zaangażować (zaangażować się w projekt)', ru: 'вовлечь / привлечь (вовлечься в проект)'},
+  {id: 164, pl: 'zastosowanie (znaleźć zastosowanie)', ru: 'применение / использование (найти применение)'},
+  {id: 165, pl: 'przewaga (mieć przewagę)', ru: 'преимущество (иметь преимущество)'},
 ];
 function nextPersId() {
   var maxId = 0;
