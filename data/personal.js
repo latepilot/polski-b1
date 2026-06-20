@@ -164,6 +164,14 @@ let PERS_VOCAB = [
   {id: 163, pl: 'zaangażować (zaangażować się w projekt)', ru: 'вовлечь / привлечь (вовлечься в проект)'},
   {id: 164, pl: 'zastosowanie (znaleźć zastosowanie)', ru: 'применение / использование (найти применение)'},
   {id: 165, pl: 'przewaga (mieć przewagę)', ru: 'преимущество (иметь преимущество)'},
+  {id: 166, pl: 'uprawiać (uprawiać sport)', ru: 'заниматься (спортом)'},
+  {id: 167, pl: 'układ (układ nerwowy)', ru: 'система / строй / договорённость (нервная система)'},
+  {id: 168, pl: 'dokonać rezerwacji (dokonać rezerwacji hotelu)', ru: 'забронировать / совершить бронирование (забронировать отель)'},
+  {id: 169, pl: 'odejście (nagłe odejście z pracy)', ru: 'уход / отбытие (внезапный уход с работы)'},
+  {id: 170, pl: 'wówczas (Wówczas mieszkałem w Gdańsku)', ru: 'тогда / в то время (Тогда я жил в Гданьске)'},
+  {id: 171, pl: 'przesuwać (przesuwać meble)', ru: 'двигать (двигать мебель)'},
+  {id: 172, pl: 'przesunąć (przesuń to na bok)', ru: 'сдвигать / сдвинуть (сдвинь это в сторону)'},
+  {id: 173, pl: 'przesunąć się (przesuń się, proszę)', ru: 'подвинуться (подвинься, пожалуйста)'},
 ];
 function nextPersId() {
   var maxId = 0;
