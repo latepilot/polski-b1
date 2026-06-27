@@ -614,6 +614,9 @@ input, textarea { font-family: inherit; }
     <symbol id="icon-chevron-up" viewBox="0 0 24 24">
       <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z"/>
     </symbol>
+    <symbol id="icon-back" viewBox="0 0 24 24">
+      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -623,6 +626,7 @@ input, textarea { font-family: inherit; }
     <div class="brand"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px solid var(--border-soft);vertical-align:middle;background:linear-gradient(180deg,#fff 50%,#dc143c 50%);"></span> Polski <span>B1</span></div>
     <div class="stats">
       <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;display:flex;align-items:center;line-height:1;" id="themeToggle"><svg class="icon-svg" aria-hidden="true"><use href="#icon-moon"/></svg></div>
+      <div class="stat-item" onclick="goBack()" style="cursor:pointer;font-size:20px;padding:0 2px;display:none;align-items:center;line-height:1;" id="backBtn" title="Cofnij"><svg class="icon-svg" aria-hidden="true"><use href="#icon-back"/></svg></div>
       <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:20px;font-weight:600;padding:0 4px;display:flex;align-items:center;line-height:1;" title="Główna"><svg class="icon-svg" aria-hidden="true"><use href="#icon-menu"/></svg></div>
     </div>
   </div>
@@ -1810,6 +1814,7 @@ function startCram() {
     showTempFeedback('Brak słów w Moje słowa. Dodaj je najpierw.');
     return;
   }
+  pushNav();
   state._cramWords = PERS_VOCAB.slice(); // copy
   // Shuffle if enabled
   if (state.fcShuffle) {
@@ -1964,6 +1969,7 @@ function finishCram() {
 }
 
 function startPersonalEdit() {
+  pushNav();
   state.phase = 'personal-edit';
   renderPersonalEdit();
 }
@@ -1973,19 +1979,13 @@ function renderPersonalEdit() {
   document.getElementById('bottomWrap').style.display = '';
   var wrap = document.getElementById('contentWrap');
   var html = '<div class="exercise-card"><div class="hint">✏️ Edytuj Moje słowa</div>' +
-    '<div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">' + PERS_VOCAB.length + ' słów. Kliknij aby edytować, ✕ aby usunąć.</div>';
+    '<div style="font-size:13px;color:var(--text-light);margin-bottom:6px;">' + PERS_VOCAB.length + ' słów. Szukaj:</div>' +
+    '<input type="text" id="persSearch" placeholder="wpisz aby filtrować..." oninput="filterPersWords()" style="width:100%;padding:10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:14px;margin-bottom:12px;" autocomplete="off">' +
+    '<div id="persWordList" style="max-height:350px;overflow-y:auto;margin-bottom:12px;"></div>';
   
-  // List all words
-  html += '<div style="max-height:400px;overflow-y:auto;margin-bottom:12px;">';
-  for (var i = 0; i < PERS_VOCAB.length; i++) {
-    var w = PERS_VOCAB[i];
-    html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--border);">' +
-      '<div style="flex:1;font-weight:600;">' + (w.pl.length > 35 ? w.pl.substring(0, 32) + '...' : w.pl) + '</div>' +
-      '<div style="flex:1;font-size:13px;color:var(--text-light);">' + (w.ru.length > 35 ? w.ru.substring(0, 32) + '...' : w.ru) + '</div>' +
-      '<button onclick="editPersWord(' + i + ')" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;">✏️</button>' +
-      '<button onclick="deletePersWord(' + i + ')" style="background:none;border:1px solid var(--error);border-radius:6px;padding:4px 8px;font-size:12px;color:var(--error);">✕</button></div>';
-  }
-  html += '</div>';
+  // Store PERS_VOCAB for filtering
+  window._persAll = PERS_VOCAB;
+  filterPersWords();
   
   // Add new word form
   html += '<div style="border-top:2px solid var(--primary);padding-top:12px;margin-top:8px;">' +
@@ -2025,6 +2025,26 @@ function deletePersWord(idx) {
   renderPersonalEdit();
 }
 
+function filterPersWords() {
+  var q = document.getElementById('persSearch') ? document.getElementById('persSearch').value.toLowerCase() : '';
+  var words = window._persAll || PERS_VOCAB;
+  var el = document.getElementById('persWordList');
+  if (!el) return;
+  var html = '';
+  for (var i = 0; i < words.length; i++) {
+    var w = words[i];
+    var pl = (w.pl || '').toLowerCase();
+    var ru = (w.ru || '').toLowerCase();
+    if (q && pl.indexOf(q) === -1 && ru.indexOf(q) === -1) continue;
+    html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--border);">' +
+      '<div style="flex:1;font-weight:600;">' + (w.pl.length > 35 ? w.pl.substring(0, 32) + '...' : w.pl) + '</div>' +
+      '<div style="flex:1;font-size:13px;color:var(--text-light);">' + (w.ru.length > 35 ? w.ru.substring(0, 32) + '...' : w.ru) + '</div>' +
+      '<button onclick="editPersWord(' + i + ')" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:12px;">✏️</button>' +
+      '<button onclick="deletePersWord(' + i + ')" style="background:none;border:1px solid var(--error);border-radius:6px;padding:4px 8px;font-size:12px;color:var(--error);">✕</button></div>';
+  }
+  el.innerHTML = html || '<div style="text-align:center;padding:20px;color:var(--text-muted);">Brak wyników</div>';
+}
+
 function editPersWord(idx) {
   var w = PERS_VOCAB[idx];
   var newPl = prompt('Edytuj polskie słowo:', w.pl);
@@ -2058,6 +2078,7 @@ let state = {
   errorQueue: [],
   reviewCorrectCount: {},
   hiddenFlashcardWords: [],
+  navStack: [],
   fcFlipDirection: 'pl2ru',
   fcShuffle: false, // 'pl2ru' or 'ru2pl', // words removed from flashcard rotation
 };
@@ -2120,9 +2141,10 @@ function saveState() {
 }
 
 function goHome() {
-  // Stop any running timers
   if (examTimer) clearInterval(examTimer);
   state.phase = 'tree';
+  state.navStack = [];
+  document.getElementById('backBtn').style.display = 'none';
   document.getElementById('progressStrip').innerHTML = '';
   document.getElementById('bottomWrap').style.display = '';
   render();
@@ -2136,6 +2158,24 @@ function toggleTheme() {
   Storage.set('polskiB1Theme', next);
   const toggle = document.getElementById('themeToggle');
   if (toggle) toggle.innerHTML = next === 'dark' ? svgIcon('icon-sun') : svgIcon('icon-moon');
+}
+
+function pushNav() {
+  if (!state.navStack) state.navStack = [];
+  state.navStack.push(state.phase);
+  document.getElementById('backBtn').style.display = 'flex';
+  saveState();
+}
+
+function goBack() {
+  if (!state.navStack || state.navStack.length === 0) { goHome(); return; }
+  var prev = state.navStack.pop();
+  saveState();
+  if (state.navStack.length === 0) {
+    document.getElementById('backBtn').style.display = 'none';
+  }
+  state.phase = prev;
+  render();
 }
 
 // ========================================================================
@@ -3043,6 +3083,7 @@ function generateExam() {
 function startExam() {
   const examQs = generateExam();
   if (examQs.length === 0) { showTempFeedback('Brak pytań. Najpierw odblokuj lekcje.'); return; }
+  pushNav();
   
   state._examQuestions = examQs;
   state._examIndex = 0;
@@ -3231,6 +3272,7 @@ function finishReview() {
 // FLASHCARD MODE — Browse words from word bank
 // ========================================================================
 function startFlashcard() {
+  pushNav();
   state.phase = 'flashcard';
   state.currentQ = 0;
   renderFlashcard();
@@ -3404,6 +3446,7 @@ function handleMainAction() {
 // ========================================================================
 
 function startHiddenWords() {
+  pushNav();
   state.phase = 'hidden-words';
   document.getElementById('bottomWrap').style.display = '';
   render();
