@@ -172,6 +172,11 @@ let PERS_VOCAB = [
   {id: 171, pl: 'przesuwać (przesuwać meble)', ru: 'двигать (двигать мебель)'},
   {id: 172, pl: 'przesunąć (przesuń to na bok)', ru: 'сдвигать / сдвинуть (сдвинь это в сторону)'},
   {id: 173, pl: 'przesunąć się (przesuń się, proszę)', ru: 'подвинуться (подвинься, пожалуйста)'},
+  {id: 174, pl: 'rozwój (rozwój osobisty)', ru: 'развитие (личностное развитие)'},
+  {id: 175, pl: 'poważny (poważna rozmowa)', ru: 'серьезный (серьезный разговор)'},
+  {id: 176, pl: 'wyobraź sobie (Wyobraź sobie, że to prawda)', ru: 'представь себе (Представь себе, что это правда)'},
+  {id: 177, pl: 'zakładać (Zakładam, że masz rację — zakładać firmę — zakładać buty)', ru: 'предполагать / основывать / надевать (Предполагаю, что ты прав — основать компанию — надеть обувь)'},
+  {id: 178, pl: 'jakby (Wyglądasz, jakbyś zobaczył ducha)', ru: 'как будто (Выглядишь, как будто призрака увидел)'},
 ];
 function nextPersId() {
   var maxId = 0;
