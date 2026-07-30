@@ -177,6 +177,7 @@ let PERS_VOCAB = [
   {id: 176, pl: 'wyobraź sobie (Wyobraź sobie, że to prawda)', ru: 'представь себе (Представь себе, что это правда)'},
   {id: 177, pl: 'zakładać (Zakładam, że masz rację — zakładać firmę — zakładać buty)', ru: 'предполагать / основывать / надевать (Предполагаю, что ты прав — основать компанию — надеть обувь)'},
   {id: 178, pl: 'jakby (Wyglądasz, jakbyś zobaczył ducha)', ru: 'как будто (Выглядишь, как будто призрака увидел)'},
+  {id: 179, pl: 'wręcz (wręcz przeciwnie — to jest wręcz niemożliwe)', ru: 'прямо / прямо-таки / вовсе (как раз наоборот — это просто невозможно)'},
 ];
 function nextPersId() {
   var maxId = 0;
