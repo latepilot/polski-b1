@@ -178,6 +178,10 @@ let PERS_VOCAB = [
   {id: 177, pl: 'zakładać (Zakładam, że masz rację — zakładać firmę — zakładać buty)', ru: 'предполагать / основывать / надевать (Предполагаю, что ты прав — основать компанию — надеть обувь)'},
   {id: 178, pl: 'jakby (Wyglądasz, jakbyś zobaczył ducha)', ru: 'как будто (Выглядишь, как будто призрака увидел)'},
   {id: 179, pl: 'wręcz (wręcz przeciwnie — to jest wręcz niemożliwe)', ru: 'прямо / прямо-таки / вовсе (как раз наоборот — это просто невозможно)'},
+  {id: 180, pl: 'uzyskać / uzyskanie (uzyskać pozwolenie — uzyskanie pozwolenia)', ru: 'получить / получение (получить разрешение — получение разрешения)'},
+  {id: 181, pl: 'stosunek (stosunek do pracy — stosunek jakości do ceny)', ru: 'отношение / соотношение (отношение к работе — соотношение цены и качества)'},
+  {id: 182, pl: 'stosunkowo (stosunkowo tanio)', ru: 'относительно / сравнительно (относительно дёшево)'},
+  {id: 183, pl: 'poważnie (traktować coś poważnie)', ru: 'серьёзно (относиться к чему-то серьёзно)'},
 ];
 function nextPersId() {
   var maxId = 0;
