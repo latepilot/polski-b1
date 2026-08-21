@@ -123,8 +123,6 @@ let PERS_VOCAB = [
   {id: 120, pl: 'niechęć / nie chce mi się', ru: 'нежелание / не хотеть'},
   {id: 121, pl: 'niepożądany', ru: 'нежелательный'},
   {id: 123, pl: 'poruszane', ru: 'затрагиваемый / обсуждаемый'},
-  {id: 125, pl: 'niechęć / nie chce mi się', ru: 'нежелание / не хотеть'},
-  {id: 126, pl: 'niepożądany', ru: 'нежелательный'},
   {id: 127, pl: 'zachwycający', ru: 'восхитительный'},
   {id: 128, pl: 'banalny', ru: 'банальный'},
   {id: 129, pl: 'głupi', ru: 'дурацкий'},

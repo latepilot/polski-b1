@@ -1975,7 +1975,7 @@ function startPersonalEdit() {
 }
 
 function renderPersonalEdit() {
-  if (typeof PERS_VOCAB === 'undefined') { render(); return; }
+  if (typeof PERS_VOCAB === 'undefined') { goHome(); return; }
   document.getElementById('bottomWrap').style.display = '';
   var wrap = document.getElementById('contentWrap');
   var html = '<div class="exercise-card"><div class="hint">✏️ Edytuj Moje słowa</div>' +
@@ -2345,6 +2345,7 @@ function renderTree() {
 function startSkill(skillId) {
   const skill = SKILLS.find(s => s.id === skillId);
   if (!skill) return;
+  pushNav();
   state.currentSkillIndex = skillId;
   
   // Reset progress display
@@ -3127,7 +3128,7 @@ function proceedNext() {
 
 function finishExam() {
   if (examTimer) clearInterval(examTimer);
-  if (!state._examQuestions) { render(); return; }
+  if (!state._examQuestions) { goHome(); return; }
   var correct = state._examCorrect || 0;
   var total = state._examQuestions ? state._examQuestions.length : 0;
   var pct = total > 0 ? Math.round(correct / total * 100) : 0;
@@ -3469,6 +3470,7 @@ function renderHiddenWords() {
     document.getElementById('progressStrip').innerHTML = '';
     document.getElementById('mainBtn').textContent = '';
     document.getElementById('mainBtn').disabled = true;
+    document.getElementById('bottomWrap').style.display = 'none';
     return;
   }
   
@@ -3510,6 +3512,7 @@ function renderHiddenWords() {
   document.getElementById('progressStrip').innerHTML = '';
   document.getElementById('mainBtn').textContent = '';
   document.getElementById('mainBtn').disabled = true;
+  document.getElementById('bottomWrap').style.display = 'none';
 }
 
 function unhideWord(wordStr) {
