@@ -182,6 +182,7 @@ let PERS_VOCAB = [
   {id: 181, pl: 'stosunek (stosunek do pracy — stosunek jakości do ceny)', ru: 'отношение / соотношение (отношение к работе — соотношение цены и качества)'},
   {id: 182, pl: 'stosunkowo (stosunkowo tanio)', ru: 'относительно / сравнительно (относительно дёшево)'},
   {id: 183, pl: 'poważnie (traktować coś poważnie)', ru: 'серьёзно (относиться к чему-то серьёзно)'},
+  {id: 184, pl: 'poruszyć (poruszyć temat — poruszyć kogoś do łez — poruszyć nogą)', ru: 'затронуть (тему) / растрогать / пошевелить (затронуть тему — растрогать до слёз — пошевелить ногой)'},
 ];
 function nextPersId() {
   var maxId = 0;
