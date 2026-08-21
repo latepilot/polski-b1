@@ -26,7 +26,7 @@ const WORD_BANK = {
   'siostra':    { g: 'f', nom:'siostra', gen:'siostry', dat:'siostrze', acc:'siostrę', inst:'siostrą', loc:'siostrze', voc:'siostro', pl_nom:'siostry', pl_gen:'sióstr' },
   'kawa':       { g: 'f', nom:'kawa', gen:'kawy', dat:'kawie', acc:'kawę', inst:'kawą', loc:'kawie', voc:'kawo', pl_nom:'kawy', pl_gen:'kaw' },
   'książka':    { g: 'f', nom:'książka', gen:'książki', dat:'książce', acc:'książkę', inst:'książką', loc:'książce', voc:'książko', pl_nom:'książki', pl_gen:'książek' },
-  'praca':      { g: 'f', nom:'praca', gen:'pracy', dat:'pracy', acc:'pracę', inst:'pracą', loc:'pracy', voc:'pracy', pl_nom:'prace', pl_gen:'prac' },
+  'praca':      { g: 'f', nom:'praca', gen:'pracy', dat:'pracy', acc:'pracę', inst:'pracą', loc:'pracy', voc:'praco', pl_nom:'prace', pl_gen:'prac' },
   'szkoła':     { g: 'f', nom:'szkoła', gen:'szkoły', dat:'szkole', acc:'szkołę', inst:'szkołą', loc:'szkole', voc:'szkoło', pl_nom:'szkoły', pl_gen:'szkół' },
   'kuchnia':    { g: 'f', nom:'kuchnia', gen:'kuchni', dat:'kuchni', acc:'kuchnię', inst:'kuchnią', loc:'kuchni', voc:'kuchnio', pl_nom:'kuchnie', pl_gen:'kuchni' },
   'ulica':      { g: 'f', nom:'ulica', gen:'ulicy', dat:'ulicy', acc:'ulicę', inst:'ulicą', loc:'ulicy', voc:'ulico', pl_nom:'ulice', pl_gen:'ulic' },
@@ -43,11 +43,11 @@ const WORD_BANK = {
   'biurko':     { g: 'n', nom:'biurko', gen:'biurka', dat:'biurku', acc:'biurko', inst:'biurkiem', loc:'biurku', voc:'biurko', pl_nom:'biurka', pl_gen:'biurek' },
   'zadanie':    { g: 'n', nom:'zadanie', gen:'zadania', dat:'zadaniu', acc:'zadanie', inst:'zadaniem', loc:'zadaniu', voc:'zadanie', pl_nom:'zadania', pl_gen:'zadań' },
   // extra vocab for mix
-  'pies':       { g: 'm-os', nom:'pies', gen:'psa', dat:'psu', acc:'psa', inst:'psem', loc:'psie', voc:'psie', pl_nom:'psy', pl_gen:'psów' },
-  'kot':        { g: 'm-os', nom:'kot', gen:'kota', dat:'kotu', acc:'kota', inst:'kotem', loc:'kocie', voc:'kocie', pl_nom:'koty', pl_gen:'kotów' },
+  'pies':       { g: 'm-zw', nom:'pies', gen:'psa', dat:'psu', acc:'psa', inst:'psem', loc:'psie', voc:'psie', pl_nom:'psy', pl_gen:'psów' },
+  'kot':        { g: 'm-zw', nom:'kot', gen:'kota', dat:'kotu', acc:'kota', inst:'kotem', loc:'kocie', voc:'kocie', pl_nom:'koty', pl_gen:'kotów' },
   'rower':      { g: 'm-nieos', nom:'rower', gen:'roweru', dat:'rowerowi', acc:'rower', inst:'rowerem', loc:'rowerze', voc:'rowerze', pl_nom:'rowery', pl_gen:'rowerów' },
   'sklep':      { g: 'm-nieos', nom:'sklep', gen:'sklepu', dat:'sklepowi', acc:'sklep', inst:'sklepem', loc:'sklepie', voc:'sklepie', pl_nom:'sklepy', pl_gen:'sklepów' },
-  'kwiat':      { g: 'm-nieos', nom:'kwiat', gen:'kwiatu', dat:'kwiatowi', acc:'kwiat', inst:'kwiatem', loc:'kwiatku', voc:'kwiatku', pl_nom:'kwiaty', pl_gen:'kwiatów' },
+  'kwiat':      { g: 'm-nieos', nom:'kwiat', gen:'kwiatu', dat:'kwiatowi', acc:'kwiat', inst:'kwiatem', loc:'kwiecie', voc:'kwiecie', pl_nom:'kwiaty', pl_gen:'kwiatów' },
   'list':       { g: 'm-nieos', nom:'list', gen:'listu', dat:'listowi', acc:'list', inst:'listem', loc:'liście', voc:'liście', pl_nom:'listy', pl_gen:'listów' },
   'prezent':    { g: 'm-nieos', nom:'prezent', gen:'prezentu', dat:'prezentowi', acc:'prezent', inst:'prezentem', loc:'prezencie', voc:'prezencie', pl_nom:'prezenty', pl_gen:'prezentów' },
   // Language adjectives — treated as masculine nouns for declension
@@ -59,7 +59,7 @@ const WORD_BANK = {
   // Missing template words — now with full declension
   'poniedziałek':{ g: 'm-nieos', nom:'poniedziałek', gen:'poniedziałku', dat:'poniedziałkowi', acc:'poniedziałek', inst:'poniedziałkiem', loc:'poniedziałku', voc:'poniedziałku', pl_nom:'poniedziałki', pl_gen:'poniedziałków' },
   'problem':     { g: 'm-nieos', nom:'problem', gen:'problemu', dat:'problemowi', acc:'problem', inst:'problemem', loc:'problemie', voc:'problemie', pl_nom:'problemy', pl_gen:'problemów' },
-  'pająk':       { g: 'm-os', nom:'pająk', gen:'pająka', dat:'pająkowi', acc:'pająka', inst:'pająkiem', loc:'pająku', voc:'pająku', pl_nom:'pająki', pl_gen:'pająków' },
+  'pająk':       { g: 'm-zw', nom:'pająk', gen:'pająka', dat:'pająkowi', acc:'pająka', inst:'pająkiem', loc:'pająku', voc:'pająku', pl_nom:'pająki', pl_gen:'pająków' },
   'wykład':      { g: 'm-nieos', nom:'wykład', gen:'wykładu', dat:'wykładowi', acc:'wykład', inst:'wykładem', loc:'wykładzie', voc:'wykładzie', pl_nom:'wykłady', pl_gen:'wykładów' },
   'egzamin':     { g: 'm-nieos', nom:'egzamin', gen:'egzaminu', dat:'egzaminowi', acc:'egzamin', inst:'egzaminem', loc:'egzaminie', voc:'egzaminie', pl_nom:'egzaminy', pl_gen:'egzaminów' },
   'plan':        { g: 'm-nieos', nom:'plan', gen:'planu', dat:'planowi', acc:'plan', inst:'planem', loc:'planie', voc:'planie', pl_nom:'plany', pl_gen:'planów' },
@@ -70,7 +70,7 @@ const WORD_BANK = {
   'koncert':     { g: 'm-nieos', nom:'koncert', gen:'koncertu', dat:'koncertowi', acc:'koncert', inst:'koncertem', loc:'koncercie', voc:'koncercie', pl_nom:'koncerty', pl_gen:'koncertów' },
   'artykuł':     { g: 'm-nieos', nom:'artykuł', gen:'artykułu', dat:'artykułowi', acc:'artykuł', inst:'artykułem', loc:'artykule', voc:'artykule', pl_nom:'artykuły', pl_gen:'artykułów' },
   'przyjaciel':  { g: 'm-os', nom:'przyjaciel', gen:'przyjaciela', dat:'przyjacielowi', acc:'przyjaciela', inst:'przyjacielem', loc:'przyjacielu', voc:'przyjacielu', pl_nom:'przyjaciele', pl_gen:'przyjaciół' },
-  'tata':        { g: 'm-os', nom:'tata', gen:'taty', dat:'tacie', acc:'tatę', inst:'tatą', loc:'tacie', voc:'tato', pl_nom:'tatusiowie', pl_gen:'tatusiów' },
+  'tata':        { g: 'm-os', nom:'tata', gen:'taty', dat:'tacie', acc:'tatę', inst:'tatą', loc:'tacie', voc:'tato', pl_nom:'tatowie', pl_gen:'tatów' },
   'koleżanka':   { g: 'f', nom:'koleżanka', gen:'koleżanki', dat:'koleżance', acc:'koleżankę', inst:'koleżanką', loc:'koleżance', voc:'koleżanko', pl_nom:'koleżanki', pl_gen:'koleżanek' },
   'informacja':  { g: 'f', nom:'informacja', gen:'informacji', dat:'informacji', acc:'informację', inst:'informacją', loc:'informacji', voc:'informacjo', pl_nom:'informacje', pl_gen:'informacji' },
   'dziewczyna':  { g: 'f', nom:'dziewczyna', gen:'dziewczyny', dat:'dziewczynie', acc:'dziewczynę', inst:'dziewczyną', loc:'dziewczynie', voc:'dziewczyno', pl_nom:'dziewczyny', pl_gen:'dziewczyn' },
@@ -92,12 +92,22 @@ const WORD_BANK = {
   'stacja':      { g: 'f', nom:'stacja', gen:'stacji', dat:'stacji', acc:'stację', inst:'stacją', loc:'stacji', voc:'stacjo', pl_nom:'stacje', pl_gen:'stacji' },
   'lekarka':     { g: 'f', nom:'lekarka', gen:'lekarki', dat:'lekarce', acc:'lekarkę', inst:'lekarką', loc:'lekarce', voc:'lekarko', pl_nom:'lekarki', pl_gen:'lekarek' },
   'studentka':   { g: 'f', nom:'studentka', gen:'studentki', dat:'studentce', acc:'studentkę', inst:'studentką', loc:'studentce', voc:'studentko', pl_nom:'studentki', pl_gen:'studentek' },
-  'radio':       { g: 'n', nom:'radio', gen:'radia', dat:'radiu', acc:'radio', inst:'radiem', loc:'radiu', voc:'radio', pl_nom:'radia', pl_gen:'radi' },
+  'radio':       { g: 'n', nom:'radio', gen:'radia', dat:'radiu', acc:'radio', inst:'radiem', loc:'radiu', voc:'radio', pl_nom:'radia', pl_gen:'radiów' },
   'jedzenie':    { g: 'n', nom:'jedzenie', gen:'jedzenia', dat:'jedzeniu', acc:'jedzenie', inst:'jedzeniem', loc:'jedzeniu', voc:'jedzenie', pl_nom:'jedzenia', pl_gen:'jedzeń' },
   'miasto':      { g: 'n', nom:'miasto', gen:'miasta', dat:'miastu', acc:'miasto', inst:'miastem', loc:'mieście', voc:'miasto', pl_nom:'miasta', pl_gen:'miast' },
-  'wakacje':     { g: 'n', nom:'wakacje', gen:'wakacji', dat:'wakacjom', acc:'wakacje', inst:'wakacjami', loc:'wakacjach', voc:'wakacje', pl_nom:'wakacje', pl_gen:'wakacji' },
+  'wakacje':     { g: 'plt', nom:'wakacje', gen:'wakacji', dat:'wakacjom', acc:'wakacje', inst:'wakacjami', loc:'wakacjach', voc:'wakacje', pl_nom:'wakacje', pl_gen:'wakacji' },
   'opowiadanie': { g: 'n', nom:'opowiadanie', gen:'opowiadania', dat:'opowiadaniu', acc:'opowiadanie', inst:'opowiadaniem', loc:'opowiadaniu', voc:'opowiadanie', pl_nom:'opowiadania', pl_gen:'opowiadań' },
   'jabłko':     { g: 'n', nom:'jabłko', gen:'jabłka', dat:'jabłku', acc:'jabłko', inst:'jabłkiem', loc:'jabłku', voc:'jabłko', pl_nom:'jabłka', pl_gen:'jabłek' },
+
+  // Formy adresatywne — potrzebne do wołacza (list oficjalny na egzaminie)
+  'pan':        { g: 'm-os', nom:'pan', gen:'pana', dat:'panu', acc:'pana', inst:'panem', loc:'panu', voc:'panie', pl_nom:'panowie', pl_gen:'panów' },
+  'pani':       { g: 'f', nom:'pani', gen:'pani', dat:'pani', acc:'panią', inst:'panią', loc:'pani', voc:'pani', pl_nom:'panie', pl_gen:'pań' },
+  'dyrektor':   { g: 'm-os', nom:'dyrektor', gen:'dyrektora', dat:'dyrektorowi', acc:'dyrektora', inst:'dyrektorem', loc:'dyrektorze', voc:'dyrektorze', pl_nom:'dyrektorzy', pl_gen:'dyrektorów' },
+  'profesor':   { g: 'm-os', nom:'profesor', gen:'profesora', dat:'profesorowi', acc:'profesora', inst:'profesorem', loc:'profesorze', voc:'profesorze', pl_nom:'profesorowie', pl_gen:'profesorów' },
+  'doktor':     { g: 'm-os', nom:'doktor', gen:'doktora', dat:'doktorowi', acc:'doktora', inst:'doktorem', loc:'doktorze', voc:'doktorze', pl_nom:'doktorzy', pl_gen:'doktorów' },
+  'prezes':     { g: 'm-os', nom:'prezes', gen:'prezesa', dat:'prezesowi', acc:'prezesa', inst:'prezesem', loc:'prezesie', voc:'prezesie', pl_nom:'prezesi', pl_gen:'prezesów' },
+  'minister':   { g: 'm-os', nom:'minister', gen:'ministra', dat:'ministrowi', acc:'ministra', inst:'ministrem', loc:'ministrze', voc:'ministrze', pl_nom:'ministrowie', pl_gen:'ministrów' },
+  'język':      { g: 'm-nieos', nom:'język', gen:'języka', dat:'językowi', acc:'język', inst:'językiem', loc:'języku', voc:'języku', pl_nom:'języki', pl_gen:'języków' },
 };
 
 // ========================================================================
@@ -187,7 +197,7 @@ const CASE_TEMPLATES = {
       { sentence: 'Nie mam {{word.gen}}.', words: ['samochód', 'telefon', 'czas', 'długopis', 'komputer', 'rower', 'bilet'], note: 'Nie ma + D. (negation)' },
       { sentence: 'Szukam {{word.gen}}.', words: ['książka', 'praca', 'mieszkanie', 'klucz', 'informacja', 'prezent'], note: 'szukać + D. (to look for)' },
       { sentence: 'Słucham {{word.gen}}.', words: ['muzyka', 'radio', 'piosenka', 'audycja', 'wykład'], note: 'słuchać + D. (to listen)' },
-      { sentence: 'Boje się {{word.gen}}.', words: ['pies', 'kot', 'ciemność', 'pająk', 'burza'], note: 'bać się + D. (to be afraid of)' },
+      { sentence: 'Boję się {{word.gen}}.', words: ['pies', 'kot', 'ciemność', 'pająk', 'burza'], note: 'bać się + D. (to be afraid of)' },
       { sentence: 'Nie lubię {{word.gen}}.', words: ['kawa', 'herbata', 'zima', 'deszcz', 'poniedziałek'], note: 'nie lubić + D.' },
     ]
   },
@@ -218,7 +228,7 @@ const CASE_TEMPLATES = {
     rules: 'Narzędnik: być kimś, interesować się czymś, z + N.',
     templates: [
       { sentence: 'Jestem {{word.inst}}.', words: ['student', 'nauczyciel', 'lekarz', 'kolega', 'chłopiec'], note: 'być + N. (to be a...)' },
-      { sentence: 'Ona jest {{word.inst}}.', words: ['student', 'lekarz', 'nauczyciel', 'siostra'], note: 'być + N. (she is a...)' },
+      { sentence: 'Ona jest {{word.inst}}.', words: ['lekarka', 'studentka', 'koleżanka', 'dziewczyna'], note: 'być + N. (ona → forma żeńska!)' },
       { sentence: 'Idę z {{word.inst}} do kina.', words: ['kolega', 'siostra', 'mama', 'brat', 'przyjaciel'], note: 'z + N. (with someone)' },
       { sentence: 'Interesuję się {{word.inst}}.', words: ['muzyka', 'film', 'sport', 'fotografia', 'historia'], note: 'interesować się + N. (interested in)' },
     ]
@@ -255,8 +265,12 @@ function getForm(wordKey, caseName) {
   if (parts.length === 2) {
     const w1 = WORD_BANK[parts[0]];
     const w2 = WORD_BANK[parts[1]];
-    if (w1 && w2) return (w1[caseName] || w1.nom) + ' ' + (w2[caseName] || w2.nom);
-    return wordKey;
+    if (!w1 || !w2) return wordKey;
+    const f1 = w1[caseName] || w1.nom;
+    // Po "pani" nazwa funkcji/tytułu pozostaje nieodmienna:
+    // Szanowna Pani Dyrektor! (a nie: Pani Dyrektorze!)
+    if (parts[0] === 'pani') return f1 + ' ' + w2.nom;
+    return f1 + ' ' + (w2[caseName] || w2.nom);
   }
   const w = WORD_BANK[wordKey];
   if (!w) return wordKey;

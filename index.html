@@ -780,7 +780,7 @@ function renderLesson(lessonId) {
         <h3>Końcówki liczby mnogiej</h3>
         <table>
           <tr><th>Rodzaj w lp.</th><th>Końcówka lm.</th><th>Przykład</th></tr>
-          <tr><td>męski na -k, -g</td><td>-i</td><td>żarówka → żarówki, kosmetyk → kosmetyki</td></tr>
+          <tr><td>męski na -k, -g</td><td>-i</td><td>kosmetyk → kosmetyki, ptak → ptaki</td></tr>
           <tr><td>męski na -ń, -sz, -cz, -rz, -ż, -l, -j, -c, -dz, -ś, -ć, -ź</td><td>-e</td><td>grosz → grosze, pokój → pokoje</td></tr>
           <tr><td>męskoosobowy</td><td>-owie, -y, -i, -e</td><td>pan → panowie, Polak → Polacy</td></tr>
           <tr><td>żeński / nijaki (standard)</td><td>-y, -i, -a</td><td>dziura → dziury, ubranie → ubrania</td></tr>
@@ -823,7 +823,7 @@ chłopiec → chłopcy
         <table>
           <tr><th>Rodzaj</th><th>Końcówka</th><th>Przykład</th></tr>
           <tr><td>męski</td><td>-owi / -u</td><td>mężowi, bratu, psu</td></tr>
-          <tr><td>żeński</td><td>-i/-y / -e/-ie</td><td>babei, ulicy, koleżance</td></tr>
+          <tr><td>żeński</td><td>-i/-y / -e/-ie</td><td>babci, ulicy, koleżance</td></tr>
           <tr><td>nijaki</td><td>-u</td><td>dziecku</td></tr>
         </table>
         <div class="highlight">Wymiany głosek: ch→sz (mucha → musze), d→dz (woda → wodzie), 
@@ -832,11 +832,11 @@ chłopiec → chłopcy
     case 'grammar-acc':
       return `<div class="learn-content exercise-card">
         <div class="hint">🔒  Biernik (Accusative) — Kogo? Co?</div>
-        <p>Biernik po: <strong>na, pod, przez, nad, w</strong>. Z czasownikami: <strong>mieć, lubić, jeść, kupować, czytać, znać, oglądać, prosić</strong>.</p>
+        <p>Biernik zawsze po <strong>przez</strong>. Po <strong>na, w, pod, nad</strong> — tylko przy RUCHU (dokąd?): <em>idę na pocztę, wchodzę w las</em>. Bez ruchu (gdzie?) → Miejscownik/Narzędnik: <em>jestem na poczcie</em>. Z czasownikami: <strong>mieć, lubić, jeść, kupować, czytać, znać, oglądać, prosić</strong>.</p>
         <table>
           <tr><th>Rodzaj</th><th>Końcówka lp.</th><th>Przykład</th></tr>
-          <tr><td>męski osobowy</td><td>-a (jak dopełniacz)</td><td>mam psa, widzę studenta</td></tr>
-          <tr><td>męski nieosobowy</td><td>— (jak mianownik)</td><td>mam dom, lubię sport</td></tr>
+          <tr><td>męski żywotny (osoby i zwierzęta)</td><td>-a (jak dopełniacz)</td><td>widzę studenta, mam psa</td></tr>
+          <tr><td>męski nieżywotny (rzeczy)</td><td>— (jak mianownik)</td><td>mam dom, lubię sport</td></tr>
           <tr><td>żeński</td><td>-ę</td><td>mam mamę, lubię kawę</td></tr>
           <tr><td>nijaki</td><td>— (jak mianownik)</td><td>mam mieszkanie, lubię kino</td></tr>
         </table>
@@ -1064,7 +1064,6 @@ const EXERCISES = {
         question: 'Wpisz poprawną formę liczby mnogiej:',
         polish: 'To są moi _____ (kolega).',
         answer: 'koledzy',
-        alt: ['kolegowie'],
         explanation: 'kolega → koledzy (męskoosobowy, -ga → -dzy).' },
       { type: 'fill',
         question: 'Wpisz poprawną formę:',
@@ -1099,7 +1098,7 @@ const EXERCISES = {
         explanation: 'język polski → języka polskiego' },
       { type: 'fill',
         question: 'Uzupełnij dopełniacz:',
-        polish: 'Boje się _____ (pies).',
+        polish: 'Boję się _____ (pies).',
         answer: 'psa',
         explanation: 'pies → psa (ruchome e wypada)' },
       { type: 'choice',
@@ -1459,7 +1458,7 @@ const EXERCISES = {
         correct: 1,
         explanation: 'Recenzja — własna opinia o wydarzeniu.' },
       { type: 'choice',
-        question: '"Droga Tereso! Piszê, ¿eby serdecznie podziêkowaæ za zaproszenie. Mama wróci³a wczoraj do domu szczêœliwa." To jest:',
+        question: '"Droga Tereso! Piszę, żeby serdecznie podziękować za zaproszenie. Mama wróciła wczoraj do domu szczęśliwa." To jest:',
         options: ['list formalny', 'list prywatny', 'ogłoszenie', 'życzenia'],
         correct: 1,
         explanation: 'List prywatny (prywatny nieformalny z elementami formalnymi).' },
@@ -1474,11 +1473,11 @@ const EXERCISES = {
         Akcja pomaga dbać o środowisko. Włączenie się do projektu jest proste — wystarczy wziąć torbę przy kasie. 
         Wykorzystywane są zarówno nowe, jak i używane torby. Pomysł powstał w Polsce.`,
         items: [
-          { text: 'Do tej pory mało sklepów bierze udział w akcji.', correct: false },
-          { text: 'Akcja pomaga dbać o środowisko.', correct: true },
+          { text: 'Torbę trzeba zwrócić przy kolejnej wizycie w sklepie.', correct: true },
+          { text: 'Celem akcji jest ochrona przyrody.', correct: true },
           { text: 'Włączenie się do projektu jest skomplikowane.', correct: false },
           { text: 'Wykorzystywane są tylko nowe torby.', correct: false },
-          { text: 'Pomysł powstał w Polsce.', correct: true },
+          { text: 'Akcja jest polskim pomysłem.', correct: true },
           { text: 'Klienci mogą pożyczyć torbę i oddać później.', correct: true },
         ]
       },
@@ -1606,7 +1605,7 @@ const EXERCISES = {
         correct: 0,
         explanation: 'Rozmówca nie może przyjść na wesele z powodu pracy.' },
       { type: 'choice',
-        question: '— "Hej, dzwonię, żeby Cię zaprosić na mój ślub. Będziemy się brać za parę miesięcy." — Jaki jest cel rozmowy?',
+        question: '— "Hej, dzwonię, żeby Cię zaprosić na mój ślub. Bierzemy ślub za parę miesięcy." — Jaki jest cel rozmowy?',
         options: ['podziękować za pomoc', 'zaprosić na ślub', 'poinformować o przeprowadzce', 'umówić się na kawę'],
         correct: 1,
         explanation: 'Celem jest zaproszenie przyjaciela na ślub.' },
@@ -1631,7 +1630,7 @@ const EXERCISES = {
         correct: 2,
         explanation: 'Rozmówca pociesza koleżankę, która nie zdała egzaminu.' },
       { type: 'choice',
-        question: '— "Proszę mi podać dokładną lokalizację wypadku i ilość poszkodowanych." — Kto to mówi?',
+        question: '— "Proszę mi podać dokładną lokalizację wypadku i liczbę poszkodowanych." — Kto to mówi?',
         options: ['policjant', 'lekarz', 'dyspozytor pogotowia', 'kierowca'],
         correct: 2,
         explanation: 'Dyspozytor pogotowia prosi o lokalizację wypadku.' },
@@ -1749,22 +1748,25 @@ function generateExercise(skillId) {
     const correctForm = getForm(wordKey, caseName);
     const usedForms = new Set([correctForm]);
     
-    // Generate wrong forms from different words
-    const wrongWords = tpl.words.filter(w => w !== wordKey).sort(() => Math.random() - 0.5);
+    // Dystraktory = formy TEGO SAMEGO słowa w innych przypadkach.
+    // Tylko wtedy zadanie sprawdza znajomość przypadka, a nie tego,
+    // które słowo stoi w nawiasie.
     const wrongForms = [];
-    for (let j = 0; j < wrongWords.length && wrongForms.length < 3; j++) {
-      const wrongForm = getForm(wrongWords[j], caseName);
-      if (!usedForms.has(wrongForm)) {
-        wrongForms.push(wrongForm);
-        usedForms.add(wrongForm);
+    const otherCases = ['nom','gen','dat','acc','inst','loc','voc']
+      .filter(c => c !== caseName)
+      .sort(() => Math.random() - 0.5);
+    for (const oc of otherCases) {
+      if (wrongForms.length >= 3) break;
+      const f = getForm(wordKey, oc);
+      if (!usedForms.has(f)) {
+        wrongForms.push(f);
+        usedForms.add(f);
       }
     }
-    // Pad with other-case forms
-    const otherCases = ['nom','gen','dat','acc','inst','loc','voc'].filter(c => c !== caseName);
-    while (wrongForms.length < 3) {
-      const otherCase = otherCases[wrongForms.length % otherCases.length];
-      const w = pick(tpl.words);
-      const f = getForm(w, otherCase);
+    // Awaryjnie (słowo o małej liczbie różnych form) — formy innych słów
+    for (const w of tpl.words.filter(w => w !== wordKey)) {
+      if (wrongForms.length >= 3) break;
+      const f = getForm(w, caseName);
       if (!usedForms.has(f)) {
         wrongForms.push(f);
         usedForms.add(f);
