@@ -262,7 +262,8 @@ function pytanie(){
   else if(q._inter==='parafraza'){
     h+=`<div class="egz-q">${q.zdanie}</div><div class="egz-sub">Użyj wyrazu: <b>${q.wyraz}</b></div>`;
     h+=`<textarea class="egz-inp egz-ta" id="egzInp" ${V.sprawdzone?'disabled':''}
-        oninput="EGZ.wpis(this.value)" placeholder="Przekształć zdanie…">${V.odp||''}</textarea>`;
+        oninput="EGZ.wpis(this.value)" placeholder="Przekształć zdanie…">${V.odp||''}</textarea>`
+        + klawiszePL();
   }
   else if(q._inter==='taknie' && widac){
     h+=`<div class="egz-q">${q.pytanie}</div>`;
@@ -316,7 +317,47 @@ function pole(q){
   const c=V.sprawdzone?(V.wyniki[V.i]?'egz-ok':'egz-no'):'';
   return `<input class="egz-inp ${c}" id="egzInp" value="${(V.odp||'').replace(/"/g,'&quot;')}"
     ${V.sprawdzone?'disabled':''} oninput="EGZ.wpis(this.value)" autocomplete="off"
-    autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="wpisz odpowiedź">`;
+    autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="wpisz odpowiedź">`
+    + klawiszePL();
+}
+
+// Na iPhonie polskie znaki wymagają przytrzymania litery, a nie każda
+// klawiatura je pokazuje. Bez nich odpowiedź "wedlug" jest liczona jako
+// błąd, choć wiedza jest poprawna — stąd własny pasek znaków.
+const ZNAKI_PL = ['ą','ć','ę','ł','ń','ó','ś','ź','ż'];
+function klawiszePL(idPola){
+  if(V.sprawdzone) return '';
+  const cel = idPola || 'egzInp';
+  return '<div class="egz-znaki">' +
+    ZNAKI_PL.map(z=>`<button type="button" class="egz-znak"
+      onmousedown="event.preventDefault()"
+      onclick="EGZ.wstawZnak('${z}','${cel}')">${z}</button>`).join('') +
+    '</div>';
+}
+
+// łacińskie odpowiedniki — po to, żeby dało się poprawić już wpisane słowo
+const ODPOWIEDNIK = {'ą':'a','ć':'c','ę':'e','ł':'l','ń':'n','ó':'o','ś':'s','ź':'z','ż':'z'};
+
+// Wstawia znak w miejscu kursora. Jeśli tuż przed kursorem stoi łaciński
+// odpowiednik (wpisane "wedlug", kursor za "l"), podmienia go zamiast
+// dopisywać — inaczej wychodziło "wedłlug" i literę trzeba było kasować.
+function wstawZnak(znak, idPola){
+  const pole2 = el(idPola || 'egzInp');
+  if(!pole2 || pole2.disabled) return;
+  const s = pole2.selectionStart ?? pole2.value.length;
+  const e = pole2.selectionEnd   ?? pole2.value.length;
+
+  let od = s, tekst = pole2.value;
+  if(s === e && s > 0){
+    const poprz = tekst[s-1].toLowerCase();
+    if(ODPOWIEDNIK[znak] === poprz) od = s - 1;   // podmiana zamiast dopisania
+  }
+  pole2.value = tekst.slice(0,od) + znak + tekst.slice(e);
+  const poz = od + znak.length;
+  pole2.focus();
+  try{ pole2.setSelectionRange(poz,poz); }catch(err){}
+  if(idPola === 'egzPraca') licz(V.cel);
+  else V.odp = pole2.value;
 }
 function odswiezPrzycisk(){
   const q=V.zadania[V.i];
@@ -456,8 +497,10 @@ function pisanie(grupa,idx){
     f.zwroty.forEach(x=>h+=`<span class="egz-zwrot">${x}</span>`); h+='</div>'; }
   if(f.uwaga) h+=`<div class="egz-uwaga">⚠ ${f.uwaga}</div>`;
   h+=`<textarea class="egz-inp egz-praca" id="egzPraca" placeholder="Pisz tutaj…"
-      oninput="EGZ.licz(${cel})">${z.tekst||''}</textarea>
-    <div class="egz-count" id="egzLicznik">0 słów</div></div>`;
+      oninput="EGZ.licz(${cel})">${z.tekst||''}</textarea>`
+    + '<div class="egz-znaki">' + ZNAKI_PL.map(zn=>`<button type="button" class="egz-znak"
+        onmousedown="event.preventDefault()" onclick="EGZ.wstawZnak('${zn}','egzPraca')">${zn}</button>`).join('') + '</div>'
+    + `<div class="egz-count" id="egzLicznik">0 słów</div></div>`;
 
   h+=`<h3 class="egz-h">Samoocena — 3 kryteria po 10 punktów</h3>
       <div class="egz-sub">Na egzaminie tak właśnie liczą. Zaznacz tylko to, co naprawdę zrobiłeś.</div>`;
@@ -475,7 +518,7 @@ function pisanie(grupa,idx){
 
   el('contentWrap').innerHTML=h;
   el('progressStrip').innerHTML='';
-  V={pisanieId:id,grupa,idx,cel};
+  V={pisanieId:id,grupa,idx,cel,sprawdzone:false};
   licz(cel); ocena();
   przycisk('Zapisz i wróć', ()=>{ zapiszPrace(); menuPisanie(); });
 }
@@ -514,6 +557,6 @@ function wzor(grupa,idx){
   b.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-return { menu, menuGram, menuSluch, menuPisanie, blok, wybierz, tn, chip, wpis, para,
+return { menu, menuGram, menuSluch, menuPisanie, blok, wybierz, tn, chip, wpis, para, wstawZnak,
          graj, akcja, dalej, pisanie, licz, ocena, wzor, wyjscie };
 })();

@@ -647,6 +647,17 @@ input, textarea { font-family: inherit; }
 @supports(-webkit-touch-callout:none){
   .egz .egz-inp,.egz .egz-opt{font-size:16px}  /* <16px powoduje zoom przy focusie */
 }
+
+/* wszystkie dziewięć znaków w jednym rzędzie — bez rozjeżdżania się
+   ostatnich dwóch na całą szerokość */
+.egz .egz-znaki{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:8px}
+.egz .egz-znak{padding:12px 2px;border:1.5px solid var(--border);
+  border-radius:8px;background:var(--card);color:var(--primary);
+  font:600 18px Inter,sans-serif;line-height:1;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+@media(max-width:340px){.egz .egz-znak{font-size:16px;padding:10px 1px}}
+.egz .egz-znak:hover{border-color:var(--primary);background:var(--selected-bg)}
+.egz .egz-znak:active{background:var(--primary);color:#fff}
 </style>
 </head>
 <body>
