@@ -2,7 +2,16 @@
 <html lang="pl" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#5645d4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Polski B1">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png" type="image/png">
 <title>Polski B1 · Duolingo-style Exam Prep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -524,6 +533,120 @@ input, textarea { font-family: inherit; }
   .exercise-card { padding: 16px; }
   .exercise-card .question { font-size: 15px; }
 }
+
+/* ==================== TRENAŻER EGZAMINU (izolowany pod .egz) ==================== */
+.egz{display:block}
+.egz .egz-i{width:24px;height:24px;fill:currentColor;flex-shrink:0}
+.egz .egz-h{font-size:16px;color:var(--text-dark);margin:18px 0 6px;font-weight:600}
+.egz .egz-h:first-child{margin-top:0}
+.egz .egz-sub{font-size:12px;color:var(--text-light);margin-bottom:10px;line-height:1.5}
+.egz .egz-cd{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:18px;margin-bottom:10px;text-align:center}
+.egz .egz-cd-n{font-size:44px;font-weight:700;color:var(--primary);line-height:1}
+.egz .egz-cd-l{font-size:13px;color:var(--text-light);margin-top:2px}
+.egz .egz-cd-d{font-size:12px;color:var(--text-muted);margin-top:6px}
+.egz .egz-alert{background:var(--highlight-bg);border:1px solid var(--gold);
+  border-left:4px solid var(--gold);border-radius:8px;padding:12px 14px;margin-bottom:12px;
+  font-size:13px;line-height:1.55;color:var(--text)}
+.egz .egz-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--primary);
+  border-radius:10px;padding:13px;margin-bottom:7px;cursor:pointer;display:flex;align-items:center;gap:12px}
+.egz .egz-card:hover{background:var(--hover-bg)}
+.egz .egz-card.egz-done{opacity:.62;border-left-color:var(--success)}
+.egz .egz-ico{color:var(--primary);display:flex}
+.egz .egz-card.egz-done .egz-ico,.egz .egz-card.egz-done .egz-meta{color:var(--success)}
+.egz .egz-body{flex:1;min-width:0}
+.egz .egz-t{font-weight:600;font-size:14px;color:var(--text-dark)}
+.egz .egz-d{font-size:12px;color:var(--text-light)}
+.egz .egz-meta{font-size:12px;font-weight:600;color:var(--primary);white-space:nowrap}
+.egz .egz-mod{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:12px 14px;margin-bottom:6px}
+.egz .egz-mod-top{display:flex;justify-content:space-between;align-items:baseline;
+  font-size:13px;margin-bottom:6px}
+.egz .egz-mod-n{font-weight:600;color:var(--text-dark)}
+.egz .egz-mod-p{font-weight:700}
+.egz .egz-bar{height:7px;border-radius:4px;background:var(--border);overflow:hidden;position:relative}
+.egz .egz-bar-f{height:100%;border-radius:4px;transition:width .4s}
+.egz .egz-prog{position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--text-muted);opacity:.75}
+.egz .egz-note{font-size:11px;color:var(--text-muted);margin-top:5px;line-height:1.5}
+.egz .egz-ex{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:18px;margin-bottom:12px}
+.egz .egz-hint{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--text-light);margin-bottom:10px}
+.egz .egz-q{font-size:16px;color:var(--text-dark);margin-bottom:14px;line-height:1.6}
+.egz .egz-q em{background:var(--highlight-bg);font-style:normal;font-weight:600;
+  padding:1px 4px;border-radius:3px}
+.egz .egz-blank{display:inline-block;min-width:70px;border-bottom:2px solid var(--primary);margin:0 3px}
+.egz .egz-opt{width:100%;text-align:left;padding:13px 15px;border:1.5px solid var(--border);
+  border-radius:9px;background:var(--card);color:var(--text);font:500 15px Inter,sans-serif;
+  cursor:pointer;margin-bottom:7px;display:block}
+.egz .egz-opt:hover{border-color:var(--primary);background:var(--hover-bg)}
+.egz .egz-opt.egz-sel{border-color:var(--primary);background:var(--selected-bg)}
+.egz .egz-opt.egz-ok{border-color:var(--success);background:var(--correct-bg)}
+.egz .egz-opt.egz-no{border-color:var(--error);background:var(--wrong-bg)}
+.egz .egz-inp{width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:9px;
+  background:var(--card);color:var(--text);font:500 16px Inter,sans-serif}
+.egz .egz-inp:focus{outline:none;border-color:var(--primary)}
+.egz .egz-inp.egz-ok{border-color:var(--success);background:var(--correct-bg)}
+.egz .egz-inp.egz-no{border-color:var(--error);background:var(--wrong-bg)}
+.egz .egz-ta{min-height:90px;resize:vertical;line-height:1.6}
+.egz .egz-praca{min-height:200px;resize:vertical;font-size:15px;line-height:1.65}
+.egz .egz-ramka{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;padding:12px;
+  background:var(--bg);border:1px dashed var(--border);border-radius:9px}
+.egz .egz-chip{padding:6px 12px;border:1px solid var(--border);border-radius:16px;
+  background:var(--card);font:500 14px Inter,sans-serif;cursor:pointer;color:var(--text)}
+.egz .egz-chip:hover{border-color:var(--primary)}
+.egz .egz-chip.egz-used{opacity:.35;text-decoration:line-through;cursor:default}
+.egz .egz-fb{border-radius:9px;padding:13px 15px;margin-top:12px;font-size:14px;line-height:1.55}
+.egz .egz-fb-ok{background:var(--correct-bg);color:var(--success)}
+.egz .egz-fb-no{background:var(--wrong-bg);color:var(--error)}
+.egz .egz-why{color:var(--text);margin-top:6px;font-size:13px}
+.egz .egz-dots{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
+.egz .egz-dot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+.egz .egz-dot.egz-ok{background:var(--success)}
+.egz .egz-dot.egz-no{background:var(--error)}
+.egz .egz-dot.egz-now{background:var(--primary);transform:scale(1.35)}
+.egz .egz-tn-row{display:flex;gap:8px;align-items:center;padding:10px 0;
+  border-bottom:1px solid var(--border-soft)}
+.egz .egz-tn-row:last-child{border-bottom:none}
+.egz .egz-tn-t{flex:1;font-size:14px;line-height:1.5}
+.egz .egz-tn{padding:6px 14px;border:1.5px solid var(--border);border-radius:7px;
+  background:var(--card);color:var(--text);font:600 13px Inter,sans-serif;cursor:pointer}
+.egz .egz-tn.egz-sel{border-color:var(--primary);background:var(--selected-bg)}
+.egz .egz-tn.egz-ok{border-color:var(--success);background:var(--correct-bg)}
+.egz .egz-tn.egz-no{border-color:var(--error);background:var(--wrong-bg)}
+.egz .egz-para{margin-bottom:8px}
+.egz .egz-para-l{font-weight:600;font-size:13px;margin-bottom:4px}
+.egz .egz-play{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  padding:16px;border:1.5px solid var(--primary);border-radius:10px;background:var(--card);
+  color:var(--primary);font:600 15px Inter,sans-serif;cursor:pointer;margin-bottom:14px}
+.egz .egz-play:hover{background:var(--selected-bg)}
+.egz .egz-play:disabled{opacity:.45;cursor:default}
+.egz .egz-szkielet{background:var(--bg);border:1px solid var(--border);border-radius:9px;
+  padding:14px;margin:12px 0}
+.egz .egz-szkielet li{margin:7px 0 7px 18px;font-size:13.5px;line-height:1.5}
+.egz .egz-zwroty{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.egz .egz-zwrot{padding:5px 11px;background:var(--selected-bg);color:var(--primary);
+  border-radius:14px;font-size:12.5px}
+.egz .egz-uwaga{background:var(--highlight-bg);border-left:3px solid var(--gold);
+  padding:10px 13px;border-radius:6px;font-size:13px;margin:10px 0;line-height:1.55}
+.egz .egz-kryt{background:var(--card);border:1px solid var(--border);border-radius:9px;
+  padding:13px;margin-bottom:8px}
+.egz .egz-kryt h4{font-size:14px;color:var(--text-dark);margin-bottom:8px}
+.egz .egz-kryt label{display:flex;gap:9px;align-items:flex-start;font-size:13px;
+  margin:7px 0;cursor:pointer;line-height:1.45}
+.egz .egz-kryt input{margin-top:3px;flex-shrink:0;width:16px;height:16px;accent-color:var(--primary)}
+.egz .egz-wzor{background:var(--bg);border-left:3px solid var(--success);padding:13px;
+  border-radius:6px;font-size:14px;line-height:1.65;margin-top:10px;white-space:pre-wrap}
+.egz .egz-count{font-size:12px;color:var(--text-light);text-align:right;margin-top:6px}
+.egz .egz-count.egz-count-ok{color:var(--success);font-weight:600}
+.egz .egz-big{font-size:34px;font-weight:700;line-height:1.1}
+
+/* iPhone: nie chowaj przycisku pod paskiem gestów */
+.bottom-btn-wrap{padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+.top-bar{padding-top:calc(10px + env(safe-area-inset-top))}
+@supports(-webkit-touch-callout:none){
+  .egz .egz-inp,.egz .egz-opt{font-size:16px}  /* <16px powoduje zoom przy focusie */
+}
 </style>
 </head>
 <body>
@@ -617,6 +740,14 @@ input, textarea { font-family: inherit; }
     <symbol id="icon-back" viewBox="0 0 24 24">
       <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
     </symbol>
+    <symbol id="egz-ear" viewBox="0 0 24 24"><path d="M12 1C7 1 3 5 3 10v1H1v5h2v-6a9 9 0 0118 0v6h2v-5h-2v-1c0-5-4-9-9-9zM9 11c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h1v-8H9zm6 0h-1v8h1c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2z"/></symbol>
+    <symbol id="egz-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+    <symbol id="egz-book" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V4a2 2 0 00-2-2H5zm2 6h10v2H7V8zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/></symbol>
+    <symbol id="egz-pen" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm17.71-10.21a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></symbol>
+    <symbol id="egz-bolt" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></symbol>
+    <symbol id="egz-check" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></symbol>
+    <symbol id="egz-target" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M2 12a10 10 0 1020 0A10 10 0 002 12zm3 0a7 7 0 1014 0A7 7 0 005 12zm4 0a3 3 0 106 0 3 3 0 00-6 0z"/></symbol>
+    <symbol id="icon-certyfikat" viewBox="0 0 24 24"><path d="M12 2a6 6 0 100 12 6 6 0 000-12zm0 2.6l1.2 2.5 2.7.4-2 1.9.5 2.7L12 10.8 9.6 12l.5-2.7-2-1.9 2.7-.4L12 4.6zM7.5 15.2L5 22l4.2-1.6L12 22l-2.8-6.8a7.9 7.9 0 01-1.7 0zm9 0a7.9 7.9 0 01-1.7 0L12 22l2.8-1.6L19 22l-2.5-6.8z"/></symbol>
   </defs>
 </svg>
 
@@ -656,6 +787,9 @@ input, textarea { font-family: inherit; }
 <script src="data/decl.js"></script>
 <script src="data/vocab.js"></script>
 <script src="data/personal.js"></script>
+<script src="data/gramatyka.js"></script>
+<script src="data/sluchanie.js"></script>
+<script src="data/pisanie.js"></script>
 <script>
 function svgIcon(id) {
   return '<svg class="icon-svg" aria-hidden="true"><use href="#' + id + '"/></svg>';
@@ -1970,6 +2104,13 @@ function finishCram() {
   delete state._cramCycle;
 }
 
+function startEgzTrener() {
+  pushNav();
+  state.phase = 'egzamin';
+  saveState();
+  EGZ.menu();
+}
+
 function startPersonalEdit() {
   pushNav();
   state.phase = 'personal-edit';
@@ -2197,6 +2338,7 @@ function render() {
   else if (state.phase === 'cram') renderCram();
   else if (state.phase === 'personal-edit') renderPersonalEdit();
   else if (state.phase === 'hidden-words') renderHiddenWords();
+  else if (state.phase === 'egzamin') EGZ.menu();
   else renderTree();
 }
 
@@ -2275,6 +2417,13 @@ function renderTree() {
   html += '<div class="skill-info"><div class="skill-name">Egzamin próbny</div>';
   html += '<div class="skill-desc">10 pytań, 15 minut. Sprawdź gotowość!</div></div>';
   html += '<div class="skill-status active-txt" style="color:var(--gold);">→ Start</div></div>';
+  // Trenażer egzaminacyjny — osobny moduł (egzamin.js)
+  html += '<div class="skill-card available" onclick="startEgzTrener()" style="margin-bottom:8px;border-left-color:var(--primary);">';
+  html += '<div class="skill-icon">' + svgIcon('icon-certyfikat') + '</div>';
+  html += '<div class="skill-info"><div class="skill-name">Trenażer egzaminu</div>';
+  var doEgz = Math.ceil((new Date('2026-12-05T09:00:00') - new Date())/864e5);
+  html += '<div class="skill-desc">Gramatyka, słuchanie, pisanie · ' + doEgz + ' dni do egzaminu</div></div>';
+  html += '<div class="skill-status active-txt">→ Otwórz</div></div>';
   // Error review button
   if (state.errorQueue && state.errorQueue.length > 0) {
     html += '<div class="skill-card available" onclick="startReview()" style="margin-bottom:8px;border-left-color:var(--error);">';
@@ -3528,6 +3677,15 @@ function unhideWord(wordStr) {
 
 loadState();
 render();
+</script>
+<script src="egzamin.js"></script>
+<script>
+// PWA: rejestracja service workera (tylko po https / localhost)
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
