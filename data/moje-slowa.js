@@ -62,24 +62,24 @@ function jestPrzymiotnikiem(pl){
 // ---------- rzeczowniki: formy wpisane ręcznie ----------
 // tylko te, których odmiany jestem pewien; reszta czeka na uzupełnienie
 const MOJE_RZECZOWNIKI = {
-  'zasada':      {r:'f', gen:'zasady', dat:'zasadzie', acc:'zasadę', inst:'zasadą', loc:'zasadzie'},
-  'umywalka':    {r:'f', gen:'umywalki', dat:'umywalce', acc:'umywalkę', inst:'umywalką', loc:'umywalce'},
-  'treść':       {r:'f', gen:'treści', dat:'treści', acc:'treść', inst:'treścią', loc:'treści'},
-  'przyjemność': {r:'f', gen:'przyjemności', dat:'przyjemności', acc:'przyjemność', inst:'przyjemnością', loc:'przyjemności'},
-  'uroczystość': {r:'f', gen:'uroczystości', dat:'uroczystości', acc:'uroczystość', inst:'uroczystością', loc:'uroczystości'},
-  'czynność':    {r:'f', gen:'czynności', dat:'czynności', acc:'czynność', inst:'czynnością', loc:'czynności'},
-  'postać':      {r:'f', gen:'postaci', dat:'postaci', acc:'postać', inst:'postacią', loc:'postaci'},
-  'zlew':        {r:'m', gen:'zlewu', dat:'zlewowi', acc:'zlew', inst:'zlewem', loc:'zlewie'},
-  'zakres':      {r:'m', gen:'zakresu', dat:'zakresowi', acc:'zakres', inst:'zakresem', loc:'zakresie'},
-  'szacunek':    {r:'m', gen:'szacunku', dat:'szacunkowi', acc:'szacunek', inst:'szacunkiem', loc:'szacunku'},
-  'wątek':       {r:'m', gen:'wątku', dat:'wątkowi', acc:'wątek', inst:'wątkiem', loc:'wątku'},
-  'otoczenie':   {r:'n', gen:'otoczenia', dat:'otoczeniu', acc:'otoczenie', inst:'otoczeniem', loc:'otoczeniu'},
-  'spóźnienie':  {r:'n', gen:'spóźnienia', dat:'spóźnieniu', acc:'spóźnienie', inst:'spóźnieniem', loc:'spóźnieniu'},
-  'wyzwanie':    {r:'n', gen:'wyzwania', dat:'wyzwaniu', acc:'wyzwanie', inst:'wyzwaniem', loc:'wyzwaniu'},
-  'wrażenie':    {r:'n', gen:'wrażenia', dat:'wrażeniu', acc:'wrażenie', inst:'wrażeniem', loc:'wrażeniu'},
-  'obciążenie':  {r:'n', gen:'obciążenia', dat:'obciążeniu', acc:'obciążenie', inst:'obciążeniem', loc:'obciążeniu'},
-  'postrzeganie':{r:'n', gen:'postrzegania', dat:'postrzeganiu', acc:'postrzeganie', inst:'postrzeganiem', loc:'postrzeganiu'},
-  'tętno':       {r:'n', gen:'tętna', dat:'tętnu', acc:'tętno', inst:'tętnem', loc:'tętnie'},
+  'zasada':      {t:'abs', r:'f', gen:'zasady', dat:'zasadzie', acc:'zasadę', inst:'zasadą', loc:'zasadzie'},
+  'umywalka':    {t:'kon', r:'f', gen:'umywalki', dat:'umywalce', acc:'umywalkę', inst:'umywalką', loc:'umywalce'},
+  'treść':       {t:'abs', r:'f', gen:'treści', dat:'treści', acc:'treść', inst:'treścią', loc:'treści'},
+  'przyjemność': {t:'abs', r:'f', gen:'przyjemności', dat:'przyjemności', acc:'przyjemność', inst:'przyjemnością', loc:'przyjemności'},
+  'uroczystość': {t:'abs', r:'f', gen:'uroczystości', dat:'uroczystości', acc:'uroczystość', inst:'uroczystością', loc:'uroczystości'},
+  'czynność':    {t:'abs', r:'f', gen:'czynności', dat:'czynności', acc:'czynność', inst:'czynnością', loc:'czynności'},
+  'postać':      {t:'kon', r:'f', gen:'postaci', dat:'postaci', acc:'postać', inst:'postacią', loc:'postaci'},
+  'zlew':        {t:'kon', r:'m', gen:'zlewu', dat:'zlewowi', acc:'zlew', inst:'zlewem', loc:'zlewie'},
+  'zakres':      {t:'abs', r:'m', gen:'zakresu', dat:'zakresowi', acc:'zakres', inst:'zakresem', loc:'zakresie'},
+  'szacunek':    {t:'abs', r:'m', gen:'szacunku', dat:'szacunkowi', acc:'szacunek', inst:'szacunkiem', loc:'szacunku'},
+  'wątek':       {t:'abs', r:'m', gen:'wątku', dat:'wątkowi', acc:'wątek', inst:'wątkiem', loc:'wątku'},
+  'otoczenie':   {t:'abs', r:'n', gen:'otoczenia', dat:'otoczeniu', acc:'otoczenie', inst:'otoczeniem', loc:'otoczeniu'},
+  'spóźnienie':  {t:'abs', r:'n', gen:'spóźnienia', dat:'spóźnieniu', acc:'spóźnienie', inst:'spóźnieniem', loc:'spóźnieniu'},
+  'wyzwanie':    {t:'abs', r:'n', gen:'wyzwania', dat:'wyzwaniu', acc:'wyzwanie', inst:'wyzwaniem', loc:'wyzwaniu'},
+  'wrażenie':    {t:'abs', r:'n', gen:'wrażenia', dat:'wrażeniu', acc:'wrażenie', inst:'wrażeniem', loc:'wrażeniu'},
+  'obciążenie':  {t:'abs', r:'n', gen:'obciążenia', dat:'obciążeniu', acc:'obciążenie', inst:'obciążeniem', loc:'obciążeniu'},
+  'postrzeganie':{t:'abs', r:'n', gen:'postrzegania', dat:'postrzeganiu', acc:'postrzeganie', inst:'postrzeganiem', loc:'postrzeganiu'},
+  'tętno':       {t:'kon', r:'n', gen:'tętna', dat:'tętnu', acc:'tętno', inst:'tętnem', loc:'tętnie'},
 };
 
 // ---------- dostęp do słownika ----------
@@ -123,22 +123,58 @@ const _m = a => a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
 
 const NAZWY_PRZYP = {gen:'Dopełniacz',dat:'Celownik',acc:'Biernik',inst:'Narzędnik',loc:'Miejscownik'};
 
-// rzeczowniki dobrane tak, żeby zdanie brzmiało naturalnie z każdym przymiotnikiem
-const RZECZ_DO_PRZYM = {
-  m:[{s:'film',gen:'filmu',dat:'filmowi',acc:'film',inst:'filmem',loc:'filmie'},
-     {s:'pomysł',gen:'pomysłu',dat:'pomysłowi',acc:'pomysł',inst:'pomysłem',loc:'pomyśle'},
-     {s:'człowiek',gen:'człowieka',dat:'człowiekowi',acc:'człowieka',inst:'człowiekiem',loc:'człowieku'}],
-  f:[{s:'książka',gen:'książki',dat:'książce',acc:'książkę',inst:'książką',loc:'książce'},
-     {s:'praca',gen:'pracy',dat:'pracy',acc:'pracę',inst:'pracą',loc:'pracy'},
-     {s:'sytuacja',gen:'sytuacji',dat:'sytuacji',acc:'sytuację',inst:'sytuacją',loc:'sytuacji'}],
-  n:[{s:'miejsce',gen:'miejsca',dat:'miejscu',acc:'miejsce',inst:'miejscem',loc:'miejscu'},
-     {s:'zadanie',gen:'zadania',dat:'zadaniu',acc:'zadanie',inst:'zadaniem',loc:'zadaniu'}],
+// „zaradne zadanie" i „ujemna książka" to bełkot, więc rzeczownik
+// dobieramy do tego, o czym dany przymiotnik w ogóle można powiedzieć
+const RZECZ_OSOBY = {
+  m:[{s:'człowiek',gen:'człowieka',dat:'człowiekowi',acc:'człowieka',inst:'człowiekiem',loc:'człowieku'},
+     {s:'sąsiad',  gen:'sąsiada',  dat:'sąsiadowi',  acc:'sąsiada',  inst:'sąsiadem',  loc:'sąsiedzie'}],
+  f:[{s:'kobieta', gen:'kobiety',  dat:'kobiecie',   acc:'kobietę',  inst:'kobietą',   loc:'kobiecie'},
+     {s:'koleżanka',gen:'koleżanki',dat:'koleżance', acc:'koleżankę',inst:'koleżanką', loc:'koleżance'}],
+  n:[{s:'dziecko', gen:'dziecka',  dat:'dziecku',    acc:'dziecko',  inst:'dzieckiem', loc:'dziecku'}],
 };
+const RZECZ_RZECZY = {
+  m:[{s:'film',   gen:'filmu',   dat:'filmowi',   acc:'film',    inst:'filmem',   loc:'filmie'},
+     {s:'pomysł', gen:'pomysłu', dat:'pomysłowi', acc:'pomysł',  inst:'pomysłem', loc:'pomyśle'}],
+  f:[{s:'książka',gen:'książki', dat:'książce',   acc:'książkę', inst:'książką',  loc:'książce'},
+     {s:'sytuacja',gen:'sytuacji',dat:'sytuacji', acc:'sytuację',inst:'sytuacją', loc:'sytuacji'}],
+  n:[{s:'miejsce',gen:'miejsca', dat:'miejscu',   acc:'miejsce', inst:'miejscem', loc:'miejscu'},
+     {s:'zadanie',gen:'zadania', dat:'zadaniu',   acc:'zadanie', inst:'zadaniem', loc:'zadaniu'}],
+};
+// przymiotniki opisujące wyłącznie ludzi albo wyłącznie rzeczy;
+// czego tu nie ma, pasuje do jednych i drugich
+const PRZYM_O_LUDZIACH = new Set(['zaradny','leniwy','dumny','grzeczny','zdolny','wybitny',
+  'wrażliwy','głupi','uprzejmy','pracowity','cierpliwy','szczery','otwarty','spokojny']);
+const PRZYM_O_RZECZACH = new Set(['ujemny','dodatny','wykwintny',
+  'banalny','przydatny','prosty','niewłaściwy','niepożądany','dowolny','poprzedni','udany']);
+// mokry, gęsty, rzadki opisują substancje — „gęste miejsce" nie istnieje
+// gęsty/rzadki opisują płyny, mokry — przedmioty. To dwie różne pule.
+const PRZYM_O_PLYNACH = new Set(['gęsty','rzadki','słodki','gorzki']);
+const PRZYM_O_MOKRYCH = new Set(['mokry','suchy','brudny','czysty']);
+const RZECZ_PLYNY = {
+  m:[{s:'sos',    gen:'sosu',    dat:'sosowi',   acc:'sos',    inst:'sosem',    loc:'sosie'}],
+  f:[{s:'zupa',   gen:'zupy',    dat:'zupie',    acc:'zupę',   inst:'zupą',     loc:'zupie'},
+     {s:'herbata',gen:'herbaty', dat:'herbacie', acc:'herbatę',inst:'herbatą',  loc:'herbacie'}],
+  n:[{s:'mleko',  gen:'mleka',   dat:'mleku',    acc:'mleko',  inst:'mlekiem',  loc:'mleku'}],
+};
+const RZECZ_MOKRE = {
+  m:[{s:'ręcznik',gen:'ręcznika',dat:'ręcznikowi',acc:'ręcznik',inst:'ręcznikiem',loc:'ręczniku'},
+     {s:'parasol',gen:'parasola',dat:'parasolowi',acc:'parasol',inst:'parasolem', loc:'parasolu'}],
+  f:[{s:'kurtka', gen:'kurtki',  dat:'kurtce',    acc:'kurtkę', inst:'kurtką',    loc:'kurtce'}],
+  n:[{s:'ubranie',gen:'ubrania', dat:'ubraniu',   acc:'ubranie',inst:'ubraniem',  loc:'ubraniu'}],
+};
+function rzeczownikiDo(przym){
+  const s = przym.toLowerCase();
+  if(PRZYM_O_LUDZIACH.has(s))    return RZECZ_OSOBY;
+  if(PRZYM_O_PLYNACH.has(s))     return RZECZ_PLYNY;
+  if(PRZYM_O_MOKRYCH.has(s))     return RZECZ_MOKRE;
+  if(PRZYM_O_RZECZACH.has(s))    return RZECZ_RZECZY;
+  return Math.random()<0.5 ? RZECZ_OSOBY : RZECZ_RZECZY;
+}
 const RAMY_PRZYP = {
-  gen: {m:'Nie widzę tu żadnego ___ {R}.',   f:'Nie znam żadnej ___ {R}.',    n:'Nie ma tu żadnego ___ {R}.'},
+  gen: {m:'Nie ma tu żadnego ___ {R}.',       f:'Nie ma tu żadnej ___ {R}.',   n:'Nie ma tu żadnego ___ {R}.'},
   dat: {m:'Przyglądam się temu ___ {R}.',    f:'Przyglądam się tej ___ {R}.', n:'Przyglądam się temu ___ {R}.'},
-  acc: {m:'Znam pewien ___ {R}.',            f:'Znam pewną ___ {R}.',         n:'Znam pewne ___ {R}.'},
-  inst:'Zajmuję się ___ {R}.',
+  acc: {m:'Widzę tu ___ {R}.',               f:'Widzę tu ___ {R}.',           n:'Widzę tu ___ {R}.'},
+  inst:'Coś jest nie tak z ___ {R}.',
   loc: 'Rozmawialiśmy o ___ {R}.',
 };
 
@@ -147,9 +183,10 @@ function genMojPrzymiotnik(){
   const lista = mojePrzymiotniki();
   if(!lista.length) return null;
   const w = _l(lista);
-  const rodzaj = _l(['m','f','n']);
+  const pula = rzeczownikiDo(w._pl);
+  const rodzaj = _l(Object.keys(pula).filter(r=>pula[r] && pula[r].length));
   const przyp  = _l(['gen','dat','acc','inst','loc']);
-  const rz = _l(RZECZ_DO_PRZYM[rodzaj]);
+  const rz = _l(pula[rodzaj]);
   const poprawna = odmienPrzym(w._pl, rodzaj, przyp);
   if(!poprawna) return null;
 
@@ -169,10 +206,22 @@ function genMojPrzymiotnik(){
 }
 
 // II. Odmiana rzeczownika z Twojego słownika
+// „Zajmuję się przyjemnością" i „Widzę postrzeganie" to bełkot —
+// rzeczownik konkretny i abstrakcyjny potrzebują innych zdań.
 const RAMY_RZECZ = {
-  gen:'Nie mam ___.', dat:'Przyglądam się ___.', acc:'Widzę ___.',
-  inst:'Zajmuję się ___.', loc:'Rozmawialiśmy o ___.',
+  kon: {
+    gen:'Nie ma tu {Z}.',        dat:'Przyjrzyj się {Z}.',   acc:'Widzę {Z}.',
+    inst:'Coś jest nie tak {ZE} {Z}.', loc:'Mówimy o {Z}.',
+  },
+  abs: {
+    gen:'To pytanie dotyczy {Z}.', dat:'Poświęćmy uwagę {Z}.', acc:'Trudno opisać {Z}.',
+    inst:'W związku {ZE} {Z} mam pytanie.', loc:'Rozmawialiśmy o {Z}.',
+  },
 };
+// przyimek "z" przechodzi w "ze" przed zbitką spółgłosek: ze zlewem, ze szacunkiem
+function przyimekZ(forma){
+  return /^(z|s|ż|ź|ś|sz|rz)[bcćdfghjklłmnńpqrstvwxzżź]/i.test(forma) ? 'ze' : 'z';
+}
 function genMojRzeczownik(){
   const lista = mojeRzeczowniki();
   if(!lista.length) return null;
@@ -183,7 +232,9 @@ function genMojRzeczownik(){
   const inne = ['gen','dat','acc','inst','loc']
     .filter(p=>p!==przyp).map(p=>opis[p]).filter(f=>f&&f!==poprawna);
   const opcje = _m([poprawna, ...[...new Set(inne)].slice(0,2)]);
-  return {zdanie: RAMY_RZECZ[przyp] + '   (' + w._pl + ' — ' + w._ru + ')',
+  const rama = (RAMY_RZECZ[opis.t] || RAMY_RZECZ.abs)[przyp]
+    .replace('{ZE}', przyimekZ(poprawna)).replace('{Z}','___');
+  return {zdanie: rama + '   (' + w._pl + ' — ' + w._ru + ')',
           opcje, ok: opcje.indexOf(poprawna),
           wyjasnienie: `${w._pl} → ${NAZWY_PRZYP[przyp]}: ${poprawna}`,
           _gen:true, _moje:true};
