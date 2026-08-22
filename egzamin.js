@@ -32,6 +32,7 @@ const zapisz = () => localStorage.setItem('b1exam', JSON.stringify(S));
 function stat(m,k){ if(!S[m][k]) S[m][k]={dobrze:0,zle:0,zrobione:0}; return S[m][k]; }
 function wynik(m,ks){ let d=0,w=0; for(const k of ks){const s=S[m][k]; if(s){d+=s.dobrze;w+=s.dobrze+s.zle;}} return {dobrze:d,wszystkie:w,pct:w?d/w:0}; }
 function pokrycie(m,ks,bank){ let z=0,a=0; for(const k of ks){a+=bank[k].zadania.length; const s=S[m][k]; if(s) z+=Math.min(s.zrobione,bank[k].zadania.length);} return a?z/a:0; }
+const maGenerator = k => typeof GENERATORY!=='undefined' && !!GENERATORY[k];
 
 function ikona(id){ return '<svg class="egz-i"><use href="#'+id+'"/></svg>'; }
 function wyjscie(){ V={}; if(typeof goHome==='function') goHome(); }
@@ -41,7 +42,8 @@ function planDnia(){
   const b=[];
   if(S.bledy.length>=4) b.push({typ:'bledy',tytul:'Powtórka błędów',opis:S.bledy.length+' zadań',ico:'egz-bolt'});
   const g=[...GRAM_KOLEJNOSC].sort((x,y)=>(S.gram[x]?.zrobione||0)-(S.gram[y]?.zrobione||0))[0];
-  b.push({typ:'gram',klucz:g,tytul:'Gramatyka: '+GRAMATYKA[g].tytul,opis:'Zadanie '+GRAMATYKA[g].nr+' — '+GRAMATYKA[g].zadania.length+' pytań',ico:'egz-book'});
+  b.push({typ:'gram',klucz:g,tytul:'Gramatyka: '+GRAMATYKA[g].tytul,
+    opis:'Zadanie '+GRAMATYKA[g].nr+(maGenerator(g)?' — świeże zadania':' — '+GRAMATYKA[g].zadania.length+' pytań'),ico:'egz-book'});
   const sl=SLUCH_KOLEJNOSC[Math.abs(dni(new Date(),new Date('2026-08-21')))%SLUCH_KOLEJNOSC.length];
   b.push({typ:'sluch',klucz:sl,tytul:'Słuchanie: '+SLUCHANIE[sl].tytul,opis:'Zadanie '+SLUCHANIE[sl].nr,ico:'egz-ear'});
   const d=new Date().getDay();
@@ -113,7 +115,7 @@ function menuGram(){
     h+=`<div class="egz-card ${g?'egz-done':''}" onclick="EGZ.blok('gram','${k}')">
       <div class="egz-ico">${ikona(g?'egz-check':'egz-book')}</div>
       <div class="egz-body"><div class="egz-t">${z.nr}. ${z.tytul}</div>
-      <div class="egz-d">${z.zadania.length} zadań${p!==null?' · '+p+'% poprawnych':''}</div></div>
+      <div class="egz-d">${maGenerator(k)?'zadania generowane za każdym razem':z.zadania.length+' zadań'}${p!==null?' · '+p+'% poprawnych':''}</div></div>
       <div class="egz-meta">${g?'✓':'→'}</div></div>`;
   }
   el('contentWrap').innerHTML=h+'</div>';
@@ -149,6 +151,20 @@ function blok(typ,klucz){
   if(typ==='gram'){
     const z=GRAMATYKA[klucz];
     zad=z.zadania.map((q,i)=>({...q,_i:i,_typ:'gram',_klucz:klucz,_inter:z.interakcja}));
+    // Świeże zadania z generatora — inaczej po tygodniu pamiętasz,
+    // że „w trzecim pytaniu jest B", a nie samą gramatykę.
+    const gen = (typeof GENERATORY!=='undefined') && GENERATORY[klucz];
+    if(gen){
+      const widziane = new Set(zad.map(q=>q.zdanie));
+      const swieze=[];
+      for(let prob=0; prob<80 && swieze.length<8; prob++){
+        const q=gen();
+        if(!q || widziane.has(q.zdanie)) continue;
+        widziane.add(q.zdanie);
+        swieze.push({...q,_typ:'gram',_klucz:klucz,_inter:'wybor',_gen:true});
+      }
+      zad=[...swieze,...zad];
+    }
     meta={tytul:z.nr+'. '+z.tytul,polecenie:z.polecenie,ramka:z.ramka};
   } else if(typ==='sluch'){
     const z=SLUCHANIE[klucz];
@@ -157,6 +173,8 @@ function blok(typ,klucz){
     meta={tytul:z.nr+'. '+z.tytul,polecenie:z.polecenie};
   } else if(typ==='bledy'){
     zad=S.bledy.slice(0,10).map(b=>{
+      // zadanie z generatora nie ma stałego numeru — leży w kolejce w całości
+      if(b.gen && b.q) return {...b.q,_typ:b.modul,_klucz:b.klucz,_inter:'wybor',_gen:true};
       const bank=b.modul==='gram'?GRAMATYKA:SLUCHANIE, z=bank[b.klucz];
       if(!z||!z.zadania[b.idx]) return null;
       const q=z.zadania[b.idx];
@@ -348,9 +366,17 @@ function akcja(){
 
   V.wyniki[V.i]=ok; V.sprawdzone=true;
   const s=stat(q._typ,q._klucz); s.zrobione++; ok?s.dobrze++:s.zle++;
-  const ten = b => b.modul===q._typ && b.klucz===q._klucz && b.idx===q._i;
+  const ten = b => q._gen
+    ? (b.gen && b.q && b.q.zdanie===q.zdanie)
+    : (!b.gen && b.modul===q._typ && b.klucz===q._klucz && b.idx===q._i);
   if(ok) S.bledy=S.bledy.filter(b=>!ten(b));
-  else if(!S.bledy.some(ten)) S.bledy.push({modul:q._typ,klucz:q._klucz,idx:q._i});
+  else if(!S.bledy.some(ten)){
+    S.bledy.push(q._gen
+      ? {modul:q._typ,klucz:q._klucz,gen:true,
+         q:{zdanie:q.zdanie,opcje:q.opcje,ok:q.ok,wyjasnienie:q.wyjasnienie}}
+      : {modul:q._typ,klucz:q._klucz,idx:q._i});
+    if(S.bledy.length>60) S.bledy=S.bledy.slice(-60);   // kolejka nie rośnie bez końca
+  }
   S.hist[dzis()]=(S.hist[dzis()]||0)+1;
   if(S.ostatni!==dzis()){
     const wczoraj=new Date(Date.now()-864e5).toISOString().slice(0,10);
