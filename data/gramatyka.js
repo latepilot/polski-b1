@@ -235,6 +235,54 @@ const GRAMATYKA = {
   ]
 },
 
+// ---------- IX. Zaimki (dział, którego brakowało) ----------
+'zaimki': {
+  nr: 'IX', tytul: 'Zaimki — osobowe, dzierżawcze, względne',
+  polecenie: 'Proszę wybrać poprawną formę zaimka.',
+  interakcja: 'wybor',
+  zadania: [
+    { zdanie: 'Piotr zakochał się w Agnieszce. Myśli o ___ cały czas.',
+      opcje: ['niej','jej','ją'], ok: 0,
+      wyjasnienie: 'Po przyimku „o" forma na n-: o niej. Miejscownik.' },
+    { zdanie: 'Codziennie czeka na ___ przed uniwersytetem.',
+      opcje: ['nią','ją','jej'], ok: 0,
+      wyjasnienie: 'czekać na + Biernik, po przyimku forma na n-: na nią.' },
+    { zdanie: 'Wczoraj odwiedziłam rodziców. Często odwiedzam ___ w niedzielę.',
+      opcje: ['ich','nich','im'], ok: 0,
+      wyjasnienie: 'Bez przyimka forma krótka: odwiedzam ich (Biernik).' },
+    { zdanie: 'Wpłaciliśmy pieniądze na konto, gdyż mamy zaufanie do ___ banku.',
+      opcje: ['tego','tamtego','swojego'], ok: 0,
+      wyjasnienie: 'zaufanie do + Dopełniacz: do tego banku.' },
+    { zdanie: 'Maria i Piotr zbierają znaczki, ale nikomu nie pokazują ___ kolekcji.',
+      opcje: ['swojej','jej','ich'], ok: 0,
+      wyjasnienie: 'Właściciel to podmiot zdania → „swojej".' },
+  ]
+},
+
+// ---------- X. Czas przeszły ----------
+'przeszly': {
+  nr: 'X', tytul: 'Czas przeszły',
+  polecenie: 'Proszę wybrać poprawną formę czasu przeszłego.',
+  interakcja: 'wybor',
+  zadania: [
+    { zdanie: 'Beata i Anna jak zwykle się ___ (spóźnić).',
+      opcje: ['spóźniły','spóźnili','spóźniła'], ok: 0,
+      wyjasnienie: 'Dwie kobiety → forma niemęskoosobowa: spóźniły się.' },
+    { zdanie: 'Tomasz ___ (mieć) wczoraj urodziny.',
+      opcje: ['miał','miała','mieli'], ok: 0,
+      wyjasnienie: 'On → miał.' },
+    { zdanie: 'Gdy ___ (mieć, ja — kobieta) siedem lat, mieszkałam z mamą.',
+      opcje: ['miałam','miałem','miały'], ok: 0,
+      wyjasnienie: 'Kobieta o sobie → miałam.' },
+    { zdanie: 'Chłopcy ___ (pójść) na mecz.',
+      opcje: ['poszli','poszły','poszedł'], ok: 0,
+      wyjasnienie: 'Męskoosobowa l. mnoga → poszli.' },
+    { zdanie: 'Dzieci ___ (zjeść) obiad i wyszły na dwór.',
+      opcje: ['zjadły','zjedli','zjadł'], ok: 0,
+      wyjasnienie: '„Dzieci" to rzeczownik niemęskoosobowy → zjadły.' },
+  ]
+},
+
 };
 
-const GRAM_KOLEJNOSC = ['odmiana','spojniki','stopniowanie','czasy','pytania','parafraza','tryby','przyimki'];
+const GRAM_KOLEJNOSC = ['odmiana','zaimki','spojniki','stopniowanie','czasy','przeszly','pytania','parafraza','tryby','przyimki'];

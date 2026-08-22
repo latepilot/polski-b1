@@ -243,3 +243,46 @@ const GENERATORY = {
   tryby:       genTryby,
   przyimki:    genPrzyimki,
 };
+
+// ---------- IX. Czas przeszły ----------
+// W zestawie Komisji to osobny, duży dział (5 zadań). Formy leżą już
+// w CZASOWNIKI.prz — trzeba tylko dobrać rodzaj i liczbę do podmiotu.
+const PODMIOTY_PRZ = [
+  {p:'Tomek',            os:'on',  r:'m',    imie:true},
+  {p:'Ania',             os:'ona', r:'f',    imie:true},
+  {p:'Mój brat',         os:'on',  r:'m'},
+  {p:'Moja siostra',     os:'ona', r:'f'},
+  {p:'Chłopcy',          os:'oni', r:'mos'},
+  {p:'Dziewczyny',       os:'one', r:'nmos'},
+  {p:'Rodzice',          os:'oni', r:'mos'},
+  {p:'Dzieci',           os:'one', r:'nmos'},
+];
+const SZABLONY_PRZESZ = [
+  '{P} ___ ({B}) wczoraj wieczorem.',
+  'W zeszłym tygodniu {p} ___ ({B}).',
+  '{P} ___ ({B}) i od razu poszli do domu.',
+  'Kiedy zadzwoniłem, {p} właśnie ___ ({B}).',
+];
+function genCzasPrzeszly(){
+  const kluczy = Object.keys(CZASOWNIKI).filter(k=>CZASOWNIKI[k].prz);
+  const klucz = _los(kluczy), c = CZASOWNIKI[klucz];
+  const pod = _los(PODMIOTY_PRZ);
+  const poprawna = c.prz[pod.r];
+  if(!poprawna) return null;
+
+  let szablon = _los(SZABLONY_PRZESZ);
+  // "i od razu poszli" pasuje tylko do liczby mnogiej
+  if(/poszli/.test(szablon) && (pod.r==='m'||pod.r==='f')) szablon = SZABLONY_PRZESZ[0];
+
+  const wSrodku = pod.imie ? pod.p : pod.p.toLowerCase();
+  const zdanie = szablon.replace('{P}',pod.p).replace('{p}',wSrodku).replace('{B}',klucz);
+  // dystraktory: ten sam czasownik w innych rodzajach — dokładnie tu się myli
+  const inne = ['m','f','mos','nmos'].filter(r=>r!==pod.r)
+    .map(r=>c.prz[r]).filter(f=>f && f!==poprawna);
+  const nazwaR = {m:'rodzaj męski',f:'rodzaj żeński',mos:'męskoosobowy l.mn.',nmos:'niemęskoosobowy l.mn.'}[pod.r];
+  return _wybor(zdanie, poprawna, _mieszaj([...new Set(inne)]),
+    `${klucz} → czas przeszły, ${nazwaR}: ${poprawna}. (on: ${c.prz.m}, ona: ${c.prz.f}, oni: ${c.prz.mos}, one: ${c.prz.nmos})`);
+}
+
+GENERATORY.przeszly = genCzasPrzeszly;
+GENERATORY.zaimki   = (typeof genZaimek==='function') ? genZaimek : null;
