@@ -73,7 +73,7 @@ GIT_SSH_COMMAND="ssh -i ~/.ssh/github_polski_b1 -o IdentitiesOnly=yes" git push 
 
 ## Генерация заданий
 
-Пять типов из восьми собираются на лету (): odmiana,
+Пять типов из восьми собираются на лету (`data/generatory.js`): odmiana,
 stopniowanie, czasy, tryby, przyimki. Около 1800 неповторяющихся заданий
 против 59 статичных — иначе они заучиваются за неделю.
 
@@ -87,7 +87,7 @@ stopniowanie, czasy, tryby, przyimki. Около 1800 неповторяющих
 лексики, а не грамматики.
 
 При добавлении контекста для предлога указывать падеж прямо в записи:
- бывает и с Dopełniaczem («z pracy»), и с Narzędnikiem («z kolegą»),
+`z` бывает и с Dopełniaczem («z pracy»), и с Narzędnikiem («z kolegą»),
 и без явного падежа объяснение будет врать.
 
 Глаголы помечены `nprz:true`, если непереходные — иначе шаблон
