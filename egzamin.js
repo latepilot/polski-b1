@@ -22,10 +22,10 @@ const bezZnakow = s => norm(s)
 
 let S=null, V={};
 
-const pusty = () => ({gram:{},sluch:{},pisanie:{},bledy:[],hist:{},seria:0,ostatni:null});
+const pusty = () => ({gram:{},sluch:{},moje:{},pisanie:{},bledy:[],hist:{},seria:0,ostatni:null});
 function wczytaj(){
   try{ S=JSON.parse(localStorage.getItem('b1exam'))||pusty(); }catch(e){ S=pusty(); }
-  for(const k of ['gram','sluch','pisanie','hist']) if(!S[k]) S[k]={};
+  for(const k of ['gram','sluch','moje','pisanie','hist']) if(!S[k]) S[k]={};
   if(!Array.isArray(S.bledy)) S.bledy=[];
 }
 const zapisz = () => localStorage.setItem('b1exam', JSON.stringify(S));
@@ -46,6 +46,9 @@ function planDnia(){
     opis:'Zadanie '+GRAMATYKA[g].nr+(maGenerator(g)?' — świeże zadania':' — '+GRAMATYKA[g].zadania.length+' pytań'),ico:'egz-book'});
   const sl=SLUCH_KOLEJNOSC[Math.abs(dni(new Date(),new Date('2026-08-21')))%SLUCH_KOLEJNOSC.length];
   b.push({typ:'sluch',klucz:sl,tytul:'Słuchanie: '+SLUCHANIE[sl].tytul,opis:'Zadanie '+SLUCHANIE[sl].nr,ico:'egz-ear'});
+  if(typeof GEN_MOJE!=='undefined' && typeof mojeSlowa==='function' && mojeSlowa().length)
+    b.push({typ:'moje',klucz:'pisownia',tytul:'Moje słowa — pisownia',
+            opis:mojeSlowa().length+' haseł z Twojego słownika',ico:'egz-pen'});
   const d=new Date().getDay();
   if(d===2||d===6) b.push({typ:'pisanie',tytul:'Pisanie — forma krótka',opis:'Szkielet + własny tekst',ico:'egz-pen'});
   return b.slice(0,4);
@@ -86,6 +89,15 @@ function menu(){
   h+=`<div class="egz-mod"><div class="egz-mod-top"><span class="egz-mod-n">Pisanie</span>
       <span class="egz-mod-p" style="color:var(--text-muted)">${Object.keys(S.pisanie).length} prac</span></div>
       <div class="egz-note">Oceniane ręcznie wg 3 kryteriów po 10 p.</div></div>`;
+
+  // Moje słowa — gramatyka na własnym słowniku
+  if(typeof GEN_MOJE!=='undefined' && typeof mojeSlowa==='function'){
+    const ile = mojeSlowa().length, przym = mojePrzymiotniki().length, rzecz = mojeRzeczowniki().length;
+    h+=`<h3 class="egz-h">Moje słowa</h3><div class="egz-sub">Gramatyka na Twoim własnym słowniku — ${ile} haseł.</div>`;
+    h+=karta('egz-pen','Pisownia', ile+' haseł · wszystkie, także nowe',"EGZ.blok('moje','pisownia')");
+    if(przym) h+=karta('egz-book','Odmiana przymiotnika', przym+' przymiotników z Twojej listy',"EGZ.blok('moje','przymiotniki')");
+    if(rzecz) h+=karta('egz-book','Odmiana rzeczownika', rzecz+' rzeczowników z opisem',"EGZ.blok('moje','rzeczowniki')");
+  }
 
   h+=`<h3 class="egz-h">Ćwicz osobno</h3>`;
   h+=karta('egz-book','Gramatyka — 8 typów zadań',GRAM_KOLEJNOSC.reduce((s,k)=>s+GRAMATYKA[k].zadania.length,0)+' zadań','EGZ.menuGram()');
@@ -171,10 +183,28 @@ function blok(typ,klucz){
     zad=z.zadania.map((q,i)=>({...q,_i:i,_typ:'sluch',_klucz:klucz,
       _inter:q.items?'taknie':(q.pary?'pary':'audio'),_powt:z.powtorzenia}));
     meta={tytul:z.nr+'. '+z.tytul,polecenie:z.polecenie};
+  } else if(typ==='moje'){
+    const gen = (typeof GEN_MOJE!=='undefined') && GEN_MOJE[klucz];
+    if(!gen){ menu(); return; }
+    const widziane=new Set();
+    for(let prob=0; prob<120 && zad.length<10; prob++){
+      const q=gen();
+      if(!q || widziane.has(q.zdanie)) continue;
+      widziane.add(q.zdanie);
+      zad.push({...q,_typ:'moje',_klucz:klucz,_inter:q._wpisz?'wpisz':'wybor'});
+    }
+    const nazwy={przymiotniki:'Moje słowa — odmiana przymiotnika',
+                 rzeczowniki:'Moje słowa — odmiana rzeczownika',
+                 pisownia:'Moje słowa — pisownia'};
+    const polec={przymiotniki:'Przymiotniki z Twojego słownika. Wybierz właściwą końcówkę.',
+                 rzeczowniki:'Rzeczowniki z Twojego słownika. Wybierz właściwą formę.',
+                 pisownia:'Napisz po polsku. Liczą się polskie znaki — tak jak na egzaminie.'};
+    meta={tytul:nazwy[klucz],polecenie:polec[klucz]};
   } else if(typ==='bledy'){
     zad=S.bledy.slice(0,10).map(b=>{
       // zadanie z generatora nie ma stałego numeru — leży w kolejce w całości
-      if(b.gen && b.q) return {...b.q,_typ:b.modul,_klucz:b.klucz,_inter:'wybor',_gen:true};
+      if(b.gen && b.q) return {...b.q,_typ:b.modul,_klucz:b.klucz,
+        _inter:b.q._wpisz?'wpisz':'wybor',_gen:true};
       const bank=b.modul==='gram'?GRAMATYKA:SLUCHANIE, z=bank[b.klucz];
       if(!z||!z.zadania[b.idx]) return null;
       const q=z.zadania[b.idx];
@@ -373,7 +403,7 @@ function akcja(){
   else if(!S.bledy.some(ten)){
     S.bledy.push(q._gen
       ? {modul:q._typ,klucz:q._klucz,gen:true,
-         q:{zdanie:q.zdanie,opcje:q.opcje,ok:q.ok,wyjasnienie:q.wyjasnienie}}
+         q:{zdanie:q.zdanie,opcje:q.opcje,ok:q.ok,wyjasnienie:q.wyjasnienie,_wpisz:q._wpisz}}
       : {modul:q._typ,klucz:q._klucz,idx:q._i});
     if(S.bledy.length>60) S.bledy=S.bledy.slice(-60);   // kolejka nie rośnie bez końca
   }
