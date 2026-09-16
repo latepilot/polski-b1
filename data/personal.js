@@ -141,7 +141,7 @@ let PERS_VOCAB = [
   {id: 145, pl: 'nam się poszczęściło', ru: 'нам повезло'},
   {id: 146, pl: 'z góry', ru: 'сверху'},
   {id: 147, pl: 'z dołu', ru: 'снизу'},
-  {id: 148, pl: 'postrzeganie', ru: 'восприятие'},
+  {id: 148, pl: 'postrzeganie (jak ty to postrzegasz? — zmienił moje postrzeganie tej sprawy)', ru: 'восприятие (как ты это воспринимаешь? — он изменил моё восприятие этого дела)'},
   {id: 149, pl: 'nieprzyjemny', ru: 'неприятный'},
   {id: 150, pl: 'wątek', ru: 'нить / тема / сюжет'},
   {id: 151, pl: 'tętno', ru: 'пульс'},
