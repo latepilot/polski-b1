@@ -178,6 +178,7 @@ let PERS_VOCAB = [
   {id: 182, pl: 'stosunkowo (stosunkowo tanio)', ru: 'относительно / сравнительно (относительно дёшево)'},
   {id: 183, pl: 'poważnie (traktować coś poważnie)', ru: 'серьёзно (относиться к чему-то серьёзно)'},
   {id: 184, pl: 'poruszyć (poruszyć temat — poruszyć kogoś do łez — poruszyć nogą)', ru: 'затронуть (тему) / растрогать / пошевелить (затронуть тему — растрогать до слёз — пошевелить ногой)'},
+  {id: 185, pl: 'zaawansowany (kurs dla zaawansowanych — zaawansowana technologia — w zaawansowanym wieku)', ru: 'продвинутый / передовой / преклонный — о возрасте (курс для продвинутых — передовая технология — в преклонном возрасте)'},
 ];
 function nextPersId() {
   var maxId = 0;
