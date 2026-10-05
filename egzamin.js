@@ -22,10 +22,10 @@ const bezZnakow = s => norm(s)
 
 let S=null, V={};
 
-const pusty = () => ({gram:{},sluch:{},moje:{},pisanie:{},bledy:[],hist:{},seria:0,ostatni:null});
+const pusty = () => ({gram:{},sluch:{},moje:{},kurs:{},pisanie:{},bledy:[],hist:{},seria:0,ostatni:null});
 function wczytaj(){
   try{ S=JSON.parse(localStorage.getItem('b1exam'))||pusty(); }catch(e){ S=pusty(); }
-  for(const k of ['gram','sluch','moje','pisanie','hist']) if(!S[k]) S[k]={};
+  for(const k of ['gram','sluch','moje','kurs','pisanie','hist']) if(!S[k]) S[k]={};
   if(!Array.isArray(S.bledy)) S.bledy=[];
 }
 const zapisz = () => localStorage.setItem('b1exam', JSON.stringify(S));
@@ -204,7 +204,7 @@ function blok(typ,klucz){
     zad=S.bledy.slice(0,10).map(b=>{
       // zadanie z generatora nie ma stałego numeru — leży w kolejce w całości
       if(b.gen && b.q) return {...b.q,_typ:b.modul,_klucz:b.klucz,
-        _inter:b.q._wpisz?'wpisz':'wybor',_gen:true};
+        _inter:(b.q._wpisz||!b.q.opcje)?'wpisz':'wybor',_gen:true};
       const bank=b.modul==='gram'?GRAMATYKA:SLUCHANIE, z=bank[b.klucz];
       if(!z||!z.zadania[b.idx]) return null;
       const q=z.zadania[b.idx];
@@ -444,7 +444,8 @@ function akcja(){
   else if(!S.bledy.some(ten)){
     S.bledy.push(q._gen
       ? {modul:q._typ,klucz:q._klucz,gen:true,
-         q:{zdanie:q.zdanie,opcje:q.opcje,ok:q.ok,wyjasnienie:q.wyjasnienie,_wpisz:q._wpisz}}
+         q:{zdanie:q.zdanie,opcje:q.opcje,ok:q.ok,alt:q.alt,wyjasnienie:q.wyjasnienie,
+            _wpisz:q._wpisz||(!q.opcje&&q._inter==='wpisz')}}
       : {modul:q._typ,klucz:q._klucz,idx:q._i});
     if(S.bledy.length>60) S.bledy=S.bledy.slice(-60);   // kolejka nie rośnie bez końca
   }
@@ -480,8 +481,33 @@ function podsumowanie(){
       <div class="egz-note">${q.wyjasnienie||''}</div></div>`);
   }
   el('contentWrap').innerHTML=h+'</div>';
-  przycisk('← Trenażer', menu);
+  if(V.powrot){ const r=V.powrot, w=V.wyniki.filter(Boolean).length, n=V.zadania.length;
+    przycisk(V.powrotTxt||'Dalej →', ()=>r(w,n)); }
+  else przycisk('← Trenażer', menu);
 }
+
+// ---------- zewnętrzne sesje (kurs) ----------
+// Kurs podaje gotową listę zadań w formacie banku (zdanie/opcje/ok/wyjasnienie)
+// i dostaje wynik po podsumowaniu. Silnik, sprawdzanie, pasek polskich znaków
+// i kolejka błędów są wspólne z trenażerem.
+function wlasne(zadania, meta, powrot, powrotTxt){
+  wczytaj();
+  const zad = zadania.map(q=>({...q,
+    _typ: q._typ||'kurs', _klucz: q._klucz||meta.klucz||'kurs',
+    _inter: q._inter || (q.opcje ? 'wybor' : 'wpisz'), _gen: true }));
+  if(!zad.length) return false;
+  V={typ:'kurs',klucz:meta.klucz||'kurs',zadania:meta.losuj===false?zad:mix(zad),i:0,meta,wyniki:[],odp:null,
+     sprawdzone:false,odtworzone:0,uzyte:[],ogonki:false,powrot,powrotTxt};
+  pytanie();
+  return true;
+}
+// Uruchamia blok trenażera, ale po podsumowaniu wraca do kursu.
+function blokKurs(typ, klucz, powrot, powrotTxt){
+  blok(typ, klucz);
+  if(V && V.zadania){ V.powrot=powrot; V.powrotTxt=powrotTxt; return true; }
+  return false;
+}
+function liczBledy(){ wczytaj(); return S.bledy.length; }
 
 // ---------- pisanie ----------
 function pisanie(grupa,idx){
@@ -558,5 +584,5 @@ function wzor(grupa,idx){
 }
 
 return { menu, menuGram, menuSluch, menuPisanie, blok, wybierz, tn, chip, wpis, para, wstawZnak,
-         graj, akcja, dalej, pisanie, licz, ocena, wzor, wyjscie };
+         graj, akcja, dalej, pisanie, licz, ocena, wzor, wyjscie, wlasne, blokKurs, liczBledy };
 })();

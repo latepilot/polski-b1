@@ -32,7 +32,7 @@ const PISANIE = {
 
 // ---------------- FORMY KRÓTKIE (25-40 słów) ----------------
 krotkie: [
-  { forma:'SMS / wiadomość', dlugosc:'25 słów',
+  { id:'sms', forma:'SMS / wiadomość', dlugosc:'25 słów',
     temat:'Widzi Pan/Pani ogłoszenie: „Zamienię mieszkanie dwupokojowe na większe w tym samym bloku. Tel. 506 34 34 51. Anna”. Proszę napisać SMS do pani Anny, zapytać o szczegóły (cena, piętro) i umówić się na spotkanie.',
     szkielet:[
       'Zwrot: Dzień dobry, / Witam,',
@@ -41,9 +41,9 @@ krotkie: [
       'Propozycja spotkania: Czy moglibyśmy spotkać się w sobotę o 12?',
       'Podpis: Pozdrawiam, [imię]',
     ],
-    wzor:'Dzień dobry, piszę w sprawie ogłoszenia o zamianie mieszkania. Chciałbym zapytać, na którym piętrze się ono znajduje i jaka jest cena. Czy moglibyśmy spotkać się w sobotę o dwunastej? Pozdrawiam, Andrzej' },
+    wzor:'Dzień dobry, piszę w sprawie zamiany mieszkania. Na którym piętrze jest Pani mieszkanie i jaka jest cena? Czy możemy spotkać się w sobotę o dwunastej? Pozdrawiam, Andrzej' },
 
-  { forma:'Życzenia', dlugosc:'25 słów',
+  { id:'zyczenia_oficjalne', forma:'Życzenia (oficjalne)', dlugosc:'25 słów',
     temat:'Proszę napisać życzenia z okazji świąt Bożego Narodzenia dla swojej dawnej nauczycielki języka polskiego.',
     szkielet:[
       'Zwrot (WOŁACZ!): Szanowna Pani Profesor! / Droga Pani Anno!',
@@ -54,7 +54,7 @@ krotkie: [
     ],
     wzor:'Szanowna Pani Profesor! Z okazji świąt Bożego Narodzenia życzę Pani dużo zdrowia, spokoju i rodzinnego ciepła. Niech nadchodzący rok przyniesie same dobre chwile. Z wyrazami szacunku, Andrzej Nowak' },
 
-  { forma:'Opinia na portalu', dlugosc:'40 słów',
+  { id:'opinia', forma:'Opinia na portalu', dlugosc:'40 słów',
     temat:'Spędził Pan wakacje w małym hotelu nad morzem. Proszę napisać opinię o tym miejscu na portalu turystycznym „(Nie)Polecamy”.',
     szkielet:[
       'Gdzie i kiedy: W lipcu spędziłem tydzień w hotelu „X” w Łebie.',
@@ -64,7 +64,7 @@ krotkie: [
     ],
     wzor:'W lipcu spędziłem tydzień w małym hotelu nad morzem w Łebie. Pokoje były czyste i ciche, a personel wyjątkowo uprzejmy. Niestety, śniadania były dość skromne, a do plaży trzeba było iść piętnaście minut. Mimo to polecam to miejsce, ponieważ stosunek ceny do jakości jest naprawdę dobry.' },
 
-  { forma:'Zaproszenie', dlugosc:'30 słów',
+  { id:'zaproszenie', forma:'Zaproszenie', dlugosc:'30 słów',
     temat:'Proszę napisać zaproszenie na swoje urodziny do kolegi z pracy.',
     szkielet:[
       'Zwrot (WOŁACZ!): Kochany Tomku! / Drogi Marku!',
@@ -74,11 +74,66 @@ krotkie: [
       'Podpis: Do zobaczenia! [imię]',
     ],
     wzor:'Kochany Tomku! Zapraszam Cię serdecznie na moje trzydzieste urodziny, które odbędą się w sobotę 22 marca o godzinie osiemnastej u mnie w domu. Będzie muzyka, dobre jedzenie i mnóstwo znajomych. Koniecznie przyjdź! Do zobaczenia, Andrzej' },
+  { id:'zyczenia', forma:'Życzenia (nieoficjalne)', dlugosc:'25 słów',
+    temat:'Pana przyjaciel Marek ma urodziny. Proszę napisać mu krótkie życzenia (SMS albo kartkę).',
+    ru:'Неформальное поздравление: на «ты», со звательным падежом в обращении и подписью.',
+    szkielet:[
+      'Zwrot (WOŁACZ!): Drogi Marku! / Kochana Aniu!',
+      'Okazja: Z okazji urodzin / imienin / świąt…',
+      'Życzenia: życzę Ci + Dopełniacz: zdrowia, szczęścia, sukcesów',
+      'Coś osobistego: Mam nadzieję, że niedługo się zobaczymy.',
+      'Podpis: Ściskam, [imię] / Wszystkiego najlepszego!',
+    ],
+    zwroty:['Z okazji urodzin życzę Ci…','dużo zdrowia i szczęścia','spełnienia wszystkich marzeń','sukcesów w pracy','Sto lat!','Wszystkiego najlepszego!','Ściskam mocno'],
+    uwaga:'Życzyć + Celownik (komu) + Dopełniacz (czego): życzę Ci zdrowia, szczęścia, sukcesów.',
+    wzor:'Drogi Marku! Z okazji urodzin życzę Ci dużo zdrowia, szczęścia i spełnienia wszystkich marzeń. Mam nadzieję, że w sobotę uczcimy to razem przy dobrej kawie. Sto lat! Ściskam, Iwan' },
+
+  { id:'pozdrowienia', forma:'Pozdrowienia', dlugosc:'30 słów',
+    temat:'Jest Pan na urlopie nad morzem. Proszę napisać pozdrowienia do koleżanki z pracy (kartka pocztowa albo SMS).',
+    ru:'Открытка с отдыха: откуда пишешь, как там, что делаешь, когда вернёшься.',
+    szkielet:[
+      'Miejsce i data: Sopot, 10 lipca',
+      'Zwrot (WOŁACZ!): Droga Ewo! / Cześć, Ewo!',
+      'Skąd i jak jest: Serdeczne pozdrowienia znad morza! Pogoda jest…',
+      'Co robisz: pływam, spaceruję, zwiedzam…',
+      'Kiedy wracasz + podpis: Wracam w sobotę. Do zobaczenia! [imię]',
+    ],
+    zwroty:['Serdeczne pozdrowienia znad morza / z gór / z Krakowa','Pogoda jest piękna, codziennie świeci słońce.','Odpoczywam i nabieram sił.','Szkoda, że Cię tu nie ma!','Do zobaczenia w pracy!'],
+    uwaga:'Откуда — z / znad + Dopełniacz: znad morza (а не «z morza»), z gór, z Krakowa.',
+    wzor:'Sopot, 10 lipca\nDroga Ewo!\nSerdeczne pozdrowienia znad morza! Pogoda jest piękna, codziennie pływam i spaceruję po plaży. Wieczorami jem pyszne ryby. Wracam w sobotę.\nDo zobaczenia w pracy!\nIwan' },
+
+  { id:'ogloszenie', forma:'Ogłoszenie', dlugosc:'35 słów',
+    temat:'Przeprowadza się Pan i chce sprzedać kanapę i biurko. Proszę napisać ogłoszenie na tablicę na osiedlu: co Pan sprzedaje, w jakim stanie, za ile i jak się z Panem skontaktować.',
+    ru:'Объявление: коротко и по делу. Экзаменатор проверяет, что есть все пункты задания: что, какое, сколько стоит, как связаться.',
+    szkielet:[
+      'Nagłówek: SPRZEDAM / KUPIĘ / SZUKAM / WYNAJMĘ / ZGUBIŁEM',
+      'Co (Biernik!): kanapę i biurko',
+      'Opis: kolor, wielkość, stan — prawie nowe, w dobrym stanie',
+      'Cena i warunki: cena do negocjacji, odbiór osobisty',
+      'Kontakt: telefon, e-mail, kiedy dzwonić',
+    ],
+    zwroty:['Sprzedam tanio…','w bardzo dobrym stanie','prawie nowy / używany rok','Cena do negocjacji.','Odbiór osobisty.','Kontakt: tel. 600 123 456 (po 17:00)','Uczciwego znalazcę proszę o kontakt.'],
+    uwaga:'После «Sprzedam / Kupię» — винительный (sprzedam kanapę), после «Szukam» — родительный (szukam mieszkania).',
+    wzor:'SPRZEDAM TANIO\nSzarą trzyosobową kanapę i drewniane biurko. Oba meble są prawie nowe, w bardzo dobrym stanie. Sprzedaję, bo się przeprowadzam. Cena: kanapa 400 zł, biurko 150 zł, do negocjacji. Odbiór osobisty, Gdańsk Przymorze.\nTel. 600 123 456 (po 17:00)' },
+
+  { id:'zawiadomienie', forma:'Zawiadomienie', dlugosc:'35 słów',
+    temat:'Jest Pan w zarządzie wspólnoty mieszkaniowej. Proszę napisać zawiadomienie dla sąsiadów: w środę od 8:00 do 14:00 nie będzie wody, ponieważ będzie remont rur.',
+    ru:'Уведомление — официальная информация для многих людей: что случится, когда, почему, о чём просим. Стиль нейтральный, «Państwo».',
+    szkielet:[
+      'Nagłówek: ZAWIADOMIENIE / UWAGA, MIESZKAŃCY!',
+      'Co się stanie: Uprzejmie informujemy, że…',
+      'Kiedy i jak długo: w środę 12 listopada w godzinach od 8:00 do 14:00',
+      'Dlaczego: z powodu (+ D.) remontu / awarii…',
+      'Prośba, przeprosiny i podpis: Prosimy o… Przepraszamy za utrudnienia. Zarząd wspólnoty',
+    ],
+    zwroty:['Uprzejmie informujemy, że…','z powodu remontu / awarii','w godzinach od… do…','Prosimy o…','Przepraszamy za utrudnienia.','Zebranie odbędzie się…'],
+    uwaga:'«Z powodu» требует родительного: z powodu remontu, z powodu awarii, z powodu choroby.',
+    wzor:'ZAWIADOMIENIE\nUprzejmie informujemy, że w środę 12 listopada w godzinach od 8:00 do 14:00 w całym budynku nie będzie wody. Powodem jest remont rur w piwnicy. Prosimy o przygotowanie zapasu wody. Przepraszamy za utrudnienia.\nZarząd wspólnoty' },
 ],
 
 // ---------------- FORMY DŁUGIE (160-175 słów) ----------------
 dlugie: [
-  { forma:'Sprawozdanie', dlugosc:'175 słów',
+  { id:'sprawozdanie', forma:'Sprawozdanie', dlugosc:'175 słów',
     temat:'Proszę napisać sprawozdanie z uroczystości rodzinnej (np. z wesela siostry, z urodzin babci), w której ostatnio Pan uczestniczył.',
     szkielet:[
       'WSTĘP — co, kiedy, gdzie: W ostatnią sobotę uczestniczyłem w… Uroczystość odbyła się w…',
@@ -89,7 +144,7 @@ dlugie: [
     zwroty:['W ostatnią sobotę…','Uroczystość odbyła się w…','Najpierw… Następnie… W końcu…',
             'Wszyscy goście świetnie się bawili.','Największe wrażenie zrobiło na mnie…','Na długo zapamiętam ten dzień.'] },
 
-  { forma:'Esej / wypracowanie', dlugosc:'160 słów',
+  { id:'esej', forma:'Esej / wypracowanie', dlugosc:'160 słów',
     temat:'Proszę napisać esej na temat: „To jest praca moich marzeń”.',
     szkielet:[
       'WSTĘP — wprowadzenie tematu: Wiele osób zastanawia się, jaka praca daje szczęście. Moim zdaniem…',
@@ -101,7 +156,7 @@ dlugie: [
     zwroty:['Moim zdaniem…','Po pierwsze… Po drugie…','Przede wszystkim…','Co więcej…',
             'Z jednej strony… z drugiej strony…','Mimo to…','Podsumowując…','Uważam, że…'] },
 
-  { forma:'Opowiadanie', dlugosc:'175 słów',
+  { id:'opowiadanie', forma:'Opowiadanie', dlugosc:'175 słów',
     temat:'Proszę napisać opowiadanie pod tytułem „Przygoda na lotnisku”.',
     szkielet:[
       'WSTĘP — tło: Pewnego dnia… Był zwykły poniedziałek, kiedy…',
@@ -113,7 +168,7 @@ dlugie: [
             'Na szczęście…','Ku mojemu zdziwieniu…','Do dziś pamiętam ten dzień.'],
     uwaga:'CZAS PRZESZŁY przez cały tekst! Uważaj na rodzaj: byłem/byłam, poszedłem/poszłam.' },
 
-  { forma:'List oficjalny', dlugosc:'160 słów',
+  { id:'list_oficjalny', forma:'List oficjalny', dlugosc:'160 słów',
     temat:'Proszę napisać list do dyrekcji szkoły językowej z prośbą o zwrot opłaty za kurs, w którym nie mógł Pan uczestniczyć.',
     szkielet:[
       'Miejscowość i data (prawy górny róg): Gdańsk, 5 grudnia 2026 r.',
@@ -128,6 +183,110 @@ dlugie: [
             'Niniejszym informuję, że…','Byłbym wdzięczny, gdyby…',
             'Z góry dziękuję za pozytywne rozpatrzenie.','Z poważaniem,'],
     uwaga:'NIGDY nie pisz "Cześć", "Pozdrawiam" ani form na "Ty". Tylko Pan/Pani/Państwo wielką literą.' },
+  { id:'list_nieformalny', forma:'List prywatny (nieoficjalny)', dlugosc:'160 słów',
+    temat:'Od trzech miesięcy mieszka Pan w nowym mieście. Proszę napisać list (e-mail) do przyjaciela: opisać nowe miejsce, pracę, nowych znajomych i zaprosić go do siebie.',
+    ru:'Неформальное письмо: на «ты», звательный падеж в обращении, живой тон — но грамматика всё равно проверяется строго. Обычно 3–4 абзаца.',
+    szkielet:[
+      'Miejscowość i data: Gdańsk, 6 października 2026 r.',
+      'Zwrot (WOŁACZ!): Drogi Tomku! / Kochana Olu!',
+      'Wstęp: przeprosiny za długie milczenie, pytanie o adresata',
+      'Rozwinięcie 1: nowe miejsce — mieszkanie, miasto',
+      'Rozwinięcie 2: praca, nowi znajomi, wolny czas',
+      'Zakończenie: zaproszenie, prośba o odpowiedź',
+      'Pożegnanie i podpis: Ściskam Cię mocno / Pozdrawiam serdecznie, [imię]',
+    ],
+    zwroty:['Przepraszam, że tak długo nie pisałem.','Co u Ciebie słychać?','Chciałem Ci opowiedzieć o…','Wyobraź sobie, że…','Bardzo mi się tu podoba, bo…','Może przyjedziesz do mnie w…?','Napisz, co u Ciebie.','Ściskam Cię mocno','Pozdrawiam serdecznie'],
+    uwaga:'В письме Ty / Ci / Cię / Twój пишутся с большой буквы — это знак уважения к адресату.',
+    wzor:'Gdańsk, 6 października 2026 r.\n\nDrogi Tomku!\n\nPrzepraszam, że tak długo nie pisałem, ale ostatnie miesiące były bardzo intensywne. Co u Ciebie słychać? Jak się czuje Twoja mama?\n\nOd trzech miesięcy mieszkam w Gdańsku. Wynająłem małe mieszkanie na Przymorzu, dziesięć minut od morza. Jest jasne i ciche, a z balkonu widać park. Na początku trochę tęskniłem za domem, ale teraz czuję się tu dobrze. Samo miasto bardzo mi się podoba: ma piękną starówkę, dużo zieleni i świetną komunikację.\n\nW pracy wszystko jest w porządku. Koledzy są sympatyczni i cierpliwi, kiedy mówię po polsku z błędami. W soboty chodzę z nimi na siatkówkę, a w niedziele zwiedzam okolice. Wieczorami uczę się polskiego, bo w grudniu mam egzamin. Najtrudniejsze są dla mnie przypadki, ale robię postępy.\n\nMoże przyjedziesz do mnie w listopadzie? Mam wygodną kanapę dla gości i chętnie pokażę Ci starówkę, a potem zabiorę Cię na spacer nad morze. Napisz, kiedy możesz przyjechać.\n\nŚciskam Cię mocno,\nIwan' },
+
+  { id:'opis_osoby', forma:'Opis osoby', dlugosc:'160 słów',
+    temat:'Proszę opisać osobę, która jest dla Pana ważna (członka rodziny, przyjaciela, nauczyciela): jej wygląd, ubiór i to, dlaczego jest dla Pana ważna.',
+    ru:'Описание человека. Порядок: кто это → рост и фигура → лицо → одежда → чем занимается, почему важен. Подробно о характере — в форме «характеристика».',
+    szkielet:[
+      'Wstęp: kim jest ta osoba, ile ma lat',
+      'Wygląd ogólny: wzrost, sylwetka',
+      'Twarz: włosy, oczy, cechy szczególne (okulary, broda, piegi)',
+      'Ubiór: na co dzień i na specjalne okazje',
+      'Zakończenie: czym się zajmuje, dlaczego jest dla Ciebie ważna',
+    ],
+    zwroty:['Chciałbym opisać…','Jest wysokim, szczupłym mężczyzną.','Ma krótkie, siwe włosy.','Jego cechą szczególną są…','Na co dzień nosi…','Wygląda na mniej / na więcej.','Jest dla mnie ważny, ponieważ…'],
+    uwaga:'Описание — в настоящем времени. Согласование: ma długie jasne włosy, nosi czarne okulary (мн.ч.), jest wysoką kobietą (być + творительный).',
+    wzor:'Chciałbym opisać mojego dziadka, Michała. Ma siedemdziesiąt osiem lat, ale wygląda na mniej. Jest wysokim, szczupłym mężczyzną i chodzi zawsze bardzo prosto. Ma krótkie, zupełnie siwe włosy i gęste brwi. Jego oczy są jasnoniebieskie i bardzo wesołe. Na twarzy ma sporo zmarszczek, szczególnie wokół oczu, bo dużo się śmieje. Jego cechą szczególną są duże, stare okulary w grubej oprawie, których nie chce zmienić na nowe.\n\nNa co dzień dziadek ubiera się prosto i wygodnie. Nosi ciemne spodnie, ciepły sweter i stary kapelusz. W niedzielę, kiedy idzie do kościoła albo na rodzinny obiad, zakłada szary garnitur, białą koszulę i krawat. Zawsze ma też czyste, wypastowane buty.\n\nDziadek przez całe życie pracował jako stolarz i do dziś robi w swoim warsztacie meble dla całej rodziny. Choć jest już na emeryturze, codziennie wstaje o szóstej rano. Jest dla mnie bardzo ważny, ponieważ nauczył mnie cierpliwości i pracowitości. Chciałbym w jego wieku wyglądać tak dobrze jak on.' },
+
+  { id:'opis_przedmiotu', forma:'Opis przedmiotu', dlugosc:'160 słów',
+    temat:'Zgubił Pan plecak w pociągu. Proszę napisać e-mail do biura rzeczy znalezionych: kiedy i gdzie zgubił Pan plecak, jak on wygląda i co jest w środku.',
+    ru:'Описание предмета обычно бывает внутри письма: пропажа, жалоба, продажа. Порядок: что это → размер и форма → цвет и материал → детали → что внутри.',
+    szkielet:[
+      'Zwrot: Szanowni Państwo!',
+      'Cel: piszę, ponieważ zgubiłem… — kiedy, gdzie (pociąg, godzina, wagon)',
+      'Wygląd: wielkość, kształt, kolor, materiał (z czego: ze skóry, z materiału)',
+      'Szczegóły: kieszenie, uszkodzenia, cechy szczególne',
+      'Zawartość: co było w środku',
+      'Prośba i kontakt: telefon, e-mail',
+      'Z poważaniem, [imię i nazwisko]',
+    ],
+    zwroty:['Piszę, ponieważ wczoraj zgubiłem…','Jest średniej wielkości.','zrobiony ze skóry / z materiału','w kolorze granatowym','Z przodu ma dużą kieszeń.','W środku był / była / były…','Będę wdzięczny za każdą informację.'],
+    uwaga:'Материал — z + родительный: ze skóry, z drewna, z bawełny. Цвет согласуется с предметом: granatowy plecak, czarna torba.',
+    wzor:'Szanowni Państwo!\n\nPiszę, ponieważ wczoraj, piątego października, zgubiłem plecak w pociągu z Gdańska do Warszawy. Pociąg odjechał z Gdańska Głównego o godzinie 8:15. Siedziałem w wagonie numer 5, miejsce 34. Wysiadłem w Tczewie i dopiero w domu zauważyłem, że nie mam plecaka.\n\nPlecak jest średniej wielkości, granatowy, zrobiony z mocnego, nieprzemakalnego materiału. Z przodu ma dużą kieszeń na zamek, a z boku dwie małe kieszenie na butelkę. Na górze jest czarny skórzany uchwyt. Plecak nie jest nowy: na dole ma małą dziurę, a jeden zamek trochę się zacina.\n\nW środku był szary laptop w czarnym etui, ładowarka, książka do nauki polskiego i niebieski zeszyt z notatkami. Laptop jest dla mnie bardzo ważny, ponieważ mam na nim dokumenty z pracy.\n\nBardzo proszę o informację, czy ktoś znalazł mój plecak. Mogę go odebrać osobiście. Mój numer telefonu to 600 123 456. Będę wdzięczny za każdą informację.\n\nZ poważaniem\nIwan Pietrow' },
+
+  { id:'opis_miejsca', forma:'Opis miejsca', dlugosc:'160 słów',
+    temat:'Proszę opisać miejsce, które Pan lubi (park, kawiarnię, dzielnicę, miasto): gdzie się znajduje, jak wygląda, co tam można robić i dlaczego Pan je lubi.',
+    ru:'Описание места — та же техника, что в описании фото: от общего к деталям, слева/справа/посередине, атмосфера. Плюс — почему ты это место любишь.',
+    szkielet:[
+      'Wstęp: jakie to miejsce, gdzie się znajduje',
+      'Jak tam dojechać',
+      'Wygląd: pośrodku, z lewej, z prawej, w tle; budynki, przyroda',
+      'Co można tam robić, kto tam przychodzi',
+      'Atmosfera o różnych porach dnia i roku',
+      'Zakończenie: dlaczego je lubisz, zachęta',
+    ],
+    zwroty:['Moim ulubionym miejscem jest…','Znajduje się w samym centrum / na obrzeżach.','Można tam dojechać tramwajem.','Pośrodku stoi… / Wokół rosną…','Panuje tam spokojna atmosfera.','Każdemu polecam…'],
+    uwaga:'Где находится — miejscownik (w parku, na rynku); куда ехать — biernik или dopełniacz (do parku, na rynek).',
+    wzor:'Moim ulubionym miejscem w Gdańsku jest Park Oliwski. Znajduje się w dzielnicy Oliwa, obok pięknej starej katedry. Łatwo tam dojechać tramwajem albo kolejką SKM — od stacji idzie się tylko dziesięć minut.\n\nPark nie jest bardzo duży, ale jest niezwykle zielony. Przy wejściu rosną wysokie stare drzewa, które tworzą długie, cieniste aleje. Pośrodku parku są stawy, a nad nimi małe mostki. Z prawej strony stoi palmiarnia, w której można zobaczyć egzotyczne rośliny, nawet zimą. W tle widać wieże katedry.\n\nDo parku przychodzą rodziny z dziećmi, studenci i starsi ludzie. Jedni spacerują, inni czytają na ławkach albo karmią kaczki. Rano jest tu bardzo cicho, słychać tylko ptaki. Latem w katedrze odbywają się koncerty organowe, więc po spacerze można posłuchać pięknej muzyki.\n\nLubię to miejsce, ponieważ zawsze mogę tu odpocząć od hałasu miasta. Zimą też jest tu pięknie, szczególnie gdy wszystko pokrywa śnieg. Każdemu, kto przyjeżdża do Gdańska, polecam spacer po Parku Oliwskim.' },
+
+  { id:'opis_sytuacji', forma:'Opis sytuacji', dlugosc:'160 słów',
+    temat:'Proszę opisać typowy poranek w Pana domu w dzień roboczy: kto co robi, co się dzieje i jaka panuje atmosfera.',
+    ru:'Описание ситуации — что происходит обычно или прямо сейчас: настоящее время, много людей и действий одновременно. Это та же техника, что в описании фото на устной части.',
+    szkielet:[
+      'Wstęp: gdzie i kiedy (Każdego dnia o siódmej rano…)',
+      'Kto bierze udział',
+      'Co się dzieje — po kolei i równocześnie (najpierw, w tym samym czasie, potem, w końcu)',
+      'Szczegóły: dźwięki, zapachy, rozmowy',
+      'Atmosfera i Twoja ocena',
+    ],
+    zwroty:['Każdego ranka…','Najpierw… / Potem… / W końcu…','W tym samym czasie…','Wszyscy się spieszą.','Panuje wesoła / nerwowa atmosfera.','Słychać… / Czuć zapach…'],
+    uwaga:'Описание идёт в настоящем времени, поэтому только несовершенный вид: mama robi kanapki, dzieci szukają butów, w końcu wszyscy wychodzą. Совершенный вид в этой форме означал бы будущее: zrobi = сделает.',
+    wzor:'Każdego dnia o siódmej rano w naszym mieszkaniu zaczyna się mały chaos. Pierwsza wstaje moja żona. Idzie do kuchni, włącza ekspres i robi kawę dla wszystkich. Po chwili w całym mieszkaniu czuć zapach kawy i świeżych bułek.\n\nW tym samym czasie ja budzę dzieci. Sześcioletni Maks zawsze chce spać jeszcze pięć minut, a jego starsza siostra Ola od razu biegnie do łazienki i zajmuje ją na długo. Wszyscy pukają do drzwi i proszą, żeby się pospieszyła.\n\nPotem siadamy razem do śniadania. Dzieci jedzą płatki z mlekiem, a my kanapki z serem i pomidorem. Radio gra cicho, żona czyta wiadomości w telefonie, a ja sprawdzam, czy dzieci mają w plecakach wszystkie książki.\n\nOkoło ósmej wszyscy szukają kluczy, butów i czapek. W końcu wychodzimy z domu: dzieci idą do szkoły, a my jedziemy do pracy. Chociaż poranki są nerwowe, lubię je, bo to jedyny czas, kiedy cała rodzina jest razem.' },
+
+  { id:'charakterystyka', forma:'Charakterystyka osoby', dlugosc:'160 słów',
+    temat:'Proszę napisać charakterystykę swojego przyjaciela lub przyjaciółki: krótko wygląd, a przede wszystkim cechy charakteru i zainteresowania. Każdą cechę proszę uzasadnić przykładem.',
+    ru:'Характеристика — прежде всего характер. Каждую черту подтверди примером из жизни: именно за это ставят баллы в критерии «выполнение задания».',
+    szkielet:[
+      'Wstęp: kto to jest, skąd go / ją znasz, od kiedy',
+      'Krótko wygląd (2–3 zdania)',
+      'Cecha 1 + przykład: Jest bardzo… Na przykład, kiedy…',
+      'Cecha 2 + przykład',
+      'Wada — delikatnie: Czasami bywa…',
+      'Zainteresowania',
+      'Zakończenie: za co go / ją cenisz',
+    ],
+    zwroty:['Znamy się od…','Najważniejszą cechą jego charakteru jest…','Można na nim polegać.','Na przykład, kiedy…','Czasami bywa uparty.','Jego wadą jest to, że…','Cenię go za to, że…'],
+    uwaga:'Черта характера: być + прилагательное (jest szczery) или być + творительный (jest szczerym człowiekiem). Пример — в прошедшем времени.',
+    wzor:'Chciałbym przedstawić mojego najlepszego przyjaciela, Pawła. Znamy się od dziesięciu lat — poznaliśmy się na studiach w Petersburgu. Paweł jest wysokim, szczupłym mężczyzną z krótką brodą i zawsze trochę potarganymi włosami.\n\nNajważniejszą cechą jego charakteru jest uczynność. Można na nim polegać w każdej sytuacji. Na przykład, kiedy przeprowadzałem się do Gdańska, Paweł wziął dwa dni urlopu i pomagał mi nosić meble. Jest też bardzo cierpliwy. To on tłumaczył mi trudne zadania z matematyki, kiedy razem studiowaliśmy, i nigdy się nie denerwował.\n\nOczywiście Paweł ma też wady. Czasami bywa uparty i trudno go przekonać, że nie ma racji. Poza tym ciągle się spóźnia, więc na spotkania zawsze umawiamy się kwadrans wcześniej.\n\nPaweł interesuje się historią i górami. W wolnym czasie czyta książki o drugiej wojnie światowej, a latem chodzi po Tatrach.\n\nCenię go za to, że jest szczery i zawsze mówi mi prawdę, nawet jeśli nie jest przyjemna. Prawdziwy przyjaciel to dla mnie właśnie taki człowiek.' },
+
+  { id:'recenzja', forma:'Recenzja (opinia o filmie lub książce)', dlugosc:'160 słów',
+    temat:'Proszę napisać recenzję filmu albo książki, które Pan ostatnio poznał: o czym są, kto gra lub kto jest autorem, co było dobre, co słabe i czy Pan poleca.',
+    ru:'На B1 «рецензия» — это мнение о фильме или книге, а не журналистский жанр. Главное — короткий сюжет без концовки и обоснованная оценка: что понравилось и почему.',
+    szkielet:[
+      'Wstęp: tytuł, gatunek, reżyser lub autor, kiedy obejrzałeś / przeczytałeś',
+      'Krótko o fabule — bez zakończenia!',
+      'Zalety z uzasadnieniem: aktorzy, muzyka, zdjęcia, pomysł',
+      'Wady',
+      'Ocena i rekomendacja: komu polecasz',
+    ],
+    zwroty:['Ostatnio obejrzałem film… w reżyserii…','To komedia / dramat / film przygodowy.','Film opowiada o…','Główną rolę gra…','Największe wrażenie zrobiła na mnie…','Moim zdaniem słabą stroną filmu jest…','Polecam ten film wszystkim, którzy lubią…'],
+    uwaga:'Сюжет — в настоящем времени (film opowiada o…, bohater spotyka…), твой опыт — в прошедшем (obejrzałem). Род: film mi się podobał, książka mi się podobała.',
+    wzor:'Ostatnio obejrzałem w domu polski film „Boże Ciało” w reżyserii Jana Komasy. To dramat, który kilka lat temu był nominowany do Oscara.\n\nFilm opowiada o młodym chłopaku, Danielu, który wychodzi z poprawczaka i przyjeżdża do małej wsi. Przez przypadek ludzie myślą, że jest księdzem, a on nie wyprowadza ich z błędu. Zaczyna prowadzić parafię i pomaga mieszkańcom poradzić sobie z tragedią, która wydarzyła się w ich wsi.\n\nNajwiększe wrażenie zrobiła na mnie gra Bartosza Bieleni w głównej roli. Jego oczy mówią więcej niż słowa. Bardzo podobały mi się też zdjęcia: szare, smutne krajobrazy dobrze pasują do tej historii. Film jest mądry, bo pokazuje, że każdy człowiek zasługuje na drugą szansę.\n\nMoim zdaniem słabą stroną filmu jest zakończenie — jest bardzo brutalne i trochę za szybkie.\n\nMimo to polecam „Boże Ciało” wszystkim, którzy lubią poważne filmy o ludziach i ich wyborach. Dla osób uczących się polskiego to także ciekawa lekcja o polskiej wsi i tradycji.' },
 ],
 
 };
