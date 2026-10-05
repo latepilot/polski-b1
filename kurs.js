@@ -125,9 +125,14 @@ function dzienEkran(n){
   el('progressStrip').innerHTML='';
   V.dzien = n;
   const pierwsze = p.zadania.findIndex((_,i)=>!zr[i]);
-  if(pierwsze>=0) przycisk('Начать: '+nazwaZadania(p.zadania[pierwsze]).split(':')[0], ()=>otworz(n,pierwsze));
+  if(pierwsze>=0) przycisk('Начать: '+krotka(p.zadania[pierwsze]), ()=>otworz(n,pierwsze));
   else przycisk(n<60?'День выполнен. Дальше →':'Курс пройден!', ()=>{ if(n<60) dzienEkran(n+1); });
   window.scrollTo(0,0);
+}
+function krotka(t){
+  return ({lekcja:'урок', slowa:'лексика', mowa:'говорение', pisanie:'письмо', powtorka:'повторение',
+    bledy:'очередь ошибок', fiszki:'фишки', zewn:'задание', probny:'пробный экзамен', wynik:'баллы'})[t.typ]
+    || (t.typ==='egz' ? (t.modul==='sluch'?'слушание':'задание экзамена') : 'задание');
 }
 function pasekKursu(n){
   let gotowe=0;
@@ -575,7 +580,7 @@ ${M.pytania.slice(0,5).map(x=>'— '+x).join('\n')}
 Между заданиями коротко объявляй следующее задание по-польски.
 
 ${PROMPT_OCENA}
-Оцени каждое из трёх заданий отдельно и скажи, прошёл бы я порог 50%.
+Оцени каждое из трёх заданий отдельно, затем дай общий результат в процентах от максимума и скажи, прошёл бы я порог 50%.
 
 Начни: поздоровайся как экзаменатор и начни задание 1.`;
 }
@@ -691,6 +696,7 @@ const MODULY = [
   {k:'cz', n:'Rozumienie tekstów pisanych', min:40, max:30},
   {k:'gr', n:'Poprawność gramatyczna', min:45, max:30},
   {k:'pi', n:'Pisanie', min:75, max:30},
+  {k:'mo', n:'Mówienie — % по оценке Claude', min:15, max:100, ustny:true},
 ];
 function probny(nr,n,i){
   const P=PROBNE[nr];
@@ -703,7 +709,7 @@ function probny(nr,n,i){
       <li>Письмо проверь в Claude (скопируй задание и свой текст) — он поставит баллы по критериям.</li>
       <li>Устную часть пройди завтра: задание «полная устная часть» в любом дне курса.</li></ul>
     <h4 class="kurs-h4">Таймер модулей — по порядку</h4>`;
-  MODULY.forEach(m=>{ h+=`<button class="egz-chip kurs-modbtn" onclick="KURS.stoperModul(${m.min},'${m.n}')">${m.n} · ${m.min} мин</button>`; });
+  MODULY.filter(m=>!m.ustny).forEach(m=>{ h+=`<button class="egz-chip kurs-modbtn" onclick="KURS.stoperModul(${m.min},'${m.n}')">${m.n} · ${m.min} мин</button>`; });
   h+=`<div class="kurs-timer" id="kursTimer"></div></div></div>`;
   el('contentWrap').innerHTML=h; window.scrollTo(0,0);
   przycisk('Экзамен пройден ✓', ()=>{ oznacz(n,i); dzienEkran(n); });

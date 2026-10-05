@@ -1243,7 +1243,7 @@ const KURS_PLAN = [
    },
    {
     "typ": "pisanie",
-    "ref": "zawiadomienie",
+    "ref": "opinia",
     "min": 20
    },
    {
