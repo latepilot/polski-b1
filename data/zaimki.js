@@ -38,31 +38,33 @@ const ZAIMKI_OSOBOWE = {
         bier:{bez:'je',  po:'nie'},    narz:{bez:'nimi',po:'nimi'},msc:{po:'nich'}},
 };
 
-// czasowniki rządzące przypadkiem — zdania BEZ przyimka
+// czasowniki rządzące przypadkiem — zdania BEZ przyimka.
+// bez:[…] — osoby, które są podmiotem zdania: „Znam mnie" czy „Idę do kina
+// ze mną" nie istnieją (byłoby „siebie / ze sobą"), więc ich nie losujemy.
 const CZASOWNIK_RZAD = [
-  {cz:'Znam',        przyp:'bier', zd:'{X} od dziecka.'},
-  {cz:'Widzę',       przyp:'bier', zd:'{X} codziennie w pracy.'},
-  {cz:'Lubię',       przyp:'bier', zd:'{X} bardzo.'},
-  {cz:'Pomagam',     przyp:'cel',  zd:'{X} w nauce.', osob:true},
-  {cz:'Dziękuję',    przyp:'cel',  zd:'{X} za wszystko.', osob:true},
-  {cz:'Powiedziałem',przyp:'cel',  zd:'{X} całą prawdę.', osob:true},
-  {cz:'Szukam',      przyp:'dop',  zd:'{X} od godziny.'},
-  {cz:'Nie znam',    przyp:'dop',  zd:'{X} zbyt dobrze.', osob:true},
-  {cz:'Boję się',    przyp:'dop',  zd:'{X} trochę.'},
+  {cz:'Znam',        przyp:'bier', zd:'{X} od dziecka.', bez:['ja']},
+  {cz:'Widzę',       przyp:'bier', zd:'{X} codziennie w pracy.', bez:['ja']},
+  {cz:'Lubię',       przyp:'bier', zd:'{X} bardzo.', bez:['ja']},
+  {cz:'Pomagam',     przyp:'cel',  zd:'{X} w nauce.', osob:true, bez:['ja']},
+  {cz:'Dziękuję',    przyp:'cel',  zd:'{X} za wszystko.', osob:true, bez:['ja']},
+  {cz:'Powiedziałem',przyp:'cel',  zd:'{X} całą prawdę.', osob:true, bez:['ja']},
+  {cz:'Szukam',      przyp:'dop',  zd:'{X} od godziny.', bez:['ja']},
+  {cz:'Nie znam',    przyp:'dop',  zd:'{X} zbyt dobrze.', osob:true, bez:['ja']},
+  {cz:'Boję się',    przyp:'dop',  zd:'{X} trochę.', bez:['ja']},
 ];
 // przyimki — zdania Z przyimkiem, gdzie zaimek dostaje formę na n-
 // osob:true — zdanie ma sens tylko o ludziach, więc bez "ono"
 const PRZYIMEK_RZAD = [
-  {p:'o',     przyp:'msc',  zd:'Ciągle myślę o {X}.'},
-  {p:'o',     przyp:'msc',  zd:'Rozmawialiśmy wczoraj o {X}.'},
-  {p:'na',    przyp:'bier', zd:'Czekam na {X} od pół godziny.', osob:true},
-  {p:'do',    przyp:'dop',  zd:'Jutro pojadę do {X}.', osob:true},
-  {p:'bez',   przyp:'dop',  zd:'Nie zrobię tego bez {X}.'},
-  {p:'dla',   przyp:'dop',  zd:'Kupiłem to specjalnie dla {X}.', osob:true},
-  {p:'z',     przyp:'narz', zd:'Idę do kina z {X}.', osob:true},
-  {p:'z',     przyp:'narz', zd:'Chętnie porozmawiam z {X}.', osob:true},
-  {p:'przy',  przyp:'msc',  zd:'Usiądź przy {X}.'},
-  {p:'od',    przyp:'dop',  zd:'Dostałem list od {X}.', osob:true},
+  {p:'o',     przyp:'msc',  zd:'Ciągle myślę o {X}.', bez:['ja']},
+  {p:'o',     przyp:'msc',  zd:'Rozmawialiśmy wczoraj o {X}.', bez:['my']},
+  {p:'na',    przyp:'bier', zd:'Czekam na {X} od pół godziny.', osob:true, bez:['ja']},
+  {p:'do',    przyp:'dop',  zd:'Jutro pojadę do {X}.', osob:true, bez:['ja']},
+  {p:'bez',   przyp:'dop',  zd:'Nie zrobię tego bez {X}.', bez:['ja']},
+  {p:'dla',   przyp:'dop',  zd:'Kupiłem to specjalnie dla {X}.', osob:true, bez:['ja']},
+  {p:'z',     przyp:'narz', zd:'Idę do kina z {X}.', osob:true, bez:['ja']},
+  {p:'z',     przyp:'narz', zd:'Chętnie porozmawiam z {X}.', osob:true, bez:['ja']},
+  {p:'przy',  przyp:'msc',  zd:'Usiądź przy {X}.', bez:['ty']},
+  {p:'od',    przyp:'dop',  zd:'Dostałem list od {X}.', osob:true, bez:['ja']},
 ];
 
 const NAZWA_PRZYP_Z = {dop:'Dopełniacz',cel:'Celownik',bier:'Biernik',narz:'Narzędnik',msc:'Miejscownik'};
@@ -72,7 +74,7 @@ const _mz = a => a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1])
 function genZaimekOsobowy(){
   const zPrzyimkiem = Math.random() < 0.55;   // forma na n- jest trudniejsza, więc częściej
   const rama = zPrzyimkiem ? _lz(PRZYIMEK_RZAD) : _lz(CZASOWNIK_RZAD);
-  const dostepne = Object.keys(ZAIMKI_OSOBOWE).filter(k => !(rama.osob && k==='ono'));
+  const dostepne = Object.keys(ZAIMKI_OSOBOWE).filter(k => !(rama.osob && k==='ono') && !(rama.bez||[]).includes(k));
   const klucz = _lz(dostepne);
   const z = ZAIMKI_OSOBOWE[klucz];
   const przyp = rama.przyp;
@@ -87,13 +89,17 @@ function genZaimekOsobowy(){
 
   // dystraktory: ten sam zaimek w innych przypadkach + wariant zza granicy
   // przyimka (właśnie tu ludzie się mylą: "myślę o jego" zamiast "o nim")
-  const pula = [];
+  const pula = [z.miano];
   for(const p of ['dop','cel','bier','narz','msc']){
     const k = z[p]; if(!k) continue;
     if(k.bez) pula.push(k.bez);
     if(k.po)  pula.push(k.po);
   }
-  const inne = [...new Set(pula)].filter(f=>f!==poprawna);
+  // ja/ty bez przyimka: forma długa też jest poprawna, tylko akcentowana
+  // („Znam ciebie od dziecka", „Pomóż mnie, nie jemu") — nie może być
+  // dystraktorem. Formy na n- (niego, niej) bez przyimka są błędem, więc zostają.
+  const tez = (!zPrzyimkiem && !z.oboczneN && komorka.po) ? komorka.po : null;
+  const inne = [...new Set(pula)].filter(f=>f!==poprawna && f!==tez);
   const opcje = _mz([poprawna, ..._mz(inne).slice(0,2)]);
 
   // nie każdy zaimek ma osobną formę po przyimku: "nas", "was", "mną"
@@ -139,9 +145,9 @@ const DZIERZAWCZE = [
   {zd:'Piotr rozmawiał z Anną o ___ problemach — to Anna ma kłopoty.', ok:'jej',
    zle:['swoich','jego'], wyj:'Właścicielem NIE jest podmiot (Piotr), tylko Anna → „jej".'},
   {zd:'Zapomniałem ___ parasola w autobusie.', ok:'swojego',
-   zle:['jego','mojego'], wyj:'Podmiot to „ja" → „swojego" (dopuszczalne też „mojego").'},
+   zle:['swoim','swojemu'], wyj:'zapomnieć + Dopełniacz → swojego (przy „ja" dopuszczalne też „mojego").'},
   {zd:'Czy zabraliście ___ dokumenty?', ok:'swoje',
-   zle:['wasze','ich'], wyj:'Podmiot „wy" → „swoje".'},
+   zle:['swoich','swoimi'], wyj:'zabrać + Biernik l.mn. → swoje (przy „wy" dopuszczalne też „wasze").'},
   {zd:'Marta pokazała mi zdjęcia ___ brata — brata Marty.', ok:'swojego',
    zle:['jej','jego'], wyj:'Brat należy do podmiotu (Marta) → „swojego".'},
 ];
@@ -167,8 +173,8 @@ const PRZECZACE = [
   {zd:'___ w klasie nie lubił Joasi.', ok:'Nikt', zle:['Nic','Żaden'], wyj:'o osobach → nikt'},
   {zd:'Nie powiedziałam ___ o tym problemie.', ok:'nikomu', zle:['niczemu','nikogo'],
    wyj:'powiedzieć + Celownik → nikomu'},
-  {zd:'W lodówce nie ma ___.', ok:'niczego', zle:['nikogo','nic'],
-   wyj:'nie ma + Dopełniacz → niczego (potocznie też „nic")'},
+  {zd:'W lodówce nie ma ___.', ok:'niczego', zle:['nikogo','niczym'],
+   wyj:'nie ma + Dopełniacz → niczego (poprawne jest też „nie ma nic")'},
   {zd:'___ z tych filmów mi się nie podobał.', ok:'Żaden', zle:['Nikt','Nic'],
    wyj:'o rzeczach z zamkniętego zbioru → żaden'},
   {zd:'Nie widziałem tam ___ znajomego.', ok:'żadnego', zle:['nikogo','niczego'],

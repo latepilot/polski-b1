@@ -164,7 +164,7 @@ KURS_TEMATY.T04 = {
   foto:'salon w mieszkaniu, ludzie w domu',
   slowa:[
     ['mieszkanie','квартира'],['dom jednorodzinny','частный дом'],['blok','многоквартирный дом'],['kamienica','старый многоквартирный дом'],
-    ['osiedle','жилой район, микрорайон'],['piętro (na trzecim piętrze)','этаж (на четвёртом этаже!)'],['parter','первый этаж'],
+    ['osiedle','жилой район, микрорайон'],['piętro (na trzecim piętrze)','этаж (этажи считают от parter: trzecie piętro = наш четвёртый этаж)'],['parter','первый этаж'],
     ['winda','лифт'],['balkon','балкон'],['pokój','комната'],['sypialnia','спальня'],['salon','гостиная, салон'],['pokój dzienny','гостиная (букв. «дневная комната»)'],
     ['kuchnia','кухня'],['łazienka','ванная'],['przedpokój','прихожая'],['piwnica','подвал'],
     ['metr kwadratowy','квадратный метр'],['dwupokojowe mieszkanie','двухкомнатная квартира'],
@@ -174,7 +174,7 @@ KURS_TEMATY.T04 = {
     ['pralka','стиральная машина'],['zmywarka','посудомоечная машина'],['widok na (+ B.)','вид на'],['położony blisko (+ D.)','расположенный рядом с'],
   ],
   zwroty:[
-    ['Mieszkam w dwupokojowym mieszkaniu na czwartym piętrze.','Живу в двухкомнатной квартире на пятом этаже.'],
+    ['Mieszkam w dwupokojowym mieszkaniu na czwartym piętrze.','Живу в двухкомнатной квартире на пятом этаже (czwarte piętro = наш пятый: счёт от parter).'],
     ['Mieszkanie ma pięćdziesiąt metrów kwadratowych.','Квартира — пятьдесят квадратных метров.'],
     ['W salonie stoi duża kanapa.','В гостиной стоит большой диван.'],
     ['Z balkonu mam widok na park.','С балкона у меня вид на парк.'],
@@ -311,7 +311,7 @@ KURS_TEMATY.T07 = {
     ['bochenek chleba','буханка хлеба'],['para butów','пара обуви'],['kosztować','стоить'],['wydawać pieniądze','тратить деньги'],['oszczędzać','экономить, копить'],
   ],
   zwroty:[
-    ['Poproszę kilo jabłek i dwadzieścia deko sera.','Дайте, пожалуйста, кило яблок и двести граммов сыра.'],
+    ['Poproszę kilo jabłek i dwadzieścia deko sera.','Дайте, пожалуйста, кило яблок и двести граммов сыра (20 deko = 200 г).'],
     ['Ile to kosztuje?','Сколько это стоит?'],
     ['Czy mogę zapłacić kartą?','Можно оплатить картой?'],
     ['Poproszę paragon.','Дайте, пожалуйста, чек.'],
@@ -543,7 +543,7 @@ KURS_TEMATY.T12 = {
     ['Film opowiada o…','Фильм рассказывает о…'],
     ['Główną rolę gra…','Главную роль играет…'],
     ['Największe wrażenie zrobiła na mnie…','Больше всего меня впечатлила…'],
-    ['Poproszę dwa bilety na seans o dziewiętnastej.','Два билета на сеанс в семь вечера.'],
+    ['Poproszę dwa bilety na seans o dziewiętnastej.','Два билета на сеанс в семь вечера (в 19:00).'],
     ['Polecam ten film każdemu, kto lubi…','Советую этот фильм всем, кто любит…'],
   ],
   monolog:{
@@ -874,7 +874,7 @@ KURS_TEMATY.T19 = {
       ['Od wczoraj nie działa ogrzewanie.','Со вчерашнего дня не работает отопление.'],
       ['To pilna sprawa, w mieszkaniu jest zimno.','Это срочно, в квартире холодно.'],
       ['Czy mógłby przyjść jeszcze dziś?','Не мог бы он прийти сегодня?'],
-      ['Będę w domu po siedemnastej.','Буду дома после пяти.'],
+      ['Będę w domu po siedemnastej.','Буду дома после пяти вечера (после 17:00).'],
       ['Kto zapłaci za naprawę?','Кто заплатит за ремонт?'],
     ],
     wzor:'Właściciel: Słucham?\nTy: Dzień dobry, panie Marku. Mówi Iwan Pietrow, wynajmuję od pana mieszkanie na Przymorzu.\nWłaściciel: A, dzień dobry. Coś się stało?\nTy: Niestety tak. W łazience przecieka kran, a od wczoraj nie działa ogrzewanie.\nWłaściciel: Ogrzewanie? To dziwne. Sprawdzał pan kaloryfery?\nTy: Tak, wszystkie są zimne. W mieszkaniu jest tylko szesnaście stopni, a mamy małe dziecko.\nWłaściciel: Rozumiem, to pilne. Zadzwonię do hydraulika. Kiedy pan jest w domu?\nTy: Dzisiaj po siedemnastej. Czy mógłby przyjść jeszcze dziś?\nWłaściciel: Spróbuję. Jeśli nie dziś, to jutro rano. Dam panu znać SMS-em.\nTy: Dobrze. A kto zapłaci za naprawę?\nWłaściciel: Oczywiście ja, to moja sprawa.\nTy: Bardzo dziękuję, panie Marku. Czekam na wiadomość.'

@@ -227,8 +227,8 @@ const CASE_TEMPLATES = {
     title: 'Narzędnik — Z kim? Z czym?',
     rules: 'Narzędnik: być kimś, interesować się czymś, z + N.',
     templates: [
-      { sentence: 'Jestem {{word.inst}}.', words: ['student', 'nauczyciel', 'lekarz', 'kolega', 'chłopiec'], note: 'być + N. (to be a...)' },
-      { sentence: 'Ona jest {{word.inst}}.', words: ['lekarka', 'studentka', 'koleżanka', 'dziewczyna'], note: 'być + N. (ona → forma żeńska!)' },
+      { sentence: 'Jestem {{word.inst}}.', words: ['student', 'nauczyciel', 'lekarz'], note: 'być + zawód → N. (to be a...)' },
+      { sentence: 'Ona jest {{word.inst}}.', words: ['lekarka', 'studentka'], note: 'być + zawód → N. (ona → forma żeńska!)' },
       { sentence: 'Idę z {{word.inst}} do kina.', words: ['kolega', 'siostra', 'mama', 'brat', 'przyjaciel'], note: 'z + N. (with someone)' },
       { sentence: 'Interesuję się {{word.inst}}.', words: ['muzyka', 'film', 'sport', 'fotografia', 'historia'], note: 'interesować się + N. (interested in)' },
     ]

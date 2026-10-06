@@ -123,11 +123,11 @@ KURS_LEKCJE.L03 = {
       ['количество','szklanka <b>wody</b>, dużo <b>pracy</b>'],
       ['предлоги do, z, od, bez, dla, u, obok, koło, około','do <b>sklepu</b>, z <b>pracy</b>, bez <b>cukru</b>, u <b>lekarza</b>'],
       ['глаголы szukać, potrzebować, słuchać, uczyć się, bać się, używać, życzyć','szukam <b>pracy</b>, słucham <b>radia</b>']]},
-    {t:'pulapka', h:'После этих глаголов в русском винительный, а в польском — родительный: <b>słuchać muzyki</b> (слушать музыку), <b>uczyć się języka</b> (учить язык), <b>szukać mieszkania</b> (искать квартиру), <b>używać komputera</b> (пользоваться компьютером). И после отрицания всегда: <b>Nie lubię kawy</b> — «не люблю кофе».'},
+    {t:'pulapka', h:'После этих глаголов в русском другой падеж, а в польском — родительный: <b>słuchać muzyki</b> (слушать музыку), <b>uczyć się języka</b> (учить язык), <b>szukać mieszkania</b> (искать квартиру), <b>używać komputera</b> (пользоваться компьютером — в русском творительный). И после отрицания всегда: <b>Nie lubię kawy</b> — «не люблю кофе».'},
     {t:'h', h:'Окончания'},
     {t:'tab', head:['Род','Окончание','Пример'], rows:[
-      ['женский','-y (после твёрдых, c, cz, sz, rz, ż)','kawa → kawy, ulica → ulicy, praca → pracy'],
-      ['женский','-i (после k, g, мягких, -ia, на согласную)','książka → książki, kuchnia → kuchni, noc → nocy'],
+      ['женский','-y (после твёрдых, c, cz, sz, rz, ż)','kawa → kawy, ulica → ulicy, praca → pracy, noc → nocy'],
+      ['женский','-i (после k, g, мягких, -ia, -ść)','książka → książki, kuchnia → kuchni, miłość → miłości'],
       ['средний','-a','okno → okna, mieszkanie → mieszkania'],
       ['мужской','-a или -u','brata, psa · domu, czasu']]},
     {t:'h', h:'Мужской род: -a или -u?'},
@@ -317,7 +317,7 @@ KURS_LEKCJE.L07 = {
   cel: 'Dużo ludzi, pięć złotych, kilka dni, nie mam pieniędzy. Форма самая коварная — зато логика как в русском: «пять книг», «много людей».',
   teoria: [
     {t:'h', h:'Когда нужен'},
-    {t:'p', h:'Все случаи родительного (отрицание, предлоги, количество) плюс числа <b>от 5</b> и слова <b>dużo, mało, wiele, kilka, ile</b>: <i>pięć osób, dużo ludzi, kilka dni, ile kosztuje?</i>'},
+    {t:'p', h:'Все случаи родительного (отрицание, предлоги, количество) плюс числа <b>от 5</b> и слова <b>dużo, mało, wiele, kilka, ile</b>: <i>pięć osób, dużo ludzi, kilka dni, ile osób?</i>'},
     {t:'h', h:'Три типа окончаний'},
     {t:'tab', head:['Окончание','Когда','Пример'], rows:[
       ['-ów','большинство мужских','studentów, domów, Polaków, samochodów'],
@@ -516,7 +516,7 @@ KURS_LEKCJE.L11 = {
       ['pić','piję · pijesz · piją'],['dawać','daję · dajesz · dają']]},
     {t:'pulapka', h:'Три «знаю»: <b>wiem</b> — знаю факт (wiem, gdzie on mieszka), <b>znam</b> — знаком с кем-то или чем-то (znam Marka, znam to miasto), <b>umiem</b> — умею (umiem pływać).'},
     {t:'przyklady', items:[
-      ['Codziennie pracuję do siedemnastej.','Каждый день работаю до пяти.'],
+      ['Codziennie pracuję do siedemnastej.','Каждый день работаю до пяти вечера (до 17:00).'],
       ['Nie wiem, gdzie jest dworzec.','Не знаю, где вокзал.'],
       ['Znam dobrze to miasto.','Я хорошо знаю этот город.']]},
   ],
@@ -789,7 +789,7 @@ KURS_LEKCJE.L17 = {
     {zdanie:'Lubię ___ (ta) książkę.', ok:'tę', wyjasnienie:'винительный женского рода: tę.'},
     {zdanie:'Kto mieszka w ___ (ten) domu?', ok:'tym', wyjasnienie:'предложный: tym.'},
     {zdanie:'___ ludzie są z Ukrainy.', opcje:['Te','Ci','Tamte'], ok:1, wyjasnienie:'мужско-личное мн.ч.: ci.'},
-    {zdanie:'Pojechałem na wakacje z ___ (moi) rodzicami.', ok:'moimi', alt:['swoimi'], wyjasnienie:'творительный мн.ч.: moimi (можно и ze swoimi).'},
+    {zdanie:'Pojechałem na wakacje z ___ (moi) rodzicami.', ok:'moimi', wyjasnienie:'творительный мн.ч.: moimi. Со swój было бы «ze swoimi» — перед sw- предлог z становится ze.'},
     {zdanie:'Każdy powinien dbać o ___ zdrowie.', opcje:['swoje','jego','twoje'], ok:0, wyjasnienie:'владелец — «każdy» → swoje.'},
     {zdanie:'Znasz ___ (jej) męża?', ok:'jej', wyjasnienie:'jej не склоняется.'},
     {zdanie:'Spotkałem ___ (twoja) siostrę w sklepie.', ok:'twoją', wyjasnienie:'винительный женского рода: twoją.'},
@@ -901,7 +901,7 @@ KURS_LEKCJE.L20 = {
     {t:'tab', head:['Реальное — jeśli','Нереальное — gdyby'], rows:[
       ['Jeśli będzie ładnie, pójdziemy na spacer.','Gdyby było ładnie, poszlibyśmy na spacer.'],
       ['будущее, это возможно','это не так сейчас, мечта или гипотеза']]},
-    {t:'uwaga', h:'После gdyby — форма на -ł с окончанием: <b>gdybym wiedział</b>, <b>gdybyś miał</b>, <b>gdybyśmy mieli</b>. Норма ударения: zro<b>BI</b>łbym, zro<b>BI</b>libyśmy.'},
+    {t:'uwaga', h:'После gdyby — форма на -ł с окончанием: <b>gdybym wiedział</b>, <b>gdybyś miał</b>, <b>gdybyśmy mieli</b>. Норма ударения: ударение остаётся там же, где в zrobił / zrobiła / zrobili — <b>ZRO</b>biłbym, zro<b>BI</b>łabym, zro<b>BI</b>libyśmy. В разговоре часто слышно zro<b>BIŁ</b>bym — на экзамене это не ошибка.'},
     {t:'pulapka', h:'В русском «бы» — отдельное слово: «сделал бы». В польском оно сливается с окончанием лица: <b>zrobiłbym, zrobiłabyś</b>. «Если бы» — одно слово <b>gdyby</b>.'},
   ],
   cwiczenia: [
@@ -975,7 +975,7 @@ KURS_LEKCJE.L22 = {
       ['B.','kogo','co','nikogo','nic'],['N.','kim','czym','nikim','niczym'],['Msc.','o kim','o czym','o nikim','o niczym']]},
     {t:'tab', head:['Вопрос','Значение'], rows:[
       ['jaki, jaka, jakie','какой (качество): Jaki kolor lubisz?'],['który','который (выбор): Który autobus jedzie do centrum?'],
-      ['czyj, czyja, czyje','чей: Czyj to telefon?'],['ile','сколько + D.: Ile kosztuje?']]},
+      ['czyj, czyja, czyje','чей: Czyj to telefon?'],['ile','сколько + D.: Ile masz lat? Ile osób przyjdzie?']]},
     {t:'h', h:'Неопределённые и отрицательные'},
     {t:'tab', head:['Неопределённые','Отрицательные (всегда с nie!)'], rows:[
       ['ktoś — кто-то','nikt — никто: Nikt nie dzwonił.'],['coś — что-то','nic — ничего: Nic nie wiem.'],
