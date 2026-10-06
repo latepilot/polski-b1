@@ -397,12 +397,12 @@ function toast(txt){
 const ZW_OPIS = [
   ['Zdjęcie przedstawia…','На фотографии изображено…'],
   ['Na pierwszym planie widzę…','На переднем плане я вижу…'],
-  ['Na drugim planie / w tle jest…','На заднем плане / на фоне есть…'],
-  ['Z lewej strony… / Z prawej strony…','Слева… / Справа…'],
-  ['Pośrodku / w rogu zdjęcia…','Посередине / в углу фотографии…'],
+  ['Na drugim planie jest…','На заднем плане есть…'],['W tle jest…','На фоне есть…'],
+  ['Z lewej strony…','Слева…'],['Z prawej strony…','Справа…'],
+  ['Pośrodku zdjęcia…','Посередине фотографии…'],['W rogu zdjęcia…','В углу фотографии…'],
   ['Ta kobieta ma na sobie…','Эта женщина одета в…'],
   ['Wydaje mi się, że to jest rodzina.','Мне кажется, это семья.'],
-  ['Chyba / prawdopodobnie jest lato.','Наверное / вероятно, сейчас лето.'],
+  ['Chyba jest lato.','Наверное, сейчас лето.'],['Prawdopodobnie jest lato.','Вероятно, сейчас лето.'],
   ['Wygląda na to, że oni świetnie się bawią.','Похоже, они отлично проводят время.'],
   ['Atmosfera jest spokojna i wesoła.','Атмосфера спокойная и весёлая.'],
 ];
@@ -411,19 +411,19 @@ const ZW_MONOLOG = [
   ['Najpierw opiszę…','Сначала опишу…'],
   ['Muszę też powiedzieć, że…','Должен также сказать, что…'],
   ['Kolejną sprawą, o której chcę powiedzieć, jest…','Следующее, о чём хочу сказать, — это…'],
-  ['Uważam, że… / Moim zdaniem…','Считаю, что… / По-моему…'],
+  ['Uważam, że…','Считаю, что…'],['Moim zdaniem…','По-моему…'],
   ['Na przykład…','Например…'],
   ['Chcę jeszcze dodać, że…','Хочу ещё добавить, что…'],
   ['Na końcu mogę stwierdzić, że…','В конце могу сказать, что…'],
 ];
 const ZW_SYTUACJA = [
   ['Przepraszam, czy mogę o coś zapytać?','Извините, можно спросить?'],
-  ['Chciałbym / Chciałabym zapytać o…','Я хотел(а) бы спросить о…'],
-  ['Czy mógłby Pan powtórzyć? / Czy mogłaby Pani powtórzyć?','Не могли бы вы повторить?'],
+  ['Chciałbym zapytać o…','Я хотел бы спросить о…'],['Chciałabym zapytać o…','Я хотела бы спросить о… (говорит женщина)'],
+  ['Czy mógłby Pan powtórzyć?','Не могли бы вы повторить? (мужчине)'],['Czy mogłaby Pani powtórzyć?','Не могли бы вы повторить? (женщине)'],
   ['Czy dobrze rozumiem, że…?','Правильно ли я понимаю, что…?'],
   ['Proponuję, żebyśmy…','Предлагаю, чтобы мы…'],
   ['Może lepiej…?','Может, лучше…?'],
-  ['Zgadzam się. / Niestety, nie mogę, bo…','Согласен. / К сожалению, не могу, потому что…'],
+  ['Zgadzam się.','Согласен.'],['Niestety, nie mogę, bo…','К сожалению, не могу, потому что…'],
   ['Dziękuję za pomoc. Do widzenia!','Спасибо за помощь. До свидания!'],
 ];
 const ZW_RATUNEK = [

@@ -27,20 +27,25 @@ function wczytaj(){
   try{ S = JSON.parse(localStorage.getItem('b1slownik')) || {}; }catch(e){ S = {}; }
   if(!S.znam || typeof S.znam!=='object') S.znam = {};
   if(S.kier!=='ru2pl') S.kier = 'pl2ru';
-  if(!S.mig) migruj();
+  // Wersja 1 przeniosła znane słowa ze starych kart kursu (po numerach).
+  // Po rozbiciu haseł numery już nie pasują, więc nowe urządzenie nic
+  // stamtąd nie bierze — lepiej zgubić kilka „Znam", niż oznaczyć złe słowa.
+  if(!S.mig){ S.mig = 2; zapisz(); }
+  else if(S.mig<2) migruj2();
 }
 const zapisz = () => { try{ localStorage.setItem('b1slownik', JSON.stringify(S)); }catch(e){} };
-// Karty tematów w kursie pamiętały znane słowa po numerach (b1kurs → slowa).
-// Przenieś je raz, żeby nic z dotychczasowej nauki nie zginęło.
-function migruj(){
-  try{
-    const K = JSON.parse(localStorage.getItem('b1kurs')) || {}, sl = K.slowa || {};
-    for(const id in sl){
-      const T = typeof KURS_TEMATY!=='undefined' && KURS_TEMATY[id]; if(!T) continue;
-      (sl[id].znam||[]).forEach(k=>{ const w=T.slowa[k]; if(w) S.znam[klucz(w[0])] = sl[id].data || dzisISO(); });
-    }
-  }catch(e){}
-  S.mig = 1; zapisz();
+// Łączone hasła („kurtka, płaszcz") rozbite na osobne karty. Kto znał całość,
+// zna też części: część to hasło, którego wszystkie słowa były w starym haśle.
+function migruj2(){
+  const wpisy = wszystkie(), jest = new Set(wpisy.map(x=>x.k));
+  const slowaW = k => k.replace(/\(.*?\)/g,' ').split(/[^a-ząćęłńóśźż-]+/).filter(Boolean);
+  Object.keys(S.znam).forEach(k=>{
+    if(jest.has(k)) return;
+    const stare = new Set(slowaW(k)), data = S.znam[k];
+    wpisy.forEach(x=>{ const w = slowaW(x.k); if(w.length && w.every(s=>stare.has(s)) && !S.znam[x.k]) S.znam[x.k] = data; });
+    delete S.znam[k];
+  });
+  S.mig = 2; zapisz();
 }
 function znam(pl){ if(!S) wczytaj(); return !!S.znam[klucz(pl)]; }
 function ustaw(k, wart){ wczytaj(); if(wart) S.znam[k] = dzisISO(); else delete S.znam[k]; zapisz(); }
