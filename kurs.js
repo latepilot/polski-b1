@@ -22,6 +22,12 @@ function wczytaj(){
 }
 const zapisz = () => { try{ localStorage.setItem('b1kurs', JSON.stringify(S)); }catch(e){} };
 
+// Ekran kursu w historii aplikacji — strzałka ← wraca do poprzedniego.
+function wejdz(klucz, fn){
+  if(typeof state!=='undefined') state.phase='kurs';
+  if(typeof ekran==='function') ekran('kurs:'+klucz, fn);
+}
+
 // ---------- dzień kursu ----------
 function nrDzisiaj(){
   const start = new Date(KURS_START+'T00:00:00'), teraz = new Date(dzisISO()+'T00:00:00');
@@ -32,7 +38,24 @@ const dzien = n => KURS_PLAN[n-1];
 const zrob = n => S.zrob['d'+n] || (S.zrob['d'+n]={});
 function postep(n){ const p=dzien(n), z=S.zrob['d'+n]||{};
   const ile=p.zadania.filter((_,i)=>z[i]).length; return {ile, wszystkie:p.zadania.length}; }
+const pelny = n => { const {ile,wszystkie}=postep(n); return wszystkie>0 && ile===wszystkie; };
 function oznacz(n,i,wart=true){ wczytaj(); zrob(n)[i]=wart; zapisz(); }
+
+// Dzień, na którym się pracuje — nie dzień z kalendarza. Kto idzie szybciej
+// niż plan, ma wracać tam, gdzie skończył, a nie do dnia 1. Podnosi się przy
+// otwarciu zadania (nigdy nie cofa: powtórka starego dnia nie gubi miejsca),
+// a gdy dzień jest cały zrobiony, kurs od razu pokazuje następny.
+function nrBiezacy(){
+  wczytaj();
+  let n = S.dzien;
+  if(!n) for(let d=60; d>=1; d--) if(postep(d).ile){ n=d; break; }   // stan sprzed tej zmiany
+  if(!n) n = nrDzisiaj();
+  while(n<60 && pelny(n)) n++;
+  return n;
+}
+function podnies(n){ wczytaj(); if(!S.dzien || n>S.dzien){ S.dzien=n; zapisz(); } }
+function dniRu(k){ const m10=k%10, m100=k%100;
+  return m10===1&&m100!==11 ? 'день' : (m10>=2&&m10<=4&&(m100<12||m100>14) ? 'дня' : 'дней'); }
 
 const DNI_TYG = ['niedziela','poniedziałek','wtorek','środa','czwartek','piątek','sobota'];
 const MIES = ['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','września','października','listopada','grudnia'];
@@ -84,8 +107,9 @@ function opisZadania(t){
 // ---------- ekran dnia ----------
 function dzienEkran(n){
   wczytaj();
-  if(!n) n = nrDzisiaj();
-  const p = dzien(n), dzisN = nrDzisiaj(), zr = S.zrob['d'+n]||{};
+  if(!n) n = nrBiezacy();
+  wejdz('dzien:'+n, ()=>dzienEkran(n));
+  const p = dzien(n), dzisN = nrDzisiaj(), biez = nrBiezacy(), zr = S.zrob['d'+n]||{};
   const doE = Math.ceil((EGZAMIN-new Date())/864e5);
   const przedStartem = dzisISO() < KURS_START;
   const minut = p.zadania.reduce((s,t)=>s+t.min,0);
@@ -97,7 +121,10 @@ function dzienEkran(n){
       <div class="kurs-cd"><b>${doE}</b><span>dni do<br>egzaminu</span></div></div>`;
   h+=pasekKursu(n);
   if(przedStartem && n===1) h+=`<div class="egz-alert">Курс начинается <b>завтра, 6 октября</b>. Можно открыть первый урок уже сегодня.</div>`;
-  if(n!==dzisN && !przedStartem) h+=`<div class="egz-uwaga">Ты смотришь ${n<dzisN?'прошедший':'будущий'} день. Сегодня — день ${dzisN}.</div>`;
+  if(n!==biez) h+=`<div class="egz-uwaga">Ты смотришь день ${n}. Твой текущий день — ${biez}.
+      <div style="margin-top:8px"><button class="egz-chip" onclick="KURS.dzien(${biez})">К дню ${biez} →</button></div></div>`;
+  else if(!przedStartem && n>dzisN) h+=`<div class="egz-uwaga">Ты идёшь быстрее плана на ${n-dzisN} ${dniRu(n-dzisN)}: по календарю сегодня день ${dzisN}.</div>`;
+  else if(!przedStartem && n<dzisN) h+=`<div class="egz-uwaga">По календарю сегодня день ${dzisN} — ты отстаёшь на ${dzisN-n} ${dniRu(dzisN-n)}.</div>`;
 
   h+=`<h3 class="egz-h kurs-tytul">${esc(p.tytul)}</h3><div class="kurs-cel">${esc(p.cel)}</div>`;
   h+=`<div class="egz-sub">${ile} из ${wszystkie} заданий · около ${Math.round(minut/5)*5} минут</div>`;
@@ -113,22 +140,27 @@ function dzienEkran(n){
     </div>`;
   });
 
+  // przycisk startu zaraz pod listą zadań, nie na dole ekranu
+  const pierwsze = p.zadania.findIndex((_,i)=>!zr[i]);
+  const start = pierwsze>=0 ? {t:'Начать: '+krotka(p.zadania[pierwsze]), on:`KURS.otworz(${n},${pierwsze})`}
+    : (n<60 ? {t:'День выполнен. Дальше →', on:`KURS.dalej(${n})`} : {t:'Курс пройден!', on:''});
+  h+=`<button class="check-btn kurs-start" ${start.on?`onclick="${start.on}"`:'disabled'}>${esc(start.t)}</button>`;
+
   h+=`<div class="kurs-nav">
     ${n>1?`<button class="egz-chip" onclick="KURS.dzien(${n-1})">← День ${n-1}</button>`:'<span></span>'}
     <button class="egz-chip" onclick="KURS.mapa()">Карта курса</button>
     ${n<60?`<button class="egz-chip" onclick="KURS.dzien(${n+1})">День ${n+1} →</button>`:'<span></span>'}
   </div>`;
+  if(typeof SLOWNIK!=='undefined') h+=`<div class="egz-card" onclick="startSlownik()"><div class="egz-ico">${ik('egz-book')}</div>
+    <div class="egz-body"><div class="egz-t">Словарь экзамена</div><div class="egz-d">Все слова и фразы курса — карточки Cram</div></div><div class="egz-meta">→</div></div>`;
   h+=`<div class="egz-card" onclick="KURS.claudeInfo()"><div class="egz-ico">${ik('egz-ear')}</div>
     <div class="egz-body"><div class="egz-t">Как заниматься с Claude</div><div class="egz-d">Говорение голосом и проверка письма</div></div><div class="egz-meta">→</div></div>`;
   h+='</div>';
   el('contentWrap').innerHTML=h;
-  el('progressStrip').innerHTML='';
+  el('bottomWrap').style.display='none';
   V.dzien = n;
-  const pierwsze = p.zadania.findIndex((_,i)=>!zr[i]);
-  if(pierwsze>=0) przycisk('Начать: '+krotka(p.zadania[pierwsze]), ()=>otworz(n,pierwsze));
-  else przycisk(n<60?'День выполнен. Дальше →':'Курс пройден!', ()=>{ if(n<60) dzienEkran(n+1); });
-  window.scrollTo(0,0);
 }
+function dalejDzien(n){ podnies(n+1); dzienEkran(n+1); }
 function krotka(t){
   return ({lekcja:'урок', slowa:'лексика', mowa:'говорение', pisanie:'письмо', powtorka:'повторение',
     bledy:'очередь ошибок', fiszki:'фишки', zewn:'задание', probny:'пробный экзамен', wynik:'баллы'})[t.typ]
@@ -140,39 +172,45 @@ function pasekKursu(n){
   return `<div class="egz-bar kurs-bar"><div class="egz-bar-f" style="width:${gotowe/60*100}%;background:var(--success)"></div></div>
     <div class="egz-note" style="margin-bottom:12px">Выполнено дней: ${gotowe} из 60</div>`;
 }
-function przelacz(n,i){ wczytaj(); const z=zrob(n); z[i]=!z[i]; zapisz(); dzienEkran(n); }
+function przelacz(n,i){ wczytaj(); const z=zrob(n); z[i]=!z[i]; zapisz(); if(z[i]) podnies(n); dzienEkran(n); }
 
 const V = {};
 function ik(id){ return '<svg class="egz-i"><use href="#'+id+'"/></svg>'; }
-function przycisk(txt,fn,wyl){ const b=el('mainBtn'); if(!b) return; b.textContent=txt; b.disabled=!!wyl; b.onclick=fn||null; }
+function przycisk(txt,fn,wyl){ const b=el('mainBtn'); if(!b) return;
+  el('bottomWrap').style.display=''; b.className='check-btn';
+  b.textContent=txt; b.disabled=!!wyl; b.onclick=fn||null; }
 function wrocDo(n){ return ()=>dzienEkran(n); }
 
 // ---------- mapa kursu ----------
 function mapa(){
   wczytaj();
-  const dz = nrDzisiaj();
+  wejdz('mapa', mapa);
+  const biez = nrBiezacy(), dz = nrDzisiaj();
   let h='<div class="egz kurs"><h3 class="egz-h">Карта курса</h3>';
-  h+='<div class="egz-sub">60 дней в три фазы: фундамент (вся грамматика B1), экзаменационный формат, финиш. Нажми на день.</div>';
+  h+=`<div class="egz-sub">60 дней в три фазы: фундамент (вся грамматика B1), экзаменационный формат, финиш. Рамкой выделен твой текущий день, по календарю сегодня — день ${dz}. Нажми на день.</div>`;
   let faza='';
   KURS_PLAN.forEach(p=>{
     if(p.faza!==faza){ faza=p.faza; h+=`<h3 class="egz-h">${{Fundament:'Фаза 1 · Фундамент',Egzamin:'Фаза 2 · Экзамен',Finisz:'Фаза 3 · Финиш'}[faza]}</h3>`; }
-    const {ile,wszystkie}=postep(p.d), pelny=ile===wszystkie;
-    const cls = p.d===dz?'kurs-dzis':(pelny?'egz-done':'');
+    const {ile,wszystkie}=postep(p.d), caly=ile===wszystkie;
+    const cls = p.d===biez?'kurs-dzis':(caly?'egz-done':'');
     h+=`<div class="egz-card ${cls}" onclick="KURS.dzien(${p.d})">
       <div class="kurs-nr">${p.d}</div>
       <div class="egz-body"><div class="egz-t">${esc(p.tytul)}</div><div class="egz-d">${dataPL(p.data)}</div></div>
-      <div class="egz-meta">${pelny?'✓':(ile?ile+'/'+wszystkie:'')}</div></div>`;
+      <div class="egz-meta">${caly?'✓':(ile?ile+'/'+wszystkie:'')}</div></div>`;
   });
   h+='</div>';
   el('contentWrap').innerHTML=h;
-  przycisk('← Сегодня', ()=>dzienEkran());
-  setTimeout(()=>{ const c=document.querySelector('.kurs-dzis'); if(c) c.scrollIntoView({block:'center'}); },50);
+  przycisk('← День '+biez, ()=>dzienEkran());
+  // przy powrocie strzałką zostaje miejsce, w którym się było
+  if(!(typeof wCofaniu==='function' && wCofaniu()))
+    setTimeout(()=>{ const c=document.querySelector('.kurs-dzis'); if(c) c.scrollIntoView({block:'center'}); },50);
 }
 
 // ---------- otwieranie zadania ----------
 function otworz(n,i){
   const t = dzien(n).zadania[i];
   V.dzien=n; V.zad=i;
+  podnies(n);
   const koniec = (w,ile)=>{ oznacz(n,i); dzienEkran(n); };
   switch(t.typ){
     case 'lekcja':   return lekcja(t.ref, n, i);
@@ -197,6 +235,7 @@ function otworz(n,i){
   }
 }
 function komunikat(txt,n){
+  wejdz('info:'+txt, ()=>komunikat(txt,n));
   el('contentWrap').innerHTML=`<div class="egz kurs"><div class="egz-ex">${esc(txt)}</div></div>`;
   przycisk('← День '+n, wrocDo(n));
 }
@@ -225,6 +264,7 @@ function lekcja(id, n, i){
   wczytaj();
   const L = KURS_LEKCJE[id];
   if(!L) return komunikat('Этот урок ещё в подготовке.', n);
+  wejdz('lekcja:'+id, ()=>lekcja(id,n,i));
   const wynikL = S.lekcje[id];
   let h=`<div class="egz kurs"><div class="egz-ex">
     <div class="egz-hint">Урок ${id.replace('L','')} · ${esc(L.tytul)}</div>
@@ -238,11 +278,11 @@ function lekcja(id, n, i){
     <div class="egz-note">${wynikL.d} из ${wynikL.n} · ${wynikL.data}. Цель — 70% и выше.</div></div>`;
   h+='</div>';
   el('contentWrap').innerHTML=h;
-  window.scrollTo(0,0);
   przycisk(`Упражнения (${L.cwiczenia.length}) →`, ()=>cwiczenia(id, n, i));
 }
 function cwiczenia(id, n, i){
   const L = KURS_LEKCJE[id];
+  wejdz('cw:'+id, ()=>cwiczenia(id,n,i));
   const ok = EGZ.wlasne(L.cwiczenia.map(q=>({...q})), {tytul:'Урок '+id.replace('L','')+' · '+L.tytul,
     polecenie: L.polecenie || 'Выбери или впиши правильную форму.', klucz:id},
     (dobrze, ile)=>{ wczytaj(); const p=Math.round(dobrze/ile*100);
@@ -268,6 +308,7 @@ function powtorka(refs, n, i){
   const naLekcje = refs.length>6 ? 3 : 4;
   refs.forEach(r=>{ const L=KURS_LEKCJE[r]; if(L) mix(L.cwiczenia).slice(0,naLekcje).forEach(q=>zad.push({...q,_klucz:r})); });
   if(!zad.length) return komunikat('Уроки для повторения ещё в подготовке.', n);
+  wejdz('powt:'+n+':'+i, ()=>powtorka(refs,n,i));
   EGZ.wlasne(zad, {tytul:'Повторение', polecenie:'Задания из пройденных уроков вперемешку.', klucz:'powtorka'},
     (d,ile)=>{ oznacz(n,i); lekcjaPo2(d,ile,n); }, 'Дальше →');
 }
@@ -280,68 +321,42 @@ function lekcjaPo2(d,ile,n){
 }
 
 // ---------- słownictwo ----------
-let F = null;
+// Karty tematu to ten sam Cram, co w słowniku egzaminu (slownik.js):
+// „Znam" zapisuje się w jednym miejscu i widać je w obu.
 function slowa(id, n, i){
-  wczytaj();
   const T = KURS_TEMATY[id];
   if(!T) return komunikat('Эта тема ещё в подготовке.', n);
-  const znane = new Set((S.slowa[id]||{}).znam||[]);
+  wejdz('slowa:'+id, ()=>slowa(id,n,i));
+  const zn = pl => typeof SLOWNIK!=='undefined' && SLOWNIK.znam(pl);
+  const wpisy = [...T.slowa, ...(T.zwroty||[])];
+  const ileZn = wpisy.filter(([pl])=>zn(pl)).length;
   let h=`<div class="egz kurs"><div class="egz-ex">
     <div class="egz-hint">Тема · ${esc(T.blok)}</div><h3 class="kurs-lh">${esc(T.tytul)}</h3>
-    <div class="kurs-cel">${esc(T.ru)}. Слова, без которых не обойтись в устной части и письме на эту тему.</div>
-    <div class="egz-note">Знаю: ${znane.size} из ${T.slowa.length}. Нажми на слово — услышишь произношение.</div>
+    <div class="kurs-cel">${esc(T.ru)}. Слова и фразы, без которых не обойтись в устной части и письме на эту тему.</div>
+    <button class="check-btn kurs-start" onclick="KURS.slowaCram('${id}',${n||0},${i||0})">Учить карточками (Cram) →</button>
+    <div class="egz-note">Знаю: ${ileZn} из ${wpisy.length}. Нажми на слово — услышишь произношение. Все темы курса собраны в «Словаре экзамена».</div>
     <div class="kurs-slowa">`;
-  T.slowa.forEach(([pl,ru],k)=>{
-    h+=`<div class="kurs-sl ${znane.has(k)?'kurs-zn':''}"><span class="kurs-pl" onclick="KURS.mow(this.textContent)">${pl}</span><span class="kurs-ru">${ru}</span></div>`;
+  T.slowa.forEach(([pl,ru])=>{
+    h+=`<div class="kurs-sl ${zn(pl)?'kurs-zn':''}"><span class="kurs-pl" onclick="KURS.mow(this.textContent)">${pl}</span><span class="kurs-ru">${ru}</span></div>`;
   });
   h+='</div>';
   if(T.zwroty && T.zwroty.length){
     h+='<h4 class="kurs-h4">Готовые фразы</h4><div class="kurs-przyklady">';
-    T.zwroty.forEach(([pl,ru])=>h+=`<div class="kurs-pr"><span class="kurs-pl" onclick="KURS.mow(this.textContent)">${pl}</span><span class="kurs-ru">${ru}</span></div>`);
+    T.zwroty.forEach(([pl,ru])=>h+=`<div class="kurs-pr ${zn(pl)?'kurs-zn':''}"><span class="kurs-pl" onclick="KURS.mow(this.textContent)">${pl}</span><span class="kurs-ru">${ru}</span></div>`);
     h+='</div>';
   }
   h+='</div></div>';
   el('contentWrap').innerHTML=h;
-  window.scrollTo(0,0);
-  przycisk('Карточки: польский → русский →', ()=>fiszkiStart(id,n,i));
+  przycisk('Учить карточками (Cram) →', ()=>slowaCram(id,n,i));
 }
-function fiszkiStart(id,n,i){
-  wczytaj();
-  const T=KURS_TEMATY[id], znane=new Set((S.slowa[id]||{}).znam||[]);
-  let kolejka = T.slowa.map((_,k)=>k).filter(k=>!znane.has(k));
-  if(!kolejka.length) kolejka = T.slowa.map((_,k)=>k);
-  F={id,n,i,kolejka:mix(kolejka),poz:0,odkryta:false,znam:new Set(znane),runda:1};
-  fiszka();
+function slowaCram(id,n,i){
+  const T=KURS_TEMATY[id];
+  if(!T || typeof SLOWNIK==='undefined') return;
+  SLOWNIK.cram([...T.slowa, ...(T.zwroty||[])], {
+    klucz:'kurs:'+id, tytul:T.tytul,
+    powrot: n ? ()=>{ oznacz(n,i); dzienEkran(n); } : null,
+    powrotTxt: n ? '← День '+n : null });
 }
-function fiszka(){
-  const T=KURS_TEMATY[F.id];
-  if(F.poz>=F.kolejka.length){
-    const zostalo = T.slowa.map((_,k)=>k).filter(k=>!F.znam.has(k));
-    wczytaj(); S.slowa[F.id]={znam:[...F.znam],data:dzisISO()}; zapisz();
-    if(!zostalo.length || F.runda>=3){
-      if(F.n) oznacz(F.n,F.i);
-      el('contentWrap').innerHTML=`<div class="egz kurs"><div class="egz-ex" style="text-align:center">
-        <div class="egz-big" style="color:var(--success)">${F.znam.size}/${T.slowa.length}</div>
-        <div class="egz-sub" style="font-size:14px">${zostalo.length?'Оставшиеся '+zostalo.length+' слов вернутся при следующем открытии темы.':'Все слова темы знаешь.'}</div></div></div>`;
-      return przycisk(F.n?'← День '+F.n:'Готово', F.n?wrocDo(F.n):null);
-    }
-    F.kolejka=mix(zostalo); F.poz=0; F.runda++;
-  }
-  const k=F.kolejka[F.poz], [pl,ru]=T.slowa[k];
-  el('contentWrap').innerHTML=`<div class="egz kurs">
-    <div class="egz-note">Круг ${F.runda} · ${F.poz+1} из ${F.kolejka.length} · знаю ${F.znam.size}/${T.slowa.length}</div>
-    <div class="kurs-fiszka" onclick="KURS.odkryj()">
-      <div class="kurs-fpl">${pl}</div>
-      ${F.odkryta?`<div class="kurs-fru">${ru}</div>`:'<div class="egz-note">нажми, чтобы увидеть перевод</div>'}
-    </div>
-    ${F.odkryta?`<div class="kurs-fbtn"><button class="egz-tn egz-no" onclick="KURS.ocen(false)">Ещё не знаю</button>
-      <button class="egz-tn egz-ok" onclick="KURS.ocen(true)">Знаю</button></div>`:''}
-  </div>`;
-  if(!F.odkryta) mow(pl.replace(/\(.*?\)/g,''));
-  przycisk(F.odkryta?'Выбери: знаю / ещё не знаю':'Показать перевод', F.odkryta?null:odkryj, F.odkryta);
-}
-function odkryj(){ if(!F) return; F.odkryta=true; fiszka(); }
-function ocen(znam){ const k=F.kolejka[F.poz]; if(znam) F.znam.add(k); else F.znam.delete(k); F.poz++; F.odkryta=false; fiszka(); }
 
 // ---------- synteza mowy ----------
 let glos=null;
@@ -352,7 +367,7 @@ function mow(txt){
   if(!('speechSynthesis' in window)) return;
   if(!glos) szukajGlosu();
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(String(txt).replace(/[—–]/g,',').trim());
+  const u=new SpeechSynthesisUtterance(String(txt).replace(/\(.*?\)/g,'').replace(/[—–]/g,',').trim());
   u.lang='pl-PL'; if(glos) u.voice=glos; u.rate=0.9;
   speechSynthesis.speak(u);
 }
@@ -424,6 +439,7 @@ function lista(zw){ return '<div class="kurs-przyklady">'+zw.map(([pl,ru])=>
 function mowa(id, co, n, i){
   const T = KURS_TEMATY[id];
   if(co!=='opis_frazy' && !T) return komunikat('Эта тема ещё в подготовке.', n);
+  wejdz('mowa:'+id+':'+co, ()=>mowa(id,co,n,i));
   V.mowa={id,co,n,i};
   let h='<div class="egz kurs"><div class="egz-ex">';
   h+=`<div class="egz-hint">Говорение · ${MOWA_NAZWA[co]||co}</div>`;
@@ -436,7 +452,7 @@ function mowa(id, co, n, i){
       <h4 class="kurs-h4">Задание 3 — ситуация</h4>${lista(ZW_SYTUACJA)}
       <h4 class="kurs-h4">Если забыл слово</h4>${lista(ZW_RATUNEK)}`;
     h+='</div></div>';
-    el('contentWrap').innerHTML=h; window.scrollTo(0,0);
+    el('contentWrap').innerHTML=h;
     return przycisk('Готово ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
   }
 
@@ -497,7 +513,7 @@ function mowa(id, co, n, i){
     <button class="egz-play" onclick="KURS.kopiujMowe()">Скопировать задание для Claude</button>
     <div class="kurs-timer" id="kursTimer"><button class="egz-chip" onclick="KURS.stoper(180)">Засечь 3 минуты для себя</button></div>
   </div></div>`;
-  el('contentWrap').innerHTML=h; window.scrollTo(0,0);
+  el('contentWrap').innerHTML=h;
   przycisk('Готово ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
 }
 function wzorBlok(wzor, dialog){
@@ -601,6 +617,7 @@ function pisanie(id, n, i){
   if(id==='powtorka_szkieletow') return szkielety(n,i);
   const f=formaPisania(id);
   if(!f) return komunikat('Эта форма ещё в подготовке.', n);
+  wejdz('pis:'+id, ()=>pisanie(id,n,i));
   const z=S.pisanie[id]||{}, cel=parseInt(f.dlugosc);
   V.pis={id,n,i,cel};
   let h=`<div class="egz kurs"><div class="egz-ex">
@@ -618,7 +635,7 @@ function pisanie(id, n, i){
     <button class="egz-play" onclick="KURS.kopiujPrace()">Скопировать текст для проверки в Claude</button>
     ${f.wzor?wzorBlok(f.wzor):''}
   </div></div>`;
-  el('contentWrap').innerHTML=h; window.scrollTo(0,0);
+  el('contentWrap').innerHTML=h;
   licz();
   przycisk('Сохранить · готово ✓', ()=>{ zapiszPrace(); oznacz(n,i); dzienEkran(n); });
 }
@@ -628,6 +645,7 @@ function licz(){
   const dol=Math.round(cel*0.9), gor=Math.round(cel*1.15), e=el('kursLicznik');
   e.textContent=ile+' слов (цель: '+dol+'–'+gor+')';
   e.className='egz-count'+(ile>=dol&&ile<=gor?' egz-count-ok':'');
+  zapiszPrace();   // szkic zapisuje się na bieżąco — wyjście strzałką nie gubi tekstu
 }
 function znak(z){
   const p=el('kursPraca'); if(!p) return;
@@ -638,7 +656,9 @@ function znak(z){
 }
 function zapiszPrace(){
   const t=el('kursPraca'); if(!t||!V.pis) return;
-  wczytaj(); S.pisanie[V.pis.id]={tekst:t.value,data:dzisISO()}; zapisz();
+  wczytaj(); const stary=S.pisanie[V.pis.id];
+  if(stary ? stary.tekst===t.value : !t.value) return;
+  S.pisanie[V.pis.id]={tekst:t.value,data:dzisISO()}; zapisz();
 }
 function kopiujPrace(){
   const f=formaPisania(V.pis.id), t=el('kursPraca'), tekst=t?t.value.trim():'';
@@ -662,11 +682,12 @@ ${tekst}
 5. Три оборота уровня B1, которые подошли бы к этому тексту.`, 'Текст скопирован — вставь его в Claude');
 }
 function szkielety(n,i){
+  wejdz('szkielety', ()=>szkielety(n,i));
   let h='<div class="egz kurs"><h3 class="egz-h">Все каркасы письма</h3><div class="egz-sub">Прочитай каждый каркас и проговори, что напишешь в каждом пункте.</div>';
   [...PISANIE.krotkie, ...PISANIE.dlugie].forEach(f=>{
     h+=`<div class="egz-ex"><div class="egz-hint">${esc(f.forma)} · ${esc(f.dlugosc)}</div><ul class="kurs-ul">${f.szkielet.map(s=>`<li>${s}</li>`).join('')}</ul></div>`;
   });
-  el('contentWrap').innerHTML=h+'</div>'; window.scrollTo(0,0);
+  el('contentWrap').innerHTML=h+'</div>';
   przycisk('Готово ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
 }
 
@@ -674,6 +695,7 @@ function szkielety(n,i){
 // ZADANIA ZEWNĘTRZNE, EGZAMINY PRÓBNE, WYNIKI
 // ========================================================================
 function zewn(t,n,i){
+  wejdz('zewn:'+n+':'+i, ()=>zewn(t,n,i));
   const z=ZRODLA[t.zrodlo]||{};
   let h=`<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">${esc(z.t||'Задание')}</div>
     <div class="kurs-cel">${esc(t.opis)}</div>`;
@@ -682,7 +704,7 @@ function zewn(t,n,i){
   if(t.zrodlo==='podcast') h+=`<div class="egz-note">Если Hello Polish уже слишком лёгкий — <a href="${ZRODLA.podcast2.link}" target="_blank" rel="noopener">Swojski Język Polski</a> (B1–B2).</div>`;
   if(t.zrodlo==='cert_mp3') h+=`<div class="egz-note">Если сайт не открывается с телефона — открой на компьютере. Транскрипции и ключи лежат на той же странице.</div>`;
   h+='</div></div>';
-  el('contentWrap').innerHTML=h; window.scrollTo(0,0);
+  el('contentWrap').innerHTML=h;
   przycisk('Сделано ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
 }
 
@@ -699,6 +721,7 @@ const MODULY = [
   {k:'mo', n:'Mówienie — % по оценке Claude', min:15, max:100, ustny:true},
 ];
 function probny(nr,n,i){
+  wejdz('probny:'+nr, ()=>probny(nr,n,i));
   const P=PROBNE[nr];
   let h=`<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">Пробный экзамен №${nr}</div>
     <h3 class="kurs-lh">${esc(P.plik)}</h3><div class="kurs-cel">${esc(P.opis)}. Файл — в папке «polski b1» на Mac. Лучше распечатать: на экзамене всё на бумаге.</div>
@@ -711,19 +734,20 @@ function probny(nr,n,i){
     <h4 class="kurs-h4">Таймер модулей — по порядку</h4>`;
   MODULY.filter(m=>!m.ustny).forEach(m=>{ h+=`<button class="egz-chip kurs-modbtn" onclick="KURS.stoperModul(${m.min},'${m.n}')">${m.n} · ${m.min} мин</button>`; });
   h+=`<div class="kurs-timer" id="kursTimer"></div></div></div>`;
-  el('contentWrap').innerHTML=h; window.scrollTo(0,0);
+  el('contentWrap').innerHTML=h;
   przycisk('Экзамен пройден ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
 }
 function stoperModul(min,nazwa){ stoper(min*60, nazwa); }
 function wynik(nr,n,i){
   wczytaj();
+  wejdz('wynik:'+nr, ()=>wynik(nr,n,i));
   const z=S.probne[nr]||{};
   let h=`<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">Баллы пробного экзамена №${nr}</div>
     <div class="kurs-cel">Впиши баллы за каждый модуль по ключу. Порог — 50% <b>в каждом</b> модуле, цель — 60% с запасом.</div>`;
   MODULY.forEach(m=>{ h+=`<label class="kurs-wynik"><span>${m.n}</span>
     <input type="number" inputmode="decimal" min="0" max="${m.max}" step="0.5" id="w_${m.k}" value="${z[m.k]??''}" class="egz-inp"> <span>/ ${m.max}</span></label>`; });
   h+=`<div id="kursWyniki"></div></div>`+historiaProbnych()+'</div>';
-  el('contentWrap').innerHTML=h; window.scrollTo(0,0);
+  el('contentWrap').innerHTML=h;
   przycisk('Сохранить ✓', ()=>{
     wczytaj(); const w={};
     MODULY.forEach(m=>{ const v=parseFloat(el('w_'+m.k).value.replace(',','.')); if(!isNaN(v)) w[m.k]=Math.min(m.max,Math.max(0,v)); });
@@ -749,6 +773,7 @@ function historiaProbnych(){
 
 // ---------- jak ćwiczyć z Claude ----------
 function claudeInfo(){
+  wejdz('claude', claudeInfo);
   el('contentWrap').innerHTML=`<div class="egz kurs"><div class="egz-ex">
     <div class="egz-hint">Claude как экзаменатор и проверяющий</div>
     <h4 class="kurs-h4">Устная часть голосом</h4>
@@ -765,24 +790,21 @@ function claudeInfo(){
     <h4 class="kurs-h4">Если что-то в курсе кажется ошибкой</h4>
     <div class="kurs-cel">Напиши в сессию Claude Code «Polski app»: номер урока и фразу. Я проверю и исправлю курс.</div>
   </div></div>`;
-  window.scrollTo(0,0);
-  przycisk('← Сегодня', ()=>dzienEkran());
+  przycisk('← День '+nrBiezacy(), ()=>dzienEkran());
 }
 
 // ---------- karta na ekranie głównym aplikacji ----------
 function kartaGlowna(){
   wczytaj();
-  const n=nrDzisiaj(), p=dzien(n), {ile,wszystkie}=postep(n);
+  const n=nrBiezacy(), p=dzien(n), {ile,wszystkie}=postep(n);
   const przed = dzisISO() < KURS_START;
-  return {n, tytul:p.tytul, opis: przed ? 'Старт завтра, 6 октября' : (ile+' из '+wszystkie+' заданий сегодня')};
+  return {n, tytul:p.tytul, opis: przed ? 'Старт завтра, 6 октября' : (ile+' из '+wszystkie+' заданий')};
 }
 
-return { dzien:dzienEkran, mapa, otworz, przelacz, lekcja, cwiczenia, slowa, mowa, pisanie, odkryj, ocen, mow,
-  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, kartaGlowna, nrDzisiaj };
+// Zwroty do egzaminu ustnego — słownik egzaminu bierze je stąd, żeby nie
+// trzymać dwóch kopii.
+const ZW = {opis:ZW_OPIS, monolog:ZW_MONOLOG, sytuacja:ZW_SYTUACJA, ratunek:ZW_RATUNEK};
+
+return { dzien:dzienEkran, dalej:dalejDzien, mapa, otworz, przelacz, lekcja, cwiczenia, slowa, slowaCram, mowa, pisanie, mow,
+  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
 })();
-
-// Ekran główny aplikacji rysuje się w skrypcie inline, zanim ten plik się
-// załaduje — wtedy karty kursu jeszcze nie ma. Dorysuj ją po załadowaniu.
-if (typeof state !== 'undefined' && state.phase === 'tree' && typeof renderTree === 'function') {
-  try { renderTree(); } catch(e) {}
-}

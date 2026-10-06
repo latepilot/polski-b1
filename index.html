@@ -195,11 +195,17 @@ input, textarea { font-family: inherit; }
 }
 
 /* ======================== CONTENT AREA ======================== */
-.content-wrap {
+/* Treść przewija się razem z przyciskiem: przycisk stoi zaraz pod zadaniem,
+   a nie przy dolnej krawędzi, gdzie na iPhonie łapie go gest „do ekranu
+   głównego". Dolny margines trzyma koniec treści z dala od paska gestów. */
+.scroll-wrap {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 16px;
   -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(48px + env(safe-area-inset-bottom));
+}
+.content-wrap {
+  padding: 20px 16px 4px;
 }
 
 /* ======================== UNITS / SKILL TREE ======================== */
@@ -430,10 +436,7 @@ input, textarea { font-family: inherit; }
 
 /* ======================== BOTTOM BUTTON ======================== */
 .bottom-btn-wrap {
-  padding: 12px 16px 20px;
-  flex-shrink: 0;
-  background: var(--card);
-  border-top: 1px solid var(--border-soft);
+  padding: 4px 16px 0;
 }
 .check-btn {
   width: 100%;
@@ -522,8 +525,8 @@ input, textarea { font-family: inherit; }
 }
 
 /* ======================== SCROLLBAR ======================== */
-.content-wrap::-webkit-scrollbar { width: 4px; }
-.content-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.scroll-wrap::-webkit-scrollbar { width: 4px; }
+.scroll-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 /* ======================== RESPONSIVE ======================== */
 @media (max-width: 400px) {
@@ -679,12 +682,7 @@ input, textarea { font-family: inherit; }
 .kurs .kurs-sl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 2px;border-bottom:1px solid var(--border-soft)}
 .kurs .kurs-sl .kurs-ru{text-align:right}
 .kurs .kurs-zn{opacity:.5}
-.kurs .kurs-fiszka{background:var(--card);border:1px solid var(--border);border-radius:14px;min-height:210px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;cursor:pointer;margin:12px 0}
-.kurs .kurs-fpl{font-size:24px;font-weight:700;color:var(--text-dark);line-height:1.3}
-.kurs .kurs-fru{font-size:17px;color:var(--primary);margin-top:14px;line-height:1.4}
-.kurs .kurs-fbtn{display:flex;gap:10px}
-.kurs .kurs-fbtn button{flex:1;padding:14px;font-size:15px}
+.kurs .kurs-start{margin:8px 0 6px}
 .kurs .kurs-karta{border:1.5px dashed var(--primary);border-radius:10px;padding:12px 14px;margin:10px 0;background:var(--selected-bg)}
 .kurs .kurs-karta-n{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--primary);font-weight:700}
 .kurs .kurs-karta-t{font-size:15px;color:var(--text-dark);margin:4px 0;line-height:1.5}
@@ -700,12 +698,45 @@ input, textarea { font-family: inherit; }
 .kurs .kurs-wynik input{width:80px;text-align:center}
 .kurs .kurs-modbtn{display:block;width:100%;margin:6px 0;text-align:left}
 .kurs a.egz-play{text-decoration:none;justify-content:center;text-align:center}
+/* ===================== SŁOWNIK EGZAMINU (slownik.js) ===================== */
+.slow .slow-bar{margin-top:7px;height:5px}
+.slow .slow-szukaj{margin:16px 0 6px}
+.slow .slow-lista{display:flex;flex-direction:column;margin:4px 0 10px}
+.slow .slow-w{display:flex;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px solid var(--border-soft)}
+.slow .slow-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.slow .slow-w.slow-zn .slow-tx{opacity:.5}
+.slow .slow-z{font-size:11px;color:var(--text-muted)}
+.slow .slow-ru-h{font-weight:500;color:var(--text-light);font-size:12.5px}
+.slow .slow-start{margin:6px 0 8px}
+.slow .slow-chipy{text-align:center;margin-bottom:4px}
+.slow .slow-tick{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-strong);
+  background:var(--card);color:#fff;font-weight:700;font-size:14px;flex-shrink:0;cursor:pointer;padding:0}
+.slow .slow-tick.on{background:var(--success);border-color:var(--success)}
+/* karta Cram — ten sam wygląd co w „Moje słowa" */
+.slow-cram{text-align:center;min-height:260px}
+.slow-cram .slow-gora{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left}
+.slow-cram .slow-ikony{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.slow-cram .slow-ik{background:none;color:var(--primary);display:flex;padding:0;cursor:pointer}
+.slow-cram .slow-ik svg{width:24px;height:24px;fill:currentColor}
+.slow-cram .slow-flaga{width:24px;height:24px;border-radius:4px;border:1px solid var(--border-soft);padding:0;cursor:pointer}
+.slow-cram .slow-fpl{background:linear-gradient(180deg,#fff 50%,#dc143c 50%)}
+.slow-cram .slow-fru{background:linear-gradient(180deg,#fff 33.3%,#0039a6 33.3%,#0039a6 66.6%,#d52b1e 66.6%)}
+.slow-cram .slow-przod{font-size:26px;font-weight:700;color:var(--text-dark);margin:16px 0;padding:20px 10px;
+  cursor:pointer;border:2px dashed var(--border);border-radius:var(--radius);line-height:1.3;word-break:break-word}
+.slow-cram .slow-przod.slow-dlugi{font-size:20px}
+.slow-cram .slow-tyl{font-size:18px;color:var(--text);margin:8px 0 16px;padding:12px;background:var(--option-bg);
+  border-radius:var(--radius-sm);word-break:break-word}
+.slow-cram .slow-podp{font-size:13px;color:var(--text-light);margin-bottom:12px}
+.slow-cram .slow-btns{display:flex;gap:8px;margin-top:4px}
+.slow-cram .slow-btns button{flex:1;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;cursor:pointer}
+.slow-cram .slow-nie{background:var(--card);border:2px solid var(--error);color:var(--error)}
+.slow-cram .slow-tak{background:var(--primary);border:2px solid var(--primary);color:#fff}
+.slow-info{text-align:center}
+
 .kurs-toast{position:fixed;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
   background:var(--text-dark);color:var(--bg);padding:10px 16px;border-radius:20px;font-size:13px;z-index:1000;
   max-width:88vw;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 
-/* iPhone: nie chowaj przycisku pod paskiem gestów */
-.bottom-btn-wrap{padding-bottom:calc(20px + env(safe-area-inset-bottom))}
 .top-bar{padding-top:calc(10px + env(safe-area-inset-top))}
 @supports(-webkit-touch-callout:none){
   .egz .egz-inp,.egz .egz-opt{font-size:16px}  /* <16px powoduje zoom przy focusie */
@@ -814,6 +845,9 @@ input, textarea { font-family: inherit; }
     <symbol id="icon-back" viewBox="0 0 24 24">
       <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
     </symbol>
+    <symbol id="icon-speaker" viewBox="0 0 24 24">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </symbol>
     <symbol id="egz-ear" viewBox="0 0 24 24"><path d="M12 1C7 1 3 5 3 10v1H1v5h2v-6a9 9 0 0118 0v6h2v-5h-2v-1c0-5-4-9-9-9zM9 11c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h1v-8H9zm6 0h-1v8h1c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2z"/></symbol>
     <symbol id="egz-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
     <symbol id="egz-book" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V4a2 2 0 00-2-2H5zm2 6h10v2H7V8zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/></symbol>
@@ -831,20 +865,20 @@ input, textarea { font-family: inherit; }
     <div class="brand"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px solid var(--border-soft);vertical-align:middle;background:linear-gradient(180deg,#fff 50%,#dc143c 50%);"></span> Polski <span>B1</span></div>
     <div class="stats">
       <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;display:flex;align-items:center;line-height:1;" id="themeToggle"><svg class="icon-svg" aria-hidden="true"><use href="#icon-moon"/></svg></div>
-      <div class="stat-item" onclick="goBack()" style="cursor:pointer;font-size:20px;padding:0 2px;display:none;align-items:center;line-height:1;" id="backBtn" title="Cofnij"><svg class="icon-svg" aria-hidden="true"><use href="#icon-back"/></svg></div>
-      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:20px;font-weight:600;padding:0 4px;display:flex;align-items:center;line-height:1;" title="Główna"><svg class="icon-svg" aria-hidden="true"><use href="#icon-menu"/></svg></div>
+      <div class="stat-item" onclick="goBack()" style="cursor:pointer;font-size:20px;padding:0 2px;display:none;align-items:center;line-height:1;" id="backBtn" title="Wstecz" aria-label="Wstecz"><svg class="icon-svg" aria-hidden="true"><use href="#icon-back"/></svg></div>
+      <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:20px;font-weight:600;padding:0 4px;display:flex;align-items:center;line-height:1;" title="Ekran główny" aria-label="Ekran główny"><svg class="icon-svg" aria-hidden="true"><use href="#icon-home"/></svg></div>
     </div>
   </div>
 
   <!-- PROGRESS STRIP -->
   <div class="progress-strip" id="progressStrip"></div>
 
-  <!-- CONTENT -->
-  <div class="content-wrap" id="contentWrap"></div>
-
-  <!-- BOTTOM BUTTON -->
-  <div class="bottom-btn-wrap" id="bottomWrap">
-    <button class="check-btn" id="mainBtn" onclick="handleMainAction()">Let's go! →</button>
+  <!-- CONTENT + BUTTON (przewijają się razem) -->
+  <div class="scroll-wrap" id="scrollWrap">
+    <div class="content-wrap" id="contentWrap"></div>
+    <div class="bottom-btn-wrap" id="bottomWrap">
+      <button class="check-btn" id="mainBtn" onclick="handleMainAction()">Let's go! →</button>
+    </div>
   </div>
 </div>
 
@@ -2028,7 +2062,8 @@ function startCram() {
     showTempFeedback('Brak słów w Moje słowa. Dodaj je najpierw.');
     return;
   }
-  pushNav();
+  // powrót z edycji słów wraca do tej samej sesji, a nie zaczyna nowej
+  ekran('cram', function() { if (state._cramWords) { state.phase = 'cram'; renderCram(); } else startCram(); });
   state._cramWords = PERS_VOCAB.slice(); // copy
   // Shuffle if enabled
   if (state.fcShuffle) {
@@ -2168,12 +2203,14 @@ function finishCram() {
     '<p style="color:var(--text-light);">' + (pct >= 80 ? 'Świetnie!' : pct >= 50 ? 'Dobra robota!' : 'Jeszcze trochę!') + '</p></div>';
   
   document.getElementById('progressStrip').innerHTML = '';
-  document.getElementById('mainBtn').textContent = '← Powrót do kursu';
+  // tam, skąd przyszedłeś: ekran główny albo dzień kursu
+  document.getElementById('bottomWrap').style.display = '';
+  document.getElementById('mainBtn').textContent = '← Wróć';
   document.getElementById('mainBtn').disabled = false;
   document.getElementById('mainBtn').className = 'check-btn secondary';
-  document.getElementById('mainBtn').onclick = function() { render(); };
+  document.getElementById('mainBtn').onclick = function() { goBack(); };
   renderTopBar();
-  
+
   delete state._cramWords;
   delete state._cramIndex;
   delete state._cramFlipped;
@@ -2182,22 +2219,24 @@ function finishCram() {
   delete state._cramCycle;
 }
 
+// Kurs, trenażer i słownik same zgłaszają swoje ekrany do historii.
 function startKurs() {
-  pushNav();
   state.phase = 'kurs';
-  saveState();
   KURS.dzien();
 }
 
 function startEgzTrener() {
-  pushNav();
   state.phase = 'egzamin';
-  saveState();
   EGZ.menu();
 }
 
+function startSlownik() {
+  state.phase = 'slownik';
+  SLOWNIK.ekran();
+}
+
 function startPersonalEdit() {
-  pushNav();
+  ekran('moje-edycja', function() { state.phase = 'personal-edit'; renderPersonalEdit(); });
   state.phase = 'personal-edit';
   renderPersonalEdit();
 }
@@ -2302,11 +2341,10 @@ let state = {
   totalQuestions: 0,
   correctInLesson: 0,
   progressDots: [],
-  phase: 'tree', // 'tree' | 'lesson' | 'exercise' | 'review' | 'flashcard' | 'cram' | 'personal-edit' | 'hidden-words'
+  phase: 'tree', // 'tree' | 'lesson' | 'exercise' | 'review' | 'flashcard' | 'cram' | 'personal-edit' | 'hidden-words' | 'kurs' | 'egzamin' | 'slownik'
   errorQueue: [],
   reviewCorrectCount: {},
   hiddenFlashcardWords: [],
-  navStack: [],
   fcFlipDirection: 'pl2ru',
   fcShuffle: false, // 'pl2ru' or 'ru2pl', // words removed from flashcard rotation
 };
@@ -2368,13 +2406,75 @@ function saveState() {
   }));
 }
 
-function goHome() {
+// ========================================================================
+// HISTORIA EKRANÓW — strzałka ← wraca o jeden ekran, domek na ekran główny.
+// Każdy ekran zgłasza się przez ekran(klucz, fn); fn rysuje go od nowa.
+// Ten sam klucz to odświeżenie (np. zaznaczenie zadania), a nie nowy krok.
+// Wejście na ekran, który już jest w historii, przycina ją do niego:
+// po „← День 3" strzałka prowadzi dalej w górę, a nie z powrotem do wyniku
+// ćwiczeń, z którego się przyszło.
+// ========================================================================
+var historia = [], biezacyEkran = null, cofanie = false;
+
+function przewijacz() { return document.getElementById('scrollWrap'); }
+function naGore() { var s = przewijacz(); if (s) s.scrollTop = 0; }
+
+function zatrzymajEkran() {
   if (examTimer) clearInterval(examTimer);
-  state.phase = 'tree';
-  state.navStack = [];
-  document.getElementById('backBtn').style.display = 'none';
+  try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
+}
+
+function ekran(klucz, fn) {
+  var bw = document.getElementById('bottomWrap');
+  if (bw) bw.style.display = '';
+  if (cofanie) { biezacyEkran = { klucz: klucz, fn: fn }; return; }
+  if (biezacyEkran && biezacyEkran.klucz === klucz) { biezacyEkran.fn = fn; return; }
+  zatrzymajEkran();
   document.getElementById('progressStrip').innerHTML = '';
-  document.getElementById('bottomWrap').style.display = '';
+  if (klucz === 'home') historia = [];
+  else {
+    var i = historia.findIndex(function (e) { return e.klucz === klucz; });
+    if (i >= 0) historia.length = i;
+    else if (biezacyEkran) {
+      var p = przewijacz();
+      biezacyEkran.y = p ? p.scrollTop : 0;
+      historia.push(biezacyEkran);
+    }
+    else historia = [{ klucz: 'home', fn: goHome }];   // start poza ekranem głównym
+  }
+  biezacyEkran = { klucz: klucz, fn: fn };
+  var s = przewijacz(); if (s) s.scrollTop = 0;
+  pokazWstecz();
+}
+
+// true, gdy ekran rysuje się w ramach powrotu — wtedy nie przewija się sam
+function wCofaniu() { return cofanie; }
+
+function pokazWstecz() {
+  var b = document.getElementById('backBtn');
+  if (b) b.style.display = historia.length ? 'flex' : 'none';
+}
+
+function goBack() {
+  var e = historia.pop();
+  if (!e) { goHome(); return; }
+  zatrzymajEkran();
+  document.getElementById('progressStrip').innerHTML = '';
+  biezacyEkran = null;
+  cofanie = true;
+  try { e.fn(); }
+  catch (err) { console.error(err); cofanie = false; goHome(); return; }
+  finally { cofanie = false; }
+  if (!biezacyEkran) biezacyEkran = e;
+  var s = przewijacz(); if (s) s.scrollTop = e.y || 0;
+  pokazWstecz();
+}
+
+function goHome() {
+  zatrzymajEkran();
+  historia = []; biezacyEkran = null;
+  state.phase = 'tree';
+  document.getElementById('progressStrip').innerHTML = '';
   render();
 }
 
@@ -2386,24 +2486,6 @@ function toggleTheme() {
   Storage.set('polskiB1Theme', next);
   const toggle = document.getElementById('themeToggle');
   if (toggle) toggle.innerHTML = next === 'dark' ? svgIcon('icon-sun') : svgIcon('icon-moon');
-}
-
-function pushNav() {
-  if (!state.navStack) state.navStack = [];
-  state.navStack.push(state.phase);
-  document.getElementById('backBtn').style.display = 'flex';
-  saveState();
-}
-
-function goBack() {
-  if (!state.navStack || state.navStack.length === 0) { goHome(); return; }
-  var prev = state.navStack.pop();
-  saveState();
-  if (state.navStack.length === 0) {
-    document.getElementById('backBtn').style.display = 'none';
-  }
-  state.phase = prev;
-  render();
 }
 
 // ========================================================================
@@ -2425,6 +2507,7 @@ function render() {
   else if (state.phase === 'hidden-words') renderHiddenWords();
   else if (state.phase === 'egzamin') EGZ.menu();
   else if (state.phase === 'kurs' && typeof KURS !== 'undefined') KURS.dzien();
+  else if (state.phase === 'slownik' && typeof SLOWNIK !== 'undefined') SLOWNIK.ekran();
   else renderTree();
 }
 
@@ -2472,9 +2555,9 @@ function toggleShowAllSkills() {
   renderTree();
 }
 function renderTree() {
+  ekran('home', goHome);
   state.phase = 'tree';
   const wrap = $('contentWrap');
-  document.getElementById('bottomWrap').style.display = '';
   const unlocked = getUnlockedSkills();
   const units = [...new Set(SKILLS.map(s => s.unit))];
 
@@ -2487,7 +2570,16 @@ function renderTree() {
     html += '<div class="skill-icon">' + svgIcon('icon-certyfikat') + '</div>';
     html += '<div class="skill-info"><div class="skill-name">Kurs B1 · Dzień ' + kk.n + ' z 60</div>';
     html += '<div class="skill-desc">' + kk.tytul + ' — ' + kk.opis + '</div></div>';
-    html += '<div class="skill-status active-txt">→ Dziś</div></div>';
+    html += '<div class="skill-status active-txt">→ Dalej</div></div>';
+  }
+  // Słownik egzaminu — słowa i zwroty z kursu (slownik.js), tryb Cram
+  if (typeof SLOWNIK !== 'undefined') {
+    var sk = SLOWNIK.kartaGlowna();
+    html += '<div class="skill-card available" onclick="startSlownik()" style="margin-bottom:10px;border-left-color:var(--primary);">';
+    html += '<div class="skill-icon">' + svgIcon('icon-book') + '</div>';
+    html += '<div class="skill-info"><div class="skill-name">Słownik egzaminu</div>';
+    html += '<div class="skill-desc">' + sk.opis + '</div></div>';
+    html += '<div class="skill-status active-txt">→ Cram</div></div>';
   }
   // Flashcard button (always at top)
   var hiddenCount = state.hiddenFlashcardWords ? state.hiddenFlashcardWords.length : 0;
@@ -2579,9 +2671,8 @@ function renderTree() {
   wrap.innerHTML = html;
 
   $('progressStrip').innerHTML = '';
-  $('mainBtn').textContent = 'Kurs';
-  $('mainBtn').onclick = () => { renderTree(); };
-  $('mainBtn').disabled = true;
+  // na ekranie głównym nie ma czego zatwierdzać — każda karta sama jest przyciskiem
+  $('bottomWrap').style.display = 'none';
 }
 
 // ========================================================================
@@ -2591,7 +2682,7 @@ function renderTree() {
 function startSkill(skillId) {
   const skill = SKILLS.find(s => s.id === skillId);
   if (!skill) return;
-  pushNav();
+  ekran('skill:' + skillId, function() { startSkill(skillId); });
   state.currentSkillIndex = skillId;
   
   // Reset progress display
@@ -3330,7 +3421,7 @@ function generateExam() {
 function startExam() {
   const examQs = generateExam();
   if (examQs.length === 0) { showTempFeedback('Brak pytań. Najpierw odblokuj lekcje.'); return; }
-  pushNav();
+  ekran('egzamin-probny', startExam);
   
   state._examQuestions = examQs;
   state._examIndex = 0;
@@ -3416,6 +3507,7 @@ function startReview() {
     showTempFeedback('★ Brak błędów do powtórki!');
     return;
   }
+  ekran('powtorka-bledow', startReview);
   state.phase = 'review';
   state.currentQ = 0;
   state.totalQuestions = state.errorQueue.length;
@@ -3519,7 +3611,7 @@ function finishReview() {
 // FLASHCARD MODE — Browse words from word bank
 // ========================================================================
 function startFlashcard() {
-  pushNav();
+  ekran('fiszki', function() { state.phase = 'flashcard'; renderFlashcard(); });
   state.phase = 'flashcard';
   state.currentQ = 0;
   renderFlashcard();
@@ -3693,7 +3785,7 @@ function handleMainAction() {
 // ========================================================================
 
 function startHiddenWords() {
-  pushNav();
+  ekran('ukryte', function() { state.phase = 'hidden-words'; render(); });
   state.phase = 'hidden-words';
   document.getElementById('bottomWrap').style.display = '';
   render();
@@ -3778,7 +3870,12 @@ render();
 <script src="data/kurs-lekcje.js"></script>
 <script src="data/kurs-tematy.js"></script>
 <script src="kurs.js"></script>
+<script src="data/slownik-pisanie.js"></script>
+<script src="slownik.js"></script>
 <script>
+// Ekran główny narysował się, zanim doszły kurs i słownik — dorysuj ich karty.
+if (state.phase === 'tree') { try { renderTree(); } catch (e) {} }
+
 // PWA: rejestracja service workera (tylko po https / localhost)
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', () => {

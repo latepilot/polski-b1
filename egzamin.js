@@ -36,6 +36,9 @@ const maGenerator = k => typeof GENERATORY!=='undefined' && !!GENERATORY[k];
 
 function ikona(id){ return '<svg class="egz-i"><use href="#'+id+'"/></svg>'; }
 function wyjscie(){ V={}; if(typeof goHome==='function') goHome(); }
+// Ekran trenażera w historii aplikacji — strzałka ← wraca do poprzedniego.
+function wejdz(klucz, fn){ if(typeof ekran==='function') ekran('egz:'+klucz, fn); }
+function naGoreEkranu(){ if(typeof naGore==='function') naGore(); }
 
 // ---------- plan dnia ----------
 function planDnia(){
@@ -57,6 +60,8 @@ function planDnia(){
 // ---------- ekran główny trenażera ----------
 function menu(){
   wczytaj(); V={};
+  if(typeof state!=='undefined') state.phase='egzamin';
+  wejdz('menu', menu);
   const doE=dni(EGZAMIN_DATA,new Date()), doR=dni(REJESTRACJA,new Date());
   let h='<div class="egz">';
   h+=`<div class="egz-cd"><div class="egz-cd-n">${doE}</div><div class="egz-cd-l">dni do egzaminu</div>
@@ -116,10 +121,12 @@ function karta(ico,t,d,fn){
 }
 function przycisk(txt,fn,wyl){
   const b=el('mainBtn'); if(!b) return;
+  el('bottomWrap').style.display=''; b.className='check-btn';
   b.textContent=txt; b.disabled=!!wyl; b.onclick=fn||null;
 }
 
 function menuGram(){
+  wejdz('gram', menuGram);
   let h='<div class="egz"><h3 class="egz-h">Poprawność gramatyczna</h3><div class="egz-sub">8 typów zadań. 45 minut, 30 punktów.</div>';
   for(const k of GRAM_KOLEJNOSC){
     const z=GRAMATYKA[k],s=S.gram[k],p=s&&(s.dobrze+s.zle)?Math.round(s.dobrze/(s.dobrze+s.zle)*100):null;
@@ -134,6 +141,7 @@ function menuGram(){
   przycisk('← Trenażer', menu);
 }
 function menuSluch(){
+  wejdz('sluch', menuSluch);
   let h='<div class="egz"><h3 class="egz-h">Rozumienie ze słuchu</h3><div class="egz-sub">30 minut, 30 punktów. Zadanie I odtwarzane tylko RAZ — jak na egzaminie.</div>';
   for(const k of SLUCH_KOLEJNOSC){
     const z=SLUCHANIE[k],s=S.sluch[k],p=s&&(s.dobrze+s.zle)?Math.round(s.dobrze/(s.dobrze+s.zle)*100):null;
@@ -146,6 +154,7 @@ function menuSluch(){
   przycisk('← Trenażer', menu);
 }
 function menuPisanie(){
+  wejdz('pisanie', menuPisanie);
   let h='<div class="egz"><h3 class="egz-h">Pisanie</h3><div class="egz-sub">Na egzaminie wybierasz JEDEN zestaw i piszesz OBA zadania. 75 minut.</div>';
   h+='<h3 class="egz-h">Formy krótkie (25–40 słów)</h3>';
   PISANIE.krotkie.forEach((f,i)=>h+=karta('egz-pen',f.forma,f.dlugosc+(S.pisanie['k'+i]?' · napisane':''),`EGZ.pisanie('krotkie',${i})`));
@@ -215,8 +224,10 @@ function blok(typ,klucz){
     meta={tytul:'Powtórka błędów',polecenie:'Zadania, w których się pomyliłeś. Poprawna odpowiedź usuwa zadanie z listy.'};
   }
   if(!zad.length){ menu(); return; }
+  wejdz('blok:'+typ+':'+klucz, ()=>blok(typ,klucz));
   V={typ,klucz,zadania:typ==='bledy'?zad:mix(zad),i:0,meta,wyniki:[],odp:null,
      sprawdzone:false,odtworzone:0,uzyte:[],ogonki:false};
+  naGoreEkranu();
   pytanie();
 }
 
@@ -312,6 +323,9 @@ function pytanie(){
   if(i&&!V.sprawdzone){ i.focus();
     i.onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); akcja(); } }; }
   odswiezPrzycisk();
+  // przycisk stoi teraz pod treścią — po sprawdzeniu przewiń tak, żeby
+  // wyjaśnienie i „Dalej" były widoczne
+  if(V.sprawdzone){ const b=el('mainBtn'); if(b&&b.scrollIntoView) b.scrollIntoView({block:'nearest',behavior:'smooth'}); }
 }
 function pole(q){
   const c=V.sprawdzone?(V.wyniki[V.i]?'egz-ok':'egz-no'):'';
@@ -388,7 +402,9 @@ function graj(){
   speechSynthesis.cancel();
   const przed=V.odtworzone; let zamkniete=false;
   const domknij=()=>{ if(zamkniete||V.odtworzone!==przed) return;
-    zamkniete=true; clearTimeout(V._timer); V.odtworzone++; pytanie(); };
+    zamkniete=true; clearTimeout(V._timer);
+    if(!el('egzPlay')) return;      // ekran już zamknięty (strzałka, domek) — nie rysuj na cudzym
+    V.odtworzone++; pytanie(); };
   const linie=q.audio.split(/\n|(?=—\s*(?:Kobieta|Mężczyzna|Osoba|Dziennikarz))/).map(s=>s.trim()).filter(Boolean);
   linie.forEach((l,idx)=>{
     const u=new SpeechSynthesisUtterance(l.replace(/^(Kobieta|Mężczyzna|Osoba \w+|Dziennikarz|Joanna Kamińska):\s*/,''));
@@ -461,6 +477,7 @@ function dalej(){
   clearTimeout(V._timer);
   if(V.i<V.zadania.length-1){
     V.i++; V.odp=null; V.sprawdzone=false; V.odtworzone=0; V._pary=null; V.ogonki=false;
+    naGoreEkranu();
     pytanie();
   } else podsumowanie();
 }
@@ -498,13 +515,17 @@ function wlasne(zadania, meta, powrot, powrotTxt){
   if(!zad.length) return false;
   V={typ:'kurs',klucz:meta.klucz||'kurs',zadania:meta.losuj===false?zad:mix(zad),i:0,meta,wyniki:[],odp:null,
      sprawdzone:false,odtworzone:0,uzyte:[],ogonki:false,powrot,powrotTxt};
+  naGoreEkranu();
   pytanie();
   return true;
 }
 // Uruchamia blok trenażera, ale po podsumowaniu wraca do kursu.
 function blokKurs(typ, klucz, powrot, powrotTxt){
   blok(typ, klucz);
-  if(V && V.zadania){ V.powrot=powrot; V.powrotTxt=powrotTxt; return true; }
+  if(V && V.zadania){ V.powrot=powrot; V.powrotTxt=powrotTxt;
+    // ten sam klucz co w blok(): przy powrocie strzałką blok wraca razem z kursem
+    wejdz('blok:'+typ+':'+klucz, ()=>blokKurs(typ, klucz, powrot, powrotTxt));
+    return true; }
   return false;
 }
 function liczBledy(){ wczytaj(); return S.bledy.length; }
@@ -512,6 +533,7 @@ function liczBledy(){ wczytaj(); return S.bledy.length; }
 // ---------- pisanie ----------
 function pisanie(grupa,idx){
   wczytaj();
+  wejdz('pis:'+grupa+':'+idx, ()=>pisanie(grupa,idx));
   const f=PISANIE[grupa][idx], id=(grupa==='krotkie'?'k':'d')+idx, z=S.pisanie[id]||{};
   const cel=parseInt(f.dlugosc);
   let h=`<div class="egz"><div class="egz-ex"><div class="egz-hint">${f.forma} · ${f.dlugosc}</div>
