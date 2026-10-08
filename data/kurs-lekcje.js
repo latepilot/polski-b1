@@ -239,7 +239,7 @@ KURS_LEKCJE.L05 = {
       ['исключения мн.ч.','-mi','ludźmi, dziećmi, przyjaciółmi, pieniędzmi']]},
     {t:'uwaga', h:'Прилагательные: <b>-ym / -im</b> (z dobrym kolegą), <b>-ą</b> (z miłą koleżanką), во мн.ч. <b>-ymi / -imi</b> (z nowymi przyjaciółmi). С движением те же предлоги требуют винительного: <i>idę nad morze</i>, но <i>jestem nad morzem</i>.'},
     {t:'przyklady', items:[
-      ['Z zawodu jestem inżynierem.','По профессии я инженер.'],
+      ['Z zawodu jestem fotografem.','По профессии я фотограф.'],
       ['Do pracy jeżdżę tramwajem.','На работу езжу на трамвае.'],
       ['Interesuję się fotografią.','Я увлекаюсь фотографией.'],
       ['Spotkajmy się przed dworcem.','Давай встретимся перед вокзалом.']]},

@@ -28,7 +28,8 @@ KURS_TEMATY.T01 = {
     ['Pochodzę z Rosji, z Petersburga.','Я родом из России, из Петербурга.'],
     ['Od trzech lat mieszkam w Gdańsku.','Уже три года живу в Гданьске.'],
     ['Przyjechałem do Polski, bo…','Я приехал в Польшу, потому что…'],
-    ['Z zawodu jestem inżynierem.','По профессии я инженер.'],
+    ['Z zawodu jestem fotografem.','По профессии я фотограф.'],
+    ['Z wykształcenia jestem inżynierem.','По образованию я инженер.'],
     ['Moim językiem ojczystym jest rosyjski.','Мой родной язык — русский.'],
     ['Mówię też trochę po angielsku.','Я также немного говорю по-английски.'],
     ['Uczę się polskiego, ponieważ…','Учу польский, потому что…'],
@@ -39,7 +40,7 @@ KURS_TEMATY.T01 = {
     plan:['Imię, wiek, skąd Pan pochodzi','Gdzie Pan mieszka i od kiedy','Praca, wykształcenie','Języki — dlaczego uczy się Pan polskiego','Zainteresowania i plany na przyszłość'],
     pytania:['Skąd Pan pochodzi?','Od kiedy mieszka Pan w Polsce?','Dlaczego przyjechał Pan do Polski?','Czym się Pan zajmuje?','Jakie języki Pan zna?','Dlaczego uczy się Pan polskiego?','Co Pan lubi robić w wolnym czasie?','Jakie ma Pan plany na przyszłość?'],
     ru:'Это первый вопрос почти любой устной части. Подготовь свой рассказ на 2 минуты и доведи до автоматизма.',
-    wzor:'Dzień dobry. Nazywam się Iwan Pietrow i mam trzydzieści osiem lat. Pochodzę z Rosji, z Petersburga, ale od trzech lat mieszkam w Polsce, w Gdańsku. Przeprowadziłem się tutaj, ponieważ dostałem propozycję pracy. Z zawodu jestem inżynierem, pracuję w międzynarodowej firmie. Moim językiem ojczystym jest rosyjski. Mówię też dość dobrze po angielsku, a od roku uczę się polskiego. Polski jest dla mnie trudny, szczególnie przypadki i wymowa, ale bardzo go lubię. Uczę się, bo chcę swobodnie rozmawiać z sąsiadami i kolegami, a także zdać egzamin na poziomie B1. W wolnym czasie lubię spacerować nad morzem i robić zdjęcia. W przyszłości chciałbym kupić tu mieszkanie i zostać w Polsce na stałe.'
+    wzor:'Dzień dobry. Nazywam się Iwan Pietrow i mam trzydzieści osiem lat. Pochodzę z Rosji, z Petersburga, ale od trzech lat mieszkam w Polsce, w Gdańsku. Przeprowadziłem się tutaj, ponieważ dostałem propozycję pracy. Z wykształcenia jestem inżynierem, a z zawodu fotografem: robię zdjęcia dla banków zdjęć. Moim językiem ojczystym jest rosyjski. Mówię też dość dobrze po angielsku, a od roku uczę się polskiego. Polski jest dla mnie trudny, szczególnie przypadki i wymowa, ale bardzo go lubię. Uczę się, bo chcę swobodnie rozmawiać z sąsiadami i kolegami, a także zdać egzamin na poziomie B1. W wolnym czasie lubię spacerować nad morzem, pływać i jeździć na rowerze. W przyszłości chciałbym kupić tu mieszkanie i zostać w Polsce na stałe.'
   },
   sytuacja:{
     polecenie:'Jest Pan w urzędzie. Chce Pan złożyć wniosek o kartę pobytu. Urzędnik pyta o Pana dane. Proszę odpowiedzieć na pytania i zapytać, jakie dokumenty trzeba przynieść i jak długo czeka się na decyzję.',
@@ -218,9 +219,11 @@ KURS_TEMATY.T05 = {
     ['szukać pracy','искать работу'],['rozmowa kwalifikacyjna','собеседование'],['doświadczenie','опыт'],
     ['awans','повышение'],['stracić pracę','потерять работу'],['emerytura','пенсия'],['zmienić pracę','сменить работу'],
     ['zespół','команда (на работе), коллектив'],['zebranie','совещание'],['klient','клиент'],
+    ['fotograf','фотограф'],['zdjęcie','фотография, снимок'],['sesja zdjęciowa','фотосессия, съёмка'],['bank zdjęć','фотобанк, фотосток'],['obróbka zdjęć','обработка фотографий'],
   ],
   zwroty:[
-    ['Pracuję jako inżynier w firmie logistycznej.','Работаю инженером в логистической компании.'],
+    ['Pracuję jako fotograf w studiu fotograficznym.','Работаю фотографом в фотостудии.'],
+    ['Robię zdjęcia dla banków zdjęć.','Снимаю для фотостоков.'],
     ['Pracuję na pełny etat, od poniedziałku do piątku.','Работаю на полную ставку, с понедельника по пятницу.'],
     ['Do moich obowiązków należy…','В мои обязанности входит…'],
     ['W pracy najbardziej lubię…','В работе больше всего люблю…'],
@@ -232,7 +235,7 @@ KURS_TEMATY.T05 = {
     plan:['Gdzie i jako kto Pan pracuje','Jak wygląda zwykły dzień pracy','Obowiązki','Co Pan lubi, a czego nie lubi w pracy','Plany zawodowe'],
     pytania:['Gdzie Pan pracuje?','Od kiedy pracuje Pan w tej firmie?','Jak wygląda Pana dzień pracy?','Co należy do Pana obowiązków?','Czy lubi Pan swoją pracę? Dlaczego?','Jakie ma Pan relacje z kolegami?','Jaka byłaby Pana praca marzeń?'],
     ru:'Если сейчас не работаешь — говори о прошлой работе или о работе мечты в условном наклонении: chciałbym pracować…',
-    wzor:'Od dwóch lat pracuję jako inżynier w międzynarodowej firmie logistycznej w Gdańsku. Pracuję na pełny etat, od poniedziałku do piątku, zwykle od ósmej do szesnastej. Dwa dni w tygodniu pracuję zdalnie, z domu. Do moich obowiązków należy planowanie transportu i kontakt z klientami z różnych krajów. Rano zawsze sprawdzam pocztę, potem mamy krótkie spotkanie zespołu. Najbardziej lubię w mojej pracy to, że codziennie rozwiązuję nowe problemy i że mam bardzo sympatycznych kolegów. Nie lubię natomiast długich zebrań i pracy w nadgodzinach. Zarabiam nieźle, ale życie w Polsce jest coraz droższe. W przyszłości chciałbym zostać kierownikiem działu. Dlatego uczę się polskiego — w mojej firmie dobra znajomość języka jest bardzo ważna, jeśli ktoś chce dostać awans.'
+    wzor:'Od trzech lat pracuję jako fotograf w małym studiu we Wrzeszczu. Robimy zdjęcia dla banków zdjęć, czyli fotostocków. Potem firmy z całego świata kupują je do reklam, gazet i na strony internetowe. Pracuję na pełny etat, od poniedziałku do piątku, zwykle od dziewiątej do siedemnastej. Dwa dni w tygodniu pracuję zdalnie, z domu: wtedy zajmuję się obróbką zdjęć. Do moich obowiązków należy planowanie sesji zdjęciowych, fotografowanie i kontakt z modelami. Rano zawsze sprawdzam, które zdjęcia sprzedają się najlepiej, a potem mamy krótkie spotkanie zespołu. Najbardziej lubię w mojej pracy to, że każdy dzień jest inny i że mam bardzo sympatycznych kolegów. Nie lubię natomiast długiego siedzenia przy komputerze i pracy w nadgodzinach. Zarabiam nieźle, ale życie w Polsce jest coraz droższe. W przyszłości chciałbym otworzyć własne studio. Dlatego uczę się polskiego — muszę swobodnie rozmawiać z klientami, modelami i urzędnikami.'
   },
   sytuacja:{
     polecenie:'Jest Pan na rozmowie kwalifikacyjnej. Proszę krótko opowiedzieć o swoim doświadczeniu, odpowiedzieć na pytania pracodawcy i zapytać o godziny pracy, wynagrodzenie i możliwość pracy zdalnej.',
@@ -240,7 +243,7 @@ KURS_TEMATY.T05 = {
     ru:'Официальная ситуация: Pan / Pani, вежливые формы условного наклонения. На экзамене часто просят рассказать о себе и спросить об условиях.',
     cele:['Przywitać się i przedstawić','Opowiedzieć o doświadczeniu','Powiedzieć o swoich mocnych stronach','Zapytać o warunki pracy','Podziękować za rozmowę'],
     zwroty:[
-      ['Mam osiem lat doświadczenia w logistyce.','У меня восемь лет опыта в логистике.'],
+      ['Mam osiem lat doświadczenia w fotografii.','У меня восемь лет опыта в фотографии.'],
       ['Pracowałem jako… w firmie…','Я работал… в компании…'],
       ['Moją mocną stroną jest…','Моя сильная сторона —…'],
       ['Chciałbym zapytać o godziny pracy.','Хотел бы спросить о рабочем времени.'],
@@ -248,7 +251,7 @@ KURS_TEMATY.T05 = {
       ['Jakie jest wynagrodzenie na tym stanowisku?','Какая зарплата на этой должности?'],
       ['Kiedy mogę spodziewać się odpowiedzi?','Когда ждать ответа?'],
     ],
-    wzor:'Pracodawca: Dzień dobry, proszę usiąść. Proszę powiedzieć kilka słów o sobie.\nTy: Dzień dobry. Nazywam się Iwan Pietrow. Jestem inżynierem, mam osiem lat doświadczenia w logistyce. Ostatnie trzy lata pracowałem w firmie transportowej w Petersburgu.\nPracodawca: Dlaczego chce Pan zmienić pracę?\nTy: Przeprowadziłem się do Gdańska i szukam pracy tutaj. Poza tym chciałbym rozwijać się w międzynarodowej firmie.\nPracodawca: Jakie są Pana mocne strony?\nTy: Jestem dobrze zorganizowany i umiem pracować pod presją czasu. Mówię po rosyjsku, po angielsku i coraz lepiej po polsku.\nPracodawca: Dobrze. Czy ma Pan jakieś pytania?\nTy: Tak. Chciałbym zapytać o godziny pracy. Czy jest możliwość pracy zdalnej?\nPracodawca: Pracujemy od ósmej do szesnastej, dwa dni w tygodniu można pracować z domu.\nTy: A jakie jest wynagrodzenie na tym stanowisku?\nPracodawca: Od siedmiu do ośmiu tysięcy złotych brutto, zależnie od doświadczenia.\nTy: Rozumiem. Kiedy mogę spodziewać się odpowiedzi?\nPracodawca: Zadzwonimy do Pana w ciągu tygodnia.\nTy: Bardzo dziękuję za rozmowę. Do widzenia.'
+    wzor:'Pracodawca: Dzień dobry, proszę usiąść. Proszę powiedzieć kilka słów o sobie.\nTy: Dzień dobry. Nazywam się Iwan Pietrow. Jestem fotografem, mam osiem lat doświadczenia w fotografii reklamowej. Ostatnie trzy lata pracowałem w studiu fotograficznym w Petersburgu.\nPracodawca: Dlaczego chce Pan zmienić pracę?\nTy: Chciałbym rozwijać się w międzynarodowym zespole. Poza tym razem z żoną chcemy zamieszkać w Polsce, nad morzem.\nPracodawca: Jakie są Pana mocne strony?\nTy: Jestem dobrze zorganizowany, mam dużo pomysłów i umiem pracować pod presją czasu. Mówię po rosyjsku, po angielsku i coraz lepiej po polsku.\nPracodawca: Dobrze. Czy ma Pan jakieś pytania?\nTy: Tak. Chciałbym zapytać o godziny pracy. Czy jest możliwość pracy zdalnej?\nPracodawca: Pracujemy od dziewiątej do siedemnastej. Dwa dni w tygodniu można obrabiać zdjęcia w domu.\nTy: A jakie jest wynagrodzenie na tym stanowisku?\nPracodawca: Od siedmiu do ośmiu tysięcy złotych brutto, zależnie od doświadczenia.\nTy: Rozumiem. Kiedy mogę spodziewać się odpowiedzi?\nPracodawca: Zadzwonimy do Pana w ciągu tygodnia.\nTy: Bardzo dziękuję za rozmowę. Do widzenia.'
   }
 };
 
@@ -417,7 +420,7 @@ KURS_TEMATY.T09 = {
     plan:['Poranek: o której wstajesz, co robisz','Praca lub nauka','Popołudnie i obowiązki domowe','Wieczór i czas wolny','Czym różni się weekend'],
     pytania:['O której Pan zwykle wstaje?','Co je Pan na śniadanie?','Jak dojeżdża Pan do pracy?','Kto w Pana domu sprząta i gotuje?','Co robi Pan wieczorem?','Jak wygląda Pana weekend?'],
     ru:'Самая «безопасная» тема: её почти всегда можно вплести в любой монолог. Отработай связки: najpierw, potem, po pracy, wieczorem.',
-    wzor:'W dni robocze wstaję o siódmej. Najpierw biorę prysznic i robię kawę, potem jem szybkie śniadanie — zwykle owsiankę albo kanapki. Za kwadrans ósma wychodzę z domu i jadę tramwajem do pracy. Podróż trwa około dwudziestu minut, więc w tramwaju słucham polskich podcastów. Pracuję do szesnastej. Po pracy robię zakupy, a potem gotuję obiad. W naszym domu obowiązki dzielimy po równo: ja gotuję, a żona sprząta i robi pranie. Wieczorem odpoczywamy: czytam, uczę się polskiego albo oglądamy razem serial. Kładę się spać około jedenastej, bo rano trudno mi wstać. Weekend wygląda zupełnie inaczej. W sobotę śpię dłużej, a potem idziemy na długi spacer nad morze. W niedzielę często odwiedzamy znajomych albo zapraszamy ich do siebie. Brakuje mi tylko czasu na sport.'
+    wzor:'W dni robocze wstaję o siódmej. Najpierw biorę prysznic i robię kawę, potem jem szybkie śniadanie — zwykle owsiankę albo kanapki. Za kwadrans ósma wychodzę z domu i jadę tramwajem do pracy. Podróż trwa około dwudziestu minut, więc w tramwaju słucham polskich podcastów. Pracuję do siedemnastej. Po pracy robię zakupy, a potem gotuję obiad. W naszym domu obowiązki dzielimy po równo: ja gotuję, a żona sprząta i robi pranie. Wieczorem odpoczywamy: czytam, uczę się polskiego albo oglądamy razem serial. Kładę się spać około jedenastej, bo rano trudno mi wstać. Weekend wygląda zupełnie inaczej. W sobotę śpię dłużej, a potem idziemy na długi spacer nad morze. W niedzielę często odwiedzamy znajomych albo zapraszamy ich do siebie. Brakuje mi tylko czasu na sport.'
   },
   sytuacja:{
     polecenie:'Chce Pan umówić się z kolegą na wspólną naukę polskiego. Proszę zaproponować dzień i godzinę. Kolega ma dużo zajęć — proszę znaleźć termin, który pasuje wam obu, i ustalić miejsce.',
@@ -507,7 +510,7 @@ KURS_TEMATY.T11 = {
     plan:['Co Pan robi w wolnym czasie','Hobby: od kiedy i dlaczego','Sport','Czas wolny w dzień roboczy i w weekend','Czego chciałby się Pan nauczyć'],
     pytania:['Co lubi Pan robić w wolnym czasie?','Od kiedy interesuje się Pan swoim hobby?','Czy uprawia Pan jakiś sport?','Ile ma Pan czasu wolnego?','Woli Pan spędzać czas sam czy z innymi?','Jakiego hobby chciałby Pan spróbować?'],
     ru:'Ловушка темы: <b>grać w</b> + винительный — игры и спорт (w piłkę, w szachy), <b>grać na</b> + предложный — инструменты (na gitarze).',
-    wzor:'Mam niewiele czasu wolnego, ale staram się go dobrze wykorzystywać. Moim największym hobby jest fotografia. Interesuję się nią od dziesięciu lat. Najchętniej fotografuję architekturę i ludzi na ulicach — Gdańsk jest pod tym względem idealny, bo ma piękną starówkę i port. Zwykle robię zdjęcia w weekendy, wcześnie rano, kiedy jest dobre światło i mało turystów. Dbam też o kondycję. Dwa razy w tygodniu chodzę na basen, a latem jeżdżę na rowerze wzdłuż morza, czasem nawet do Sopotu. Wieczorami lubię czytać kryminały — teraz czytam je po polsku, chociaż na razie bardzo powoli. Czasem gram też z kolegami w szachy. Chciałbym nauczyć się grać na gitarze, ale na razie nie mam na to czasu. Myślę, że hobby jest bardzo ważne, bo pomaga odpocząć od pracy i poznać nowych ludzi.'
+    wzor:'Mam niewiele czasu wolnego, ale staram się go dobrze wykorzystywać. Moją największą pasją jest fotografia. Interesuję się nią od czasów studiów, a od ponad dziesięciu lat to także mój zawód. W pracy robię zdjęcia dla banków zdjęć, ale w weekendy fotografuję tylko dla siebie: najchętniej architekturę i ludzi na ulicach. Gdańsk jest pod tym względem idealny, bo ma piękną starówkę i port. Zwykle wychodzę z aparatem wcześnie rano, kiedy jest dobre światło i mało turystów. Dbam też o kondycję. Dwa razy w tygodniu chodzę na basen, a latem jeżdżę na rowerze wzdłuż morza, czasem nawet do Sopotu. Wieczorami lubię czytać kryminały — teraz czytam je po polsku, chociaż na razie bardzo powoli. Czasem gram też z kolegami w szachy. Chciałbym nauczyć się grać na gitarze, ale na razie nie mam na to czasu. Myślę, że hobby jest bardzo ważne, bo pomaga odpocząć od pracy i poznać nowych ludzi.'
   },
   sytuacja:{
     polecenie:'Dzwoni Pan do klubu sportowego, żeby zapisać się na zajęcia z pływania dla dorosłych. Proszę zapytać o dni i godziny zajęć, cenę karnetu, zniżki i o to, co trzeba ze sobą zabrać.',
@@ -807,6 +810,7 @@ KURS_TEMATY.T18 = {
   zwroty:[
     ['Skończyłem studia na politechnice.','Я окончил политехнический институт.'],
     ['Studiowałem logistykę.','Я изучал логистику.'],
+    ['Nie pracuję w wyuczonym zawodzie.','Я работаю не по специальности.'],
     ['W szkole najbardziej lubiłem matematykę.','В школе больше всего любил математику.'],
     ['Uczę się polskiego od roku.','Учу польский уже год.'],
     ['Najtrudniejsze są dla mnie przypadki.','Труднее всего для меня падежи.'],
@@ -817,7 +821,7 @@ KURS_TEMATY.T18 = {
     plan:['Szkoła: gdzie, jakie przedmioty Pan lubił','Studia: co i gdzie','Jak uczy się Pan polskiego','Szkoła w Polsce i w Pana kraju','Plany edukacyjne'],
     pytania:['Gdzie chodził Pan do szkoły?','Jaki przedmiot lubił Pan najbardziej?','Co Pan studiował?','Jak uczy się Pan polskiego?','Co jest dla Pana najtrudniejsze w polskim?','Czego chciałby się Pan jeszcze nauczyć?'],
     ru:'Вопрос «как ты учишь польский» почти наверняка прозвучит на экзамене. Подготовь честный ответ на 1 минуту.',
-    wzor:'Do szkoły chodziłem w Petersburgu. Najbardziej lubiłem matematykę i fizykę, a najmniej historię, bo trzeba było uczyć się na pamięć wielu dat. Z matematyki miałem zawsze bardzo dobre oceny. Po szkole studiowałem logistykę na politechnice. Studia trwały pięć lat i były dość trudne, szczególnie na początku. Najbardziej podobały mi się praktyki w porcie. Polskiego uczę się od roku. Dwa razy w tygodniu chodzę na kurs, a codziennie ćwiczę w aplikacji i słucham podcastów. Najtrudniejsze są dla mnie przypadki i wymowa, na przykład różnica między „sz” i „ś”. Wydaje mi się, że w polskiej szkole uczniowie mają mniej zadań domowych niż u nas, ale więcej projektów. W grudniu chcę zdać egzamin na poziomie B1. Potem chciałbym zrobić kurs zawodowy, który pomoże mi w pracy.'
+    wzor:'Do szkoły chodziłem w Petersburgu. Najbardziej lubiłem matematykę i fizykę, a najmniej historię, bo trzeba było uczyć się na pamięć wielu dat. Z matematyki miałem zawsze bardzo dobre oceny. Po szkole studiowałem logistykę na politechnice. Studia trwały pięć lat i były dość trudne, szczególnie na początku. Najbardziej podobały mi się praktyki w porcie. Po studiach kilka lat pracowałem jako inżynier. Teraz nie pracuję w wyuczonym zawodzie, bo moje hobby, fotografia, stało się moją pracą. Polskiego uczę się od roku. Dwa razy w tygodniu chodzę na kurs, a codziennie ćwiczę w aplikacji i słucham podcastów. Najtrudniejsze są dla mnie przypadki i wymowa, na przykład różnica między „sz” i „ś”. Wydaje mi się, że w polskiej szkole uczniowie mają mniej zadań domowych niż u nas, ale więcej projektów. W grudniu chcę zdać egzamin na poziomie B1. Potem chciałbym zrobić kurs zawodowy, który pomoże mi w pracy.'
   },
   sytuacja:{
     polecenie:'Chce Pan zapisać się na kurs języka polskiego w szkole językowej. Proszę zapytać o terminy zajęć, cenę i liczbę osób w grupie, a potem zdecydować, czy się Pan zapisuje.',
