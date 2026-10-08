@@ -1,9 +1,9 @@
 // Service worker: network-first z fallbackiem na cache.
 // Przy internecie zawsze świeża wersja, bez internetu — ostatnia zapisana.
 // Dzięki temu poprawki widać od razu, a aplikacja działa w metrze.
-const CACHE = 'polski-b1-v3';
+const CACHE = 'polski-b1-v4';
 const ZASOBY = [
-  './', './index.html', './egzamin.js', './kurs.js', './slownik.js',
+  './', './index.html', './egzamin.js', './kurs.js', './slownik.js', './wzory.js',
   './data/decl.js', './data/vocab.js', './data/personal.js',
   './data/gramatyka.js', './data/sluchanie.js', './data/pisanie.js',
   './data/czasowniki.js', './data/zaimki.js', './data/generatory.js', './data/moje-slowa.js',

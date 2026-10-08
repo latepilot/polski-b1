@@ -151,6 +151,9 @@ function dzienEkran(n){
     <button class="egz-chip" onclick="KURS.mapa()">Карта курса</button>
     ${n<60?`<button class="egz-chip" onclick="KURS.dzien(${n+1})">День ${n+1} →</button>`:'<span></span>'}
   </div>`;
+  if(typeof WZORY!=='undefined'){ const wd=WZORY.naDzis(), wk=WZORY.kartaGlowna();
+    if(wd) h+=`<div class="egz-card ${wk.zrobione?'egz-done':''}" onclick="startWzory()"><div class="egz-ico">${ik(wk.zrobione?'egz-check':'egz-pen')}</div>
+    <div class="egz-body"><div class="egz-t">Сочинения дня — переписать</div><div class="egz-d">${esc(WZORY.forma(wd.k).forma)} + ${esc(WZORY.forma(wd.d).forma)}</div></div><div class="egz-meta">${wk.zrobione?'✓':'→'}</div></div>`; }
   if(typeof SLOWNIK!=='undefined') h+=`<div class="egz-card" onclick="startSlownik()"><div class="egz-ico">${ik('egz-book')}</div>
     <div class="egz-body"><div class="egz-t">Словарь экзамена</div><div class="egz-d">Все слова и фразы курса — карточки Cram</div></div><div class="egz-meta">→</div></div>`;
   h+=`<div class="egz-card" onclick="KURS.claudeInfo()"><div class="egz-ico">${ik('egz-ear')}</div>
@@ -633,7 +636,8 @@ function pisanie(id, n, i){
     <h4 class="kurs-h4">Проверка у Claude</h4>
     <div class="kurs-cel">Напиши текст целиком сам, без словаря — как на экзамене. Потом скопируй его вместе с заданием в Claude: он оценит по трём официальным критериям и разберёт ошибки.</div>
     <button class="egz-play" onclick="KURS.kopiujPrace()">Скопировать текст для проверки в Claude</button>
-    ${f.wzor?wzorBlok(f.wzor):''}
+    ${f.wzor?wzorBlok(f.wzor, true):''}
+    ${f.wzor && typeof WZORY!=='undefined'?`<div class="egz-note" style="margin-top:8px">Образец с переводом и проверкой переписывания — в разделе <a href="#" onclick="WZORY.esej('${f.id}');return false">«Примеры сочинений»</a>.</div>`:''}
   </div></div>`;
   el('contentWrap').innerHTML=h;
   licz();

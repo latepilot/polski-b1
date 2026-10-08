@@ -733,6 +733,27 @@ input, textarea { font-family: inherit; }
 .slow-cram .slow-tak{background:var(--primary);border:2px solid var(--primary);color:#fff}
 .slow-info{text-align:center}
 
+/* ===================== WZORY WYPRACOWAŃ (wzory.js) ===================== */
+.wz .wz-akcje{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.wz .wz-akcje .wz-wyb{border-color:var(--primary);background:var(--selected-bg);color:var(--primary)}
+.wz .wz-tekst{margin:6px 0 4px}
+.wz .wz-pl{font-size:16px;line-height:1.75;color:var(--text-dark);margin:0 0 4px;overflow-wrap:break-word}
+.wz .wz-ru{font-size:13.5px;line-height:1.55;color:var(--text-light);margin:0 0 12px;padding-left:10px;border-left:2px solid var(--border)}
+.wz .wz-odstep{height:10px}
+.wz .wz-zrodlo{max-height:38vh;overflow-y:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);
+  border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg);font-size:14.5px;line-height:1.65}
+.wz .wz-zrodlo p{margin:0 0 8px}
+.wz .wz-bledy{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-size:12.5px;color:var(--text-light);margin-top:10px}
+.wz .wz-bledy b{color:var(--text-dark)}
+.wz .wz-diff{font-size:15px;line-height:1.9;color:var(--text-dark);overflow-wrap:break-word}
+.wz .wz-diff del,.wz .wz-diff ins{text-decoration:none;border-radius:4px;padding:1px 3px}
+.wz .wz-blad,.wz .wz-zbedne{background:var(--wrong-bg);color:var(--error);text-decoration:line-through!important}
+.wz .wz-ogonki{background:var(--highlight-bg);color:var(--gold);text-decoration:line-through!important}
+.wz .wz-popr{background:var(--correct-bg);color:var(--success);margin-left:3px}
+.wz .wz-brak{background:var(--correct-bg);color:var(--success);text-decoration:underline dotted!important}
+.wz .wz-bohater{margin:16px 0 6px;font-size:13.5px}
+.wz .wz-bohater summary{cursor:pointer;font-weight:600;color:var(--primary);padding:6px 0}
+
 .kurs-toast{position:fixed;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
   background:var(--text-dark);color:var(--bg);padding:10px 16px;border-radius:20px;font-size:13px;z-index:1000;
   max-width:88vw;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
@@ -2235,6 +2256,11 @@ function startSlownik() {
   SLOWNIK.ekran();
 }
 
+function startWzory() {
+  state.phase = 'wzory';
+  WZORY.ekran();
+}
+
 function startPersonalEdit() {
   ekran('moje-edycja', function() { state.phase = 'personal-edit'; renderPersonalEdit(); });
   state.phase = 'personal-edit';
@@ -2508,6 +2534,7 @@ function render() {
   else if (state.phase === 'egzamin') EGZ.menu();
   else if (state.phase === 'kurs' && typeof KURS !== 'undefined') KURS.dzien();
   else if (state.phase === 'slownik' && typeof SLOWNIK !== 'undefined') SLOWNIK.ekran();
+  else if (state.phase === 'wzory' && typeof WZORY !== 'undefined') WZORY.ekran();
   else renderTree();
 }
 
@@ -2580,6 +2607,15 @@ function renderTree() {
     html += '<div class="skill-info"><div class="skill-name">Słownik egzaminu</div>';
     html += '<div class="skill-desc">' + sk.opis + '</div></div>';
     html += '<div class="skill-status active-txt">→ Cram</div></div>';
+  }
+  // Wzory wypracowań — przykładowe teksty do przepisywania (wzory.js)
+  if (typeof WZORY !== 'undefined') {
+    var wk = WZORY.kartaGlowna();
+    html += '<div class="skill-card ' + (wk.zrobione ? 'completed' : 'available') + '" onclick="startWzory()" style="margin-bottom:10px;border-left-color:var(--primary);">';
+    html += '<div class="skill-icon">' + svgIcon(wk.zrobione ? 'icon-check' : 'icon-pencil') + '</div>';
+    html += '<div class="skill-info"><div class="skill-name">Wzory wypracowań</div>';
+    html += '<div class="skill-desc">' + wk.opis + '</div></div>';
+    html += '<div class="skill-status active-txt">' + (wk.zrobione ? svgIcon('icon-check') + ' Dziś' : '→ Przepisz') + '</div></div>';
   }
   // Flashcard button (always at top)
   var hiddenCount = state.hiddenFlashcardWords ? state.hiddenFlashcardWords.length : 0;
@@ -3872,6 +3908,7 @@ render();
 <script src="kurs.js"></script>
 <script src="data/slownik-pisanie.js"></script>
 <script src="slownik.js"></script>
+<script src="wzory.js"></script>
 <script>
 // Ekran główny narysował się, zanim doszły kurs i słownik — dorysuj ich karty.
 if (state.phase === 'tree') { try { renderTree(); } catch (e) {} }
