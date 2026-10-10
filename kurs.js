@@ -712,11 +712,30 @@ function zewn(t,n,i){
   przycisk('Сделано ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
 }
 
+// Prawdziwe arkusze z sesji — Państwowa Komisja publikuje je z opóźnieniem
+// (sesje 2024 r. pojawiły się w lutym 2025). Arkuszy z 2025–2026 jeszcze nie ma.
+const CERT = 'https://certyfikatpolski.pl/wp-content/uploads/';
+const ARCHIWUM = 'https://certyfikatpolski.pl/o-egzaminie/testy-egzaminacyjne-z-poprzednich-lat/';
 const PROBNE = {
-  1:{plik:'5_B1_test.pdf', opis:'официальный пробный тест комиссии'},
-  2:{plik:'B1_test.pdf', opis:'официальный пробный тест комиссии'},
-  3:{plik:'B1_przykladowy_test_2020_03.pdf', opis:'самый свежий официальный тест (2020)'},
+  1:{plik:'Сессия 4–5 февраля 2024', opis:'Настоящий экзамен B1 этой сессии',
+     arkusz:CERT+'2025/02/4-5.02.2024-B1_arkusz_egzaminacyjny.pdf'},
+  2:{plik:'Сессия 20–21 апреля 2024', opis:'Настоящий экзамен B1 этой сессии',
+     arkusz:CERT+'2025/02/20-21.04.2024-B1_arkusz_egzaminacyjny.pdf',
+     klucz:CERT+'2025/02/20-21.04.2024-B1_transkrypcja.pdf'},
+  3:{plik:'Сессия 22–23 июня 2024', opis:'Самый свежий опубликованный экзамен B1',
+     arkusz:CERT+'2025/02/22-23.06.2024-B1_arkusz_egzaminacyjny.pdf',
+     klucz:CERT+'2025/02/22-23.06.2024-B1_transkrypcja.pdf'},
 };
+// Kolejne prawdziwe sesje — do dodatkowego treningu.
+const SESJE = [
+  ['24–25 июня 2023', '2025/07/2023_06_24_25_B1_arkusz_egzaminacyjny.pdf'],
+  ['15–16 апреля 2023', '2025/07/2023_04_15_16_B1_arkusz_egzaminacyjny.pdf'],
+  ['5–6 февраля 2023', '2025/07/2023_02_5_6_B1_arkusz_egzaminacyjny.pdf'],
+  ['5–6 ноября 2022', '2026/01/2022.11.5-6_B1_Arkusz_egzaminacyjny.pdf'],
+  ['25–26 июня 2022', '2026/01/2022.06.25-26_B1_Arkusz_egzaminacyjny.pdf', '2026/01/2022.06.25-26_B1_Transkrypcja_nagran.pdf'],
+  ['26–27 марта 2022', '2026/01/2022.03.26-27_B1_Arkusz_egzaminacyjny.pdf'],
+  ['6–7 февраля 2022', '2026/01/2022.02.6-7_B1_Arkusz_egzaminacyjny.pdf'],
+];
 const MODULY = [
   {k:'sl', n:'Rozumienie ze słuchu', min:30, max:30},
   {k:'cz', n:'Rozumienie tekstów pisanych', min:40, max:30},
@@ -728,16 +747,24 @@ function probny(nr,n,i){
   wejdz('probny:'+nr, ()=>probny(nr,n,i));
   const P=PROBNE[nr];
   let h=`<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">Пробный экзамен №${nr}</div>
-    <h3 class="kurs-lh">${esc(P.plik)}</h3><div class="kurs-cel">${esc(P.opis)}. Файл — в папке «polski b1» на Mac. Лучше распечатать: на экзамене всё на бумаге.</div>
+    <h3 class="kurs-lh">${esc(P.plik)}</h3><div class="kurs-cel">${esc(P.opis)} — те самые задания, которые писали кандидаты. Лучше распечатать: на экзамене всё на бумаге.</div>
+    <a class="egz-play" href="${P.arkusz}" target="_blank" rel="noopener">Экзаменационный лист (PDF)</a>
+    ${P.klucz ? `<a class="egz-play" href="${P.klucz}" target="_blank" rel="noopener">Расшифровка аудио и ключ (PDF)</a>` : ''}
+    <a class="egz-play" href="${ARCHIWUM}" target="_blank" rel="noopener">Аудио${P.klucz ? '' : ' и ключ'} — архив комиссии</a>
+    <div class="egz-note">В архиве найди эту сессию: там «Plik dźwiękowy» (аудио) и «Transkrypcja nagrań» (расшифровка с ключом). Если сайт не открывается с телефона — открой на компьютере.</div>
     <h4 class="kurs-h4">Правила — как на настоящем экзамене</h4>
     <ul class="kurs-ul"><li>Без словаря, без телефона, без пауз внутри модуля.</li>
-      <li>Аудио: certyfikatpolski.pl → O egzaminie → Przykładowe testy → B1. Запись — один раз (задание I) или два раза, как указано.</li>
+      <li>Аудио включай только по ходу модуля. Сколько раз слушать каждую запись, написано в задании.</li>
       <li>Между модулями — перерыв 10 минут, не больше.</li>
       <li>Письмо проверь в Claude (скопируй задание и свой текст) — он поставит баллы по критериям.</li>
       <li>Устную часть пройди завтра: задание «полная устная часть» в любом дне курса.</li></ul>
     <h4 class="kurs-h4">Таймер модулей — по порядку</h4>`;
   MODULY.filter(m=>!m.ustny).forEach(m=>{ h+=`<button class="egz-chip kurs-modbtn" onclick="KURS.stoperModul(${m.min},'${m.n}')">${m.n} · ${m.min} мин</button>`; });
-  h+=`<div class="kurs-timer" id="kursTimer"></div></div></div>`;
+  h+=`<div class="kurs-timer" id="kursTimer"></div></div>`;
+  h+=`<div class="egz-ex"><div class="egz-hint">Ещё настоящие сессии — для тренировки</div>
+    <div class="kurs-cel">Опубликованы все листы B1 с 2022 года. Аудио и ключи к ним — в <a href="${ARCHIWUM}" target="_blank" rel="noopener">архиве комиссии</a>.</div><ul class="kurs-ul">`;
+  SESJE.forEach(s=>{ h+=`<li><a href="${CERT+s[1]}" target="_blank" rel="noopener">${s[0]}</a>${s[2] ? ` · <a href="${CERT+s[2]}" target="_blank" rel="noopener">ключ</a>` : ''}</li>`; });
+  h+='</ul></div></div>';
   el('contentWrap').innerHTML=h;
   przycisk('Экзамен пройден ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
 }
