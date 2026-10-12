@@ -41,8 +41,8 @@ krotkie: [
       'Propozycja spotkania: Czy moglibyśmy spotkać się w sobotę o 12?',
       'Podpis: Pozdrawiam, [imię]',
     ],
-    wzor:'Dzień dobry, piszę w sprawie Pani ogłoszenia o zamianie mieszkania. Na którym piętrze jest mieszkanie i jaka jest cena? Czy możemy spotkać się w sobotę o dwunastej?\nIwan',
-    wzor_ru:'Добрый день, пишу по поводу Вашего объявления об обмене квартиры. На каком этаже квартира и какая цена? Можем ли мы встретиться в субботу в двенадцать?\nИван' },
+    wzor:'Dzień dobry, piszę w sprawie Pani ogłoszenia. Na którym piętrze jest mieszkanie i jaka jest cena? Czy możemy spotkać się w sobotę o 12:00?\nIwan',
+    wzor_ru:'Добрый день, пишу по поводу Вашего объявления. На каком этаже квартира и какая цена? Можем ли мы встретиться в субботу в 12:00?\nИван' },
 
   { id:'zyczenia_oficjalne', forma:'Życzenia (oficjalne)', dlugosc:'25 słów',
     temat:'Proszę napisać życzenia z okazji świąt Bożego Narodzenia dla swojej dawnej nauczycielki języka polskiego.',

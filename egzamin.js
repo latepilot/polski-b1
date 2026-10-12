@@ -572,10 +572,12 @@ function pisanie(grupa,idx){
 }
 function licz(cel){
   const t=el('egzPraca').value.trim(), n=t?t.split(/\s+/).length:0;
-  const dol=Math.round(cel*0.9), gor=Math.round(cel*1.15);
+  // Na egzaminie dozwolone ±10%. Słów ponad limit egzaminator już nie czyta.
+  const dol=Math.ceil(cel*0.9), gor=Math.floor(cel*1.1);
   const e=el('egzLicznik');
-  e.textContent=n+' słów (cel: '+dol+'–'+gor+')';
-  e.className='egz-count'+(n>=dol&&n<=gor?' egz-count-ok':'');
+  e.textContent = n>gor ? n+' słów — больше '+gor+': дальше экзаменатор не читает'
+    : n+' słów (cel: '+dol+'–'+gor+')';
+  e.className='egz-count'+(n>gor?' egz-count-zle':n>=dol?' egz-count-ok':'');
 }
 function ocena(){
   let pkt=0,max=0;
