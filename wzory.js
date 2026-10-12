@@ -33,8 +33,8 @@ const stat = id => S.cw[id] || {n:0};
 const krotkie = () => (typeof PISANIE!=='undefined' ? PISANIE.krotkie : []).filter(f=>f.wzor && f.id);
 const dlugie  = () => (typeof PISANIE!=='undefined' ? PISANIE.dlugie  : []).filter(f=>f.wzor && f.id);
 // Wszystkie wzory danej formy jako {id, f, wzor, wzor_ru, tytul}.
-const wzoryFormy = f => [{id:f.id, f, wzor:f.wzor, wzor_ru:f.wzor_ru, tytul:f.tytul},
-  ...(f.inne||[]).filter(x=>x.id && x.wzor).map(x=>({id:x.id, f, wzor:x.wzor, wzor_ru:x.wzor_ru, tytul:x.tytul}))];
+const wzoryFormy = f => [{id:f.id, f, wzor:f.wzor, wzor_ru:f.wzor_ru, tytul:f.tytul, temat:f.temat},
+  ...(f.inne||[]).filter(x=>x.id && x.wzor).map(x=>({id:x.id, f, wzor:x.wzor, wzor_ru:x.wzor_ru, tytul:x.tytul, temat:x.temat||f.temat}))];
 const krotkieW = () => krotkie().flatMap(wzoryFormy);
 const dlugieW  = () => dlugie().flatMap(wzoryFormy);
 const wzor  = id => [...krotkieW(), ...dlugieW()].find(w=>w.id===id);
@@ -110,6 +110,8 @@ function ekranGlowny(){
   krotkieW().forEach(w=>h += karta(w));
   h += '<h3 class="egz-h">Длинные формы · 160–175 слов</h3>';
   dlugieW().forEach(w=>h += karta(w));
+  if(typeof KURS!=='undefined') h += `<div class="egz-card" onclick="KURS.egzaminInfo()"><div class="egz-ico">${ik('egz-target')}</div>
+    <div class="egz-body"><div class="egz-t">Как проходит письменный экзамен</div><div class="egz-d">Объём ±10%, черновик, время, оформление</div></div><div class="egz-meta">→</div></div>`;
   h += `<details class="wz-bohater"><summary>Кто герой сочинений</summary><ul class="kurs-ul">${BOHATER.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
     <div class="egz-note">Хочешь писать о себе — меняй имена и детали, а конструкции оставляй.</div></details>`;
   h += '</div>';
@@ -129,7 +131,8 @@ function esejEkran(id){
   let h = `<div class="egz kurs wz"><div class="egz-ex">
     <div class="egz-hint">${esc(f.forma)} · ${slowa(w.wzor)} слов · норма ${parseInt(f.dlugosc)}</div>
     ${siostry.length>1 ? `<div class="wz-akcje">${siostry.map(x=>`<button class="egz-chip ${x.id===id?'wz-wyb':''}" onclick="WZORY.esej('${x.id}')">${esc(x.tytul||'Образец')}</button>`).join('')}</div>` : ''}
-    <div class="kurs-karta"><div class="kurs-karta-n">Задание</div><div class="kurs-karta-t">${f.temat}</div></div>
+    <div class="kurs-karta"><div class="kurs-karta-n">Задание</div><div class="kurs-karta-t">${w.temat}</div></div>
+    ${krotkie().includes(f) && (typeof UKLAD_KROTKICH!=='undefined'?UKLAD_KROTKICH:'') ? `<div class="egz-note">${esc((typeof UKLAD_KROTKICH!=='undefined'?UKLAD_KROTKICH:''))}</div>` : ''}
     <div class="wz-akcje">
       <button class="egz-chip" id="wzSluchaj" onclick="WZORY.sluchaj()">Слушать</button>
       <button class="egz-chip" id="wzTlum" onclick="WZORY.tlumaczenie()">Показать перевод</button>

@@ -156,6 +156,8 @@ function dzienEkran(n){
     <div class="egz-body"><div class="egz-t">Сочинения дня — переписать</div><div class="egz-d">${esc(WZORY.forma(wd.k).forma)} + ${esc(WZORY.forma(wd.d).forma)}</div></div><div class="egz-meta">${wk.zrobione?'✓':'→'}</div></div>`; }
   if(typeof SLOWNIK!=='undefined') h+=`<div class="egz-card" onclick="startSlownik()"><div class="egz-ico">${ik('egz-book')}</div>
     <div class="egz-body"><div class="egz-t">Словарь экзамена</div><div class="egz-d">Все слова и фразы курса — карточки Cram</div></div><div class="egz-meta">→</div></div>`;
+  h+=`<div class="egz-card" onclick="KURS.egzaminInfo()"><div class="egz-ico">${ik('egz-target')}</div>
+    <div class="egz-body"><div class="egz-t">Как проходит экзамен</div><div class="egz-d">Письмо, устная часть и день экзамена — советы экзаменаторов</div></div><div class="egz-meta">→</div></div>`;
   h+=`<div class="egz-card" onclick="KURS.claudeInfo()"><div class="egz-ico">${ik('egz-ear')}</div>
     <div class="egz-body"><div class="egz-t">Как заниматься с Claude</div><div class="egz-d">Говорение голосом и проверка письма</div></div><div class="egz-meta">→</div></div>`;
   h+='</div>';
@@ -635,6 +637,7 @@ function pisanie(id, n, i){
     <div class="egz-szkielet"><b style="font-size:13px">Каркас — держись порядка:</b><ul>${f.szkielet.map(s=>`<li>${s}</li>`).join('')}</ul></div>`;
   if(f.zwroty) h+=`<div style="font-size:13px;font-weight:600;margin:8px 0 4px">Полезные обороты:</div><div class="egz-zwroty">${f.zwroty.map(x=>`<span class="egz-zwrot">${x}</span>`).join('')}</div>`;
   if(f.uwaga) h+=`<div class="egz-uwaga">⚠ ${f.uwaga}</div>`;
+  if(PISANIE.krotkie.includes(f) && typeof UKLAD_KROTKICH!=='undefined') h+=`<div class="egz-note">${UKLAD_KROTKICH}</div>`;
   h+=`<textarea class="egz-inp egz-praca" id="kursPraca" placeholder="Пиши здесь…" oninput="KURS.licz()">${esc(z.tekst||'')}</textarea>
     <div class="egz-znaki">${['ą','ć','ę','ł','ń','ó','ś','ź','ż'].map(zn=>`<button type="button" class="egz-znak" onmousedown="event.preventDefault()" onclick="KURS.znak('${zn}')">${zn}</button>`).join('')}</div>
     <div class="egz-count" id="kursLicznik"></div>
@@ -831,6 +834,44 @@ function claudeInfo(){
   przycisk('← День '+nrBiezacy(), ()=>dzienEkran());
 }
 
+// Jak przebiega egzamin — z rad egzaminatorów (Global School, Kraków) i relacji zdających.
+function egzaminInfo(){
+  wejdz('egzamin-info', egzaminInfo);
+  el('contentWrap').innerHTML=`<div class="egz kurs"><div class="egz-ex">
+    <div class="egz-hint">Как проходит экзамен — советы экзаменаторов</div>
+    <h4 class="kurs-h4">Письменная часть · 75 минут · 30 баллов, порог 15</h4>
+    <ul class="kurs-ul">
+      <li>В бланке три набора (zestaw), в каждом короткое и длинное задание. Выбираешь <b>один набор целиком</b>, смешивать нельзя. Выбирай по длинному заданию: короткие формы — это шаблон.</li>
+      <li>Объём: короткое около 30 слов, длинное 150–170, вместе около 200. Норма напечатана в задании. Допуск <b>±10%</b>: меньше — снимают баллы, больше — всё после лимита не читают. Первое, что делает экзаменатор, — считает слова.</li>
+      <li>Словами считаются предлоги и союзы (i, w, z), подпись, место и дата. «5 lipca 2025 roku» — 4 слова, e-mail — одно.</li>
+      <li>Чтобы не сбиться, ставь на полях точку каждые 20 слов.</li>
+      <li>Время: короткое ~10 минут, длинное 30–45, остальное — перечитать и исправить ошибки.</li>
+      <li><b>Пиши сразу набело</b>, на черновике только план. Ошибку аккуратно зачеркни. Карандаш и корректор запрещены — только ручка, синяя или чёрная.</li>
+      <li>Не успел переписать из черновика — напиши в чистовике <i>Proszę o sprawdzenie dalszej części w brudnopisie</i> и чётко отметь кусок в черновике. Его обязаны проверить.</li>
+      <li>Почерк тоже оценивают — тренируйся писать от руки.</li>
+      <li>Оценка: выполнение задания 10, языковые средства 10, правильность 10.</li></ul>
+    <h4 class="kurs-h4">Устная часть · 15–20 минут · 40 баллов, порог 20</h4>
+    <ul class="kurs-ul">
+      <li>Тянешь вслепую один из трёх листков: фото, монолог, диалог. На подготовку 4–6 минут. <b>Можно делать заметки</b> и подглядывать в них во время ответа.</li>
+      <li>Сначала разминка: <i>Skąd Pan jest? Jak długo mieszka Pan w Polsce? Po co Panu ten egzamin?</i> Отвечай как есть.</li>
+      <li>Предложат выбрать, с чего начать, — начинай с самого трудного для себя задания и закончи сильным. Не предложат — начинай с фото.</li>
+      <li>На задание 3–4 минуты. Ушёл от темы — скажут «dziękuję» и перейдут дальше.</li>
+      <li>Фото: от общего к деталям — ситуация → люди (одежда, что делают, эмоции) → место → детали → атмосфера и своё мнение. Догадки: <i>chyba, prawdopodobnie, wydaje mi się</i>.</li>
+      <li>Монолог: вступление → развитие → вывод. Бывает трёх видов: мнение о социальной теме, «расскажи о…» и выбор из двух вариантов.</li>
+      <li>Диалог: будь активным — начинай сам, задавай вопросы. Выполни <b>каждый пункт</b> задания: пропустишь — решат, что не понял.</li>
+      <li><b>Не молчи.</b> Кто молчит, не сдаёт.</li>
+      <li>Баллы: выполнение заданий — фото 7, монолог 7, диалог 6 (вместе это уже порог). Плюс грамматика 8, лексика 8, произношение 4. Экзаменаторов несколько, они делают пометки — это нормально.</li></ul>
+    <h4 class="kurs-h4">День экзамена · 5–6 декабря</h4>
+    <ul class="kurs-ul">
+      <li>С собой: паспорт или карта побыту, ручка (синяя или чёрная), вода, еда, что-то сладкое, таблетка от головной боли.</li>
+      <li><b>Телефон и смарт-часы</b> сдай или выключи полностью. Если зазвонит или увидят гаджет — экзамен закончен.</li>
+      <li>Письменные модули идут подряд: аудирование, чтение, грамматика, письмо. Береги силы: письмо последнее и самое тяжёлое.</li>
+      <li>Устная часть обычно на следующий день. Иногда центр разрешает сдать её в тот же день — смотри письмо от центра.</li>
+      <li>Результатов ждать долго: работы проверяют в центре, а потом ещё в Варшаве.</li></ul>
+  </div></div>`;
+  przycisk('← День '+nrBiezacy(), ()=>dzienEkran());
+}
+
 // ---------- karta na ekranie głównym aplikacji ----------
 function kartaGlowna(){
   wczytaj();
@@ -844,5 +885,5 @@ function kartaGlowna(){
 const ZW = {opis:ZW_OPIS, monolog:ZW_MONOLOG, sytuacja:ZW_SYTUACJA, ratunek:ZW_RATUNEK};
 
 return { dzien:dzienEkran, dalej:dalejDzien, mapa, otworz, przelacz, lekcja, cwiczenia, slowa, slowaCram, mowa, pisanie, mow,
-  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
+  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
 })();

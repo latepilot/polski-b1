@@ -156,6 +156,7 @@ function menuSluch(){
 function menuPisanie(){
   wejdz('pisanie', menuPisanie);
   let h='<div class="egz"><h3 class="egz-h">Pisanie</h3><div class="egz-sub">Na egzaminie wybierasz JEDEN zestaw i piszesz OBA zadania. 75 minut.</div>';
+  if(typeof KURS!=='undefined') h+=karta('egz-target','Как проходит экзамен','Объём ±10%, черновик, время, оформление — советы экзаменаторов','KURS.egzaminInfo()');
   h+='<h3 class="egz-h">Formy krótkie (25–40 słów)</h3>';
   PISANIE.krotkie.forEach((f,i)=>h+=karta('egz-pen',f.forma,f.dlugosc+(S.pisanie['k'+i]?' · napisane':''),`EGZ.pisanie('krotkie',${i})`));
   h+='<h3 class="egz-h">Formy długie (160–175 słów)</h3>';
@@ -544,6 +545,7 @@ function pisanie(grupa,idx){
   if(f.zwroty){ h+='<div style="font-size:13px;font-weight:600;margin-bottom:4px">Przydatne zwroty:</div><div class="egz-zwroty">';
     f.zwroty.forEach(x=>h+=`<span class="egz-zwrot">${x}</span>`); h+='</div>'; }
   if(f.uwaga) h+=`<div class="egz-uwaga">⚠ ${f.uwaga}</div>`;
+  if(grupa==='krotkie' && typeof UKLAD_KROTKICH!=='undefined') h+=`<div class="egz-note">${UKLAD_KROTKICH}</div>`;
   h+=`<textarea class="egz-inp egz-praca" id="egzPraca" placeholder="Pisz tutaj…"
       oninput="EGZ.licz(${cel})">${z.tekst||''}</textarea>`
     + '<div class="egz-znaki">' + ZNAKI_PL.map(zn=>`<button type="button" class="egz-znak"

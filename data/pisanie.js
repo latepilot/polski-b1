@@ -28,6 +28,9 @@ const KRYTERIA = [
     ]},
 ];
 
+// Układ krótkich form — egzaminator sprawdza go tak samo jak treść.
+const UKLAD_KROTKICH = 'Оформление тоже проверяют. Открытка, записка, письмо почтой: место и дата справа вверху, обращение, подпись справа внизу. SMS и e-mail: места и даты нет, обращение и подпись слева. Объявление (ogłoszenie): ни места с датой, ни обращения, ни подписи. Место, дата и подпись считаются словами.';
+
 const PISANIE = {
 
 // ---------------- FORMY KRÓTKIE (25-40 słów) ----------------
@@ -53,8 +56,8 @@ krotkie: [
       'Dodatek: Niech ten czas przyniesie same dobre chwile.',
       'Podpis: Z wyrazami szacunku, [imię i nazwisko]',
     ],
-    wzor:'Szanowna Pani Profesor!\nZ okazji świąt Bożego Narodzenia życzę Pani zdrowia, spokoju i radości. Dziękuję za cierpliwość na lekcjach polskiego.\nZ wyrazami szacunku\nIwan Pietrow',
-    wzor_ru:'Уважаемая пани профессор!\nПо случаю Рождества желаю Вам здоровья, покоя и радости. Спасибо за терпение на уроках польского.\nС уважением\nИван Петров' },
+    wzor:'Gdańsk, 20 grudnia\nSzanowna Pani Profesor!\nZ okazji świąt Bożego Narodzenia życzę Pani zdrowia, spokoju i radości. Dziękuję za Pani cierpliwość.\nZ wyrazami szacunku\nIwan Pietrow',
+    wzor_ru:'Гданьск, 20 декабря\nУважаемая пани профессор!\nПо случаю Рождества желаю Вам здоровья, покоя и радости. Спасибо за Ваше терпение.\nС уважением\nИван Петров' },
 
   { id:'opinia', forma:'Opinia na portalu', dlugosc:'40 słów',
     temat:'Spędził Pan wakacje w małym hotelu nad morzem. Proszę napisać opinię o tym miejscu na portalu turystycznym „(Nie)Polecamy”.',
@@ -137,11 +140,55 @@ krotkie: [
     uwaga:'«Z powodu» требует родительного: z powodu remontu, z powodu awarii, z powodu choroby.',
     wzor:'ZAWIADOMIENIE\nUprzejmie informujemy, że w środę 18 listopada od 8:00 do 14:00 w całym budynku nie będzie wody. Powodem jest remont rur w piwnicy. Prosimy o przygotowanie zapasu wody. Przepraszamy za utrudnienia.\nZarząd wspólnoty\nIwan Pietrow',
     wzor_ru:'УВЕДОМЛЕНИЕ\nСообщаем, что в среду 18 ноября с 8:00 до 14:00 во всём здании не будет воды. Причина — ремонт труб в подвале. Просим заранее запастись водой. Приносим извинения за неудобства.\nПравление жилищного товарищества\nИван Петров' },
+
+  // ---- dopisane później: zawsze na końcu listy, trenażer zapisuje prace po numerze ----
+  { id:'gratulacje', forma:'Gratulacje', dlugosc:'30 słów',
+    temat:'Pana przyjaciel dostał awans w pracy. Proszę napisać mu e-mail z gratulacjami.',
+    ru:'Поздравление с достижением: окончил учёбу, сдал экзамен, получил повышение, купил квартиру. С днём рождения, свадьбой и праздниками пишут życzenia, а не gratulacje — экзаменаторы говорят, что это частая ошибка.',
+    szkielet:[
+      'Zwrot (WOŁACZ!): Drogi Pawle! / Kochana Ewo!',
+      'Gratulacje — za co (+ Dopełniacz): Gratuluję Ci awansu! / Przyjmij moje gratulacje!',
+      'Miłe słowa: Byłem pewny, że dasz radę. Zasłużyłeś na to.',
+      'Życzenia na przyszłość: Życzę Ci dalszych sukcesów.',
+      'Propozycja i podpis: Musimy to oblać! / Ściskam, [imię]',
+    ],
+    zwroty:['Gratuluję Ci awansu / zdania egzaminu / nowego mieszkania!','Przyjmij moje gratulacje!','Z całego serca gratuluję!','Byłem pewny, że dasz radę.','Zasłużyłeś na to.','Życzę Ci dalszych sukcesów.','Musimy to oblać!'],
+    uwaga:'Gratulować + Celownik (komu) + Dopełniacz (czego): gratuluję Ci awansu, gratuluję wam nowego mieszkania. «Gratuluję z okazji urodzin» — ошибка: на день рождения пишут życzenia.',
+    wzor:'Drogi Pawle!\nGratuluję Ci awansu! Byłem pewny, że dasz radę, bo bardzo ciężko na to pracowałeś. Życzę Ci dalszych sukcesów i zadowolonych klientów. Musimy to oblać, kiedy przyjedziesz do Gdańska!\nIwan',
+    wzor_ru:'Дорогой Павел!\nПоздравляю тебя с повышением! Я был уверен, что у тебя получится, ведь ты очень много для этого работал. Желаю тебе дальнейших успехов и довольных клиентов. Это нужно обмыть, когда приедешь в Гданьск!\nИван' },
+  { id:'podziekowania', forma:'Podziękowania', dlugosc:'30 słów',
+    temat:'Kiedy był Pan na urlopie, sąsiadka podlewała Pana kwiaty. Proszę zostawić jej kartkę z podziękowaniami.',
+    ru:'Благодарность: обязательно само слово «dziękuję», за что именно и ответный жест — пригласить на кофе, передать подарок.',
+    szkielet:[
+      'Miejsce i data (to kartka): Gdańsk, 21 lipca',
+      'Zwrot: Szanowna Pani! / Droga Pani Ewo!',
+      'Za co dziękujesz: Bardzo dziękuję za + Biernik / Dziękuję, że Pani…',
+      'Dlaczego to ważne: Dzięki Pani…',
+      'Rewanż i podpis: W ramach podziękowania zapraszam Panią na kawę.',
+    ],
+    zwroty:['Bardzo dziękuję za pomoc / za podlewanie kwiatów.','Dziękuję, że Pani…','Jestem Pani bardzo wdzięczny.','Dzięki Pani…','W ramach podziękowania zapraszam na kawę.','Proszę przyjąć ten drobny upominek.'],
+    uwaga:'Dziękować + Celownik (komu) + za + Biernik (za co): dziękuję Pani za pomoc, dziękuję Ci za kwiaty.',
+    wzor:'Gdańsk, 21 lipca\nSzanowna Pani!\nBardzo dziękuję za podlewanie moich kwiatów, kiedy byłem na urlopie. Dzięki Pani wszystkie są zdrowe. W ramach podziękowania zapraszam Panią w sobotę na kawę.\nIwan Pietrow',
+    wzor_ru:'Гданьск, 21 июля\nУважаемая пани!\nБольшое спасибо, что поливали мои цветы, пока я был в отпуске. Благодаря Вам они все живы и здоровы. В благодарность приглашаю Вас в субботу на кофе.\nИван Петров' },
+  { id:'przeprosiny', forma:'Przeprosiny', dlugosc:'30 słów',
+    temat:'Wczoraj wieczorem świętował Pan w domu urodziny i do późna było głośno. Proszę napisać kartkę z przeprosinami do sąsiada z dołu.',
+    ru:'Извинение: обязательно «przepraszam» или «proszę przyjąć moje przeprosiny», за что именно, короткое объяснение и как загладишь вину. На экзамене бывает редко, но готовым быть стоит.',
+    szkielet:[
+      'Miejsce i data (to kartka): Gdańsk, 17 maja',
+      'Zwrot: Szanowny Panie! / Drogi Marku!',
+      'Przeprosiny — za co: Bardzo przepraszam za + Biernik / Przepraszam, że…',
+      'Wyjaśnienie: Świętowaliśmy… / Zrobiłem to niechcący.',
+      'Obietnica lub rewanż i podpis: To się więcej nie powtórzy. / Proszę przyjąć…',
+    ],
+    zwroty:['Bardzo przepraszam za hałas.','Przepraszam, że…','Proszę przyjąć moje przeprosiny.','Zrobiłem to niechcący.','To się więcej nie powtórzy.','Mam nadzieję, że się Pan nie gniewa.'],
+    uwaga:'Przepraszać + Biernik (kogo) + za + Biernik (za co): przepraszam Pana za hałas.',
+    wzor:'Gdańsk, 17 maja\nSzanowny Panie!\nBardzo przepraszam za wczorajszy hałas. Świętowaliśmy moje urodziny i nie zauważyliśmy, że jest tak późno. To się więcej nie powtórzy. Proszę przyjąć ten kawałek tortu.\nIwan Pietrow',
+    wzor_ru:'Гданьск, 17 мая\nУважаемый пан!\nОчень извиняюсь за вчерашний шум. Мы праздновали мой день рождения и не заметили, что уже так поздно. Это больше не повторится. Примите, пожалуйста, этот кусочек торта.\nИван Петров' },
 ],
 
 // ---------------- FORMY DŁUGIE (160-175 słów) ----------------
 dlugie: [
-  { id:'sprawozdanie', forma:'Sprawozdanie', dlugosc:'175 słów',
+  { id:'sprawozdanie', forma:'Sprawozdanie', dlugosc:'175 słów', tytul:'Urodziny mamy',
     temat:'Proszę napisać sprawozdanie z uroczystości rodzinnej (np. z wesela siostry, z urodzin babci), w której ostatnio Pan uczestniczył.',
     szkielet:[
       'WSTĘP — co, kiedy, gdzie: W ostatnią sobotę uczestniczyłem w… Uroczystość odbyła się w…',
@@ -152,9 +199,15 @@ dlugie: [
     zwroty:['W ostatnią sobotę…','Uroczystość odbyła się w…','Najpierw… Następnie… W końcu…',
             'Wszyscy goście świetnie się bawili.','Największe wrażenie zrobiło na mnie…','Na długo zapamiętam ten dzień.'],
     wzor:'W ostatnią sobotę września uczestniczyłem w sześćdziesiątych urodzinach mojej mamy. Rodzice przyjechali do nas z Petersburga na dwa tygodnie, więc postanowiliśmy zorganizować przyjęcie w Gdańsku. Uroczystość odbyła się w małej restauracji nad Motławą. Przyszło piętnaście osób: najbliższa rodzina i nasi polscy przyjaciele.\n\nNajpierw wszyscy goście złożyli mamie życzenia i wręczyli prezenty. Ja przygotowałem dla niej album ze zdjęciami całej rodziny, które robiłem przez ostatnie lata. Mama była bardzo wzruszona. Następnie usiedliśmy do stołu. Na kolację podano żurek, pierogi z mięsem i pieczoną kaczkę, a na deser ogromny tort czekoladowy. Przez cały wieczór grał gitarzysta, który znał nawet stare rosyjskie piosenki, więc rodzice tańczyli jak młodzi.\n\nOkoło dziewiątej wieczorem wydarzyło się coś nieoczekiwanego. Nagle w całej restauracji zgasło światło. Na szczęście kelnerzy szybko przynieśli świece. W ich ciepłym świetle tata zaczął opowiadać, jak poznał mamę czterdzieści lat temu. Wszyscy słuchali w ciszy, a potem długo się śmialiśmy.\n\nUroczystość bardzo mi się podobała, ponieważ cała rodzina była w końcu razem. Mama powiedziała, że to były jej najpiękniejsze urodziny. Na długo zapamiętam ten wieczór przy świecach. Mam nadzieję, że niedługo znowu spotkamy się wszyscy razem.',
-    wzor_ru:'В последнюю субботу сентября я был на шестидесятилетии моей мамы. Родители приехали к нам из Петербурга на две недели, поэтому мы решили устроить праздник в Гданьске. Торжество прошло в маленьком ресторане на берегу Мотлавы. Пришли пятнадцать человек: самые близкие родственники и наши польские друзья.\n\nСначала все гости поздравили маму и вручили подарки. Я приготовил для неё альбом с фотографиями всей семьи, которые делал последние годы. Мама была очень растрогана. Потом мы сели за стол. На ужин подали журек, пироги с мясом и запечённую утку, а на десерт — огромный шоколадный торт. Весь вечер играл гитарист, который знал даже старые русские песни, поэтому родители танцевали, как молодые.\n\nОколо девяти вечера случилось что-то неожиданное. Вдруг во всём ресторане погас свет. К счастью, официанты быстро принесли свечи. При их тёплом свете папа начал рассказывать, как познакомился с мамой сорок лет назад. Все слушали в тишине, а потом мы долго смеялись.\n\nТоржество мне очень понравилось, потому что вся семья наконец была вместе. Мама сказала, что это был её самый красивый день рождения. Я надолго запомню этот вечер при свечах. Надеюсь, что скоро мы снова соберёмся все вместе.' },
+    wzor_ru:'В последнюю субботу сентября я был на шестидесятилетии моей мамы. Родители приехали к нам из Петербурга на две недели, поэтому мы решили устроить праздник в Гданьске. Торжество прошло в маленьком ресторане на берегу Мотлавы. Пришли пятнадцать человек: самые близкие родственники и наши польские друзья.\n\nСначала все гости поздравили маму и вручили подарки. Я приготовил для неё альбом с фотографиями всей семьи, которые делал последние годы. Мама была очень растрогана. Потом мы сели за стол. На ужин подали журек, пироги с мясом и запечённую утку, а на десерт — огромный шоколадный торт. Весь вечер играл гитарист, который знал даже старые русские песни, поэтому родители танцевали, как молодые.\n\nОколо девяти вечера случилось что-то неожиданное. Вдруг во всём ресторане погас свет. К счастью, официанты быстро принесли свечи. При их тёплом свете папа начал рассказывать, как познакомился с мамой сорок лет назад. Все слушали в тишине, а потом мы долго смеялись.\n\nТоржество мне очень понравилось, потому что вся семья наконец была вместе. Мама сказала, что это был её самый красивый день рождения. Я надолго запомню этот вечер при свечах. Надеюсь, что скоро мы снова соберёмся все вместе.',
+    inne:[
+      { id:'sprawozdanie_krakow', tytul:'Wycieczka do Krakowa',
+        temat:'Proszę napisać sprawozdanie z wycieczki po Polsce, w której Pan ostatnio uczestniczył: dokąd i z kim Pan pojechał, co Pan zobaczył, co Pan jadł i jakie są Pana wrażenia.',
+        wzor:'W majówkę pojechałem z rodziną na trzy dni do Krakowa. Wyjechaliśmy z Gdańska w piątek rano pociągiem i po pięciu godzinach byliśmy na miejscu. Zatrzymaliśmy się w małym hotelu niedaleko Rynku.\n\nNajpierw poszliśmy na Rynek Główny. Zobaczyliśmy Sukiennice i Kościół Mariacki, a w południe usłyszeliśmy hejnał. Trębacz gra go z wieży co godzinę. Maks był zachwycony gołębiami i dorożkami. Po południu zwiedziliśmy Wawel. Zamek jest piękny, ale synowi najbardziej podobał się smok, który zieje ogniem. Wieczorem zjedliśmy kolację w polskiej restauracji: ja zamówiłem żurek w chlebie, a Olga pierogi ruskie.\n\nDrugiego dnia pojechaliśmy na Kazimierz, starą dzielnicę żydowską. Spacerowaliśmy wąskimi uliczkami, na których jest dużo klimatycznych kawiarni i galerii. Na obiad zjedliśmy słynną zapiekankę. Ostatniego dnia odwiedziliśmy Kopalnię Soli w Wieliczce. Zeszliśmy ponad sto metrów pod ziemię i zobaczyliśmy kaplicę wyrzeźbioną w soli.\n\nWycieczka bardzo mi się podobała, ponieważ Kraków jest zupełnie inny niż Gdańsk. Jako fotograf zrobiłem setki zdjęć. Najbardziej zapamiętam kopalnię, bo czegoś takiego nigdy wcześniej nie widziałem. Do domu przywieźliśmy obwarzanki, a dla Maksa pluszowego smoka. Na pewno tu wrócimy.',
+        wzor_ru:'На майские праздники я поехал с семьёй на три дня в Краков. Мы выехали из Гданьска в пятницу утром на поезде и через пять часов были на месте. Остановились в маленькой гостинице недалеко от Рынка.\n\nСначала мы пошли на Главный рынок. Увидели Сукенницы и Мариацкий костёл, а в полдень услышали хейнал. Трубач играет его с башни каждый час. Макс был в восторге от голубей и конных экипажей. После обеда мы осмотрели Вавель. Замок красивый, но сыну больше всего понравился дракон, который извергает огонь. Вечером мы ужинали в польском ресторане: я заказал журек в хлебе, а Ольга — pierogi ruskie (вареники с картошкой и творогом).\n\nНа второй день мы поехали в Казимеж, старый еврейский квартал. Гуляли по узким улочкам, где много атмосферных кафе и галерей. На обед съели знаменитую zapiekankę (горячий багет с грибами и сыром). В последний день мы побывали в Соляной шахте в Величке. Спустились больше чем на сто метров под землю и увидели часовню, вырезанную в соли.\n\nПоездка мне очень понравилась, потому что Краков совсем не похож на Гданьск. Как фотограф я сделал сотни снимков. Больше всего я запомню шахту, потому что ничего подобного раньше не видел. Домой мы привезли обважанки (краковские бублики), а Максу — плюшевого дракона. Мы обязательно сюда вернёмся.' },
+    ] },
 
-  { id:'esej', forma:'Esej / wypracowanie', dlugosc:'160 słów',
+  { id:'esej', forma:'Esej / wypracowanie', dlugosc:'160 słów', tytul:'Praca marzeń',
     temat:'Proszę napisać esej na temat: „To jest praca moich marzeń”.',
     szkielet:[
       'WSTĘP — wprowadzenie tematu: Wiele osób zastanawia się, jaka praca daje szczęście. Moim zdaniem…',
@@ -166,7 +219,13 @@ dlugie: [
     zwroty:['Moim zdaniem…','Po pierwsze… Po drugie…','Przede wszystkim…','Co więcej…',
             'Z jednej strony… z drugiej strony…','Mimo to…','Podsumowując…','Uważam, że…'],
     wzor:'Wiele osób zastanawia się, jaka praca daje prawdziwe szczęście. Moim zdaniem nie chodzi tylko o pieniądze. Najważniejsza jest praca, która łączy obowiązki z pasją. Mam szczęście, bo taką pracę już mam: jestem fotografem i pracuję dla banków zdjęć, czyli fotostocków.\n\nPo pierwsze, fotografia przez wiele lat była moim największym hobby. Z wykształcenia jestem inżynierem, ale ponad dziesięć lat temu postanowiłem zmienić zawód. Nigdy tego nie żałowałem, ponieważ kiedy fotografuję, zapominam o czasie i o problemach.\n\nPo drugie, ludzie na całym świecie oglądają moje zdjęcia. Firmy kupują je do reklam, gazet i na strony internetowe. Co więcej, każdy dzień w pracy jest inny: raz fotografuję jedzenie, a innym razem ludzi w biurze.\n\nOczywiście taka praca ma też wady. Konkurencja jest ogromna, więc ciągle muszę szukać nowych pomysłów. Poza tym często siedzę przy komputerze do późna, bo obróbka zdjęć zajmuje dużo czasu. Mimo to nie zamieniłbym tej pracy na żadną inną.\n\nPodsumowując, uważam, że praca marzeń to praca z pasją. Dla mnie jest nią fotografia.',
-    wzor_ru:'Многие задумываются, какая работа приносит настоящее счастье. По-моему, дело не только в деньгах. Важнее всего работа, которая сочетает обязанности со страстью. Мне повезло, потому что такая работа у меня уже есть: я фотограф и работаю для фотобанков, то есть фотостоков.\n\nВо-первых, фотография много лет была моим самым большим хобби. По образованию я инженер, но больше десяти лет назад решил сменить профессию. Я ни разу об этом не пожалел, потому что, когда я фотографирую, я забываю о времени и о проблемах.\n\nВо-вторых, мои фотографии смотрят люди по всему миру. Компании покупают их для рекламы, газет и сайтов. Более того, каждый рабочий день не похож на другой: то я снимаю еду, то людей в офисе.\n\nКонечно, у такой работы есть и недостатки. Конкуренция огромная, поэтому мне постоянно приходится искать новые идеи. Кроме того, я часто сижу за компьютером допоздна, потому что обработка фотографий занимает много времени. Несмотря на это, я не променял бы эту работу ни на какую другую.\n\nПодводя итог, считаю, что работа мечты — это работа со страстью. Для меня это фотография.' },
+    wzor_ru:'Многие задумываются, какая работа приносит настоящее счастье. По-моему, дело не только в деньгах. Важнее всего работа, которая сочетает обязанности со страстью. Мне повезло, потому что такая работа у меня уже есть: я фотограф и работаю для фотобанков, то есть фотостоков.\n\nВо-первых, фотография много лет была моим самым большим хобби. По образованию я инженер, но больше десяти лет назад решил сменить профессию. Я ни разу об этом не пожалел, потому что, когда я фотографирую, я забываю о времени и о проблемах.\n\nВо-вторых, мои фотографии смотрят люди по всему миру. Компании покупают их для рекламы, газет и сайтов. Более того, каждый рабочий день не похож на другой: то я снимаю еду, то людей в офисе.\n\nКонечно, у такой работы есть и недостатки. Конкуренция огромная, поэтому мне постоянно приходится искать новые идеи. Кроме того, я часто сижу за компьютером допоздна, потому что обработка фотографий занимает много времени. Несмотря на это, я не променял бы эту работу ни на какую другую.\n\nПодводя итог, считаю, что работа мечты — это работа со страстью. Для меня это фотография.',
+    inne:[
+      { id:'esej_miasto', tytul:'Miasto czy wieś?',
+        temat:'Proszę napisać esej na temat: „Życie w dużym mieście czy na wsi — co jest lepsze?”',
+        wzor:'Wiele osób zastanawia się, gdzie lepiej się żyje: w dużym mieście czy na wsi. Moim zdaniem obie opcje mają swoje zalety i wady, a wybór zależy od wieku i stylu życia.\n\nZ jednej strony duże miasto daje więcej możliwości. Łatwiej tu znaleźć dobrą pracę, a komunikacja miejska działa sprawnie. Co więcej, w mieście są teatry, kina i kawiarnie, więc nikt się nie nudzi. Mieszkam w Gdańsku i bardzo to doceniam, bo mój syn chodzi do dobrego przedszkola, a ja mam blisko do pracy.\n\nZ drugiej strony życie w mieście jest drogie i głośne. Mieszkania kosztują coraz więcej, a powietrze nie zawsze jest czyste. Na wsi jest spokojniej, ludzie dobrze się znają i mają więcej czasu dla siebie. Poza tym dzieci mogą tam bezpiecznie bawić się na dworze. Mój dziadek mieszka na wsi pod Petersburgiem i nigdy nie chciał przeprowadzić się do miasta.\n\nPodsumowując, uważam, że dla młodych ludzi, którzy szukają pracy i rozrywki, lepsze jest miasto. Mimo to na emeryturze chciałbym zamieszkać w małym domu na wsi, blisko lasu.',
+        wzor_ru:'Многие задумываются, где лучше жить: в большом городе или в деревне. По-моему, у обоих вариантов есть свои плюсы и минусы, а выбор зависит от возраста и образа жизни.\n\nС одной стороны, большой город даёт больше возможностей. Здесь легче найти хорошую работу, а общественный транспорт работает исправно. Более того, в городе есть театры, кино и кафе, поэтому никто не скучает. Я живу в Гданьске и очень это ценю, потому что мой сын ходит в хороший детский сад, а мне близко до работы.\n\nС другой стороны, жизнь в городе дорогая и шумная. Квартиры стоят всё дороже, а воздух не всегда чистый. В деревне спокойнее, люди хорошо знают друг друга, и у них больше времени для себя. Кроме того, дети могут там спокойно играть на улице. Мой дедушка живёт в деревне под Петербургом и никогда не хотел переезжать в город.\n\nПодводя итог, считаю, что молодым людям, которые ищут работу и развлечения, больше подходит город. Несмотря на это, на пенсии я хотел бы поселиться в маленьком доме в деревне, рядом с лесом.' },
+    ] },
 
   { id:'opowiadanie', forma:'Opowiadanie', dlugosc:'175 słów',
     temat:'Proszę napisać opowiadanie pod tytułem „Przygoda na lotnisku”.',
