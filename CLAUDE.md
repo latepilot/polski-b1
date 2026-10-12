@@ -70,7 +70,7 @@ GIT_SSH_COMMAND="ssh -i ~/.ssh/github_polski_b1 -o IdentitiesOnly=yes" git push 
 | `data/kurs-lekcje.js`, `data/kurs-tematy.js` | 25 уроков грамматики, 24 темы со словами и фразами |
 | `slownik.js` | словарь экзамена (Cram), `window.SLOWNIK` — собирается из тем курса |
 | `data/slownik-pisanie.js` | обороты для письма с переводом — для словаря |
-| `wzory.js` | «Примеры сочинений»: образцы из `pisanie.js` (`wzor`, `wzor_ru`), переписывание с проверкой, `window.WZORY` |
+| `wzory.js` | «Примеры сочинений»: образцы из `pisanie.js` (`wzor`, `wzor_ru`; ещё образцы той же формы — `inne:[{id,tytul,wzor,wzor_ru}]`), переписывание с проверкой, `window.WZORY` |
 
 ## Про экзамен
 

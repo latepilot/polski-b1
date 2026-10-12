@@ -6,6 +6,8 @@
 // co w monologach kursu), żeby fakty się nie rozjeżdżały.
 // Przepisywanie: od ręki do zeszytu (jak na egzaminie) albo w aplikacji —
 // wtedy tekst porównuje się z wzorem słowo po słowie.
+// Forma może mieć kilka wzorów: główny (wzor) i kolejne w inne:[{id,tytul,wzor,wzor_ru}].
+// Każdy wzór ma własne id i własny postęp.
 // Stan: klucz 'b1wzory' — {cw:{id:{n,best,last}}, dzien:{data,k,d}, szkic:{id:tekst}}.
 // ========================================================================
 window.WZORY = (function(){
@@ -30,7 +32,13 @@ const stat = id => S.cw[id] || {n:0};
 // ---------- dane ----------
 const krotkie = () => (typeof PISANIE!=='undefined' ? PISANIE.krotkie : []).filter(f=>f.wzor && f.id);
 const dlugie  = () => (typeof PISANIE!=='undefined' ? PISANIE.dlugie  : []).filter(f=>f.wzor && f.id);
-const forma = id => [...krotkie(), ...dlugie()].find(f=>f.id===id);
+// Wszystkie wzory danej formy jako {id, f, wzor, wzor_ru, tytul}.
+const wzoryFormy = f => [{id:f.id, f, wzor:f.wzor, wzor_ru:f.wzor_ru, tytul:f.tytul},
+  ...(f.inne||[]).filter(x=>x.id && x.wzor).map(x=>({id:x.id, f, wzor:x.wzor, wzor_ru:x.wzor_ru, tytul:x.tytul}))];
+const krotkieW = () => krotkie().flatMap(wzoryFormy);
+const dlugieW  = () => dlugie().flatMap(wzoryFormy);
+const wzor  = id => [...krotkieW(), ...dlugieW()].find(w=>w.id===id);
+const forma = id => (wzor(id)||{}).f;   // id wzoru albo formy → forma
 
 // Wypracowania na dziś: jedno krótkie i jedno długie — tak wygląda zestaw
 // na egzaminie. Najpierw te, które przepisywałeś najrzadziej; przy remisie
@@ -38,16 +46,16 @@ const forma = id => [...krotkie(), ...dlugie()].find(f=>f.id===id);
 function naDzis(){
   wczytaj();
   const dzis = dzisISO();
-  if(S.dzien && S.dzien.data===dzis && forma(S.dzien.k) && forma(S.dzien.d)) return S.dzien;
-  if(!krotkie().length || !dlugie().length) return null;
+  if(S.dzien && S.dzien.data===dzis && wzor(S.dzien.k) && wzor(S.dzien.d)) return S.dzien;
+  if(!krotkieW().length || !dlugieW().length) return null;
   const nrDnia = Math.floor(new Date(dzis+'T12:00:00').getTime()/864e5);
   const wybierz = lista => {
     if(!lista.length) return null;
     const n = lista.length, off = nrDnia % n;
-    return lista.map((f,i)=>({f, n:stat(f.id).n, r:(i-off+n)%n}))
-                .sort((a,b)=>a.n-b.n || a.r-b.r)[0].f.id;
+    return lista.map((w,i)=>({w, n:stat(w.id).n, r:(i-off+n)%n}))
+                .sort((a,b)=>a.n-b.n || a.r-b.r)[0].w.id;
   };
-  S.dzien = {data:dzis, k:wybierz(krotkie()), d:wybierz(dlugie())};
+  S.dzien = {data:dzis, k:wybierz(krotkieW()), d:wybierz(dlugieW())};
   zapisz();
   return S.dzien;
 }
@@ -67,13 +75,13 @@ const bezPrzycisku = () => { el('bottomWrap').style.display = 'none'; };
 const ik = id => '<svg class="egz-i"><use href="#'+id+'"/></svg>';
 const dataRu = iso => { const [r,m,d] = iso.split('-'); return +d+'.'+m; };
 
-function karta(f){
-  const s = stat(f.id), dzis = dzisZrobione(f.id);
+function karta(w){
+  const f = w.f, s = stat(w.id), dzis = dzisZrobione(w.id);
   const opis = f.dlugosc + (s.n ? ' · переписано '+s.n+' '+razy(s.n) : ' · ещё не переписывал') +
     (s.best!==undefined ? ' · лучший результат '+s.best+'%' : '');
-  return `<div class="egz-card ${dzis?'egz-done':''}" onclick="WZORY.esej('${f.id}')">
+  return `<div class="egz-card ${dzis?'egz-done':''}" onclick="WZORY.esej('${w.id}')">
     <div class="egz-ico">${ik(dzis?'egz-check':'egz-pen')}</div>
-    <div class="egz-body"><div class="egz-t">${esc(f.forma)}</div><div class="egz-d">${esc(opis)}</div></div>
+    <div class="egz-body"><div class="egz-t">${esc(f.forma)}${w.tytul?' — '+esc(w.tytul):''}</div><div class="egz-d">${esc(opis)}</div></div>
     <div class="egz-meta">${dzis?'✓':'→'}</div></div>`;
 }
 function razy(n){ const m10=n%10, m100=n%100;
@@ -94,14 +102,14 @@ function ekranGlowny(){
   const d = naDzis();
   let h = '<div class="egz kurs wz">';
   h += `<h3 class="egz-h">Примеры сочинений</h3>
-    <div class="egz-sub">По одному образцу на каждое письменное задание курса и тренажёра, точно в нужном объёме. Все тексты — об одном человеке, том же, что в монологах курса. Переписывай каждый день: лучше от руки в тетрадь, как на экзамене, или в приложении — тогда текст сверится с образцом слово в слово.</div>`;
+    <div class="egz-sub">Образцы для каждого письменного задания курса и тренажёра, точно в нужном объёме. Все тексты — об одном человеке, том же, что в монологах курса. Переписывай каждый день: лучше от руки в тетрадь, как на экзамене, или в приложении — тогда текст сверится с образцом слово в слово.</div>`;
   h += `<h3 class="egz-h">Сегодня — как на экзамене</h3>
     <div class="egz-sub">На экзамене ты пишешь одно короткое и одно длинное задание. Сегодня:</div>`;
-  if(d) h += karta(forma(d.k)) + karta(forma(d.d));
+  if(d) h += karta(wzor(d.k)) + karta(wzor(d.d));
   h += '<h3 class="egz-h">Короткие формы · 25–40 слов</h3>';
-  krotkie().forEach(f=>h += karta(f));
+  krotkieW().forEach(w=>h += karta(w));
   h += '<h3 class="egz-h">Длинные формы · 160–175 слов</h3>';
-  dlugie().forEach(f=>h += karta(f));
+  dlugieW().forEach(w=>h += karta(w));
   h += `<details class="wz-bohater"><summary>Кто герой сочинений</summary><ul class="kurs-ul">${BOHATER.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
     <div class="egz-note">Хочешь писать о себе — меняй имена и детали, а конструкции оставляй.</div></details>`;
   h += '</div>';
@@ -113,12 +121,14 @@ function akapity(tekst){ return String(tekst).split('\n'); }
 
 function esejEkran(id){
   wczytaj();
-  const f = forma(id); if(!f) return ekranGlowny();
+  const w = wzor(id); if(!w) return ekranGlowny();
+  const f = w.f, siostry = wzoryFormy(f);
   wejdz('wzory:'+id, ()=>esejEkran(id));
   tlumaczWidac = false;
-  const s = stat(id), pl = akapity(f.wzor), ru = akapity(f.wzor_ru||'');
+  const s = stat(id), pl = akapity(w.wzor), ru = akapity(w.wzor_ru||'');
   let h = `<div class="egz kurs wz"><div class="egz-ex">
-    <div class="egz-hint">${esc(f.forma)} · ${slowa(f.wzor)} слов · норма ${parseInt(f.dlugosc)}</div>
+    <div class="egz-hint">${esc(f.forma)} · ${slowa(w.wzor)} слов · норма ${parseInt(f.dlugosc)}</div>
+    ${siostry.length>1 ? `<div class="wz-akcje">${siostry.map(x=>`<button class="egz-chip ${x.id===id?'wz-wyb':''}" onclick="WZORY.esej('${x.id}')">${esc(x.tytul||'Образец')}</button>`).join('')}</div>` : ''}
     <div class="kurs-karta"><div class="kurs-karta-n">Задание</div><div class="kurs-karta-t">${f.temat}</div></div>
     <div class="wz-akcje">
       <button class="egz-chip" id="wzSluchaj" onclick="WZORY.sluchaj()">Слушать</button>
@@ -170,13 +180,14 @@ const TRYBY = {tekst:'С текстом', ru:'По переводу', pamiec:'П
 let C = null;
 function cwiczenie(id, tryb){
   wczytaj();
-  const f = forma(id); if(!f) return ekranGlowny();
+  const w = wzor(id); if(!w) return ekranGlowny();
+  const f = w.f;
   tryb = TRYBY[tryb] ? tryb : 'tekst';
   wejdz('wzory:cw:'+id, ()=>cwiczenie(id, tryb));
-  C = {id, tryb, cel:slowa(f.wzor)};
-  const zrodlo = tryb==='tekst' ? f.wzor : tryb==='ru' ? (f.wzor_ru||'') : null;
+  C = {id, tryb, cel:slowa(w.wzor)};
+  const zrodlo = tryb==='tekst' ? w.wzor : tryb==='ru' ? (w.wzor_ru||'') : null;
   let h = `<div class="egz kurs wz"><div class="egz-ex">
-    <div class="egz-hint">${esc(f.forma)} · переписать</div>
+    <div class="egz-hint">${esc(f.forma)}${w.tytul?' — '+esc(w.tytul):''} · переписать</div>
     <div class="wz-akcje">${Object.entries(TRYBY).map(([k,n])=>
       `<button class="egz-chip ${k===tryb?'wz-wyb':''}" onclick="WZORY.cwiczenie('${id}','${k}')">${n}</button>`).join('')}</div>
     <div class="egz-note">${tryb==='tekst' ? 'Переписывай, глядя на текст. Полезно и для руки, и для глаза: окончания запоминаются сами.'
@@ -246,7 +257,7 @@ function porownaj(wzor, tekst){
 function sprawdz(){
   const t = el('wzPraca'); if(!t || !C) return;
   if(!t.value.trim()){ toast('Сначала перепиши текст'); return; }
-  const f = forma(C.id), r = porownaj(f.wzor, t.value);
+  const r = porownaj(wzor(C.id).wzor, t.value);
   wczytaj();
   const s = S.cw[C.id] || (S.cw[C.id] = {n:0});
   s.n++; s.last = dzisISO(); s.best = Math.max(s.best||0, r.pct);
@@ -277,7 +288,7 @@ function sprawdz(){
 function kartaGlowna(){
   const d = naDzis();
   if(!d) return {opis:'', zrobione:false};
-  return {opis: (krotkie().length+dlugie().length)+' wzorów · dziś: '+forma(d.k).forma+' + '+forma(d.d).forma,
+  return {opis: (krotkieW().length+dlugieW().length)+' wzorów · dziś: '+forma(d.k).forma+' + '+forma(d.d).forma,
           zrobione: dzisZrobione(d.k) && dzisZrobione(d.d)};
 }
 
