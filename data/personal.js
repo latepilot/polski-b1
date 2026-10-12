@@ -181,6 +181,7 @@ let PERS_VOCAB = [
   {id: 185, pl: 'zaawansowany (kurs dla zaawansowanych — zaawansowana technologia — w zaawansowanym wieku)', ru: 'продвинутый / передовой / преклонный — о возрасте (курс для продвинутых — передовая технология — в преклонном возрасте)'},
   {id: 186, pl: 'percepcja (percepcja rzeczywistości — to zmieniło moją percepcję świata)', ru: 'восприятие (восприятие реальности — это изменило моё восприятие мира)'},
   {id: 187, pl: 'gatunek (ulubiony gatunek muzyki — dobry gatunek mięsa — gatunek zagrożony wyginięciem)', ru: 'жанр / сорт / вид — биологический (любимый музыкальный жанр — хороший сорт мяса — вид под угрозой вымирания)'},
+  {id: 188, pl: 'cofnąć (cofnąć decyzję — cofnąć zegarek o godzinę — cofnąć samochód o metr — cofnąć się o krok)', ru: 'отменить / перевести назад / сдать назад / отступить — с się (отменить решение — перевести часы на час назад — сдать машину на метр назад — отступить на шаг)'},
 ];
 function nextPersId() {
   var maxId = 0;
