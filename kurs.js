@@ -65,6 +65,7 @@ function dataPL(iso){ const d=new Date(iso+'T12:00:00'); return DNI_TYG[d.getDay
 const IKONY = {lekcja:'egz-book', slowa:'egz-pen', mowa:'egz-ear', egz:'egz-target', pisanie:'egz-pen',
   powtorka:'egz-bolt', bledy:'egz-bolt', fiszki:'egz-book', zewn:'egz-ear', probny:'egz-target', wynik:'egz-check'};
 const MOWA_NAZWA = {monolog:'монолог', sytuacja:'ролевая ситуация', opis_osoby:'описание человека',
+  monolog2:'монолог — ещё вариант', sytuacja2:'ситуация — ещё вариант',
   ilustracja:'описание фотографии', pelny:'полная устная часть', opis_frazy:'обороты для устной части'};
 const ZRODLA = {
   podcast: {t:'Подкаст', link:'https://www.hellopolish.pl/podcast-archive/',
@@ -410,6 +411,8 @@ const ZW_OPIS = [
   ['Chyba jest lato.','Наверное, сейчас лето.'],['Prawdopodobnie jest lato.','Вероятно, сейчас лето.'],
   ['Wygląda na to, że oni świetnie się bawią.','Похоже, они отлично проводят время.'],
   ['Atmosfera jest spokojna i wesoła.','Атмосфера спокойная и весёлая.'],
+  ['Niestety nie widzę dokładnie, co to jest.','К сожалению, не вижу точно, что это.'],
+  ['Sam chętnie bym tam pojechał.','Я бы и сам с удовольствием туда поехал.'],
 ];
 const ZW_MONOLOG = [
   ['Na początku powiem o…','Сначала скажу о…'],
@@ -461,9 +464,13 @@ function mowa(id, co, n, i){
     return przycisk('Готово ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
   }
 
-  const M=T.monolog, Y=T.sytuacja;
-  if(co==='monolog' || co==='opis_osoby'){
-    const mm = (co==='opis_osoby' && T.opis_osoby) ? T.opis_osoby : M;
+  const M=T.monolog, Y = (co==='sytuacja2' && T.sytuacja2) ? T.sytuacja2 : T.sytuacja;
+  const TYP_MONOLOGU = {opinia:'Монолог-мнение о проблеме', wybor:'Монолог-выбор из двух вариантов'};
+  const inny = (co2, typ, temat) => `<div class="egz-card" onclick="KURS.mowa('${id}','${co2}',${n},${i})"><div class="egz-ico">${ik('egz-ear')}</div>
+    <div class="egz-body"><div class="egz-t">Ещё вариант: ${esc(typ)}</div><div class="egz-d">${esc(temat)}</div></div><div class="egz-meta">→</div></div>`;
+  if(co==='monolog' || co==='opis_osoby' || co==='monolog2'){
+    const mm = (co==='opis_osoby' && T.opis_osoby) ? T.opis_osoby : (co==='monolog2' && T.monolog2) ? T.monolog2 : M;
+    if(co==='monolog2' && mm.typ) h+=`<div class="kurs-cel"><b>${TYP_MONOLOGU[mm.typ]||''}</b> — на экзамене монолог бывает трёх видов: «расскажи о…», мнение о проблеме и выбор из двух вариантов.</div>`;
     h+=`<div class="kurs-karta"><div class="kurs-karta-n">Zadanie 2 · Monolog</div>
       <div class="kurs-karta-t">${mm.temat}</div>
       <div class="kurs-karta-s">Proszę mówić 2–3 minuty. Plan wypowiedzi:</div>
@@ -475,7 +482,7 @@ function mowa(id, co, n, i){
     if(T.zwroty) h+=`<h4 class="kurs-h4">Лексика темы</h4>${lista(T.zwroty)}`;
     h+=wzorBlok(mm.wzor);
   }
-  else if(co==='sytuacja'){
+  else if(co==='sytuacja' || co==='sytuacja2'){
     h+=`<div class="kurs-karta"><div class="kurs-karta-n">Zadanie 3 · Sytuacja komunikacyjna</div>
       <div class="kurs-karta-t">${Y.polecenie}</div>
       <div class="kurs-karta-s">Twoja rola: ${Y.rola_ja}. Egzaminator: ${Y.rola_on}.</div></div>
@@ -496,7 +503,8 @@ function mowa(id, co, n, i){
         <li>Люди: внешность, одежда, эмоции, кто они друг другу.</li>
         <li>Что делают — настоящее время, несовершенный вид: siedzi, rozmawia, je.</li>
         <li>Место и детали: что на переднем плане, на заднем, слева, справа.</li>
-        <li>Время года, погода, атмосфера, твоё предположение: chyba, wydaje mi się.</li></ol>
+        <li>Время года, погода, атмосфера, твоё предположение: chyba, wydaje mi się.</li>
+        <li>В конце — что-то от себя: <i>Sam chętnie bym tam pojechał.</i></li></ol>
       <h4 class="kurs-h4">Обороты</h4>${lista(ZW_OPIS)}`;
   }
   else if(co==='pelny'){
@@ -509,6 +517,13 @@ function mowa(id, co, n, i){
       <h4 class="kurs-h4">Если забыл слово</h4>${lista(ZW_RATUNEK)}`;
   }
 
+  // Dodatkowe warianty tematu — widoczne z każdego ekranu mowy, bo nie każdy
+  // temat ma w planie i monolog, i sytuację.
+  if(T.monolog2 && co!=='monolog2') h+=inny('monolog2', TYP_MONOLOGU[T.monolog2.typ]||'монолог', T.monolog2.temat);
+  if(T.sytuacja2 && co!=='sytuacja2') h+=inny('sytuacja2', 'другая ситуация', T.sytuacja2.polecenie);
+  if(co==='monolog2') h+=inny('monolog', 'монолог «расскажи о…»', M.temat);
+  if(co==='sytuacja2') h+=inny('sytuacja', 'основная ситуация темы', T.sytuacja.polecenie);
+
   h+=`<h4 class="kurs-h4">Тренировка с Claude голосом</h4>
     <ol class="kurs-ul kurs-kroki">
       <li>Нажми «Скопировать задание для Claude».</li>
@@ -519,7 +534,9 @@ function mowa(id, co, n, i){
     <div class="kurs-timer" id="kursTimer"><button class="egz-chip" onclick="KURS.stoper(180)">Засечь 3 минуты для себя</button></div>
   </div></div>`;
   el('contentWrap').innerHTML=h;
-  przycisk('Готово ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
+  // Otwarte spoza planu (np. z ekranu «Как проходит экзамен») — bez odhaczania dnia.
+  if(n==null) przycisk('← Назад', ()=>goBack());
+  else przycisk('Готово ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
 }
 function wzorBlok(wzor, dialog){
   if(!wzor) return '';
@@ -555,9 +572,9 @@ const promptOcena = (zadanie, max) => `Когда я закончу, выйди 
 ${PROMPT_BLEDY}`;
 
 function promptMowa(T, co){
-  const M=T.monolog, Y=T.sytuacja;
-  if(co==='monolog' || co==='opis_osoby'){
-    const mm=(co==='opis_osoby'&&T.opis_osoby)?T.opis_osoby:M;
+  const M=T.monolog, Y=(co==='sytuacja2'&&T.sytuacja2)?T.sytuacja2:T.sytuacja;
+  if(co==='monolog' || co==='opis_osoby' || co==='monolog2'){
+    const mm=(co==='opis_osoby'&&T.opis_osoby)?T.opis_osoby:(co==='monolog2'&&T.monolog2)?T.monolog2:M;
     return `${PROMPT_WSTEP}
 
 Сегодня только задание 2 — монолог.
@@ -569,7 +586,7 @@ ${promptOcena('монолог', 7)}
 
 Начни: поздоровайся и дай мне тему.`;
   }
-  if(co==='sytuacja'){
+  if(co==='sytuacja' || co==='sytuacja2'){
     return `${PROMPT_WSTEP}
 
 Сегодня только задание 3 — ситуация.
@@ -853,12 +870,15 @@ function egzaminInfo(){
     <h4 class="kurs-h4">Устная часть · 15–20 минут · 40 баллов, порог 20</h4>
     <ul class="kurs-ul">
       <li>Тянешь вслепую один из трёх листков: фото, монолог, диалог. На подготовку 4–6 минут. <b>Можно делать заметки</b> и подглядывать в них во время ответа.</li>
-      <li>Сначала разминка: <i>Skąd Pan jest? Jak długo mieszka Pan w Polsce? Po co Panu ten egzamin?</i> Отвечай как есть.</li>
+      <li>Сначала разминка: <i>Skąd Pan jest? Jak długo mieszka Pan w Polsce? Po co Panu ten egzamin?</i> Отвечай как есть, двумя-тремя фразами. Ответы Ивана — переделай под себя:
+        <i>Jestem z Rosji, z Petersburga. W Polsce mieszkam od trzech lat, w Gdańsku. Chcę zostać tu na stałe i certyfikat jest mi potrzebny do dokumentów. Poza tym chcę swobodnie rozmawiać z kolegami w pracy.</i></li>
       <li>Предложат выбрать, с чего начать, — начинай с самого трудного для себя задания и закончи сильным. Не предложат — начинай с фото.</li>
       <li>На задание 3–4 минуты. Ушёл от темы — скажут «dziękuję» и перейдут дальше.</li>
       <li>Фото: от общего к деталям — ситуация → люди (одежда, что делают, эмоции) → место → детали → атмосфера и своё мнение. Догадки: <i>chyba, prawdopodobnie, wydaje mi się</i>.</li>
-      <li>Монолог: вступление → развитие → вывод. Бывает трёх видов: мнение о социальной теме, «расскажи о…» и выбор из двух вариантов.</li>
-      <li>Диалог: будь активным — начинай сам, задавай вопросы. Выполни <b>каждый пункт</b> задания: пропустишь — решат, что не понял.</li>
+      <li>Монолог: вступление → развитие → вывод. Бывает трёх видов: мнение о социальной теме, «расскажи о…» и выбор из двух вариантов. Монологи на мнение и выбор с примерами ответов:
+        <ul>${Object.keys(KURS_TEMATY).filter(t=>KURS_TEMATY[t].monolog2).map(t=>`<li><a href="#" onclick="KURS.mowa('${t}','monolog2',null,null);return false">${esc(KURS_TEMATY[t].monolog2.temat)}</a></li>`).join('')}</ul></li>
+      <li>Диалог: будь активным — начинай сам, задавай вопросы. Выполни <b>каждый пункт</b> задания: пропустишь — решат, что не понял. Ещё ситуации:
+        <ul>${Object.keys(KURS_TEMATY).filter(t=>KURS_TEMATY[t].sytuacja2).map(t=>`<li><a href="#" onclick="KURS.mowa('${t}','sytuacja2',null,null);return false">${esc(KURS_TEMATY[t].sytuacja2.polecenie.split('. ')[0])}</a></li>`).join('')}</ul></li>
       <li><b>Не молчи.</b> Кто молчит, не сдаёт.</li>
       <li>Баллы: выполнение заданий — фото 7, монолог 7, диалог 6 (вместе это уже порог). Плюс грамматика 8, лексика 8, произношение 4. Экзаменаторов несколько, они делают пометки — это нормально.</li></ul>
     <h4 class="kurs-h4">День экзамена · 5–6 декабря</h4>

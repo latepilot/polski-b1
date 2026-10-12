@@ -1109,3 +1109,95 @@ KURS_TEMATY.T24 = {
     wzor:'Znajoma: Nie wiemy, co robić. Kamil chce kupić dom pod Gdańskiem, a ja nie jestem pewna.\nTy: A co jest dla was najważniejsze?\nZnajoma: Chcemy, żeby dzieci miały ogród i więcej miejsca. W mieszkaniu jest nam już ciasno.\nTy: Rozumiem. Z jednej strony pod miastem jest spokojniej, czyściej i domy są tańsze niż mieszkania w centrum. Dzieci mogłyby się bawić na dworze.\nZnajoma: No właśnie. Ale boję się dojazdów.\nTy: I słusznie. Z drugiej strony musielibyście codziennie dojeżdżać do pracy i do szkoły, a rano są korki. Potrzebowalibyście chyba drugiego samochodu.\nZnajoma: Kamil może pracować z domu trzy dni w tygodniu.\nTy: To dużo zmienia. A czy jest tam szkoła i sklep?\nZnajoma: Szkoła jest w sąsiedniej wsi, dwa kilometry dalej.\nTy: Na waszym miejscu pojechałbym tam kilka razy rano i sprawdził, ile naprawdę trwa droga. Jeśli to mniej niż pół godziny, kupiłbym dom.\nZnajoma: Dobry pomysł, tak zrobimy. Dzięki za radę!\nTy: Nie ma za co. Trzymam kciuki!'
   }
 };
+
+
+// ========================================================================
+// Dodatkowe monologi i sytuacje (monolog2 / sytuacja2) — z rad egzaminatorów:
+// monolog bywa trzech typów (opowiedz o… / opinia o problemie / wybór z dwóch),
+// a w dialogu trzeba wykonać każdy punkt polecenia. Pokazują się jako
+// «Ещё вариант» na ekranie monologu lub sytuacji danego tematu; plan kursu
+// się nie zmienia.
+// ========================================================================
+KURS_TEMATY.T07.monolog2 = {
+  typ:'opinia',
+  temat:'Co Pan myśli o zakazie handlu w niedzielę?',
+  plan:['Wstęp: na czym polega zakaz','Argumenty za — z przykładami','Argumenty przeciw','Moje zdanie i podsumowanie'],
+  pytania:['Czy robi Pan zakupy w niedzielę?','Kto zyskuje na zakazie, a kto traci?','Jak to wygląda w Pana kraju?','Co Pan robi w niedzielę zamiast zakupów?'],
+  ru:'Монолог-мнение: вступление (о чём речь) → аргументы за → аргументы против → твоё мнение. В Польше уже несколько лет большинство магазинов по воскресеньям закрыто, торговых воскресений в году всего несколько.',
+  wzor:'W Polsce od kilku lat większość sklepów w niedzielę jest zamknięta. Otwarte są tylko małe sklepy, stacje benzynowe i piekarnie. Kiedy przyjechałem do Gdańska, bardzo mnie to zdziwiło, bo w Rosji sklepy działają codziennie. Ten zakaz ma swoje zalety i wady. Z jednej strony pracownicy sklepów mogą odpocząć i spędzić niedzielę z rodziną. To bardzo ważne, bo praca w handlu jest ciężka. Poza tym ludzie mniej czasu spędzają w galeriach handlowych, a więcej na spacerach. Z drugiej strony to niewygodne dla osób, które pracują od poniedziałku do soboty i nie mają kiedy zrobić zakupów. Na początku często zapominałem kupić chleb w sobotę. Teraz planuję zakupy wcześniej i właściwie mi to nie przeszkadza. Podsumowując, uważam, że zakaz handlu w niedzielę to dobry pomysł, chociaż nie dla wszystkich jest wygodny. Dzięki niemu niedziela jest naprawdę dniem odpoczynku.',
+};
+KURS_TEMATY.T23.monolog2 = {
+  typ:'opinia',
+  temat:'Dlaczego współczesny człowiek nie potrafi przeżyć dnia bez telefonu komórkowego?',
+  plan:['Wstęp: jak ważny jest dziś telefon','Do czego go używamy — przykłady z życia','Wady: uzależnienie, mniej rozmów','Moje zdanie i rada'],
+  pytania:['Ile godzin dziennie korzysta Pan z telefonu?','Do czego najczęściej używa Pan telefonu?','Czy potrafiłby Pan żyć tydzień bez telefonu?','Czy dzieci powinny mieć smartfony?'],
+  ru:'Монолог-мнение о социальной теме. Обязательно примеры из своей жизни: за них ставят баллы за выполнение задания.',
+  wzor:'Dzisiaj telefon komórkowy to coś więcej niż telefon. Moim zdaniem nie potrafimy bez niego żyć, ponieważ zastępuje nam wiele innych rzeczy. W telefonie mamy mapę, aparat, bank, bilety, kalendarz i kontakt z bliskimi. Ja na przykład codziennie rozmawiam przez telefon z rodzicami w Petersburgu, kupuję bilety na tramwaj i uczę się polskiego w aplikacji. Jako fotograf często sprawdzam też w telefonie, jak sprzedają się moje zdjęcia. Z drugiej strony telefon zabiera nam dużo czasu. Wiele osób sprawdza wiadomości co kilka minut, nawet podczas obiadu z rodziną. Ludzie mniej ze sobą rozmawiają, a dzieci wolą gry niż zabawę na dworze. To jest już prawdziwe uzależnienie. Podsumowując, uważam, że telefon jest bardzo przydatny, ale trzeba używać go z umiarem. W naszym domu mamy prostą zasadę: przy stole nikt nie używa telefonu.',
+};
+KURS_TEMATY.T10.monolog2 = {
+  typ:'opinia',
+  temat:'„Jesteś tym, co jesz”. Czy zgadza się Pan z tą opinią?',
+  plan:['Wstęp: co znaczy to powiedzenie','Argumenty: jedzenie a zdrowie i nastrój','Przykład z własnego życia','Podsumowanie: moje zdanie'],
+  pytania:['Czy zdrowo się Pan odżywia?','Co jada Pan na śniadanie?','Czy często je Pan fast foody?','Czy polska kuchnia jest zdrowa?'],
+  ru:'Монолог «согласен ли ты с мнением». Можно согласиться частично — главное, обоснуй и приведи пример.',
+  wzor:'Powiedzenie „Jesteś tym, co jesz” znaczy, że jedzenie ma wpływ na nasze zdrowie, wygląd i nastrój. Moim zdaniem to prawda, chociaż nie cała. Po pierwsze, kiedy jemy dużo warzyw, owoców i ryb, mamy więcej energii i rzadziej chorujemy. Kiedy jemy fast foody i słodycze, szybko tyjemy i czujemy się zmęczeni. Po drugie, jedzenie wpływa na nastrój. Ja na przykład po ciężkim obiedzie nie mam siły pracować. Kilka lat temu jadłem dużo w biegu i często bolał mnie brzuch. Teraz razem z żoną gotujemy w domu, a w weekendy chodzę na nordic walking i czuję się dużo lepiej. Z drugiej strony jedzenie to nie wszystko. Na zdrowie wpływają też sen, ruch i stres. Podsumowując, zgadzam się z tą opinią, ale tylko częściowo. Uważam, że jesteśmy tym, co jemy, ale też tym, jak żyjemy.',
+};
+KURS_TEMATY.T22.monolog2 = {
+  typ:'opinia',
+  temat:'Jakimi wartościami kierują się dziś młodzi ludzie?',
+  plan:['Wstęp: czym są wartości','Co jest ważne dla młodych — przykłady','Czym różnią się od pokolenia rodziców','Podsumowanie: moja opinia'],
+  pytania:['Co było dla Pana najważniejsze, kiedy miał Pan dwadzieścia lat?','Czy młodzi ludzie są dziś inni niż kiedyś?','Co jest ważniejsze: kariera czy rodzina?','Jakie wartości chciałby Pan przekazać synowi?'],
+  ru:'Монолог-мнение. Удобная схема: «во-первых… во-вторых… в-третьих…», потом сравнение с поколением родителей и вывод.',
+  wzor:'Wartości to rzeczy, które są dla nas najważniejsze i pomagają nam podejmować decyzje. Moim zdaniem młodzi ludzie dzisiaj cenią przede wszystkim wolność i niezależność. Chcą sami decydować, gdzie mieszkać i gdzie pracować. Wielu z nich podróżuje, studiuje za granicą i nie boi się zmian. Po drugie, dla młodych bardzo ważna jest praca, która daje satysfakcję, a nie tylko pieniądze. Po trzecie, coraz więcej młodych ludzi dba o środowisko i zdrowie. Moi rodzice uważali, że najważniejsze są stabilna praca i własne mieszkanie. Dla mojego pokolenia to też jest ważne, ale chcemy mieć także czas na pasję. Z drugiej strony młodzi ludzie często za dużo czasu spędzają w internecie i mają mniej prawdziwych przyjaciół. Podsumowując, uważam, że wartości młodych się zmieniają, ale rodzina i przyjaźń wciąż są dla nich ważne. Mojemu synowi chcę przekazać przede wszystkim uczciwość i szacunek do innych ludzi.',
+};
+KURS_TEMATY.T12.monolog2 = {
+  typ:'wybor',
+  temat:'Książka papierowa czy e-book? Co Pan wybiera i dlaczego?',
+  plan:['Wstęp: czy i kiedy Pan czyta','Zalety książki papierowej','Zalety e-booka','Mój wybór i uzasadnienie'],
+  pytania:['Jaką książkę ostatnio Pan przeczytał?','Gdzie najczęściej Pan czyta?','Czy kupuje Pan książki, czy pożycza je z biblioteki?','Czy dzieci powinny czytać papierowe książki?'],
+  ru:'Монолог-выбор из двух вариантов: плюсы первого → плюсы второго → твой выбор с причиной. Можно выбрать «и то и другое», но объясни когда что.',
+  wzor:'Lubię czytać przed snem, więc często zastanawiam się, co jest lepsze: książka papierowa czy e-book. Obie formy mają swoje zalety. Książka papierowa ma swój zapach i ciężar. Kiedy trzymam ją w rękach, łatwiej mi się skupić. Poza tym oczy mniej się męczą, a papierowej książki nie trzeba ładować. Ładną książkę można też komuś podarować albo postawić na półce. Z drugiej strony e-book jest bardzo praktyczny. W jednym małym czytniku mieszczą się setki książek, więc zabieram go w każdą podróż. E-booki są też często tańsze, a w nocy mogę czytać bez lampy i nie budzę żony. Dla mnie ważne jest jeszcze to, że w czytniku mogę od razu sprawdzić trudne polskie słowo w słowniku. Podsumowując, na co dzień wybieram e-book, bo jest wygodniejszy i pomaga mi w nauce polskiego. Mimo to książki dla syna kupujemy zawsze papierowe, bo dzieci powinny mieć z nimi kontakt.',
+};
+KURS_TEMATY.T05.monolog2 = {
+  typ:'wybor',
+  temat:'Praca zdalna czy praca w biurze? Co jest lepsze?',
+  plan:['Wstęp: jak wygląda moja praca','Zalety pracy zdalnej','Zalety pracy w biurze','Mój wybór i uzasadnienie'],
+  pytania:['Czy pracuje Pan czasem z domu?','Co przeszkadza Panu w pracy w domu?','Czy kontakt z kolegami jest ważny?','Jak będzie wyglądała praca za dwadzieścia lat?'],
+  ru:'Монолог-выбор. Опыт Ивана: жена работает из дома, он сам три дня в студии и два дня дома — это и есть живые примеры.',
+  wzor:'W mojej rodzinie mamy oba modele pracy. Moja żona pracuje z domu, a ja trzy dni w tygodniu jeżdżę do studia, a dwa dni obrabiam zdjęcia w domu. Dlatego dobrze znam zalety i wady obu rozwiązań. Praca zdalna oszczędza czas i pieniądze, bo nie trzeba dojeżdżać. Można pracować w wygodnym ubraniu i samemu planować dzień. Kiedy syn jest chory, jeden z nas zawsze jest w domu. Z drugiej strony w domu łatwo się rozproszyć: pranie, zakupy, telewizor. Czasem trudno też oddzielić pracę od życia prywatnego. W studiu mam kontakt z ludźmi. Z Tomkiem i Ewą wymieniamy się pomysłami, a przy kawie szybciej rozwiązujemy problemy. Poza tym łatwiej mi mówić po polsku, kiedy codziennie rozmawiam z kolegami. Podsumowując, najlepsze jest dla mnie połączenie obu modeli. Myślę, że w przyszłości większość firm wybierze właśnie pracę hybrydową.',
+};
+KURS_TEMATY.T11.monolog2 = {
+  typ:'wybor',
+  temat:'Siłownia czy sport na świeżym powietrzu? Co Pan woli?',
+  plan:['Wstęp: dlaczego ruch jest ważny','Zalety siłowni','Zalety sportu na świeżym powietrzu','Mój wybór i uzasadnienie'],
+  pytania:['Jak często uprawia Pan sport?','Czy chodził Pan kiedyś na siłownię?','Jaki sport jest popularny w Pana kraju?','Czy sport w złą pogodę to dobry pomysł?'],
+  ru:'Монолог-выбор. Сначала честно назови плюсы варианта, который ты не выбираешь, — так ответ звучит взвешенно.',
+  wzor:'Uważam, że ruch jest bardzo ważny, szczególnie kiedy ktoś pracuje przy komputerze tak jak ja. Ludzie często wybierają między siłownią a sportem na świeżym powietrzu. Siłownia ma kilka zalet. Można tam ćwiczyć niezależnie od pogody, a trener pomoże dobrać ćwiczenia. Jest dużo sprzętu, więc łatwo zbudować mięśnie. Z drugiej strony karnet jest drogi, a na siłowni jest głośno i tłoczno. Ja wolę sport na świeżym powietrzu. Trzy razy w tygodniu chodzę na nordic walking do parku niedaleko domu. To nic nie kosztuje, a po całym dniu przy komputerze mogę odetchnąć i odpocząć od ekranu. Jesienią park jest piękny, a zimą wystarczy ciepła kurtka. Czasem zabieram ze sobą syna, który jeździ obok na hulajnodze. Podsumowując, siłownia jest dobra dla osób, które chcą szybko zobaczyć efekty, ale ja wybieram ruch na świeżym powietrzu, bo daje mi energię i spokój.',
+};
+KURS_TEMATY.T04.sytuacja2 = {
+  polecenie:'Pana sąsiad z góry od tygodnia słucha głośno muzyki późno w nocy, a Pana syn nie może spać. Proszę porozmawiać z sąsiadem: wyjaśnić problem, poprosić o ciszę i zaproponować rozwiązanie.',
+  rola_ja:'sąsiad z dołu',
+  rola_on:'sąsiad, który słucha muzyki',
+  ru:'Вежливая ситуация с соседом на «Pan», без претензий в голосе. Объясни проблему, попроси и предложи компромисс. Выполни каждый пункт задания.',
+  cele:['Przywitać się i przedstawić','Wyjaśnić problem','Poprosić o ciszę po 22:00','Zaproponować rozwiązanie','Podziękować i pożegnać się'],
+  zwroty:[['Przepraszam, że przeszkadzam.','Извините, что беспокою.'],['Mieszkam piętro niżej.','Я живу этажом ниже.'],['Od tygodnia w nocy jest bardzo głośno.','Уже неделю по ночам очень шумно.'],['Mój syn nie może przez to spać.','Мой сын из-за этого не может спать.'],['Czy mógłby Pan ściszyć muzykę po dwudziestej drugiej?','Не могли бы Вы делать музыку тише после 22:00?'],['Bardzo dziękuję za zrozumienie.','Большое спасибо за понимание.']],
+  wzor:'Sąsiad: Dzień dobry. Słucham?\nTy: Dzień dobry. Przepraszam, że przeszkadzam. Nazywam się Iwan Pietrow, mieszkam piętro niżej.\nSąsiad: Aha, dzień dobry. W czym mogę pomóc?\nTy: Mam mały problem. Od tygodnia późno w nocy słychać u Pana głośną muzykę. Mój syn ma sześć lat i przez to nie może spać.\nSąsiad: Naprawdę? Nie wiedziałem, że tak dobrze słychać. Przepraszam.\nTy: Rozumiem, każdy lubi muzykę. Ja też, sam ją tworzę. Czy mógłby Pan ściszyć muzykę po dwudziestej drugiej?\nSąsiad: Oczywiście. Wieczorem będę słuchał w słuchawkach.\nTy: To świetny pomysł. Bardzo dziękuję za zrozumienie.\nSąsiad: Nie ma za co. Jeśli znowu będzie za głośno, proszę po prostu zapukać.\nTy: Dobrze. Miłego wieczoru!\nSąsiad: Nawzajem. Do widzenia.',
+};
+KURS_TEMATY.T07.sytuacja2 = {
+  polecenie:'Zamówił Pan w sklepie internetowym kurtkę dla syna. Kurtka przyszła za mała, a zamek jest zepsuty. Proszę zadzwonić do działu obsługi klienta: opisać problem, podać numer zamówienia i ustalić, czy sklep wymieni kurtkę, czy zwróci pieniądze.',
+  rola_ja:'klient',
+  rola_on:'pracownik działu obsługi klienta',
+  ru:'Официальный звонок: Pan/Pani. Назови проблему, номер заказа, выбери обмен или возврат денег и спроси, как отправить посылку и когда ждать.',
+  cele:['Przywitać się i powiedzieć, w jakiej sprawie Pan dzwoni','Opisać oba problemy','Podać numer zamówienia','Wybrać wymianę albo zwrot pieniędzy','Zapytać, jak odesłać paczkę i kiedy przyjdzie nowa'],
+  zwroty:[['Dzwonię w sprawie zamówienia numer…','Звоню по поводу заказа номер…'],['Dzwonię, żeby złożyć reklamację.','Звоню, чтобы подать жалобу.'],['Kurtka jest za mała i ma zepsuty zamek.','Куртка мала, и у неё сломана молния.'],['Czy mogę ją wymienić na większy rozmiar?','Могу ли я обменять её на больший размер?'],['Wolałbym zwrot pieniędzy.','Я бы предпочёл возврат денег.'],['Jak mam odesłać paczkę?','Как мне отправить посылку обратно?']],
+  wzor:'Pracownik: Dział obsługi klienta, dzień dobry. W czym mogę pomóc?\nTy: Dzień dobry. Dzwonię, żeby złożyć reklamację. W zeszłym tygodniu zamówiłem kurtkę dla syna.\nPracownik: Rozumiem. Jaki jest numer zamówienia?\nTy: Numer zamówienia to 481 523.\nPracownik: Dziękuję. Co jest nie tak z kurtką?\nTy: Są dwa problemy. Kurtka jest za mała, chociaż zamówiłem rozmiar 116. Poza tym zamek jest zepsuty.\nPracownik: Bardzo przepraszam. Możemy wymienić kurtkę albo zwrócić pieniądze.\nTy: Czy mają Państwo tę samą kurtkę w rozmiarze 122?\nPracownik: Tak, mamy ją jeszcze w magazynie.\nTy: To poproszę o wymianę. Jak mam odesłać paczkę?\nPracownik: Wyślemy Panu e-mailem etykietę. Przesyłka zwrotna jest bezpłatna.\nTy: Świetnie. A kiedy dostanę nową kurtkę?\nPracownik: Do pięciu dni roboczych od otrzymania zwrotu.\nTy: Dziękuję bardzo za pomoc. Do widzenia.',
+};
+KURS_TEMATY.T17.sytuacja2 = {
+  polecenie:'Kolega zaprosił Pana na urodziny w sobotę, ale jest Pan chory. Proszę do niego zadzwonić: przeprosić, wyjaśnić, co Panu jest, złożyć życzenia i zaproponować spotkanie w innym terminie.',
+  rola_ja:'chory kolega',
+  rola_on:'kolega, który ma urodziny',
+  ru:'Неформальный звонок на «ты». Извинись, объясни, что болен (симптомы!), поздравь и предложи другой день. Лексика болезни: przeziębić się, katar, kaszel, gorączka, boli mnie gardło.',
+  cele:['Przywitać się','Przeprosić i powiedzieć, że nie przyjdziesz','Wyjaśnić, co Ci jest','Złożyć życzenia','Zaproponować inny termin'],
+  zwroty:[['Słuchaj, mam złą wiadomość.','Слушай, у меня плохая новость.'],['Niestety nie dam rady przyjść.','К сожалению, я не смогу прийти.'],['Przeziębiłem się.','Я простудился.'],['Mam katar, kaszel i trochę gorączki.','У меня насморк, кашель и небольшая температура.'],['Nie chcę nikogo zarazić.','Я не хочу никого заразить.'],['Może spotkamy się w przyszłym tygodniu?','Может, встретимся на следующей неделе?']],
+  wzor:'Kolega: Cześć, Iwan! Wszystko aktualne na sobotę?\nTy: Cześć, Tomek. Słuchaj, mam złą wiadomość. Niestety nie dam rady przyjść na twoje urodziny.\nKolega: Szkoda! A co się stało?\nTy: Przeziębiłem się. Od wczoraj mam katar, kaszel i trochę gorączki. Lekarz kazał mi zostać w domu.\nKolega: Oj, to nie brzmi dobrze. Bierzesz jakieś leki?\nTy: Tak, biorę tabletki i piję dużo herbaty z miodem. Poza tym nie chcę nikogo zarazić.\nKolega: Rozumiem, zdrowie jest najważniejsze.\nTy: Bardzo mi przykro. Z okazji urodzin życzę ci dużo zdrowia i szczęścia! Może spotkamy się w przyszłym tygodniu? Zapraszam cię na piwo.\nKolega: Dzięki! Może w piątek po pracy?\nTy: Piątek pasuje. Wtedy dam ci też prezent.\nKolega: Super. Kuruj się!\nTy: Dzięki, cześć!',
+};
