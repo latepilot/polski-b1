@@ -773,7 +773,7 @@ KURS_LEKCJE.L17 = {
     {t:'uwaga', h:'Указательное: ten, ta, to, ci, te; tamten — тот. Винительный женского рода — <b>tę</b>: <i>Lubię tę książkę</i>. Мужско-личное мн.ч. — <b>ci</b>: <i>Ci ludzie są mili</i>.'},
     {t:'pulapka', h:'Как в русском «свой». Главная ошибка — склонять jego / jej / ich: «z jejem», «dla jegom» — такого нет.'},
     {t:'przyklady', items:[
-      ['To jest moja żona, Olga.','Это моя жена, Ольга.'],
+      ['To jest moja żona, Natalia.','Это моя жена, Наталья.'],
       ['Każdy powinien dbać o swoje zdrowie.','Каждый должен заботиться о своём здоровье.'],
       ['Znasz jej męża?','Ты знаешь её мужа?']]},
   ],
