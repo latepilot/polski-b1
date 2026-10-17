@@ -110,6 +110,9 @@
   --accent-ring: rgba(123,111,240,0.25);
 }
 html, body { height: 100%; overflow: hidden; }
+/* Корень закреплён: на iPhone scrollIntoView/фокус иначе сдвигают всю страницу,
+   и шапка с кнопками «назад» и «домой» уезжает под статус-бар. */
+html, body { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; }
 body {
   font-family: var(--font);
   background: var(--bg);
@@ -125,7 +128,7 @@ input, textarea { font-family: inherit; }
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   max-width: 600px;
   margin: 0 auto;
   position: relative;
@@ -888,6 +891,7 @@ input, textarea { font-family: inherit; }
     <div class="stats">
       <div class="stat-item theme-toggle" onclick="toggleTheme()" style="cursor:pointer;font-size:20px;user-select:none;display:flex;align-items:center;line-height:1;" id="themeToggle"><svg class="icon-svg" aria-hidden="true"><use href="#icon-moon"/></svg></div>
       <div class="stat-item" onclick="goBack()" style="cursor:pointer;font-size:20px;padding:0 2px;display:none;align-items:center;line-height:1;" id="backBtn" title="Wstecz" aria-label="Wstecz"><svg class="icon-svg" aria-hidden="true"><use href="#icon-back"/></svg></div>
+      <div class="stat-item" onclick="goForward()" style="cursor:pointer;font-size:20px;padding:0 2px;display:none;align-items:center;line-height:1;transform:scaleX(-1);" id="fwdBtn" title="Dalej" aria-label="Dalej"><svg class="icon-svg" aria-hidden="true"><use href="#icon-back"/></svg></div>
       <div class="stat-item" onclick="goHome()" style="cursor:pointer;font-size:20px;font-weight:600;padding:0 4px;display:flex;align-items:center;line-height:1;" title="Ekran główny" aria-label="Ekran główny"><svg class="icon-svg" aria-hidden="true"><use href="#icon-home"/></svg></div>
     </div>
   </div>
@@ -2441,9 +2445,21 @@ function saveState() {
 // po „← День 3" strzałka prowadzi dalej w górę, a nie z powrotem do wyniku
 // ćwiczeń, z którego się przyszło.
 // ========================================================================
-var historia = [], biezacyEkran = null, cofanie = false;
+var historia = [], przod = [], biezacyEkran = null, cofanie = false;
 
 function przewijacz() { return document.getElementById('scrollWrap'); }
+// Страница не должна двигаться сама (iOS сдвигает её при фокусе и scrollIntoView):
+// прокручивается только #scrollWrap, шапка всегда на месте.
+function trzymajStrone() {
+  var d = document.scrollingElement || document.documentElement;
+  if (d.scrollTop || d.scrollLeft) d.scrollTo(0, 0);
+  if (document.body.scrollTop) document.body.scrollTop = 0;
+  var a = document.getElementById('app');
+  if (a && (a.scrollTop || a.scrollLeft)) { a.scrollTop = 0; a.scrollLeft = 0; }
+}
+window.addEventListener('scroll', trzymajStrone, true);
+window.addEventListener('focusout', function () { setTimeout(trzymajStrone, 50); });
+if (window.visualViewport) window.visualViewport.addEventListener('resize', trzymajStrone);
 function naGore() { var s = przewijacz(); if (s) s.scrollTop = 0; }
 
 function zatrzymajEkran() {
@@ -2458,6 +2474,7 @@ function ekran(klucz, fn) {
   if (biezacyEkran && biezacyEkran.klucz === klucz) { biezacyEkran.fn = fn; return; }
   zatrzymajEkran();
   document.getElementById('progressStrip').innerHTML = '';
+  przod = [];   // nowe przejście kasuje „do przodu"
   if (klucz === 'home') historia = [];
   else {
     var i = historia.findIndex(function (e) { return e.klucz === klucz; });
@@ -2480,6 +2497,8 @@ function wCofaniu() { return cofanie; }
 function pokazWstecz() {
   var b = document.getElementById('backBtn');
   if (b) b.style.display = historia.length ? 'flex' : 'none';
+  var f = document.getElementById('fwdBtn');
+  if (f) f.style.display = przod.length ? 'flex' : 'none';
 }
 
 function goBack() {
@@ -2487,6 +2506,32 @@ function goBack() {
   if (!e) { goHome(); return; }
   zatrzymajEkran();
   document.getElementById('progressStrip').innerHTML = '';
+  if (biezacyEkran) {   // z tego ekranu strzałka „dalej" wróci
+    var py = przewijacz();
+    biezacyEkran.y = py ? py.scrollTop : 0;
+    przod.push(biezacyEkran);
+  }
+  biezacyEkran = null;
+  cofanie = true;
+  try { e.fn(); }
+  catch (err) { console.error(err); cofanie = false; goHome(); return; }
+  finally { cofanie = false; }
+  if (!biezacyEkran) biezacyEkran = e;
+  var s = przewijacz(); if (s) s.scrollTop = e.y || 0;
+  pokazWstecz();
+}
+
+// Strzałka „dalej": wraca na ekran, z którego cofnęliśmy się strzałką „wstecz".
+function goForward() {
+  var e = przod.pop();
+  if (!e) return;
+  zatrzymajEkran();
+  document.getElementById('progressStrip').innerHTML = '';
+  if (biezacyEkran) {
+    var py = przewijacz();
+    biezacyEkran.y = py ? py.scrollTop : 0;
+    historia.push(biezacyEkran);
+  }
   biezacyEkran = null;
   cofanie = true;
   try { e.fn(); }
@@ -2500,6 +2545,7 @@ function goBack() {
 function goHome() {
   zatrzymajEkran();
   historia = []; biezacyEkran = null;
+  if (!cofanie) przod = [];
   state.phase = 'tree';
   document.getElementById('progressStrip').innerHTML = '';
   render();
