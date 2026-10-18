@@ -137,6 +137,14 @@ KURS_LEKCJE.L03 = {
       ['многие вещи: chleba, sera, klucza, komputera','вещества: cukru, soku, deszczu'],
       ['польские города: Gdańska, Krakowa','здания и места: domu, sklepu, hotelu, teatru'],
       ['месяцы: stycznia, marca','дни: poniedziałku, wtorku']]},
+    {t:'tab', head:['Почти всегда -a','Почти всегда -u'], rows:[
+      ['валюты и меры: dolara, kilograma, metra, kilometra','транспорт: samochodu, roweru, autobusu, pociągu'],
+      ['инструменты и посуда: młotka, klucza, noża, talerza, garnka','жидкости: soku, majonezu, kleju'],
+      ['марки: Forda, Adidasa; танцы: walca, poloneza','сыпучее и «много чего»: makaronu, cukru, lasu'],
+      ['игры и спорт: tenisa, hokeja, brydża','абстрактное: problemu, hałasu, chaosu'],
+      ['части тела: brzucha, palca, nosa','дни недели: poniedziałku, wtorku, piątku'],
+      ['цветы, овощи, фрукты: tulipana, banana, ogórka; продукты: chleba, sera, naleśnika','']]},
+    {t:'uwaga', h:'Если сомневаешься, открой <b>Wikisłownik</b> (там склонение каждого слова). Бывают и два варианта сразу: <i>krawata / krawatu</i>. Для экзамена достаточно знать группы выше.'},
     {t:'uwaga', h:'Беглое <b>e</b> выпадает: pies → psa, ojciec → ojca, dzień → dnia, cukier → cukru, Marek → Marka. Слова на <b>-um</b> в единственном числе не меняются: w muzeum, do muzeum.'},
     {t:'przyklady', items:[
       ['Nie mam dziś czasu.','У меня сегодня нет времени.'],
@@ -161,6 +169,12 @@ KURS_LEKCJE.L03 = {
     {zdanie:'Nigdzie nie widzę ___ .', opcje:['mój telefon','mojego telefonu','moim telefonem'], ok:1, wyjasnienie:'отрицание → родительный: mojego telefonu.'},
     {zdanie:'Mieszkam obok ___ (kino).', ok:'kina', wyjasnienie:'obok + родительный; средний → -a.'},
     {zdanie:'Boję się ___ .', opcje:['ten pies','tego psa','tym psem'], ok:1, wyjasnienie:'bać się + родительный: tego psa.'},
+    {zdanie:'Nie mam ___ (samochód).', ok:'samochodu', wyjasnienie:'транспорт → -u: samochodu, roweru, autobusu.'},
+    {zdanie:'Potrzebuję ___ (młotek).', ok:'młotka', wyjasnienie:'инструменты → -a: młotka, noża, klucza.'},
+    {zdanie:'Nie lubię ___ (tenis).', ok:'tenisa', wyjasnienie:'игры и спорт → -a: tenisa, hokeja.'},
+    {zdanie:'Od ___ (poniedziałek) do piątku pracuję.', ok:'poniedziałku', wyjasnienie:'дни недели → -u: poniedziałku, piątku.'},
+    {zdanie:'Mieszkam niedaleko ___ (Gdańsk).', ok:'Gdańska', wyjasnienie:'города → -a: Gdańska, Krakowa.'},
+    {zdanie:'Nie ma ___ (problem)!', ok:'problemu', wyjasnienie:'абстрактное → -u: problemu, hałasu.'},
   ]
 };
 
@@ -237,6 +251,7 @@ KURS_LEKCJE.L05 = {
       ['женский и мужской на -a','-ą','mamą, kobietą, nocą, panią, kolegą'],
       ['множественное число','-ami','studentami, kobietami, oknami'],
       ['исключения мн.ч.','-mi','ludźmi, dziećmi, przyjaciółmi, pieniędzmi']]},
+    {t:'pulapka', h:'«Работаю <b>кем</b>» — <b>pracuję jako programista</b>: после <b>jako</b> именительный, не творительный. А вот «я программист» — <b>jestem programistą</b>. Прилагательное без существительного тоже остаётся в именительном: <b>Moja koleżanka jest ładna i wesoła</b>. Творительный нужен, только если дальше есть существительное: <b>jest ładną i wesołą dziewczyną</b>.'},
     {t:'uwaga', h:'Прилагательные: <b>-ym / -im</b> (z dobrym kolegą), <b>-ą</b> (z miłą koleżanką), во мн.ч. <b>-ymi / -imi</b> (z nowymi przyjaciółmi). С движением те же предлоги требуют винительного: <i>idę nad morze</i>, но <i>jestem nad morzem</i>.'},
     {t:'przyklady', items:[
       ['Z zawodu jestem fotografem.','По профессии я фотограф.'],
@@ -262,6 +277,10 @@ KURS_LEKCJE.L05 = {
     {zdanie:'W ogrodzie bawię się z ___ .', opcje:['dzieci','dziećmi','dzieciami'], ok:1, wyjasnienie:'исключение: dziećmi.'},
     {zdanie:'Pojedziemy do Krakowa ___ (pociąg).', ok:'pociągiem', wyjasnienie:'транспорт; после g → -iem.'},
     {zdanie:'Opiekuję się ___ (babcia).', ok:'babcią', wyjasnienie:'opiekować się + творительный.'},
+    {zdanie:'Pracuję jako ___ (fotograf).', opcje:['fotograf','fotografem','fotografa'], ok:0, wyjasnienie:'jako + именительный: pracuję jako fotograf.'},
+    {zdanie:'Jestem ___ (fotograf).', opcje:['fotograf','fotografem','fotografa'], ok:1, wyjasnienie:'być + профессия → творительный: jestem fotografem.'},
+    {zdanie:'Moja koleżanka jest ___ i wesoła.', opcje:['ładna','ładną','ładnej'], ok:0, wyjasnienie:'прилагательное без существительного — именительный.'},
+    {zdanie:'On jest wysokim ___ (mężczyzna).', ok:'mężczyzną', wyjasnienie:'прилагательное + существительное после być → творительный.'},
   ]
 };
 
@@ -277,6 +296,13 @@ KURS_LEKCJE.L06 = {
       ['безличные: podobać się, smakować, jest mi zimno / przykro / smutno, brakuje mi','Podoba <b>mi</b> się ten film.'],
       ['предлоги: dzięki, wbrew, przeciwko','dzięki <b>przyjacielowi</b>']]},
     {t:'pulapka', h:'«Благодарить маму» — <b>dziękować mamie</b> (дательный, а не винительный). «Мне нравится фильм» — <b>Podoba mi się film</b>: нравящаяся вещь — подлежащее, поэтому <b>Te buty mi się podobają</b> (мн.ч.).'},
+    {t:'tab', head:['Глагол с дательным','Пример (в русском падеж другой)'], rows:[
+      ['pogratulować komuś czegoś — поздравить с успехом','Pogratulowałem <b>mu</b> sukcesu.'],
+      ['podziękować komuś za coś — поблагодарить','Podziękowałam <b>jej</b> za pomoc.'],
+      ['ukraść komuś coś — украсть у кого-то','Ukradli <b>mi</b> portfel.'],
+      ['przyglądać się czemuś — разглядывать','Przyglądam się <b>tej fotografii</b>.'],
+      ['kibicować komuś — болеть за кого-то','Kibicuję <b>ci</b>.'],
+      ['być przeciw czemuś — быть против','Jestem przeciw <b>temu</b>.']]},
     {t:'h', h:'Окончания'},
     {t:'tab', head:['Род','Окончание','Пример'], rows:[
       ['мужской','-owi','studentowi, lekarzowi, Markowi'],
@@ -308,6 +334,12 @@ KURS_LEKCJE.L06 = {
     {zdanie:'Dzięki ___ (przyjaciel) znalazłem pracę.', ok:'przyjacielowi', wyjasnienie:'dzięki + дательный.'},
     {zdanie:'Daliśmy prezenty wszystkim ___ .', opcje:['dzieci','dzieciom','dziećmi'], ok:1, wyjasnienie:'мн.ч. → -om: dzieciom.'},
     {zdanie:'Nie przeszkadzaj ___ (tata), on pracuje.', ok:'tacie', wyjasnienie:'tata склоняется как женский: tacie.'},
+    {zdanie:'Ukradli ___ portfel w tramwaju.', opcje:['mnie','mi','mną'], ok:1, wyjasnienie:'ukraść komu (mi) co.'},
+    {zdanie:'Kibicuję ___ , trzymam kciuki!', opcje:['ci','cię','tobą'], ok:0, wyjasnienie:'kibicować + дательный: ci.'},
+    {zdanie:'Przyglądam się ___ (ta fotografia).', ok:'tej fotografii', wyjasnienie:'przyglądać się + дательный: tej fotografii.'},
+    {zdanie:'Jestem przeciw ___ (ten pomysł).', ok:'temu pomysłowi', wyjasnienie:'przeciw + дательный: temu pomysłowi.'},
+    {zdanie:'Pogratulowałem ___ (on) sukcesu.', ok:'mu', wyjasnienie:'pogratulować komu (mu) czego (sukcesu).'},
+    {zdanie:'Podziękowałam ___ (ona) za pomoc.', ok:'jej', wyjasnienie:'podziękować komu (jej) za co (za pomoc).'},
   ]
 };
 

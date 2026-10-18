@@ -123,6 +123,8 @@ stopniowanie, czasy, tryby, przyimki. Около 1800 неповторяющих
 музыку (techno, house, ambient), nordic walking в парке у дома, дизайн, vibe coding, путешествия. Рецензия — на «Złap mnie, jeśli
 potrafisz» (так попросил пользователь: это его реальная работа и выбор фильма).
 Новые тексты держать в этих фактах.
+Дополнительные монологи и диалоги темы — ключи `monolog2`, `monolog3`… и `sytuacja2`, `sytuacja3`… в `KURS_TEMATY`;
+дополнительные образцы сочинений — `inne:[{id,tytul,temat,wzor,wzor_ru}]` в `pisanie.js`.
 
 ## Навигация
 

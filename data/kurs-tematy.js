@@ -76,6 +76,7 @@ KURS_TEMATY.T02 = {
     ['buty','обувь'],['czapka','шапка'],['szalik','шарф'],['rozmiar','размер'],
     ['przymierzyć','примерить'],['przymierzalnia','примерочная'],['pasować (pasuje mi)','подходить, сидеть по размеру'],
     ['wyglądać na (+ B.) czterdzieści lat','выглядеть на сорок лет'],['być podobnym do (+ D.)','быть похожим на'],
+    ['koszulka','футболка'],['bluza','толстовка'],['w kratkę','в клетку'],['w paski','в полоску'],
   ],
   zwroty:[
     ['Jest wysokim, szczupłym mężczyzną.','Он высокий, стройный мужчина.'],
@@ -267,6 +268,7 @@ KURS_TEMATY.T06 = {
     ['ufać (+ C.)','доверять'],['polegać na (+ Msc.)','полагаться на'],['kłócić się','ссориться'],['pogodzić się','помириться'],
     ['cieszyć się z (+ D.)','радоваться чему-то'],['martwić się o (+ B.)','переживать за'],['denerwować się','нервничать, злиться'],
     ['czuć się samotnie','чувствовать себя одиноко'],['zaufanie','доверие'],
+    ['zaręczyć się','обручиться'],['narzeczony','жених'],['narzeczona','невеста'],['pierścionek','кольцо (на палец)'],['ślub','свадьба (церемония)'],['brać ślub','жениться, выходить замуж'],['oświadczyć się','сделать предложение'],
   ],
   zwroty:[
     ['Jest bardzo życzliwym człowiekiem.','Он очень доброжелательный человек.'],
@@ -451,6 +453,7 @@ KURS_TEMATY.T10 = {
     ['zamówić','заказать'],['rachunek','счёт'],['napiwek','чаевые'],['zarezerwować stolik','забронировать столик'],
     ['sztućce','столовые приборы'],['nóż','нож'],['widelec','вилка'],['łyżka','ложка'],['talerz','тарелка'],['szklanka','стакан'],['filiżanka','чашка'],
     ['pierogi','вареники (польские пироги)'],['żurek','журек (кислый суп на закваске)'],['bigos','бигос (тушёная капуста с мясом)'],['schabowy','свиная отбивная'],['Smacznego!','Приятного аппетита!'],
+    ['rezerwacja','бронь'],['menu dla dzieci','детское меню'],
   ],
   zwroty:[
     ['Poproszę kartę.','Дайте, пожалуйста, меню.'],
@@ -591,6 +594,7 @@ KURS_TEMATY.T13 = {
     ['odprawa','регистрация (на рейс)'],['bagaż podręczny','ручная кладь'],['bagaż rejestrowany','багаж (сдаваемый)'],['walizka','чемодан'],['plecak','рюкзак'],
     ['rezerwacja','бронь'],['miejsce przy oknie','место у окна'],['w jedną stronę','в одну сторону'],['tam i z powrotem','туда и обратно'],
     ['godziny szczytu','часы пик'],['prom','паром'],
+    ['zagubiony bagaż','потерянный багаж'],['kwit bagażowy','багажная квитанция'],['biuro bagażu','бюро багажа'],['zgłosić zgubienie','заявить о потере'],
   ],
   zwroty:[
     ['Poproszę bilet normalny do Krakowa, w jedną stronę.','Полный билет до Кракова в одну сторону, пожалуйста.'],
@@ -679,6 +683,7 @@ KURS_TEMATY.T15 = {
     ['szpital','больница'],['policja','полиция'],['prosto','прямо'],['w lewo','налево'],['w prawo','направо'],['skręcić','повернуть'],
     ['na rogu','на углу'],['naprzeciwko (+ D.)','напротив'],['niedaleko','недалеко'],['daleko','далеко'],['pieszo','пешком'],['piechotą','пешком (разг.)'],
     ['zgubić się','заблудиться'],['pytać o drogę','спрашивать дорогу'],
+    ['rower miejski','городской велосипед'],['ścieżka rowerowa','велодорожка'],['korek','пробка (на дороге)'],
   ],
   zwroty:[
     ['Przepraszam, jak dojść do dworca?','Извините, как пройти к вокзалу?'],
@@ -902,6 +907,7 @@ KURS_TEMATY.T20 = {
     ['klimat','климат'],['ochrona środowiska','охрана окружающей среды'],['zanieczyszczenie','загрязнение'],['smog','смог'],
     ['segregować śmieci','сортировать мусор'],['las','лес'],['jezioro','озеро'],['rzeka','река'],['wybrzeże','побережье'],
     ['zwierzęta domowe','домашние животные'],['rośliny','растения'],['zapowiadać (deszcz)','обещать, прогнозировать'],
+    ['środowisko naturalne','окружающая среда'],['oszczędzać energię','экономить энергию'],['ograniczać plastik','сокращать пластик'],
   ],
   zwroty:[
     ['Jaka jutro będzie pogoda?','Какая завтра будет погода?'],
@@ -990,6 +996,7 @@ KURS_TEMATY.T22 = {
     ['bieda','бедность'],['bezdomność','бездомность'],['uzależnienie','зависимость'],['samotność','одиночество'],
     ['cudzoziemiec','иностранец'],['imigrant','иммигрант'],['tolerancja','терпимость, толерантность'],['równość','равенство'],['wojna','война'],['pokój (na świecie)','мир (не война)'],
     ['uchodźca','беженец'],['wolontariat','волонтёрство'],['wolontariusz','волонтёр'],['pomagać potrzebującym','помогать нуждающимся'],
+    ['sprawca','виновный, преступник'],['zawiadomienie','заявление (о преступлении), уведомление'],
   ],
   zwroty:[
     ['Moim zdaniem największym problemem jest…','По-моему, самая большая проблема —…'],
@@ -1201,4 +1208,103 @@ KURS_TEMATY.T17.sytuacja2 = {
   cele:['Przywitać się','Przeprosić i powiedzieć, że nie przyjdziesz','Wyjaśnić, co Ci jest','Złożyć życzenia','Zaproponować inny termin'],
   zwroty:[['Słuchaj, mam złą wiadomość.','Слушай, у меня плохая новость.'],['Niestety nie dam rady przyjść.','К сожалению, я не смогу прийти.'],['Przeziębiłem się.','Я простудился.'],['Mam katar, kaszel i trochę gorączki.','У меня насморк, кашель и небольшая температура.'],['Nie chcę nikogo zarazić.','Я не хочу никого заразить.'],['Może spotkamy się w przyszłym tygodniu?','Может, встретимся на следующей неделе?']],
   wzor:'Kolega: Cześć, Iwan! Wszystko aktualne na sobotę?\nTy: Cześć, Tomek. Słuchaj, mam złą wiadomość. Niestety nie dam rady przyjść na twoje urodziny.\nKolega: Szkoda! A co się stało?\nTy: Przeziębiłem się. Od wczoraj mam katar, kaszel i trochę gorączki. Lekarz kazał mi zostać w domu.\nKolega: Oj, to nie brzmi dobrze. Bierzesz jakieś leki?\nTy: Tak, biorę tabletki i piję dużo herbaty z miodem. Poza tym nie chcę nikogo zarazić.\nKolega: Rozumiem, zdrowie jest najważniejsze.\nTy: Bardzo mi przykro. Z okazji urodzin życzę ci dużo zdrowia i szczęścia! Może spotkamy się w przyszłym tygodniu? Zapraszam cię na piwo.\nKolega: Dzięki! Może w piątek po pracy?\nTy: Piątek pasuje. Wtedy dam ci też prezent.\nKolega: Super. Kuruj się!\nTy: Dzięki, cześć!',
+};
+
+// ------------------------------------------------------------------------
+// Z prawdziwych sesji (relacje zdających, 2026): monologi marzeń i opinii
+// oraz dialogi, których brakowało — kolejne warianty tematów (monolog3, sytuacja3…).
+// ------------------------------------------------------------------------
+KURS_TEMATY.T04.monolog2 = {
+  typ:'marzenie',
+  temat:'Jaki dom lub jakie mieszkanie chciałby Pan mieć?',
+  plan:['Wstęp: gdzie bym chciał mieszkać','Opis: pokoje, ogród, otoczenie','Dlaczego właśnie tak','Podsumowanie: czy to realne'],
+  pytania:['Gdzie chciałby Pan mieszkać?','Ile pokoi miałoby Pana wymarzone mieszkanie?','Co byłoby w ogrodzie?','Jak daleko od centrum chciałby Pan mieszkać?'],
+  ru:'Монолог-мечта: условное наклонение (chciałbym, byłby, miałbym) и описание комнат. Тема реально была на экзамене в июне 2026.',
+  wzor:'Moje wymarzone mieszkanie jest duże i jasne. Chciałbym mieszkać w domu z ogrodem, najlepiej niedaleko morza i lasu. Na parterze byłby duży salon z kuchnią otwartą na jadalnię, bo lubimy gotować całą rodziną. Obok salonu chciałbym mieć mały pokój z biurkiem, regałem na płyty winylowe i dobrym gramofonem. To byłoby moje miejsce do pracy i do słuchania muzyki. Na piętrze byłyby trzy sypialnie: dla nas, dla córki i jedna dla gości, żeby przyjaciele z Petersburga i Warszawy mogli nas odwiedzać. Oliwia na pewno chciałaby mieć własną łazienkę i duże okno. W ogrodzie postawiłbym stół, grill i huśtawkę. Taki dom nie musiałby być luksusowy. Najważniejsze, żeby było w nim dużo światła i ciszy. Dzisiaj mieszkamy w małym mieszkaniu na czwartym piętrze, ale kiedyś chciałbym spełnić to marzenie. Dlatego co miesiąc odkładamy trochę pieniędzy.',
+};
+KURS_TEMATY.T13.monolog2 = {
+  typ:'marzenie',
+  temat:'Miejsce, do którego chciałby Pan pojechać. Dlaczego właśnie tam?',
+  plan:['Wstęp: gdzie chciałbym pojechać','Dlaczego to miejsce','Co bym tam zobaczył i robił','Z kim i kiedy; podsumowanie'],
+  pytania:['Dokąd chciałby Pan pojechać?','Dlaczego właśnie tam?','Z kim by Pan pojechał?','Jak długo trwałaby taka podróż?'],
+  ru:'Монолог-мечта о поездке. Тема была на экзамене в июне 2026. Опора: условное наклонение + «dlatego że…».',
+  wzor:'Moim wymarzonym miejscem na podróż jest Japonia. Zawsze chciałem tam pojechać, ponieważ interesuję się fotografią, designem i muzyką elektroniczną, a Tokio jest dla mnie stolicą wszystkich trzech. Chciałbym zobaczyć nowoczesne dzielnice pełne neonów, ale też stare świątynie i spokojne ogrody w Kioto. Bardzo zależy mi na tym, żeby odwiedzić sklepy z płytami winylowymi. Podobno można tam znaleźć rzadkie wydania, których nie ma nigdzie indziej. Pojechałbym tam z żoną i córką, bo Oliwia uwielbia japońskie bajki i chce spróbować prawdziwego sushi. Podróż trwa długo, więc zaplanowałbym co najmniej dwa tygodnie. Jeździlibyśmy szybkim pociągiem, jedlibyśmy lokalne potrawy i robilibyśmy mnóstwo zdjęć. Na razie nie mamy na to pieniędzy, ale zbieramy je od roku. Myślę, że taka wyprawa jest dla dziecka lekcją ciekawości świata, której nie da żadna szkoła.',
+};
+KURS_TEMATY.T07.monolog3 = {
+  typ:'marzenie',
+  temat:'Co by Pan zrobił, gdyby wygrał milion złotych?',
+  plan:['Wstęp: pierwsza reakcja','Po pierwsze, po drugie, po trzecie — na co wydam','Co zostawię na później','Podsumowanie: czy pieniądze dają szczęście'],
+  pytania:['Co by Pan kupił za pierwsze pieniądze?','Czy rzuciłby Pan pracę?','Komu by Pan pomógł?','Czy pieniądze dają szczęście?'],
+  ru:'Монолог «что бы ты сделал, если бы…»: период условия gdybym + прошедшее время, главная часть — условное. Тема была на экзамене в июне 2026.',
+  wzor:'Gdybym wygrał milion złotych, najpierw bardzo bym się ucieszył, a potem spokojnie zastanowił, co zrobić z tymi pieniędzmi. Po pierwsze, kupiłbym mieszkanie dla rodziny, żeby żona i córka miały własny kąt. Po drugie, odłożyłbym część pieniędzy na naukę Oliwii, bo wykształcenie jest bardzo ważne. Dalej, kupiłbym dobry sprzęt do nagrywania muzyki i kilka rzadkich płyt winylowych, o których od dawna marzę. Poza tym wybralibyśmy się całą rodziną w daleką podróż, na przykład do Japonii. Chciałbym też pomóc rodzicom w Petersburgu i dziadkowi Michałowi. Na koniec zostawiłbym trochę pieniędzy na czarną godzinę. Nie rzuciłbym pracy, bo fotografia sprawia mi przyjemność, ale mógłbym pracować mniej i mieć więcej czasu dla rodziny. Myślę, że pieniądze nie dają szczęścia, ale na pewno pomagają żyć spokojniej.',
+};
+KURS_TEMATY.T15.monolog2 = {
+  typ:'opinia',
+  temat:'Czy warto korzystać z roweru miejskiego?',
+  plan:['Wstęp: co to jest rower miejski','Zalety','Wady','Moje zdanie i podsumowanie'],
+  pytania:['Czy korzysta Pan z roweru miejskiego?','Dlaczego rowery miejskie są popularne?','Jakie są ich wady?','Czy w Pana mieście są ścieżki rowerowe?'],
+  ru:'Монолог-мнение о городском велосипеде (на экзамене в июне 2026 просили выразить мнение). Схема: за → против → вывод.',
+  wzor:'W Gdańsku od kilku lat działa rower miejski, z którego korzystają tysiące osób. Moim zdaniem warto z niego korzystać, szczególnie w dużym mieście. Po pierwsze, to tani i szybki środek transportu. Rower można wypożyczyć w jednym miejscu i zostawić w innym, a w korkach jedzie się szybciej niż samochodem. Po drugie, jazda na rowerze jest zdrowa i pomaga dbać o środowisko, bo rower nie produkuje spalin. Ja sam często jeżdżę rowerem miejskim, kiedy jest ładna pogoda i nie spieszę się do pracy. Z drugiej strony są też wady. Zimą i w deszczu nie każdy ma ochotę jechać, a w centrum brakuje bezpiecznych ścieżek rowerowych. Zdarza się też, że w pobliżu nie ma wolnego roweru. Podsumowując, uważam, że rower miejski to świetne uzupełnienie komunikacji miejskiej, ale miasto powinno budować więcej ścieżek.',
+};
+KURS_TEMATY.T20.monolog2 = {
+  typ:'opinia',
+  temat:'Jak dbać o środowisko naturalne?',
+  plan:['Wstęp: dlaczego to ważne','Co robię ja i moja rodzina','Co powinni robić inni, firmy i państwo','Podsumowanie'],
+  pytania:['Czy segreguje Pan śmieci?','Jak dojeżdża Pan do pracy?','Co jest największym problemem dla środowiska?','Co robią w Pana kraju, żeby chronić przyrodę?'],
+  ru:'Монолог «как заботиться об окружающей среде» (был на экзамене в июне 2026). Примеры из своей жизни дают баллы за выполнение задания.',
+  wzor:'Dbanie o środowisko jest dziś ważniejsze niż kiedykolwiek, dlatego staram się robić swoje, chociaż to nie zawsze jest łatwe. W domu segregujemy śmieci: papier, plastik i szkło wyrzucamy osobno. Nie kupuję wody w plastikowych butelkach, tylko piję wodę z kranu. Do pracy jeżdżę tramwajem, a w weekendy chodzę pieszo albo jeżdżę rowerem, więc rzadko używamy samochodu. Poza tym uczę córkę, żeby wyłączała światło i nie marnowała jedzenia. Moim zdaniem każdy powinien zacząć od małych rzeczy, bo razem możemy dużo zmienić. Z drugiej strony ważne jest też to, co robią firmy i państwo. Powinny inwestować w czystą energię i ograniczać plastik w sklepach. Kiedy chodzę na nordic walking do parku i widzę śmieci, zawsze jest mi smutno. Podsumowując, uważam, że ochrona środowiska to obowiązek nas wszystkich, bo mamy tylko jedną planetę.',
+};
+KURS_TEMATY.T10.sytuacja2 = {
+  polecenie:'Chce Pan zarezerwować stolik w restauracji na sobotni wieczór z okazji urodzin żony. Proszę zadzwonić do restauracji: podać termin, godzinę i liczbę osób, zapytać o menu dla dzieci i o możliwość zamówienia tortu.',
+  rola_ja:'klient',
+  rola_on:'pracownik restauracji',
+  ru:'Официальный звонок: Pan/Pani. Назови день, время, число людей, фамилию по буквам и телефон. Задание реально было на экзамене в июне 2026.',
+  cele:['Przywitać się i powiedzieć, że chce Pan zarezerwować stolik','Podać dzień, godzinę i liczbę osób','Zapytać o menu dla dzieci','Zapytać o tort urodzinowy','Podać nazwisko i numer telefonu, podziękować'],
+  zwroty:[['Chciałbym zarezerwować stolik na sobotę.','Хотел бы забронировать столик на субботу.'],['Na godzinę osiemnastą, dla sześciu osób.','На 18:00, на шесть человек.'],['Mamy urodziny mojej żony.','У моей жены день рождения.'],['Czy macie menu dla dzieci?','Есть ли у вас детское меню?'],['Czy mogę zamówić tort urodzinowy?','Могу ли я заказать праздничный торт?'],['Nazwisko: Pietrow, P-I-E-T-R-O-W.','Фамилия: Петров, П-И-Е-Т-Р-О-В.']],
+  wzor:'Pracownik: Restauracja „Pod Żurawiem”, dzień dobry. Słucham.\nTy: Dzień dobry. Chciałbym zarezerwować stolik na sobotę wieczorem.\nPracownik: Na którą godzinę i dla ilu osób?\nTy: Na godzinę osiemnastą, dla sześciu osób, w tym dla dwojga dzieci. Mamy urodziny mojej żony.\nPracownik: Bardzo mi miło. Na jakie nazwisko mam zapisać rezerwację?\nTy: Pietrow, P-I-E-T-R-O-W.\nPracownik: Dziękuję. Stolik będzie czekał od osiemnastej.\nTy: Czy macie menu dla dzieci? Moja córka ma dziesięć lat i nie lubi ostrego jedzenia.\nPracownik: Tak, mamy specjalne menu: zupy, makaron i naleśniki.\nTy: Świetnie. Czy mogę zamówić u Państwa tort urodzinowy?\nPracownik: Oczywiście, ale proszę zamówić go dzień wcześniej. Mamy tort czekoladowy i sernik.\nTy: Poproszę czekoladowy, dla sześciu osób.\nPracownik: Dobrze, zapisuję. Proszę jeszcze o numer telefonu.\nTy: Sześćset sto dwadzieścia trzy, czterysta pięćdziesiąt sześć.\nPracownik: Dziękuję, rezerwacja potwierdzona. Do zobaczenia w sobotę.\nTy: Bardzo dziękuję. Do widzenia.',
+};
+KURS_TEMATY.T10.sytuacja3 = {
+  polecenie:'Wczoraj był Pan z żoną w nowej restauracji. Jedzenie było zimne, obsługa niemiła, a na stolik czekali Państwo prawie godzinę. Opowiada Pan o tym koledze z pracy, który chciał tam pójść. Proszę opisać, co się stało, powiedzieć, co Panu się nie podobało, i doradzić koledze, czy warto tam iść.',
+  rola_ja:'klient, który był w restauracji',
+  rola_on:'kolega z pracy',
+  ru:'Неформальный разговор на «ты»: расскажи, что случилось, что не понравилось, и дай совет. Задание реально было на экзамене в июне 2026 (пожаловаться подруге на ресторан).',
+  cele:['Zacząć rozmowę i powiedzieć, gdzie Pan był','Opisać, co się stało (czekanie, obsługa, jedzenie)','Powiedzieć, co Panu się nie podobało','Doradzić koledze, czy iść do tej restauracji','Zaproponować inne miejsce'],
+  zwroty:[['Niestety, nie polecam tej restauracji.','К сожалению, не рекомендую этот ресторан.'],['Mieliśmy bardzo złe doświadczenie.','У нас был очень плохой опыт.'],['Czekaliśmy na stolik prawie godzinę.','Мы ждали столик почти час.'],['Kelner był niemiły i pomylił zamówienie.','Официант был груб и перепутал заказ.'],['Zupa była zimna, a rachunek bardzo wysoki.','Суп был холодным, а счёт очень высоким.'],['Polecam raczej inne miejsce.','Рекомендую скорее другое место.']],
+  wzor:'Ty: Cześć, Tomek! Pytałeś mnie o tę nową restaurację przy Długiej. Byliśmy tam wczoraj z Natalią.\nKolega: No właśnie! I jak? Warto iść?\nTy: Niestety, nie polecam. Mieliśmy bardzo złe doświadczenie.\nKolega: Naprawdę? Co się stało?\nTy: Najpierw czekaliśmy na stolik prawie godzinę, chociaż mieliśmy rezerwację.\nKolega: Oj, to długo.\nTy: Potem kelner był bardzo niemiły. Ani razu się nie uśmiechnął i pomylił nasze zamówienie. Zamiast ryby dostałem mięso, a zupa była zimna.\nKolega: A mówiliście o tym kelnerowi?\nTy: Tak, ale powiedział tylko, że kuchnia ma dużo pracy. A rachunek był wysoki: prawie trzysta złotych.\nKolega: To rzeczywiście przykre. Znasz jakieś lepsze miejsce?\nTy: Jasne. Polecam małą knajpkę w Oliwie, jedzenie jest tam pyszne i niedrogie. Możemy pójść razem w piątek.\nKolega: Super, chętnie. Dzięki za radę!\nTy: Nie ma za co. Do piątku!',
+};
+KURS_TEMATY.T13.sytuacja2 = {
+  polecenie:'Wylądował Pan na lotnisku, ale Pana walizka nie dotarła. Proszę zgłosić zgubienie bagażu w biurze bagażu: opisać walizkę, podać numer lotu i adres, pod który ma zostać odesłana, i zapytać, co będzie dalej.',
+  rola_ja:'pasażer',
+  rola_on:'pracownik biura bagażu',
+  ru:'Официальная ситуация. Опиши чемодан (размер, цвет, особая примета), назови рейс, адрес и телефон. Задание реально было на экзамене в июне 2026 (сообщить о потере багажа).',
+  cele:['Przywitać się i zgłosić zgubiony bagaż','Podać numer lotu i numer z kwitka','Opisać walizkę i powiedzieć, co jest w środku','Podać adres i numer telefonu','Zapytać, co będzie dalej'],
+  zwroty:[['Moja walizka nie dotarła.','Мой чемодан не прибыл.'],['Numer lotu to…','Номер рейса —…'],['To duża, granatowa walizka na kółkach.','Это большой тёмно-синий чемодан на колёсиках.'],['Na rączce jest kolorowa wstążka.','На ручке цветная ленточка.'],['Proszę odesłać ją do hotelu…','Прошу отправить его в отель…'],['Kiedy mogę się spodziewać walizki?','Когда мне ждать чемодан?']],
+  wzor:'Pracownik: Biuro bagażu, dzień dobry. W czym mogę pomóc?\nTy: Dzień dobry. Przyleciałem z Gdańska do Rzymu, ale moja walizka nie dotarła.\nPracownik: Bardzo mi przykro. Proszę podać numer lotu i numer z kwitka bagażowego.\nTy: Numer lotu to LO 3911, a numer na kwitku to GDN 482 915.\nPracownik: Dziękuję. Jak wygląda ta walizka?\nTy: To duża, granatowa walizka na kółkach, z czarnym uchwytem. Na rączce jest kolorowa wstążka, żeby łatwo ją poznać.\nPracownik: A co jest w środku?\nTy: Ubrania, kosmetyki i leki dla córki. Leki są dla nas bardzo ważne.\nPracownik: Rozumiem. Spróbujemy ją znaleźć jak najszybciej. Pod jaki adres mamy ją odesłać?\nTy: Do hotelu „Roma”, przy ulicy Via Veneto 12. Mój numer telefonu to 600 123 456.\nPracownik: Dobrze, zapisałem. Zwykle walizka dociera w ciągu doby.\nTy: A co mam zrobić do tego czasu? Potrzebuję kupić najpotrzebniejsze rzeczy.\nPracownik: Wypełnimy formularz, a Pan zachowa rachunki. Zwrócimy koszty zakupów.\nTy: Bardzo dziękuję za pomoc. Do widzenia.',
+};
+KURS_TEMATY.T22.sytuacja2 = {
+  polecenie:'Ukradziono Panu telefon w tramwaju. Proszę zgłosić kradzież na policji: opisać telefon, powiedzieć, kiedy i gdzie to się stało, i podać swój numer telefonu.',
+  rola_ja:'poszkodowany',
+  rola_on:'policjant',
+  ru:'Официальная ситуация: Pan/Pani. Опиши телефон (цвет, чехол, особая примета) и назови СВОЙ номер. Задание реально было на экзамене в июне 2026.',
+  cele:['Przywitać się i zgłosić kradzież','Powiedzieć, kiedy i gdzie to się stało','Opisać telefon','Podać swój numer telefonu','Podziękować i pożegnać się'],
+  zwroty:[['Chcę zgłosić kradzież telefonu.','Хочу заявить о краже телефона.'],['Ukradziono mi telefon w tramwaju.','У меня украли телефон в трамвае.'],['To czarny smartfon w niebieskim etui.','Это чёрный смартфон в синем чехле.'],['Z tyłu ma małą rysę.','Сзади у него небольшая царапина.'],['Mój numer telefonu to…','Мой номер телефона —…'],['Zablokowałem już kartę SIM.','Я уже заблокировал сим-карту.']],
+  wzor:'Policjant: Dzień dobry, w jakiej sprawie?\nTy: Dzień dobry. Chcę zgłosić kradzież telefonu.\nPolicjant: Kiedy i gdzie to się stało?\nTy: Dzisiaj rano, około ósmej, w tramwaju jadącym w stronę Wrzeszcza. Ukradziono mi telefon z kieszeni kurtki.\nPolicjant: Jak wyglądał ten telefon?\nTy: To czarny smartfon z dużym ekranem, w niebieskim silikonowym etui. Z tyłu, przy aparacie, ma małą rysę.\nPolicjant: Jaki jest numer telefonu?\nTy: Mój numer to 600 123 456. Zablokowałem już kartę SIM.\nPolicjant: Czy telefon był zabezpieczony hasłem?\nTy: Tak, kodem i odciskiem palca. Mam w nim ważne zdjęcia z pracy.\nPolicjant: Czy widział Pan sprawcę?\nTy: Niestety nie. Poczułem tylko, że ktoś mnie popchnął, a po chwili telefonu już nie było.\nPolicjant: Dobrze, spiszemy zawiadomienie. Proszę podać imię i nazwisko.\nTy: Iwan Pietrow, mieszkam w Gdańsku na Przymorzu.\nPolicjant: Dziękuję. Skontaktujemy się z Panem, jeśli telefon się znajdzie.\nTy: Bardzo dziękuję. Do widzenia.',
+};
+KURS_TEMATY.T06.sytuacja2 = {
+  polecenie:'Pana koleżanka ma jutro ważny egzamin i bardzo się denerwuje. Proszę z nią porozmawiać: zapytać, jaki to egzamin, uspokoić ją i udzielić rady, co zrobić dzień przed egzaminem, żeby zmniejszyć stres.',
+  rola_ja:'przyjaciel',
+  rola_on:'zdenerwowana koleżanka',
+  ru:'Неформальный разговор на «ты»: спроси, какой экзамен, успокой и дай 2–3 совета. Задание реально было на экзамене в июне 2026.',
+  cele:['Zapytać, jak się czuje i jaki to egzamin','Uspokoić koleżankę','Dać radę (przed egzaminem)','Zaproponować coś miłego po egzaminie','Życzyć powodzenia'],
+  zwroty:[['Jak się czujesz? Jaki to egzamin?','Как себя чувствуешь? Какой это экзамен?'],['Spokojnie, na pewno dasz radę.','Спокойно, ты обязательно справишься.'],['Po pierwsze, nie ucz się do późna.','Во-первых, не учись допоздна.'],['Idź na spacer, to pomaga na stres.','Сходи на прогулку, это помогает от стресса.'],['Połóż się dziś wcześnie spać.','Ложись сегодня пораньше.'],['Trzymam kciuki!','Держу кулачки!']],
+  wzor:'Ty: Cześć, Kasiu! Słyszałem, że jutro masz egzamin. Jak się czujesz?\nKoleżanka: Cześć! Strasznie się denerwuję. Nie mogę się skupić.\nTy: Rozumiem. A jaki to egzamin?\nKoleżanka: Teoria na prawo jazdy. Boję się, że wszystko zapomnę.\nTy: Spokojnie, na pewno dobrze się przygotowałaś. Ile razy robiłaś testy?\nKoleżanka: Chyba dwadzieścia.\nTy: No widzisz! To naprawdę dużo. Mam kilka rad na dzień przed egzaminem. Po pierwsze, nie ucz się już do późna, tylko przejrzyj najtrudniejsze pytania.\nKoleżanka: A co jeszcze?\nTy: Po drugie, idź na spacer albo poćwicz, to pomaga na stres. Wieczorem zjedz coś dobrego i połóż się wcześnie spać.\nKoleżanka: Spróbuję. Myślisz, że dam radę?\nTy: Oczywiście! Zawsze dawałaś sobie radę. A po egzaminie zapraszam cię na kawę, żeby to uczcić.\nKoleżanka: Dzięki, jesteś kochany. Trzymaj kciuki!\nTy: Trzymam z całych sił. Daj znać, jak poszło!',
+};
+KURS_TEMATY.T06.sytuacja3 = {
+  polecenie:'Spotkał Pan przypadkiem koleżankę, której nie widział Pan od dawna. Dowiedział się Pan, że jest zaręczona. Proszę wyrazić radość, pogratulować i zaprosić ją na kawę.',
+  rola_ja:'dawny kolega',
+  rola_on:'koleżanka, która się zaręczyła',
+  ru:'Неформальный диалог. Больше времени оставь на приглашение: это обязательный пункт и в нём больше всего шагов (позвать, день, время, место). Экзаменатор часто создаёт препятствие: «в этот день не могу».',
+  cele:['Przywitać się i wyrazić radość ze spotkania','Zapytać o nowości, zauważyć pierścionek','Wyrazić radość i pogratulować','Zaprosić na kawę, uzgodnić dzień, godzinę i miejsce','Pożegnać się, pozdrowić narzeczonego'],
+  zwroty:[['Tak dawno cię nie widziałem!','Так давно тебя не видел!'],['Świetnie wyglądasz!','Отлично выглядишь!'],['O, widzę, że masz piękny pierścionek!','О, вижу, у тебя красивое кольцо!'],['To wspaniała wiadomość! Gratuluję!','Какая чудесная новость! Поздравляю!'],['Masz ochotę na kawę?','Хочешь кофе?'],['Pozdrów ode mnie narzeczonego!','Передай привет жениху!']],
+  wzor:'Ty: Cześć, Marto! Tak dawno cię nie widziałem!\nKoleżanka: Iwan! Co za niespodzianka!\nTy: Świetnie wyglądasz! A co ty tu robisz? Myślałem, że mieszkasz w Krakowie.\nKoleżanka: Bo mieszkam, ale przyjechałam na weekend do rodziców. A ty dalej pracujesz w tym samym studiu?\nTy: Tak, dalej. O, widzę, że masz na palcu piękny pierścionek!\nKoleżanka: No tak, zaręczyłam się miesiąc temu!\nTy: Naprawdę? To wspaniała wiadomość! Gratuluję ci, bardzo się cieszę! Jak on ma na imię?\nKoleżanka: Marek. Poznaliśmy się na kursie tańca.\nTy: Jak romantycznie! A kiedy bierzecie ślub?\nKoleżanka: W przyszłym roku, latem.\nTy: Chcę wszystko wiedzieć, ale niestety trochę się spieszę. Opowiem ci o sobie przy kawie. Masz ochotę na kawę?\nKoleżanka: Z przyjemnością! Kiedy masz czas?\nTy: Co robisz w sobotę po południu?\nKoleżanka: W sobotę niestety nie mogę.\nTy: Szkoda. A może w niedzielę? Znam nową kawiarnię przy rynku. Mają tam świetną kawę i ciasto.\nKoleżanka: W niedzielę mi pasuje. O której?\nTy: O piętnastej. Dasz mi swój numer telefonu?\nKoleżanka: Jasne, zapisz.\nTy: Będziemy w kontakcie. Do zobaczenia w niedzielę! Pozdrów ode mnie narzeczonego!\nKoleżanka: Dziękuję, pozdrowię. Cześć!',
 };

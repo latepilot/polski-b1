@@ -64,6 +64,9 @@ function dataPL(iso){ const d=new Date(iso+'T12:00:00'); return DNI_TYG[d.getDay
 // ---------- opisy zadań ----------
 const IKONY = {lekcja:'egz-book', slowa:'egz-pen', mowa:'egz-ear', egz:'egz-target', pisanie:'egz-pen',
   powtorka:'egz-bolt', bledy:'egz-bolt', fiszki:'egz-book', zewn:'egz-ear', probny:'egz-target', wynik:'egz-check'};
+// Dodatkowe warianty tematu: klucze monolog2, monolog3… i sytuacja2, sytuacja3…
+const jestMon = co => /^monolog\d+$/.test(co), jestSyt = co => /^sytuacja\d+$/.test(co);
+const dodatkowe = (T, baza) => Object.keys(T||{}).filter(k=>new RegExp('^'+baza+'\\d+$').test(k)).sort((a,b)=>parseInt(a.slice(baza.length))-parseInt(b.slice(baza.length)));
 const MOWA_NAZWA = {monolog:'монолог', sytuacja:'ролевая ситуация', opis_osoby:'описание человека',
   monolog2:'монолог — ещё вариант', sytuacja2:'ситуация — ещё вариант',
   ilustracja:'описание фотографии', pelny:'полная устная часть', opis_frazy:'обороты для устной части'};
@@ -450,7 +453,7 @@ function mowa(id, co, n, i){
   wejdz('mowa:'+id+':'+co, ()=>mowa(id,co,n,i));
   V.mowa={id,co,n,i};
   let h='<div class="egz kurs"><div class="egz-ex">';
-  h+=`<div class="egz-hint">Говорение · ${MOWA_NAZWA[co]||co}</div>`;
+  h+=`<div class="egz-hint">Говорение · ${MOWA_NAZWA[co] || (jestMon(co)?'монолог — ещё вариант':jestSyt(co)?'ситуация — ещё вариант':co)}</div>`;
 
   if(co==='opis_frazy'){
     h+=`<h3 class="kurs-lh">Обороты для всех трёх заданий</h3>
@@ -464,13 +467,13 @@ function mowa(id, co, n, i){
     return przycisk('Готово ✓', ()=>{ oznacz(n,i); dzienEkran(n); });
   }
 
-  const M=T.monolog, Y = (co==='sytuacja2' && T.sytuacja2) ? T.sytuacja2 : T.sytuacja;
-  const TYP_MONOLOGU = {opinia:'Монолог-мнение о проблеме', wybor:'Монолог-выбор из двух вариантов'};
+  const M=T.monolog, Y = (jestSyt(co) && T[co]) ? T[co] : T.sytuacja;
+  const TYP_MONOLOGU = {opinia:'Монолог-мнение о проблеме', wybor:'Монолог-выбор из двух вариантов', marzenie:'Монолог-мечта: «что бы ты сделал, если бы…»'};
   const inny = (co2, typ, temat) => `<div class="egz-card" onclick="KURS.mowa('${id}','${co2}',${n},${i})"><div class="egz-ico">${ik('egz-ear')}</div>
     <div class="egz-body"><div class="egz-t">Ещё вариант: ${esc(typ)}</div><div class="egz-d">${esc(temat)}</div></div><div class="egz-meta">→</div></div>`;
-  if(co==='monolog' || co==='opis_osoby' || co==='monolog2'){
-    const mm = (co==='opis_osoby' && T.opis_osoby) ? T.opis_osoby : (co==='monolog2' && T.monolog2) ? T.monolog2 : M;
-    if(co==='monolog2' && mm.typ) h+=`<div class="kurs-cel"><b>${TYP_MONOLOGU[mm.typ]||''}</b> — на экзамене монолог бывает трёх видов: «расскажи о…», мнение о проблеме и выбор из двух вариантов.</div>`;
+  if(co==='monolog' || co==='opis_osoby' || jestMon(co)){
+    const mm = (co==='opis_osoby' && T.opis_osoby) ? T.opis_osoby : (jestMon(co) && T[co]) ? T[co] : M;
+    if(jestMon(co) && mm.typ) h+=`<div class="kurs-cel"><b>${TYP_MONOLOGU[mm.typ]||''}</b> — на экзамене монолог бывает трёх видов: «расскажи о…», мнение о проблеме и выбор из двух вариантов.</div>`;
     h+=`<div class="kurs-karta"><div class="kurs-karta-n">Zadanie 2 · Monolog</div>
       <div class="kurs-karta-t">${mm.temat}</div>
       <div class="kurs-karta-s">Proszę mówić 2–3 minuty. Plan wypowiedzi:</div>
@@ -482,7 +485,7 @@ function mowa(id, co, n, i){
     if(T.zwroty) h+=`<h4 class="kurs-h4">Лексика темы</h4>${lista(T.zwroty)}`;
     h+=wzorBlok(mm.wzor);
   }
-  else if(co==='sytuacja' || co==='sytuacja2'){
+  else if(co==='sytuacja' || jestSyt(co)){
     h+=`<div class="kurs-karta"><div class="kurs-karta-n">Zadanie 3 · Sytuacja komunikacyjna</div>
       <div class="kurs-karta-t">${Y.polecenie}</div>
       <div class="kurs-karta-s">Twoja rola: ${Y.rola_ja}. Egzaminator: ${Y.rola_on}.</div></div>
@@ -519,10 +522,10 @@ function mowa(id, co, n, i){
 
   // Dodatkowe warianty tematu — widoczne z każdego ekranu mowy, bo nie każdy
   // temat ma w planie i monolog, i sytuację.
-  if(T.monolog2 && co!=='monolog2') h+=inny('monolog2', TYP_MONOLOGU[T.monolog2.typ]||'монолог', T.monolog2.temat);
-  if(T.sytuacja2 && co!=='sytuacja2') h+=inny('sytuacja2', 'другая ситуация', T.sytuacja2.polecenie);
-  if(co==='monolog2') h+=inny('monolog', 'монолог «расскажи о…»', M.temat);
-  if(co==='sytuacja2') h+=inny('sytuacja', 'основная ситуация темы', T.sytuacja.polecenie);
+  dodatkowe(T,'monolog').filter(k=>k!==co).forEach(k=>h+=inny(k, TYP_MONOLOGU[T[k].typ]||'монолог', T[k].temat));
+  dodatkowe(T,'sytuacja').filter(k=>k!==co).forEach(k=>h+=inny(k, 'другая ситуация', T[k].polecenie));
+  if(jestMon(co)) h+=inny('monolog', 'монолог «расскажи о…»', M.temat);
+  if(jestSyt(co)) h+=inny('sytuacja', 'основная ситуация темы', T.sytuacja.polecenie);
 
   h+=`<h4 class="kurs-h4">Тренировка с Claude голосом</h4>
     <ol class="kurs-ul kurs-kroki">
@@ -572,9 +575,9 @@ const promptOcena = (zadanie, max) => `Когда я закончу, выйди 
 ${PROMPT_BLEDY}`;
 
 function promptMowa(T, co){
-  const M=T.monolog, Y=(co==='sytuacja2'&&T.sytuacja2)?T.sytuacja2:T.sytuacja;
-  if(co==='monolog' || co==='opis_osoby' || co==='monolog2'){
-    const mm=(co==='opis_osoby'&&T.opis_osoby)?T.opis_osoby:(co==='monolog2'&&T.monolog2)?T.monolog2:M;
+  const M=T.monolog, Y=(jestSyt(co)&&T[co])?T[co]:T.sytuacja;
+  if(co==='monolog' || co==='opis_osoby' || jestMon(co)){
+    const mm=(co==='opis_osoby'&&T.opis_osoby)?T.opis_osoby:(jestMon(co)&&T[co])?T[co]:M;
     return `${PROMPT_WSTEP}
 
 Сегодня только задание 2 — монолог.
@@ -586,7 +589,7 @@ ${promptOcena('монолог', 7)}
 
 Начни: поздоровайся и дай мне тему.`;
   }
-  if(co==='sytuacja' || co==='sytuacja2'){
+  if(co==='sytuacja' || jestSyt(co)){
     return `${PROMPT_WSTEP}
 
 Сегодня только задание 3 — ситуация.
@@ -860,13 +863,30 @@ function egzaminInfo(){
     <ul class="kurs-ul">
       <li>В бланке три набора (zestaw), в каждом короткое и длинное задание. Выбираешь <b>один набор целиком</b>, смешивать нельзя. Выбирай по длинному заданию: короткие формы — это шаблон.</li>
       <li>Объём: короткое около 30 слов, длинное 150–170, вместе около 200. Норма напечатана в задании. Допуск <b>±10%</b>: меньше — снимают баллы, больше — всё после лимита не читают. Первое, что делает экзаменатор, — считает слова.</li>
-      <li>Словами считаются предлоги и союзы (i, w, z), подпись, место и дата. «5 lipca 2025 roku» — 4 слова, e-mail — одно.</li>
+      <li>Словами считаются предлоги и союзы (i, w, z), подпись, место и дата. Место и дату пиши коротко, одной строкой справа вверху: <i>Gdańsk, 17.10.2026 r.</i> А «5 lipca 2025 roku» словами — уже 4 слова. E-mail — одно слово.</li>
+      <li>Пример бюджета: открытка в 30 слов (pozdrowienia профессору) — место и дата 2 + обращение <i>Szanowny Panie Profesorze</i> 3 + основной текст 23 + имя и фамилия 2. Максимум с допуском — 33. В основном тексте три предложения: <i>Przesyłam serdeczne pozdrowienia z…</i> (назови всё, что требует задание), отношение (<i>Wszystko mi się podoba</i>), тёплая фраза (<i>Z sentymentem wspominam Pana lekcje</i>). Для e-mail и SMS места и даты нет, лишние слова добавь в основной текст.</li>
       <li>Чтобы не сбиться, ставь на полях точку каждые 20 слов.</li>
       <li>Время: короткое ~10 минут, длинное 30–45, остальное — перечитать и исправить ошибки.</li>
       <li><b>Пиши сразу набело</b>, на черновике только план. Ошибку аккуратно зачеркни. Карандаш и корректор запрещены — только ручка, синяя или чёрная.</li>
       <li>Не успел переписать из черновика — напиши в чистовике <i>Proszę o sprawdzenie dalszej części w brudnopisie</i> и чётко отметь кусок в черновике. Его обязаны проверить.</li>
       <li>Почерк тоже оценивают — тренируйся писать от руки.</li>
-      <li>Оценка: выполнение задания 10, языковые средства 10, правильность 10.</li></ul>
+      <li>Оценка: выполнение задания 10, языковые средства 10, правильность 10.</li>
+      <li><i>Esej</i> — рассуждение с аргументами, <i>opowiadanie</i> — рассказ с завязкой, кульминацией и неожиданной развязкой, <i>sprawozdanie</i> — хронологический отчёт, где ничего необычного не происходит. Esej не должен превращаться в opowiadanie.</li>
+      <li>Если в начале написал <i>Szanowni Państwo</i>, дальше нельзя ты и «вы»: только Państwo, Pan, Pani. Не путай: <i>życzenia</i> — праздники, <i>gratulacje</i> — достижение, <i>pozdrowienia</i> — привет с отдыха, это не поздравление.</li>
+      <li>Темы длинных текстов повторяются: путешествие, характеристика человека (шеф, коллеги, друг), работа и коллеги, книги и фильмы, переезд, плюсы и минусы, рассказ о своей стране и о Польше, весёлая история с неожиданной развязкой. Подготовь по тексту на каждую.</li></ul>
+    <h4 class="kurs-h4">Обращение (zwrot do adresata) — пишется всегда, кроме ogłoszenie</h4>
+    <ul class="kurs-ul">
+      <li><b>К группе:</b> <i>Szanowni Państwo!</i> (компания, учреждение, мужчины и женщины), <i>Szanowne Panie! / Szanowni Panowie!</i>; <i>Drogie Koleżanki, Drodzy Koledzy!</i> (коллеги); <i>Drodzy Sąsiedzi! Drodzy Uczniowie!</i> (по названию группы); <i>Drodzy Nowożeńcy!</i>; <i>Moi Drodzy!</i> (друзья, есть мужчины), <i>Moje Drogie!</i> (только женщины).</li>
+      <li><b>К одному человеку:</b> <i>Panie Piotrze! Pani Katarzyno!</i> (взрослый без титула, при тёплых отношениях можно <i>Drogi Panie Piotrze</i>); <i>Szanowny Panie Profesorze! Szanowna Pani Profesor!</i> (вуз); <i>Szanowny Panie Dyrektorze! Szanowna Pani Kierownik!</i> (начальник); <i>Kochana Ciociu, Babciu, Mamo!</i> (родные); <i>Drogi Piotrku! Droga Kasiu!</i> (друзья, звательный падеж!).</li>
+      <li>В обращении все слова с большой буквы, оно стоит по центру (в e-mail и SMS — слева), занимает 2–3 слова.</li></ul>
+    <h4 class="kurs-h4">Аудирование, чтение, грамматика</h4>
+    <ul class="kurs-ul">
+      <li><b>Аудирование:</b> в записи бывает, что последняя фраза переворачивает смысл сказанного. Не отмечай ответ, пока не дослушал до конца.</li>
+      <li><b>Чтение:</b> есть задание «соотнеси заголовок и предложение». К одному заголовку подходит сразу несколько предложений — смотри, чтобы подходило <i>единственное</i> лучшее, и не трать на него всё время.</li>
+      <li><b>Грамматика:</b> задание «переделай предложение со словом в скобках» даёт около 15% теста. Это стоит отработать: сохрани смысл, не менять лишнего, обычно нужен один дополнительный предлог или падеж.</li>
+      <li>Вопросительное слово: если речь о <i>конкретном</i> предмете, который известен обоим, нужно <i>który</i>, а не <i>jaki</i> (<i>Z którego swetra…</i>).</li>
+      <li>Читай задание внимательно. Повтори прошедшее время, степени сравнения (<i>-ej</i> у наречий, <i>-szy / -ejszy</i> у прилагательных) и согласование: <i>mały dom — małe domy</i>, <i>niski człowiek — niscy ludzie</i>.</li>
+      <li>Режим подготовки: каждый день один раздел одного настоящего теста прошлых лет (сегодня аудирование, завтра чтение, потом грамматика), потом второй круг. На втором круге прогресс заметен.</li></ul>
     <h4 class="kurs-h4">Устная часть · 15–20 минут · 40 баллов, порог 20</h4>
     <ul class="kurs-ul">
       <li>Тянешь вслепую один из трёх листков: фото, монолог, диалог. На подготовку 4–6 минут. <b>Можно делать заметки</b> и подглядывать в них во время ответа.</li>
@@ -876,11 +896,23 @@ function egzaminInfo(){
       <li>На задание 3–4 минуты. Ушёл от темы — скажут «dziękuję» и перейдут дальше.</li>
       <li>Фото: от общего к деталям — ситуация → люди (одежда, что делают, эмоции) → место → детали → атмосфера и своё мнение. Догадки: <i>chyba, prawdopodobnie, wydaje mi się</i>.</li>
       <li>Монолог: вступление → развитие → вывод. Бывает трёх видов: мнение о социальной теме, «расскажи о…» и выбор из двух вариантов. Монологи на мнение и выбор с примерами ответов:
-        <ul>${Object.keys(KURS_TEMATY).filter(t=>KURS_TEMATY[t].monolog2).map(t=>`<li><a href="#" onclick="KURS.mowa('${t}','monolog2',null,null);return false">${esc(KURS_TEMATY[t].monolog2.temat)}</a></li>`).join('')}</ul></li>
+        <ul>${Object.keys(KURS_TEMATY).flatMap(t=>dodatkowe(KURS_TEMATY[t],'monolog').map(k=>`<li><a href="#" onclick="KURS.mowa('${t}','${k}',null,null);return false">${esc(KURS_TEMATY[t][k].temat)}</a></li>`)).join('')}</ul></li>
       <li>Диалог: будь активным — начинай сам, задавай вопросы. Выполни <b>каждый пункт</b> задания: пропустишь — решат, что не понял. Ещё ситуации:
-        <ul>${Object.keys(KURS_TEMATY).filter(t=>KURS_TEMATY[t].sytuacja2).map(t=>`<li><a href="#" onclick="KURS.mowa('${t}','sytuacja2',null,null);return false">${esc(KURS_TEMATY[t].sytuacja2.polecenie.split('. ')[0])}</a></li>`).join('')}</ul></li>
+        <ul>${Object.keys(KURS_TEMATY).flatMap(t=>dodatkowe(KURS_TEMATY[t],'sytuacja').map(k=>`<li><a href="#" onclick="KURS.mowa('${t}','${k}',null,null);return false">${esc(KURS_TEMATY[t][k].polecenie.split('. ')[0])}</a></li>`)).join('')}</ul></li>
+      <li>На диалог оставь больше всего времени. Последний обязательный пункт — приглашение и договорённость (день, время, место, обмен контактами): до него легко не дойти, если увлечься вопросами о подробностях. Экзаменатор там часто создаёт препятствие («в этот день не могу»): предложи другой день.</li>
+      <li>Официальный лист: «до 15 минут», перед ответом около 5 минут на подготовку, экзамен начинается с короткой беседы с комиссией. Три задания можно делать в любом порядке. Члены комиссии могут задавать вопросы во время ответа.</li>
+      <li>Тренировка: один зестав = 15 минут (по 5 на фото, монолог и диалог), включи диктофон. Чем больше зестав, тем лучше. Потом можно прослушать запись или дать её проверить. Цель — снять стресс и довести до автоматизма.</li>
       <li><b>Не молчи.</b> Кто молчит, не сдаёт.</li>
       <li>Баллы: выполнение заданий — фото 7, монолог 7, диалог 6 (вместе это уже порог). Плюс грамматика 8, лексика 8, произношение 4. Экзаменаторов несколько, они делают пометки — это нормально.</li></ul>
+    <h4 class="kurs-h4">Что было на настоящих экзаменах (июнь 2026, рассказы сдававших)</h4>
+    <ul class="kurs-ul">
+      <li><b>Письмо, короткие формы:</b> приглашение директору школы на окончание курсов; поздравление коллеге с <i>imieniny</i>; открытка соседу из отпуска с благодарностью за уход за цветами.</li>
+      <li><b>Письмо, длинные формы:</b> характеристика шефа и коллег и e-mail подруге; эссе «как вы проводите свободное время»; отчёт о кулинарном или музыкальном мастер-классе.</li>
+      <li><b>Фото:</b> люди в офисе; семья разговаривает по ноутбуку; люди в кафе (двое девушек и парень едят бургеры); туристы в горах; приём у врача.</li>
+      <li><b>Монолог:</b> дом или квартира, где хотел бы жить; стоит ли пользоваться городскими велосипедами; как заботиться об окружающей среде; место мечты для поездки; что бы ты сделал, выиграв миллион злотых.</li>
+      <li><b>Диалог:</b> заказать столик в ресторане; успокоить подругу перед экзаменом; сообщить о потере багажа; заявить в полицию о краже телефона (описать его и назвать номер); пожаловаться подруге на плохой опыт в ресторане.</li>
+      <li>На все эти темы в приложении есть образцы (в «Примерах сочинений» и в «Ещё вариант» на экранах говорения). Из других сессий: просили описать фото в кафе, написать e-mail с просьбой о проекте ремонта комнаты, рассказ «Tajemnica starego domu», сообщение «koleżanka ma jutro egzamin».</li></ul>
+    <button class="egz-play" onclick="KURS.tematyMonologow()">Банк тем для монолога (около 70)</button>
     <h4 class="kurs-h4">День экзамена · 5–6 декабря</h4>
     <ul class="kurs-ul">
       <li>С собой: паспорт или карта побыту, ручка (синяя или чёрная), вода, еда, что-то сладкое, таблетка от головной боли.</li>
@@ -890,6 +922,104 @@ function egzaminInfo(){
       <li>Результатов ждать долго: работы проверяют в центре, а потом ещё в Варшаве.</li></ul>
   </div></div>`;
   przycisk('← День '+nrBiezacy(), ()=>dzienEkran());
+}
+
+// Bank pytań do monologu — do ćwiczenia głosem z Claude lub samodzielnie z timerem.
+const BANK_TEMATOW = [
+  ['Rodzina i ludzie', [
+    'Jakie znaczenie ma dla Pana rodzina? Proszę uzasadnić.',
+    'Proszę opowiedzieć o jednym z członków rodziny i opisać jego cechy charakteru.',
+    'Proszę opisać ostatnie rodzinne święto, w którym Pan uczestniczył.',
+    'Proszę opowiedzieć śmieszną historię o Pana rodzinie.',
+    'Proszę scharakteryzować swojego najlepszego przyjaciela.',
+    'Kto jest dla Pana autorytetem? Proszę opisać tę osobę.',
+    'Jakie cechy charakteru są według Pana najważniejsze?',
+    'Czy charakter można kształtować i zmieniać?',
+    'Czy ubranie dużo mówi o człowieku?']],
+  ['Mieszkanie i miasto', [
+    'Własne mieszkanie czy wynajem? Co Panu bardziej odpowiada?',
+    'Czy woli Pan mieszkać w domu czy w bloku?',
+    'Czy woli Pan kawalerkę czy mieszkanie wielopokojowe?',
+    'Jak wyglądałoby mieszkanie Pana marzeń?',
+    'Czy woli Pan duże miasto czy małą miejscowość?',
+    'Jakie jest Pana ulubione miasto? Proszę je opisać.',
+    'Jakie miejsca i zabytki swojego miasta może Pan polecić do zwiedzania?',
+    'Czy starówki i centra miast powinny być zamknięte dla samochodów?',
+    'Czy jazda rowerem jest dobrym sposobem na poruszanie się po mieście?',
+    'Jaki środek transportu wybiera Pan najczęściej? Dlaczego?']],
+  ['Praca i nauka', [
+    'Jak wygląda Pana idealna praca?',
+    'Jaka powinna być praca, żeby była dla Pana przyjemna?',
+    'Jakie są wady i zalety pracy zdalnej? Proszę podać kilka przykładów.',
+    'Jaka była Pana pierwsza praca w życiu?',
+    'Czy praca odgrywa najważniejszą rolę w naszym życiu? Dlaczego?',
+    'Jakie sposoby poszukiwania pracy Pan zna?',
+    'Jakim powinien być idealny kierownik?',
+    'Jaki jest Pana ulubiony przedmiot szkolny? Dlaczego?',
+    'Czy według Pana znajomość języków obcych pomaga w życiu?',
+    'Jakie kierunki studiów i zawody warto dziś wybierać?']],
+  ['Czas wolny, sport, zdrowie', [
+    'Jakie ma Pan zainteresowania i hobby?',
+    'Z kim woli Pan spędzać czas wolny: z rodziną, przyjaciółmi czy samotnie?',
+    'Jak można zagospodarować czas wolny?',
+    'Czy woli Pan kino czy teatr? Dlaczego?',
+    'Czy woli Pan rozrywki tradycyjne czy online?',
+    'Jak ważną rolę odgrywa sport w Pana kraju?',
+    'Czy zgadza się Pan z tym, że sport to zdrowie?',
+    'Jak Pan dba o zdrowie i samopoczucie?',
+    'Czy stres ma silny wpływ na Pana? Jak sobie z nim radzić?',
+    'Co może wyprowadzić Pana z równowagi? Jak Pan tego unika?',
+    'Dlaczego warto się szczepić? Jakie obawy są z tym związane?']],
+  ['Podróże i wakacje', [
+    'Jak wyglądają dla Pana idealne wakacje?',
+    'Wakacje letnie czy zimowe? Proszę uzasadnić.',
+    'Odpoczynek nad morzem czy w górach?',
+    'Odpoczynek w mieście czy blisko natury?',
+    'Co woli Pan mieć ze sobą w podróży: walizkę czy plecak?',
+    'Czy korzysta Pan z usług biura podróży, czy woli sam planować wyjazd?',
+    'Czy woli Pan pokój w hotelu czy nocleg pod namiotem?',
+    'Jakie trzy rzeczy wziąłby Pan ze sobą na bezludną wyspę?']],
+  ['Jedzenie i zakupy', [
+    'Jaka jest Pana ulubiona kuchnia narodowa? Jakie potrawy z niej Pan preferuje?',
+    'Jakie jest Pana ulubione danie? Proszę podać przepis.',
+    'Co Pan najczęściej je i czego unika w swojej diecie?',
+    'Czy zgadza się Pan z twierdzeniem, że człowiek jest tym, co je?',
+    'Czy woli Pan robić zakupy w sklepie czy na targowisku?',
+    'Jakie są wady i zalety zakupów online?',
+    'Czy reklama wpływa na Pana? Czy często kupuje Pan reklamowane produkty?',
+    'Czy w niedzielę sklepy powinny być otwarte czy zamknięte?']],
+  ['Technologie, media, społeczeństwo', [
+    'Czy telefon odgrywa ważną rolę w naszym życiu?',
+    'Jaka jest rola technologii w naszym życiu?',
+    'Czy woli Pan laptop czy komputer stacjonarny?',
+    'Z jakich źródeł czerpie Pan codzienne informacje i wiadomości?',
+    'Czy pieniądze są najważniejszym elementem naszego życia?',
+    'Jak dba Pan o środowisko naturalne?',
+    'Czy biblioteki nadal są potrzebne ludziom?',
+    'Jakie plany na przyszłość mają młodzi ludzie w Pana kraju?',
+    'Jak widzi Pan swoją przyszłość za dziesięć lat?',
+    'Czy pies to najlepszy przyjaciel człowieka?']],
+];
+function tematyMonologow(){
+  wejdz('tematy-monologow', tematyMonologow);
+  const wszystkie = BANK_TEMATOW.flatMap(g=>g[1]);
+  let h=`<div class="egz kurs"><div class="egz-ex">
+    <div class="egz-hint">Банк тем для монолога · ${wszystkie.length} вопросов</div>
+    <div class="kurs-cel">Нажми «Случайная тема» и говори 2–3 минуты по плану: вступление → аргументы с примерами из жизни → вывод. Или скопируй тему в Claude и говори голосом.</div>
+    <div class="kurs-karta" id="kursLosTemat" style="min-height:64px"><div class="kurs-karta-t">Нажми кнопку ниже</div></div>
+    <div class="wz-akcje"><button class="egz-chip" onclick="KURS.losujTemat()">Случайная тема</button>
+      <button class="egz-chip" onclick="KURS.stoper(180,'Монолог')">Засечь 3 минуты</button></div>
+    <div class="kurs-timer" id="kursTimer"></div>`;
+  BANK_TEMATOW.forEach(([nazwa,lista])=>{
+    h+=`<details class="wz-bohater"><summary>${esc(nazwa)} · ${lista.length}</summary><ul class="kurs-ul">${lista.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>`; });
+  h+='</div></div>';
+  el('contentWrap').innerHTML=h;
+  przycisk('← Назад', ()=>goBack());
+}
+function losujTemat(){
+  const w = BANK_TEMATOW.flatMap(g=>g[1]);
+  const t = w[Math.floor(Math.random()*w.length)];
+  const k = el('kursLosTemat'); if(k) k.innerHTML = `<div class="kurs-karta-n">Monolog</div><div class="kurs-karta-t">${esc(t)}</div>`;
 }
 
 // ---------- karta na ekranie głównym aplikacji ----------
@@ -905,5 +1035,5 @@ function kartaGlowna(){
 const ZW = {opis:ZW_OPIS, monolog:ZW_MONOLOG, sytuacja:ZW_SYTUACJA, ratunek:ZW_RATUNEK};
 
 return { dzien:dzienEkran, dalej:dalejDzien, mapa, otworz, przelacz, lekcja, cwiczenia, slowa, slowaCram, mowa, pisanie, mow,
-  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
+  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, tematyMonologow, losujTemat, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
 })();
