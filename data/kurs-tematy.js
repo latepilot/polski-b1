@@ -144,10 +144,10 @@ KURS_TEMATY.T03 = {
     wzor:'Moja rodzina nie jest bardzo duża. Składa się z czterech osób: rodziców, mojej siostry i mnie. Rodzice mieszkają w Rosji, w Petersburgu, a ja z żoną Natalią i córką Oliwią mieszkam w Gdańsku. Oliwia ma dziesięć lat i chodzi do czwartej klasy szkoły podstawowej. Mój tata ma sześćdziesiąt pięć lat i jest już na emeryturze. Kiedyś pracował jako kierowca. Mama jest nauczycielką, uczy matematyki w szkole podstawowej. Moja młodsza siostra, Ania, ma dwadzieścia osiem lat. Jest wysoka, ma długie jasne włosy i jest bardzo wesoła. Pracuje w banku i interesuje się sportem. Niestety, nie widzimy się często, bo mieszkamy daleko od siebie. Na co dzień rozmawiamy przez telefon albo przez internet. Cała rodzina spotyka się zwykle latem i na Boże Narodzenie. Myślę, że w mojej rodzinie są dobre relacje: wszyscy się wspieramy i bardzo za sobą tęsknimy.'
   },
   sytuacja:{
-    polecenie:'Pana babcia za dwa tygodnie kończy osiemdziesiąt lat. Proszę zadzwonić do kuzynki i zaproponować wspólny prezent. Proszę ustalić, co kupić, ile każdy zapłaci i kiedy się spotkacie.',
-    rola_ja:'wnuk', rola_on:'kuzynka',
+    polecenie:'Pana babcia za dwa tygodnie kończy osiemdziesiąt lat. Proszę zadzwonić do siostry i zaproponować wspólny prezent. Proszę ustalić, co kupić, ile każdy zapłaci i kiedy się spotkacie.',
+    rola_ja:'wnuk', rola_on:'siostra',
     ru:'Неофициальная ситуация: на «ты», можно cześć. Нужно предложить, выслушать встречное предложение и договориться.',
-    cele:['Przywitać się i powiedzieć, dlaczego Pan dzwoni','Zaproponować prezent','Wysłuchać propozycji kuzynki i dojść do porozumienia','Ustalić, ile każdy zapłaci','Umówić się na spotkanie'],
+    cele:['Przywitać się i powiedzieć, dlaczego Pan dzwoni','Zaproponować prezent','Wysłuchać propozycji siostry i dojść do porozumienia','Ustalić, ile każdy zapłaci','Umówić się na spotkanie'],
     zwroty:[
       ['Cześć, dzwonię w sprawie urodzin babci.','Привет, звоню насчёт дня рождения бабушки.'],
       ['Mam pomysł: może kupimy razem…?','У меня идея: может, купим вместе…?'],
@@ -157,7 +157,7 @@ KURS_TEMATY.T03 = {
       ['Podzielimy się po połowie.','Разделим пополам.'],
       ['Kiedy ci pasuje?','Когда тебе удобно?'],
     ],
-    wzor:'Kuzynka: Halo?\nTy: Cześć, Kasia, tu Iwan. Dzwonię w sprawie urodzin babci.\nKuzynka: O, cześć! Właśnie o tym myślałam.\nTy: Mam pomysł: może kupimy babci razem nowy telewizor? Jej telewizor jest już bardzo stary.\nKuzynka: Hm, to dobry pomysł, ale babcia prawie nie ogląda telewizji. Może raczej wycieczka do Zakopanego? Zawsze mówi, że chce zobaczyć góry.\nTy: Masz rację, to lepszy pomysł. Ile to może kosztować?\nKuzynka: Hotel i pociąg dla dwóch osób — około tysiąca dwustu złotych.\nTy: To podzielimy się po połowie, każdy po sześćset złotych. Pasuje?\nKuzynka: Pasuje. Kiedy się spotkamy, żeby wszystko zarezerwować?\nTy: Może w sobotę o jedenastej w kawiarni na rynku?\nKuzynka: Super, do zobaczenia w sobotę!\nTy: Do zobaczenia, cześć!'
+    wzor:'Siostra: Halo?\nTy: Cześć, Ania, tu Iwan. Dzwonię w sprawie urodzin babci.\nSiostra: O, cześć! Właśnie o tym myślałam.\nTy: Mam pomysł: może kupimy babci razem nowy telewizor? Jej telewizor jest już bardzo stary.\nSiostra: Hm, to dobry pomysł, ale babcia prawie nie ogląda telewizji. Może raczej wycieczka do Zakopanego? Zawsze mówi, że chce zobaczyć góry.\nTy: Masz rację, to lepszy pomysł. Ile to może kosztować?\nSiostra: Hotel i pociąg dla dwóch osób — około tysiąca dwustu złotych.\nTy: To podzielimy się po połowie, każdy po sześćset złotych. Pasuje?\nSiostra: Pasuje. Kiedy się spotkamy, żeby wszystko zarezerwować?\nTy: Może w sobotę o jedenastej w kawiarni na rynku?\nSiostra: Super, do zobaczenia w sobotę!\nTy: Do zobaczenia, cześć!'
   }
 };
 
@@ -299,7 +299,7 @@ KURS_TEMATY.T06 = {
       ['Może pójdziemy gdzieś po pracy?','Может, сходим куда-нибудь после работы?'],
       ['To ci dobrze zrobi.','Тебе это пойдёт на пользу.'],
     ],
-    wzor:'Ty: Cześć, Tomek. Co się stało? Wyglądasz na smutnego.\nKolega: A, nic… Nie dostałem tego awansu. Szef wybrał Kasię.\nTy: Naprawdę? Bardzo mi przykro. Wiem, jak bardzo ci zależało.\nKolega: Pracowałem nad tym projektem pół roku…\nTy: Wiem i wszyscy widzieli, że świetnie ci poszło. Nie przejmuj się, na pewno następnym razem się uda.\nKolega: Może… Ale teraz nie mam na nic ochoty.\nTy: Rozumiem. Słuchaj, może pójdziemy dziś po pracy na kręgle? To ci dobrze zrobi.\nKolega: Kręgle brzmią nieźle. Ale dzisiaj nie mogę, muszę odebrać córkę.\nTy: To może jutro o szóstej?\nKolega: Jutro pasuje. Dzięki, że ze mną porozmawiałeś.\nTy: Nie ma za co. Do jutra!'
+    wzor:'Ty: Cześć, Tomek. Co się stało? Wyglądasz na smutnego.\nKolega: A, nic… Nie dostałem tego awansu. Szef wybrał Ewę.\nTy: Naprawdę? Bardzo mi przykro. Wiem, jak bardzo ci zależało.\nKolega: Pracowałem nad tym projektem pół roku…\nTy: Wiem i wszyscy widzieli, że świetnie ci poszło. Nie przejmuj się, na pewno następnym razem się uda.\nKolega: Może… Ale teraz nie mam na nic ochoty.\nTy: Rozumiem. Słuchaj, może pójdziemy dziś po pracy na kręgle? To ci dobrze zrobi.\nKolega: Kręgle brzmią nieźle. Ale dzisiaj nie mogę, muszę odebrać córkę.\nTy: To może jutro o szóstej?\nKolega: Jutro pasuje. Dzięki, że ze mną porozmawiałeś.\nTy: Nie ma za co. Do jutra!'
   }
 };
 
@@ -365,7 +365,7 @@ KURS_TEMATY.T08 = {
   zwroty:[
     ['Halo? Kto mówi?','Алло? Кто говорит?'],
     ['Dzwonię w sprawie…','Звоню по поводу…'],
-    ['Czy zastałem Marka?','Марек дома / на месте?'],
+    ['Czy zastałem Tomka?','Томек дома / на месте?'],
     ['Przepraszam, to chyba pomyłka.','Извините, вы, кажется, ошиблись номером.'],
     ['Proszę przekazać, że dzwoniłem.','Передайте, пожалуйста, что я звонил.'],
     ['Oddzwonię za godzinę.','Перезвоню через час.'],
@@ -385,14 +385,14 @@ KURS_TEMATY.T08 = {
     cele:['Przywitać się i przedstawić','Poprosić do telefonu kolegę','Przekazać wiadomość o zmianie terminu','Poprosić o oddzwonienie','Podziękować i pożegnać się'],
     zwroty:[
       ['Dzień dobry, mówi Iwan Pietrow.','Добрый день, это Иван Петров.'],
-      ['Czy zastałem Marka?','Можно Марека? (Марек дома?)'],
+      ['Czy zastałem Tomka?','Можно Томека? (Томек дома?)'],
       ['Kiedy wróci?','Когда он вернётся?'],
       ['Czy mogę zostawić wiadomość?','Можно оставить сообщение?'],
       ['Proszę mu przekazać, że…','Передайте ему, пожалуйста, что…'],
       ['Niech do mnie oddzwoni.','Пусть он мне перезвонит.'],
       ['Dziękuję, do usłyszenia.','Спасибо, до свидания (по телефону).'],
     ],
-    wzor:'Żona kolegi: Halo?\nTy: Dzień dobry, mówi Iwan Pietrow, kolega Marka z pracy. Czy zastałem Marka?\nŻona kolegi: Dzień dobry. Niestety, Marka nie ma. Pojechał do mamy.\nTy: A kiedy wróci?\nŻona kolegi: Chyba dopiero wieczorem, koło dziewiątej. Coś mu przekazać?\nTy: Tak, jeśli można. Proszę mu przekazać, że nasze piątkowe spotkanie jest przełożone na sobotę.\nŻona kolegi: Na sobotę… O której godzinie?\nTy: O tej samej, o szóstej, w tej samej kawiarni na Długiej.\nŻona kolegi: Dobrze, zapisałam. Coś jeszcze?\nTy: Niech do mnie oddzwoni, jeśli sobota mu nie pasuje. Ma mój numer.\nŻona kolegi: Dobrze, przekażę.\nTy: Bardzo dziękuję. Do usłyszenia.'
+    wzor:'Żona kolegi: Halo?\nTy: Dzień dobry, mówi Iwan Pietrow, kolega Tomka z pracy. Czy zastałem Tomka?\nŻona kolegi: Dzień dobry. Niestety, Tomka nie ma. Pojechał do mamy.\nTy: A kiedy wróci?\nŻona kolegi: Chyba dopiero wieczorem, koło dziewiątej. Coś mu przekazać?\nTy: Tak, jeśli można. Proszę mu przekazać, że nasze piątkowe spotkanie jest przełożone na sobotę.\nŻona kolegi: Na sobotę… O której godzinie?\nTy: O tej samej, o szóstej, w tej samej kawiarni na Długiej.\nŻona kolegi: Dobrze, zapisałam. Coś jeszcze?\nTy: Niech do mnie oddzwoni, jeśli sobota mu nie pasuje. Ma mój numer.\nŻona kolegi: Dobrze, przekażę.\nTy: Bardzo dziękuję. Do usłyszenia.'
   }
 };
 
@@ -1301,7 +1301,7 @@ KURS_TEMATY.T06.sytuacja2 = {
   ru:'Неформальный разговор на «ты»: спроси, какой экзамен, успокой и дай 2–3 совета. Задание реально было на экзамене в июне 2026.',
   cele:['Zapytać, jak się czuje i jaki to egzamin','Uspokoić koleżankę','Dać radę (przed egzaminem)','Zaproponować coś miłego po egzaminie','Życzyć powodzenia'],
   zwroty:[['Jak się czujesz? Jaki to egzamin?','Как себя чувствуешь? Какой это экзамен?'],['Spokojnie, na pewno dasz radę.','Спокойно, ты обязательно справишься.'],['Po pierwsze, nie ucz się do późna.','Во-первых, не учись допоздна.'],['Idź na spacer, to pomaga na stres.','Сходи на прогулку, это помогает от стресса.'],['Połóż się dziś wcześnie spać.','Ложись сегодня пораньше.'],['Trzymam kciuki!','Держу кулачки!']],
-  wzor:'Ty: Cześć, Kasiu! Słyszałem, że jutro masz egzamin. Jak się czujesz?\nKoleżanka: Cześć! Strasznie się denerwuję. Nie mogę się skupić.\nTy: Rozumiem. A jaki to egzamin?\nKoleżanka: Teoria na prawo jazdy. Boję się, że wszystko zapomnę.\nTy: Spokojnie, na pewno dobrze się przygotowałaś. Ile razy robiłaś testy?\nKoleżanka: Chyba dwadzieścia.\nTy: No widzisz! To naprawdę dużo. Mam kilka rad na dzień przed egzaminem. Po pierwsze, nie ucz się już do późna, tylko przejrzyj najtrudniejsze pytania.\nKoleżanka: A co jeszcze?\nTy: Po drugie, idź na spacer albo poćwicz, to pomaga na stres. Wieczorem zjedz coś dobrego i połóż się wcześnie spać.\nKoleżanka: Spróbuję. Myślisz, że dam radę?\nTy: Oczywiście! Zawsze dawałaś sobie radę. A po egzaminie zapraszam cię na kawę, żeby to uczcić.\nKoleżanka: Dzięki, jesteś kochany. Trzymaj kciuki!\nTy: Trzymam z całych sił. Daj znać, jak poszło!',
+  wzor:'Ty: Cześć, Ewo! Słyszałem, że jutro masz egzamin. Jak się czujesz?\nKoleżanka: Cześć! Strasznie się denerwuję. Nie mogę się skupić.\nTy: Rozumiem. A jaki to egzamin?\nKoleżanka: Teoria na prawo jazdy. Boję się, że wszystko zapomnę.\nTy: Spokojnie, na pewno dobrze się przygotowałaś. Ile razy robiłaś testy?\nKoleżanka: Chyba dwadzieścia.\nTy: No widzisz! To naprawdę dużo. Mam kilka rad na dzień przed egzaminem. Po pierwsze, nie ucz się już do późna, tylko przejrzyj najtrudniejsze pytania.\nKoleżanka: A co jeszcze?\nTy: Po drugie, idź na spacer albo poćwicz, to pomaga na stres. Wieczorem zjedz coś dobrego i połóż się wcześnie spać.\nKoleżanka: Spróbuję. Myślisz, że dam radę?\nTy: Oczywiście! Zawsze dawałaś sobie radę. A po egzaminie zapraszam cię na kawę, żeby to uczcić.\nKoleżanka: Dzięki, jesteś kochany. Trzymaj kciuki!\nTy: Trzymam z całych sił. Daj znać, jak poszło!',
 };
 KURS_TEMATY.T06.sytuacja3 = {
   polecenie:'Spotkał Pan przypadkiem koleżankę, której nie widział Pan od dawna. Dowiedział się Pan, że jest zaręczona. Proszę wyrazić radość, pogratulować i zaprosić ją na kawę.',

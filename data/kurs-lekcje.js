@@ -94,7 +94,7 @@ KURS_LEKCJE.L02 = {
   cwiczenia: [
     {zdanie:'Codziennie piję ___ (kawa).', ok:'kawę', wyjasnienie:'женский на -a → -ę.'},
     {zdanie:'Mam ___ (siostra) i brata.', ok:'siostrę', wyjasnienie:'siostra → siostrę.'},
-    {zdanie:'Znasz ___ (Marek)?', ok:'Marka', wyjasnienie:'одушевлённый мужской → -a; беглое e выпадает: Marek → Marka.'},
+    {zdanie:'Znasz ___ (Tomek)?', ok:'Tomka', wyjasnienie:'одушевлённый мужской → -a; беглое e выпадает: Tomek → Tomka.'},
     {zdanie:'Kupiłem nowy ___ .', opcje:['telefon','telefonu','telefona'], ok:0, wyjasnienie:'неодушевлённый мужской = именительный.'},
     {zdanie:'Widzę ___ na ulicy.', opcje:['pies','psa','psem'], ok:1, wyjasnienie:'животное — одушевлённое: pies → psa.'},
     {zdanie:'Czekam na ___ (autobus).', ok:'autobus', wyjasnienie:'czekać na + винительный; autobus — неодушевлённый.'},
@@ -145,7 +145,7 @@ KURS_LEKCJE.L03 = {
       ['части тела: brzucha, palca, nosa','дни недели: poniedziałku, wtorku, piątku'],
       ['цветы, овощи, фрукты: tulipana, banana, ogórka; продукты: chleba, sera, naleśnika','']]},
     {t:'uwaga', h:'Если сомневаешься, открой <b>Wikisłownik</b> (там склонение каждого слова). Бывают и два варианта сразу: <i>krawata / krawatu</i>. Для экзамена достаточно знать группы выше.'},
-    {t:'uwaga', h:'Беглое <b>e</b> выпадает: pies → psa, ojciec → ojca, dzień → dnia, cukier → cukru, Marek → Marka. Слова на <b>-um</b> в единственном числе не меняются: w muzeum, do muzeum.'},
+    {t:'uwaga', h:'Беглое <b>e</b> выпадает: pies → psa, ojciec → ojca, dzień → dnia, cukier → cukru, Tomek → Tomka. Слова на <b>-um</b> в единственном числе не меняются: w muzeum, do muzeum.'},
     {t:'przyklady', items:[
       ['Nie mam dziś czasu.','У меня сегодня нет времени.'],
       ['Idę do sklepu po chleb.','Иду в магазин за хлебом.'],
@@ -305,7 +305,7 @@ KURS_LEKCJE.L06 = {
       ['być przeciw czemuś — быть против','Jestem przeciw <b>temu</b>.']]},
     {t:'h', h:'Окончания'},
     {t:'tab', head:['Род','Окончание','Пример'], rows:[
-      ['мужской','-owi','studentowi, lekarzowi, Markowi'],
+      ['мужской','-owi','studentowi, lekarzowi, Tomkowi'],
       ['мужской — исключения','-u','bratu, ojcu, panu, kotu, psu, chłopcu'],
       ['женский (как предложный)','-e / -i / -y','mamie, siostrze, córce, babci, ulicy, pani'],
       ['мужской на -a','как женский','koledze, tacie, mężczyźnie'],
@@ -402,7 +402,7 @@ KURS_LEKCJE.L08 = {
       ['женский на -a','-o','mama → mamo, Anna → Anno, Ewa → Ewo'],
       ['женский на -ia, уменьшительные','-u','Kasia → Kasiu, babcia → babciu, Ania → Aniu'],
       ['мужской на твёрдую согласную','-e (с чередованием)','Marcin → Marcinie, Piotr → Piotrze, Paweł → Pawle, pan → panie'],
-      ['мужской на мягкую, k, g, ch','-u','Tomasz → Tomaszu, Marek → Marku, Jacek → Jacku'],
+      ['мужской на мягкую, k, g, ch','-u','Tomasz → Tomaszu, Tomek → Tomku, Jacek → Jacku'],
       ['мужской на -a','-o','kolega → kolego, tata → tato'],
       ['средний и мн.ч.','= именительный','Drodzy Państwo! Kochani! Dzieci!']]},
     {t:'uwaga', h:'Исключения: <b>pani → pani</b>, <b>ojciec → ojcze</b>, <b>chłopiec → chłopcze</b>, <b>człowiek → człowieku</b>. Должность у женщины не склоняется: <b>Szanowna Pani Profesor!</b> У мужчины склоняются оба слова: <b>Szanowny Panie Dyrektorze!</b>'},
@@ -410,8 +410,8 @@ KURS_LEKCJE.L08 = {
     {t:'tab', head:['Письмо','Начало','Конец'], rows:[
       ['официальное','Szanowni Państwo! / Szanowny Panie! / Szanowna Pani!','Z poważaniem'],
       ['полуофициальное','Szanowny Panie Tomaszu! / Szanowna Pani Anno!','Z wyrazami szacunku / Łączę pozdrowienia'],
-      ['неформальное','Drogi Marku! / Kochana Mamo! / Cześć, Kasiu!','Pozdrawiam serdecznie / Ściskam']]},
-    {t:'pulapka', h:'В русском звательной формы почти нет, а в польском обращение без неё звучит небрежно: «Dzień dobry, panie Tomaszu», а не «panie Tomasz». Между друзьями в разговоре можно «Cześć, Marek!», но <b>в письме на экзамене — только звательный</b>.'},
+      ['неформальное','Drogi Tomku! / Kochana Mamo! / Cześć, Kasiu!','Pozdrawiam serdecznie / Ściskam']]},
+    {t:'pulapka', h:'В русском звательной формы почти нет, а в польском обращение без неё звучит небрежно: «Dzień dobry, panie Tomaszu», а не «panie Tomasz». Между друзьями в разговоре можно «Cześć, Tomek!», но <b>в письме на экзамене — только звательный</b>.'},
     {t:'przyklady', items:[
       ['Kochana Mamo! Pozdrawiam Cię z Gdańska.','Дорогая мама! Привет тебе из Гданьска.'],
       ['Szanowny Panie Dyrektorze!','Уважаемый господин директор!'],
@@ -424,7 +424,7 @@ KURS_LEKCJE.L08 = {
     {zdanie:'Cześć, ___ (Kasia)!', ok:'Kasiu', wyjasnienie:'уменьшительные на -ia → -iu.'},
     {zdanie:'Szanowna Pani ___ !', opcje:['Profesor','Profesorze','Profesorko'], ok:0, wyjasnienie:'должность у женщины не склоняется.'},
     {zdanie:'___ (Piotr), pomóż mi, proszę!', ok:'Piotrze', wyjasnienie:'r → rze: Piotrze.'},
-    {zdanie:'Dzień dobry, panie ___ (Marek)!', ok:'Marku', wyjasnienie:'Marek → Marku.'},
+    {zdanie:'Dzień dobry, panie ___ (Tomek)!', ok:'Tomku', wyjasnienie:'Tomek → Tomku.'},
     {zdanie:'___ Państwo! (начало официального письма)', opcje:['Szanowny','Szanowna','Szanowni'], ok:2, wyjasnienie:'Państwo — мн.ч.: Szanowni Państwo.'},
     {zdanie:'Kochana ___ (babcia)!', ok:'babciu', wyjasnienie:'-ia → -iu: babciu.'},
     {zdanie:'Drogi ___ (Paweł)!', ok:'Pawle', wyjasnienie:'ł → le, e выпадает: Pawle.'},
@@ -546,7 +546,7 @@ KURS_LEKCJE.L11 = {
       ['jechać','jadę · jedziesz · jadą'],['móc','mogę · możesz · mogą'],['chcieć','chcę · chcesz · chcą'],
       ['jeść','jem · jesz · jedzą'],['wiedzieć','wiem · wiesz · wiedzą'],['brać','biorę · bierzesz · biorą'],
       ['pić','piję · pijesz · piją'],['dawać','daję · dajesz · dają']]},
-    {t:'pulapka', h:'Три «знаю»: <b>wiem</b> — знаю факт (wiem, gdzie on mieszka), <b>znam</b> — знаком с кем-то или чем-то (znam Marka, znam to miasto), <b>umiem</b> — умею (umiem pływać).'},
+    {t:'pulapka', h:'Три «знаю»: <b>wiem</b> — знаю факт (wiem, gdzie on mieszka), <b>znam</b> — знаком с кем-то или чем-то (znam Tomka, znam to miasto), <b>umiem</b> — умею (umiem pływać).'},
     {t:'przyklady', items:[
       ['Codziennie pracuję do siedemnastej.','Каждый день работаю до пяти вечера (до 17:00).'],
       ['Nie wiem, gdzie jest dworzec.','Не знаю, где вокзал.'],
@@ -594,7 +594,7 @@ KURS_LEKCJE.L12 = {
       ['W sobotę poszliśmy na mecz.','В субботу мы пошли на матч.']]},
   ],
   cwiczenia: [
-    {zdanie:'Wczoraj Marek ___ (być) w kinie.', ok:'był', wyjasnienie:'он: był.'},
+    {zdanie:'Wczoraj Tomek ___ (być) w kinie.', ok:'był', wyjasnienie:'он: był.'},
     {zdanie:'Anna ___ (mieszkać) kiedyś w Krakowie.', ok:'mieszkała', wyjasnienie:'она: -ła.'},
     {zdanie:'W sobotę ___ (być — ja) z żoną na koncercie.', ok:'byłem', wyjasnienie:'я (мужчина): byłem.'},
     {zdanie:'Dzieci ___ (bawić się) w parku cały dzień.', ok:'bawiły się', wyjasnienie:'dzieci — не мужско-личная группа: bawiły się.'},
@@ -801,7 +801,7 @@ KURS_LEKCJE.L17 = {
       ['mój, twój, nasz, wasz','да, как прилагательное','mojego brata, w naszym domu, z twoją siostrą'],
       ['jego, jej, ich','нет, никогда','z jego bratem, w jej domu, dla ich dzieci'],
       ['Pana, Pani, Państwa (вежливо)','нет','Czy to Pana samochód?'],
-      ['swój','да','Marek wziął swój telefon.']]},
+      ['swój','да','Tomek wziął swój telefon.']]},
     {t:'h', h:'Когда swój'},
     {t:'p', h:'Если владелец — подлежащее этого же предложения, в 3-м лице нужно <b>swój</b>: <i>Anna dzwoni do swojej mamy</i> (к своей). <i>Anna dzwoni do jej mamy</i> — к маме другой женщины. С ja / ty / my / wy можно и так, и так: <i>Wziąłem swój / mój telefon</i>.'},
     {t:'uwaga', h:'Указательное: ten, ta, to, ci, te; tamten — тот. Винительный женского рода — <b>tę</b>: <i>Lubię tę książkę</i>. Мужско-личное мн.ч. — <b>ci</b>: <i>Ci ludzie są mili</i>.'},
@@ -814,9 +814,9 @@ KURS_LEKCJE.L17 = {
   cwiczenia: [
     {zdanie:'To jest ___ siostra, Anna.', opcje:['mój','moja','moje'], ok:1, wyjasnienie:'siostra — женский: moja.'},
     {zdanie:'Nie znam ___ (twój) brata.', ok:'twojego', wyjasnienie:'отрицание + одушевлённый: twojego.'},
-    {zdanie:'Marek zapomniał ___ kluczy.', opcje:['swoich','jego','swój'], ok:0, wyjasnienie:'владелец = подлежащее → swoich (zapomnieć + D.).'},
+    {zdanie:'Tomek zapomniał ___ kluczy.', opcje:['swoich','jego','swój'], ok:0, wyjasnienie:'владелец = подлежащее → swoich (zapomnieć + D.).'},
     {zdanie:'Anna dzwoni do ___ mamy.', opcje:['swojej','jej','swoja'], ok:0, wyjasnienie:'к своей маме → swojej.'},
-    {zdanie:'Piotr pożyczył auto od Marka i jeździł ___ autem cały tydzień.', opcje:['swoim','jego'], ok:1, wyjasnienie:'машина Марка, не Петра → jego.'},
+    {zdanie:'Piotr pożyczył auto od Tomka i jeździł ___ autem cały tydzień.', opcje:['swoim','jego'], ok:1, wyjasnienie:'машина Марка, не Петра → jego.'},
     {zdanie:'Państwo Nowakowie mieszkają w ___ (nasz) bloku.', ok:'naszym', wyjasnienie:'предложный: naszym.'},
     {zdanie:'Czy to jest ___ walizka, proszę pani?', opcje:['Pani','Pana','swoja'], ok:0, wyjasnienie:'вежливо к женщине: Pani.'},
     {zdanie:'Rozmawialiśmy o ___ planach. (my)', opcje:['naszych','nasze','naszymi'], ok:0, wyjasnienie:'o + Msc. мн.ч.: naszych.'},
@@ -996,7 +996,7 @@ KURS_LEKCJE.L21 = {
     {zdanie:'Moja siostra śpiewa ___ niż ja.', opcje:['gorzej','gorsza','zły'], ok:0, wyjasnienie:'как поёт → наречие: gorzej.'},
     {zdanie:'Jutro przyjdę trochę ___ (późno).', ok:'później', wyjasnienie:'późno → później.'},
     {zdanie:'Zimą dni są ___ niż latem.', opcje:['krótkie','krótsze','najkrótsze'], ok:1, wyjasnienie:'сравнение с niż → krótsze.'},
-    {zdanie:'Marek jest ___ niż Piotr. (wesoły)', ok:'weselszy', wyjasnienie:'wesoły → weselszy (нерегулярно, без -ej-): weselszy, najweselszy.'},
+    {zdanie:'Tomek jest ___ niż Piotr. (wesoły)', ok:'weselszy', wyjasnienie:'wesoły → weselszy (нерегулярно, без -ej-): weselszy, najweselszy.'},
   ]
 };
 
@@ -1025,7 +1025,7 @@ KURS_LEKCJE.L22 = {
     {zdanie:'Czy ___ dzwonił do mnie?', opcje:['nikt','ktoś','kogo'], ok:1, wyjasnienie:'кто-то → ktoś.'},
     {zdanie:'Z ___ rozmawiałeś?', opcje:['kto','kim','kogo'], ok:1, wyjasnienie:'z + N.: z kim.'},
     {zdanie:'O ___ myślisz?', opcje:['co','czym','czego'], ok:1, wyjasnienie:'o + Msc.: o czym.'},
-    {zdanie:'___ jest ten samochód? — Marka.', opcje:['Czyj','Jaki','Który'], ok:0, wyjasnienie:'чей → czyj.'},
+    {zdanie:'___ jest ten samochód? — Tomka.', opcje:['Czyj','Jaki','Który'], ok:0, wyjasnienie:'чей → czyj.'},
     {zdanie:'___ kolor lubisz najbardziej?', opcje:['Jaki','Kto','Czyj'], ok:0, wyjasnienie:'какой (качество) → jaki.'},
     {zdanie:'Nigdy ___ w Rzymie.', opcje:['byłem','nie byłem'], ok:1, wyjasnienie:'nigdy требует nie.'},
     {zdanie:'Nie znam tu ___ (nikt).', ok:'nikogo', wyjasnienie:'отрицание → родительный: nikogo.'},
