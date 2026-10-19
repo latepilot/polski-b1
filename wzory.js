@@ -113,7 +113,8 @@ function ekranGlowny(){
   if(typeof KURS!=='undefined') h += `<div class="egz-card" onclick="KURS.egzaminInfo()"><div class="egz-ico">${ik('egz-target')}</div>
     <div class="egz-body"><div class="egz-t">Как проходит письменный экзамен</div><div class="egz-d">Объём ±10%, черновик, время, оформление</div></div><div class="egz-meta">→</div></div>`;
   h += `<details class="wz-bohater"><summary>Кто герой сочинений</summary><ul class="kurs-ul">${BOHATER.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="egz-note">Хочешь писать о себе — меняй имена и детали, а конструкции оставляй.</div></details>`;
+    <div class="egz-note">Хочешь писать о себе — меняй имена и детали, а конструкции оставляй.</div>
+    ${typeof KURS!=='undefined' ? '<button class="egz-chip" onclick="KURS.bohaterowie()">Все герои и склонение имён</button>' : ''}</details>`;
   h += '</div>';
   el('contentWrap').innerHTML = h;
   bezPrzycisku();

@@ -918,6 +918,7 @@ function egzaminInfo(){
       <li><b>Диалог:</b> заказать столик в ресторане; успокоить подругу перед экзаменом; сообщить о потере багажа; заявить в полицию о краже телефона (описать его и назвать номер); пожаловаться подруге на плохой опыт в ресторане.</li>
       <li>На все эти темы в приложении есть образцы (в «Примерах сочинений» и в «Ещё вариант» на экранах говорения). Из других сессий и учебных наборов: фото в кафе; e-mail с просьбой о проекте ремонта комнаты; рассказ «Tajemnica starego domu»; приглашение коллегам на фотовыставку; объявление о поиске музыкантов в группу; письмо с поздравлением знакомому, защитившему докторскую; отчёт о первом дне на новой работе; e-mail двоюродному брату из нового города. Диалоги из методички центра: сломалась машина, холодильник, заказ ресторана для корпоратива, уговорить друга лететь.</li></ul>
     <button class="egz-play" onclick="KURS.tematyMonologow()">Банк тем для монолога (около 70)</button>
+    <button class="egz-play" onclick="KURS.bohaterowie()">Мои герои и склонение их имён</button>
     <h4 class="kurs-h4">День экзамена · 5–6 декабря</h4>
     <ul class="kurs-ul">
       <li>С собой: паспорт или карта побыту, ручка (синяя или чёрная), вода, еда, что-то сладкое, таблетка от головной боли.</li>
@@ -1037,6 +1038,40 @@ function losujTemat(){
   const k = el('kursLosTemat'); if(k) k.innerHTML = `<div class="kurs-karta-n">Monolog</div><div class="kurs-karta-t">${esc(t)}</div>`;
 }
 
+// «Мои герои»: постоянный круг людей, которых героиня курса использует во всех
+// ответах. Меняется тема, люди те же — так склоняются одни и те же имена.
+const BOHATEROWIE = [
+  {im:'Iwan', kto:'это я (Иван Петров)', pad:['Iwan','Iwana','Iwanowi','Iwana','Iwanem','Iwanie','Iwanie!'], ex:'Iwan jest fotografem. Rozmawiam z Iwanem.'},
+  {im:'Natalia', kto:'жена', pad:['Natalia','Natalii','Natalii','Natalię','Natalią','Natalii','Natalio!'], ex:'Mieszkam z Natalią. Kocham Natalię. Dziękuję Natalii za pomoc.'},
+  {im:'Oliwia', kto:'дочь, 10 лет', pad:['Oliwia','Oliwii','Oliwii','Oliwię','Oliwią','Oliwii','Oliwio!'], ex:'Odprowadzam Oliwię do szkoły. Idę z Oliwią do parku.'},
+  {im:'Paweł', kto:'лучший друг из Варшавы', pad:['Paweł','Pawła','Pawłowi','Pawła','Pawłem','Pawle','Pawle!'], ex:'Piszę do Pawła. Dzwonię do Pawła. Opowiadam o Pawle.'},
+  {im:'Tomek', kto:'коллега по студии', pad:['Tomek','Tomka','Tomkowi','Tomka','Tomkiem','Tomku','Tomku!'], ex:'Pracuję z Tomkiem. Pytam Tomka o radę. Cześć, Tomku!'},
+  {im:'Ewa', kto:'коллега по студии', pad:['Ewa','Ewy','Ewie','Ewę','Ewą','Ewie','Ewo!'], ex:'Lubię Ewę. Dziękuję Ewie. Drogi Ewo!'.replace('Drogi','Droga')},
+  {im:'pan Andrzej', kto:'начальник', pad:['Andrzej','Andrzeja','Andrzejowi','Andrzeja','Andrzejem','Andrzeju','Andrzeju!'], ex:'Rozmawiam z panem Andrzejem. Panie Andrzeju, mam pytanie.'},
+  {im:'Michał', kto:'дедушка, 78 лет, столяр', pad:['Michał','Michała','Michałowi','Michała','Michałem','Michale','Michale!'], ex:'Mam dziadka Michała. Opowiadam o dziadku Michale.'},
+  {im:'Ania', kto:'младшая сестра, 28 лет', pad:['Ania','Ani','Ani','Anię','Anią','Ani','Aniu!'], ex:'Mam siostrę Anię. Piszę do Ani. Droga Aniu!'},
+];
+function bohaterowie(){
+  wejdz('bohaterowie', bohaterowie);
+  const PAD=['Mian. кто?','Dop. кого?','Cel. кому?','Bier. кого?','Narz. с кем?','Msc. о ком?','Woł.'];
+  let h=`<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">Мои герои — одни и те же люди во всех ответах</div>
+    <div class="kurs-cel">Совет сдавших: придумай постоянных героев и используй их везде — в рассказе о фильме, в истории из жизни, в описании фото, в письме. Меняется тема, люди остаются те же. Так ты выучишь склонение этих имён, будет меньше стресса и не нужно придумывать новых людей на экзамене. Здесь герои этого курса. Можешь заменить их своими, а падежи оставить как образец.</div>`;
+  BOHATEROWIE.forEach(b=>{
+    h+=`<h4 class="kurs-h4">${esc(b.im)} — ${esc(b.kto)}</h4>
+    <div class="egz-zwroty">${b.pad.map((x,i)=>`<span class="egz-zwrot"><small style="color:var(--text-light)">${PAD[i]}</small><br><b>${esc(x)}</b></span>`).join('')}</div>
+    <div class="egz-note">${esc(b.ex)}</div>`; });
+  h+=`<h4 class="kurs-h4">Где использовать одних и тех же героев</h4><ul class="kurs-ul">
+    <li><b>Фильм или книга:</b> «Obejrzałem film z Natalią»; кто с кем ходил.</li>
+    <li><b>История из жизни:</b> с Pawłem поехали в Краков; с Tomkiem заблудились.</li>
+    <li><b>Описание фото:</b> подставь Oliwię и Natalię вместо незнакомых людей.</li>
+    <li><b>Письмо:</b> обращение <i>Drogi Pawle! Droga Aniu!</i>, подпись <i>Iwan</i>.</li>
+    <li><b>Характеристика:</b> pan Andrzej, Tomek и Ewa; <b>opis osoby</b> — dziadek Michał.</li></ul>
+    <div class="egz-note">И ещё один совет из чата: распечатай экзаменационный бланк (arkusz с certyfikatpolski.pl) и сразу пиши на нём дома: так привыкнешь к размеру листа и почерку.</div>
+  </div></div>`;
+  el('contentWrap').innerHTML=h;
+  przycisk('← Назад', ()=>goBack());
+}
+
 // ---------- karta na ekranie głównym aplikacji ----------
 function kartaGlowna(){
   wczytaj();
@@ -1050,5 +1085,5 @@ function kartaGlowna(){
 const ZW = {opis:ZW_OPIS, monolog:ZW_MONOLOG, sytuacja:ZW_SYTUACJA, ratunek:ZW_RATUNEK};
 
 return { dzien:dzienEkran, dalej:dalejDzien, mapa, otworz, przelacz, lekcja, cwiczenia, slowa, slowaCram, mowa, pisanie, mow,
-  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, tematyMonologow, losujTemat, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
+  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, tematyMonologow, losujTemat, bohaterowie, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
 })();
