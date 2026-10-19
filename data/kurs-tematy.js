@@ -1377,3 +1377,56 @@ KURS_TEMATY.T13.sytuacja3 = {
   zwroty:[['Mam pomysł na wakacje.','У меня есть идея на отпуск.'],['Może pojedziemy razem do Włoch?','Может, поедем вместе в Италию?'],['A co dokładnie cię niepokoi?','А что именно тебя тревожит?'],['Samolot jest bezpieczniejszy niż samochód.','Самолёт безопаснее машины.'],['Możemy pojechać pociągiem.','Можем поехать на поезде.'],['Zastanów się i daj mi znać.','Подумай и дай мне знать.']],
   wzor:'Ty: Cześć, Tomek! Mam pomysł na wakacje. Może pojedziemy razem do Włoch we wrześniu?\nKolega: Włochy? Brzmi super, ale boję się latać.\nTy: Rozumiem, wiele osób się boi. A co dokładnie cię niepokoi?\nKolega: Turbulencje i to, że nie mam nad niczym kontroli. Poza tym lot jest długi.\nTy: Z Gdańska do Rzymu leci się niecałe trzy godziny. To naprawdę krótko. A samolot jest statystycznie bezpieczniejszy niż samochód.\nKolega: Wiem, ale i tak się stresuję.\nTy: Mam inny pomysł. Możemy pojechać pociągiem i autobusem. To dłużej, ale po drodze zobaczylibyśmy Wiedeń i Wenecję.\nKolega: To brzmi lepiej. A ile to potrwa?\nTy: Około dwudziestu godzin, z przesiadkami. Możemy rozłożyć to na dwa dni i w drodze zwiedzać.\nKolega: Hm, a nie jest to za drogie?\nTy: Bilety kupimy z wyprzedzeniem, więc wyjdzie podobnie jak samolot. Zastanów się i daj mi znać do piątku.\nKolega: Dobrze, brzmi sensownie. Pomyślę.\nTy: Super! Zobaczysz, że będzie fajnie. Do piątku!',
 };
+
+// ------------------------------------------------------------------------
+// Z prawdziwych sesji (relacje zdających, 2026): monologi marzeń i opinii
+// oraz dialogi, których brakowało — kolejne warianty tematów (monolog3, sytuacja3…).
+// ------------------------------------------------------------------------
+KURS_TEMATY.T22.monolog3 = {
+  typ:'opinia',
+  temat:'Czy warto angażować się w działalność charytatywną?',
+  plan:['Wstęp: moja opinia','Dlaczego warto — z przykładami','Jak pomagać bez dużych pieniędzy','Zagrożenia i podsumowanie'],
+  pytania:['Czy kiedyś komuś Pan pomagał?','Jakie organizacje charytatywne Pan zna?','Jak dzieci mogą pomagać?','Czy zbiórki są zawsze uczciwe?'],
+  ru:'Тема из списка, которую преподаватель готовила с группой («деятельность Caritas»). Схема: за → как помогать → осторожность → вывод.',
+  wzor:'Moim zdaniem warto angażować się w działalność charytatywną, nawet jeśli robimy to w małym stopniu. Po pierwsze, pomagamy ludziom, którzy naprawdę tego potrzebują, na przykład samotnym osobom starszym albo dzieciom z biednych rodzin. Po drugie, dzięki takiej pomocy sami czujemy się lepiej i uczymy się empatii. Razem z rodziną co roku przed świętami kupuję produkty dla Caritasu, a Oliwia oddaje zabawki, z których już wyrosła. Jest też wiele sposobów, żeby pomagać bez dużych pieniędzy: można być wolontariuszem, zbierać nakrętki albo ugotować obiad dla potrzebujących. Z drugiej strony trzeba uważać na oszustów, dlatego wolę wspierać znane organizacje. Podsumowując, uważam, że każdy może komuś pomóc i że warto zaczynać od małych rzeczy, bo razem możemy naprawdę dużo zmienić.',
+};
+KURS_TEMATY.T23.monolog3 = {
+  typ:'opinia',
+  temat:'Sztuczna inteligencja i deepfake: szanse i zagrożenia',
+  plan:['Wstęp: jak szybko zmienia się świat','Szanse: praca, nauka, medycyna','Zagrożenia: fałszywe filmy, zawody, dzieci','Podsumowanie: mądre korzystanie'],
+  pytania:['Czy korzysta Pan ze sztucznej inteligencji?','Co to jest deepfake?','Jak sprawdzać informacje w internecie?','Czy dzieci powinny z niej korzystać?'],
+  ru:'Тема, которую преподаватель назвала возможной на экзамене (ИИ и deepfake). Схема: плюсы → минусы → вывод.',
+  wzor:'Sztuczna inteligencja zmienia nasze życie bardzo szybko. Z jednej strony przynosi wiele korzyści. Pomaga w pracy, tłumaczy teksty i uczy języków. Sam używam jej codziennie: dzięki niej programuję szybciej i uczę się polskiego, bo mogę rozmawiać po polsku o każdej porze dnia. Lekarze używają jej do analizy badań, co ratuje życie. Z drugiej strony są też zagrożenia. Najgroźniejsze są fałszywe filmy i zdjęcia, zwane deepfake, które wyglądają jak prawdziwe. Ktoś może w ten sposób oszukać innych albo zniszczyć czyjąś reputację. Poza tym niektóre zawody mogą zniknąć, a dzieci mogą przestać samodzielnie myśleć. Moim zdaniem trzeba uczyć się krytycznie korzystać z internetu i sprawdzać informacje w kilku źródłach. Uważam, że technologia jest dobra, jeśli używamy jej mądrze, dlatego rozmawiam o tym z córką.',
+};
+KURS_TEMATY.T20.monolog3 = {
+  typ:'opinia',
+  temat:'Jak możemy oszczędzać wodę każdego dnia?',
+  plan:['Wstęp: dlaczego woda jest ważna','Po pierwsze, po drugie, po trzecie — sposoby','Przykład z mojego domu','Podsumowanie'],
+  pytania:['Czy oszczędza Pan wodę?','Ile trwa Pana prysznic?','Co robi Pan z deszczówką?','Czy woda jest w Pana kraju droga?'],
+  ru:'Тема из списка преподавателя. Хорошая структура: «po pierwsze… po drugie… po trzecie…» и пример из своей жизни.',
+  wzor:'Oszczędzanie wody jest ważne, bo woda jest naszym najcenniejszym zasobem, a w wielu miejscach świata jej brakuje. W codziennym życiu można oszczędzać ją na wiele sposobów. Po pierwsze, zamiast kąpieli w wannie lepiej brać krótki prysznic. Po drugie, warto zakręcać wodę podczas mycia zębów i naczyń. U nas w domu Oliwia ma nawet mały zegar w łazience, który pilnuje, żeby prysznic nie trwał dłużej niż pięć minut. Po trzecie, pralkę i zmywarkę włączamy dopiero wtedy, gdy są pełne. Poza tym warto naprawiać cieknące krany, bo jeden kran może zmarnować wiele litrów dziennie. Można też zbierać deszczówkę do podlewania roślin. Uważam, że to małe rzeczy, ale razem dają duży efekt. Dla mnie oszczędzanie wody to także oszczędzanie pieniędzy.',
+};
+KURS_TEMATY.T10.monolog3 = {
+  typ:'opinia',
+  temat:'Zdrowe odżywianie: piramida żywieniowa',
+  plan:['Wstęp: dlaczego zdrowe jedzenie','Piramida: co jeść najczęściej, a co rzadko','Jak jemy w moim domu','Podsumowanie: umiar'],
+  pytania:['Ile posiłków dziennie Pan je?','Co Pan je na śniadanie?','Czy lubi Pan słodycze?','Jak zachęcić dziecko do zdrowego jedzenia?'],
+  ru:'Тема из списка преподавателя (пирамида питания). Лексика: warzywa, owoce, produkty zbożowe, nabiał, tłuszcze, umiar.',
+  wzor:'Zdrowe odżywianie jest podstawą dobrego samopoczucia. Piramida żywieniowa pokazuje, co powinniśmy jeść najczęściej: na dole są warzywa, owoce i produkty zbożowe, wyżej mięso, ryby i nabiał, a na samej górze słodycze i tłuszcze, których powinno być jak najmniej. W naszym domu staramy się jeść pięć małych posiłków dziennie i pić dużo wody. Na śniadanie zwykle jemy owsiankę z owocami, a na obiad zupę i dużo warzyw. Oliwia czasem prosi o chipsy, ale wtedy proponujemy jej jabłko albo orzechy. Sam przyznaję, że uwielbiam słodycze, więc kupuję je tylko na weekend. Moim zdaniem nie trzeba rezygnować z ulubionych potraw, ale trzeba zachować umiar. Dzięki zdrowej diecie mamy więcej energii i rzadziej chorujemy.',
+};
+KURS_TEMATY.T03.monolog3 = {
+  typ:'opinia',
+  temat:'Prawa i obowiązki dziecka',
+  plan:['Wstęp: dzieci mają prawa i obowiązki','Najważniejsze prawa','Obowiązki — przykład z mojego domu','Podsumowanie: równowaga'],
+  pytania:['Jakie prawa ma dziecko?','Jakie obowiązki ma Pana córka?','Czy dzieci mają dziś za dużo nauki?','Jak spędza Pan czas z dzieckiem?'],
+  ru:'Тема из списка преподавателя («права и обязанности ребёнка»). У Ивана дочери 10 лет, пример из жизни очевиден.',
+  wzor:'Dzieci mają swoje prawa, ale także obowiązki. Do najważniejszych praw należą prawo do nauki, do bezpieczeństwa, do zabawy i do wyrażania własnego zdania. Dorośli powinni wysłuchać dziecka i szanować jego uczucia. Z drugiej strony dziecko ma też obowiązki. Moja córka na przykład musi odrabiać lekcje, sprzątać swój pokój i pomagać nam w domu. Uważam, że obowiązki uczą odpowiedzialności i pomagają dorastać. Zdarza się, że dzieci są przeciążone nauką i nie mają czasu na zabawę, a to jest niezdrowe. Moim zdaniem rodzice powinni pamiętać, że dziecko potrzebuje równowagi: nauki, odpoczynku i wspólnych chwil z rodziną. Dlatego w niedzielę nie ma u nas ani szkoły, ani prac domowych, tylko wspólne gry i spacery.',
+};
+KURS_TEMATY.T06.monolog3 = {
+  typ:'opis',
+  temat:'Jak poznałem swojego najlepszego przyjaciela?',
+  plan:['Wstęp: kim jest mój przyjaciel','Jak się poznaliśmy (kiedy, gdzie, co się stało)','Co nas połączyło','Podsumowanie: czym jest dla mnie przyjaźń'],
+  pytania:['Kto jest Pana najlepszym przyjacielem?','Jak się poznaliście?','Jak często się widujecie?','Czym jest dla Pana przyjaźń?'],
+  ru:'Тема из домашних заданий преподавателя. Рассказ в прошедшем времени: когда, где, что произошло, чем кончилось.',
+  wzor:'Mojego najlepszego przyjaciela, Pawła, poznałem na pierwszym roku studiów w Petersburgu. Paweł przyjechał do nas z Polski na wymianę studencką i nie znał nikogo. W pierwszym tygodniu zgubił się w budynku uniwersytetu i zapytał mnie o drogę po angielsku. Pomogłem mu znaleźć salę, a potem poszliśmy razem na kawę. Okazało się, że obaj lubimy muzykę i historię. Od tego dnia byliśmy nierozłączni: razem uczyliśmy się do egzaminów, chodziliśmy na koncerty i jeździliśmy na wycieczki. Paweł nauczył mnie pierwszych polskich słów, co dzisiaj bardzo mi się przydaje. Później wrócił do Warszawy, ale nasza przyjaźń trwa do dziś. Dzwonimy do siebie co tydzień, a kiedy mogę, jadę do niego pociągiem. Myślę, że prawdziwy przyjaciel to osoba, na którą zawsze można liczyć.',
+};
