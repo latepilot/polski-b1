@@ -1430,3 +1430,93 @@ KURS_TEMATY.T06.monolog3 = {
   ru:'Тема из домашних заданий преподавателя. Рассказ в прошедшем времени: когда, где, что произошло, чем кончилось.',
   wzor:'Mojego najlepszego przyjaciela, Pawła, poznałem na pierwszym roku studiów w Petersburgu. Paweł przyjechał do nas z Polski na wymianę studencką i nie znał nikogo. W pierwszym tygodniu zgubił się w budynku uniwersytetu i zapytał mnie o drogę po angielsku. Pomogłem mu znaleźć salę, a potem poszliśmy razem na kawę. Okazało się, że obaj lubimy muzykę i historię. Od tego dnia byliśmy nierozłączni: razem uczyliśmy się do egzaminów, chodziliśmy na koncerty i jeździliśmy na wycieczki. Paweł nauczył mnie pierwszych polskich słów, co dzisiaj bardzo mi się przydaje. Później wrócił do Warszawy, ale nasza przyjaźń trwa do dziś. Dzwonimy do siebie co tydzień, a kiedy mogę, jadę do niego pociągiem. Myślę, że prawdziwy przyjaciel to osoba, na którą zawsze można liczyć.',
 };
+
+// ------------------------------------------------------------------------
+// Z prawdziwych sesji (relacje zdających, 2026): monologi marzeń i opinii
+// oraz dialogi, których brakowało — kolejne warianty tematów (monolog3, sytuacja3…).
+// ------------------------------------------------------------------------
+KURS_TEMATY.T02.monolog2 = {
+  typ:'opis',
+  temat:'Jaki jest Pana styl ubierania? Jakie ubrania Pan lubi, a jakich nie nosi?',
+  plan:['Wstęp: co jest dla mnie ważne w ubiorze','Co lubię i noszę na co dzień','Czego nie lubię i nie noszę','Podsumowanie'],
+  pytania:['Co zakłada Pan do pracy?','Jaki jest Pana ulubiony kolor?','Czy lubi Pan nowe ubrania?','Co Pan zakłada na wyjątkowe okazje?'],
+  ru:'Тема, которую сдавшие описывают как частую. Схема: что нравится → чего не ношу → вывод. Лексика: swetry, spodnie, w kratkę, w paski.',
+  wzor:'W moim stylu ubierania najważniejsze jest to, żebym czuł się wygodnie. Uważam, że ubranie wpływa na nasze samopoczucie i pewność siebie. Po pierwsze, lubię ubrania proste i luźne. Na co dzień noszę dżinsy, ciemne swetry i T-shirty, a na nogach wygodne sportowe buty. W pracy często zakładam bluzę, bo w studiu bywa chłodno. Kiedy idziemy do teatru albo na ważne spotkanie, zakładam koszulę i marynarkę. Po drugie, są rzeczy, których nie lubię i nie noszę. Nie podobają mi się krzykliwe kolory ani ubrania w paski, bo czuję się w nich nieswojo. Nie noszę też krawatów, chyba że naprawdę muszę. Moim ulubionym kolorem jest granatowy, a koszul w kratkę mam kilka. Podsumowując, mój styl to połączenie wygody z odrobiną elegancji. Najważniejsze jest dla mnie, żeby czuć się swobodnie i pewnie.',
+};
+KURS_TEMATY.T16.monolog2 = {
+  typ:'opis',
+  temat:'Z jakich usług Pan korzysta? Jak często?',
+  plan:['Wstęp: usługi ułatwiają życie','Po pierwsze: transport','Po drugie: inne usługi (poczta, fryzjer, gastronomia)','Podsumowanie'],
+  pytania:['Z jakich usług korzysta Pan najczęściej?','Jak często chodzi Pan do fryzjera?','Czy zamawia Pan jedzenie do domu?','Jak wygląda Pana kontakt z pocztą lub bankiem?'],
+  ru:'Монолог о повседневных услугах: транспорт, еда, парикмахер, почта. Назови, как часто (raz w miesiącu, co tydzień).',
+  wzor:'W dzisiejszych czasach usługi są bardzo ważne, bo ułatwiają nam życie i pozwalają oszczędzać czas. Po pierwsze, codziennie korzystam z usług transportowych. Do pracy jeżdżę tramwajem, a na dłuższe trasy pociągiem, ponieważ nie mam samochodu. Transport publiczny jest wygodny i tańszy niż taksówka. Po drugie, regularnie korzystam z usług gastronomicznych. Lubię chodzić z żoną do kawiarni, a kiedy nie mamy czasu gotować, czasem zamawiamy jedzenie do domu. Do fryzjera chodzę mniej więcej raz w miesiącu. Od czasu do czasu korzystam też z poczty: wysyłam paczki rodzicom do Petersburga albo odbieram przesyłki zamówione przez internet. Podsumowując, najczęściej używam usług transportowych, gastronomicznych i pocztowych. Uważam, że bez nich trudniej byłoby zorganizować nasz dzień.',
+};
+KURS_TEMATY.T13.monolog3 = {
+  typ:'opis',
+  temat:'Proszę opowiedzieć o najlepszej podróży w Pana życiu.',
+  plan:['Wstęp: dokąd i kiedy','Co się działo (po kolei)','Najciekawszy moment lub zaskoczenie','Podsumowanie: dlaczego wyjątkowa'],
+  pytania:['Dokąd Pan pojechał?','Z kim?','Co najbardziej Panu się podobało?','Czy wróciłby Pan tam?'],
+  ru:'Рассказ в прошедшем времени. Добавь неожиданный момент («Nagle…») и вывод. Образец построен на поездке в Рим.',
+  wzor:'Najlepszą podróżą w moim życiu był tydzień w Rzymie z żoną i córką w czerwcu. Pojechaliśmy tam samolotem z Gdańska, a Oliwia pierwszy raz w życiu leciała i bardzo się cieszyła. Mieszkaliśmy w małym hotelu niedaleko Koloseum. Każdego dnia zwiedzaliśmy inne miejsca: Forum Romanum, Watykan i Fontannę di Trevi. Jedliśmy lokalne potrawy, na przykład makaron, pizzę i lody. Wieczorami spacerowaliśmy po starych uliczkach, a ja robiłem setki zdjęć. Nagle, ostatniego dnia, na lotnisku okazało się, że wzięliśmy cudzą walizkę! To był niespodziewany moment, ale na szczęście wszystko dobrze się skończyło. Ta podróż była wyjątkowa, bo spędziliśmy czas razem i poznaliśmy nowych ludzi. Na pewno kiedyś tam wrócimy.',
+};
+KURS_TEMATY.T21.monolog2 = {
+  typ:'opis',
+  temat:'Proszę opowiedzieć o tradycjach świątecznych w Pana kraju.',
+  plan:['Wstęp: które święto jest najważniejsze','Jak je obchodzimy: jedzenie, rodzina, zwyczaje','Jak obchodzę je w Polsce','Podsumowanie'],
+  pytania:['Jakie święto lubi Pan najbardziej?','Co je się w tym czasie?','Czym różnią się święta w Polsce i w Pana kraju?','Z kim Pan świętuje?'],
+  ru:'Рассказ о традициях своей страны. Образец про Новый год и Рождество; можешь взять Пасху.',
+  wzor:'W Rosji najważniejszym świętem jest Nowy Rok. Przygotowujemy się do niego już wiele dni wcześniej. Po pierwsze, w domu stoi choinka, którą ubieramy razem z dziećmi. Po drugie, na stole musi być tradycyjna sałatka, szampan i mandarynki. O północy oglądamy przemówienie prezydenta, a potem życzymy sobie szczęścia. Dzieci dostają prezenty od Dziadka Mroza. Boże Narodzenie obchodzi się w Rosji siódmego stycznia, więc mamy dłuższe święta. Odkąd mieszkam w Polsce, poznałem też polskie zwyczaje, na przykład Wigilię z barszczem i dzieleniem się opłatkiem. Bardzo mi się to podoba. Dla mnie najważniejsze w świętach jest to, że rodzina siada razem przy stole. Podsumowując, staram się zachować nasze tradycje, ale chętnie poznaję też polskie.',
+};
+KURS_TEMATY.T18.monolog2 = {
+  typ:'opis',
+  temat:'Proszę opowiedzieć, jak wygląda system edukacji w kraju, z którego Pan pochodzi.',
+  plan:['Wstęp: jak jest zorganizowana nauka','Etapy: przedszkole, szkoła, studia','Moje wspomnienia ze szkoły','Podsumowanie'],
+  pytania:['W jakim wieku dzieci idą do szkoły?','Ile lat trwa szkoła?','Czy studia są płatne?','Jak Pan wspomina swoją szkołę?'],
+  ru:'Монолог о системе образования своей страны: этапы, возраст, экзамены. Цифры можно подставить свои.',
+  wzor:'W Rosji dzieci zaczynają naukę w przedszkolu około trzeciego roku życia. Do szkoły idą w wieku sześciu lub siedmiu lat. Szkoła trwa jedenaście lat. W klasach od pierwszej do czwartej uczniowie uczą się podstaw: czytania, pisania i liczenia. W klasach od piątej do dziewiątej pojawiają się nowe przedmioty, takie jak fizyka, chemia i języki obce. W ostatnich dwóch klasach uczniowie przygotowują się do egzaminów państwowych, które decydują o tym, czy dostaną się na studia. Studia trwają zwykle pięć lat, a ja studiowałem logistykę na politechnice w Petersburgu. Z mojej szkoły najlepiej pamiętam lekcje matematyki i fizyki, które bardzo lubiłem. Podsumowując, uważam, że edukacja w moim kraju daje solidną wiedzę, ale uczniowie mają dużo nauki i mało czasu na zabawę.',
+};
+KURS_TEMATY.T17.sytuacja3 = {
+  polecenie:'Boli Pana ząb. Proszę zadzwonić do gabinetu dentystycznego i umówić się na wizytę: opisać problem, zapytać o wolne terminy i o cenę leczenia, wybrać termin i zapytać, jakie dokumenty trzeba przynieść.',
+  rola_ja:'pacjent',
+  rola_on:'recepcjonistka',
+  ru:'Официальный звонок: Pan/Pani. Назови проблему (boli mnie ząb), выбери день и час, спроси цену и документы, назови фамилию и телефон. Пример из конспектов сдавшей.',
+  cele:['Przywitać się i powiedzieć, że chce Pan umówić wizytę','Opisać problem','Wybrać termin spośród wolnych','Zapytać o cenę i o dokumenty','Podać dane i podziękować'],
+  zwroty:[['Chciałbym umówić się na wizytę.','Хотел бы записаться на приём.'],['Boli mnie ząb.','У меня болит зуб.'],['Czy macie wolne terminy w tym tygodniu?','Есть ли у вас свободное время на этой неделе?'],['Środa o 10:00 byłaby idealna.','Среда в 10:00 была бы идеальна.'],['Ile kosztuje leczenie?','Сколько стоит лечение?'],['Czy mogę zapłacić kartą?','Могу ли я заплатить картой?']],
+  wzor:'Recepcjonistka: Gabinet stomatologiczny, dzień dobry.\nTy: Dzień dobry. Nazywam się Iwan Pietrow. Chciałbym umówić się na wizytę, ponieważ boli mnie ząb.\nRecepcjonistka: Rozumiem. Mamy wolne terminy w środę o dziesiątej i w piątek o czternastej. Który Panu odpowiada?\nTy: Środa o dziesiątej byłaby idealna. Ile kosztuje leczenie kanałowe?\nRecepcjonistka: Czterysta złotych. Plombę zakładamy za sto pięćdziesiąt.\nTy: Dobrze. Czy muszę przynieść jakieś dokumenty?\nRecepcjonistka: Proszę zabrać dowód osobisty lub paszport i kartę ubezpieczeniową, jeśli Pan ją ma.\nTy: Rozumiem. Czy mogę zapłacić kartą?\nRecepcjonistka: Tak, kartą lub gotówką.\nTy: Świetnie. Jakie dane są potrzebne do zapisu?\nRecepcjonistka: Imię, nazwisko, numer telefonu i data urodzenia.\nTy: Iwan Pietrow, telefon 600 123 456, urodziłem się dwunastego maja tysiąc dziewięćset osiemdziesiątego ósmego roku.\nRecepcjonistka: Dziękuję, zapisuję Pana na środę na dziesiątą. Do zobaczenia!\nTy: Dziękuję bardzo. Do widzenia.',
+};
+KURS_TEMATY.T10.sytuacja4 = {
+  polecenie:'Pana kolega je codziennie fast foody i pije kilka kaw dziennie. Proszę go przekonać, że warto zdrowo się odżywiać.',
+  rola_ja:'przyjaciel',
+  rola_on:'kolega, który niezdrowo się odżywia',
+  ru:'Неформальный диалог: выскажи беспокойство, приведи пример, предложи простые замены и помощь. Пример из конспектов сдавшей.',
+  cele:['Powiedzieć, że się Pan martwi','Podać argument lub przykład','Zaproponować proste zmiany','Zaoferować pomoc','Pożegnać się'],
+  zwroty:[['Słyszałem, że ostatnio jesz dużo fast foodów.','Слышал, что ты в последнее время много ешь фастфуда.'],['Trochę się o ciebie martwię.','Я немного за тебя переживаю.'],['Spróbuj zamienić kawę na wodę albo herbatę.','Попробуй заменить кофе водой или чаем.'],['Możemy razem wymyślić proste przepisy.','Можем вместе придумать простые рецепты.'],['Zobaczysz, że będziesz miał więcej energii.','Увидишь, что у тебя будет больше энергии.'],['Nie trzeba od razu wszystkiego zmieniać.','Не нужно сразу всё менять.']],
+  wzor:'Ty: Cześć, Tomek! Słyszałem, że ostatnio jesz dużo fast foodów i pijesz kilka kaw dziennie. Chciałem o tym pogadać, bo trochę się o ciebie martwię.\nKolega: Cześć! No tak, ale jakoś sobie radzę.\nTy: Wiem, ale posłuchaj. Mój kolega z Petersburga też ciągle jadł fast foody i pił dużo kawy. Na początku nic się nie działo, a potem zaczął mieć problemy z żołądkiem i był bardzo zmęczony. Nie chcę, żeby tobie też się coś takiego przytrafiło.\nKolega: Hm, może faktycznie trochę przesadzam.\nTy: No właśnie! I wcale nie trzeba od razu gotować skomplikowanych dań. Możemy razem wymyślić proste przepisy: sałatki, owsiankę, koktajle. To szybkie i naprawdę dobre.\nKolega: Brzmi nieźle, ale nie wiem.\nTy: Spróbuj chociaż zmienić jeden nawyk. Zamień raz w tygodniu fast food na coś lekkiego, a kawę na wodę albo herbatę. Zobaczysz, że będziesz miał więcej energii.\nKolega: Dobrze, myślę, że mogę spróbować.\nTy: Super! To naprawdę dobra decyzja. Nie chodzi o to, żeby od razu wszystko zmienić, tylko żeby dbać o siebie krok po kroku. Ja ci pomogę.',
+};
+KURS_TEMATY.T06.sytuacja4 = {
+  polecenie:'Pana koleżanka planuje przeprowadzkę za granicę, ale się waha i boi. Proszę z nią porozmawiać: zapytać, dokąd chce jechać i czego się boi, zachęcić ją i zaoferować wsparcie.',
+  rola_ja:'przyjaciel',
+  rola_on:'koleżanka, która się boi wyjazdu',
+  ru:'Неформальный диалог на «ты»: расспроси, выслушай страхи, подбодри и предложи помощь. Пример из конспектов сдавшей.',
+  cele:['Zapytać o plany i dokąd chce jechać','Zapytać, czego się boi','Zachęcić (nowa praca, język, ludzie)','Zaoferować wsparcie','Pożegnać się'],
+  zwroty:[['Słyszałem, że planujesz przeprowadzkę.','Слышал, что ты планируешь переезд.'],['Dokąd chciałabyś wyjechać?','Куда ты хотела бы уехать?'],['Rozumiem, że się boisz.','Понимаю, что ты боишься.'],['To szansa na rozwój i nowe znajomości.','Это шанс на развитие и новые знакомства.'],['Lepiej żałować, że się spróbowało, niż że się nie spróbowało.','Лучше жалеть, что попробовал, чем что не попробовал.'],['Trzymam za ciebie kciuki.','Держу за тебя кулачки.']],
+  wzor:'Ty: Cześć, Ewo! Słyszałem, że planujesz przeprowadzkę za granicę. To prawda?\nKoleżanka: Cześć! Tak, myślę o tym, ale jeszcze się waham.\nTy: Rozumiem. A dokąd chciałabyś wyjechać?\nKoleżanka: Do Niemiec. Dostałam tam propozycję pracy, ale nie wiem, czy sobie poradzę.\nTy: To świetna okazja! Czego się boisz? Języka czy tego, że będziesz sama?\nKoleżanka: Chyba jednego i drugiego. Boję się, że nie znajdę przyjaciół.\nTy: To normalne, każdy się boi na początku. Pamiętaj, że wyjazd to szansa na rozwój, nową pracę i znajomości. A w Niemczech mieszka wielu Polaków, więc na pewno nie będziesz sama.\nKoleżanka: Masz rację, ale wszystko tam będzie nowe i obce.\nTy: Wiem, ale pomyśl, ile możesz zyskać! A jeśli ci się nie spodoba, zawsze możesz wrócić. Lepiej żałować, że się spróbowało, niż że się nie spróbowało.\nKoleżanka: Chyba mnie przekonałeś. Dziękuję za wsparcie.\nTy: Nie ma za co. Trzymam za ciebie kciuki, a jak będziesz potrzebować pomocy, zawsze możesz do mnie zadzwonić.',
+};
+KURS_TEMATY.T14.sytuacja2 = {
+  polecenie:'Pana przyjaciel zaprosił Pana do Krakowa na trzy dni. Proszę z nim porozmawiać: zapytać, gdzie można nocować i jeść, i zaproponować, co robić w kolejne dni.',
+  rola_ja:'gość',
+  rola_on:'przyjaciel gospodarz',
+  ru:'Неформальный диалог: спроси про ночлег, еду, предложи план по дням. Пример из конспектов сдавшей.',
+  cele:['Podziękować za zaproszenie','Zapytać o nocleg','Zapytać o jedzenie','Zaproponować plan na trzy dni','Ustalić kontakt przed wyjazdem'],
+  zwroty:[['Dzięki za zaproszenie do Krakowa!','Спасибо за приглашение в Краков!'],['Gdzie mogę nocować?','Где я могу переночевать?'],['Chciałbym, żeby hotel był czysty i cichy.','Хотел бы, чтобы отель был чистым и тихим.'],['Chciałbym spróbować pierogów i żurku.','Хотел бы попробовать пироги и журек.'],['Pierwszego dnia możemy pójść na Rynek.','В первый день можем пойти на Рынок.'],['Napiszemy w czacie i ustalimy szczegóły.','Напишем в чате и обсудим детали.']],
+  wzor:'Ty: Cześć, Paweł! Dzięki za zaproszenie do Krakowa, naprawdę się cieszę! Masz już pomysł, gdzie mogę nocować?\nPrzyjaciel: Cześć! Jeszcze nie wiem, może hotel w centrum?\nTy: Dobry pomysł. Chciałbym, żeby był czysty i cichy. Znasz jakieś dobre hotele w centrum?\nPrzyjaciel: Tak, znam kilka. Coś ci polecę.\nTy: Świetnie! A co z jedzeniem? Chciałbym spróbować pierogów i żurku. Polecasz jakieś restauracje?\nPrzyjaciel: Jasne, w centrum jest kilka miejsc z tradycyjną kuchnią.\nTy: A masz już plan, co będziemy robić? Mogę coś zaproponować?\nPrzyjaciel: Chętnie posłucham.\nTy: Pierwszego dnia możemy pójść na Rynek Główny i zobaczyć Sukiennice. Drugiego dnia chciałbym zwiedzić Wawel i jakieś muzeum. Masz propozycje?\nPrzyjaciel: Możemy iść do muzeum historycznego albo do galerii sztuki.\nTy: Super, oba brzmią ciekawie! Trzeciego dnia możemy pójść na Kazimierz na kawę. Wieczorem odprowadzisz mnie na dworzec, prawda?\nPrzyjaciel: Oczywiście!\nTy: Napiszemy do siebie w czacie i ustalimy szczegóły. Nie mogę się doczekać!',
+};
+KURS_TEMATY.T14.sytuacja3 = {
+  polecenie:'Pana koleżanka wróciła z urlopu za granicą. Proszę z nią porozmawiać o jej wakacjach: zapytać, gdzie była, co zwiedziła, gdzie spała i co jadła.',
+  rola_ja:'przyjaciel',
+  rola_on:'koleżanka po urlopie',
+  ru:'Неформальный диалог: задавай открытые вопросы (где, что, где жила, что ела) и реагируй на ответы. Пример из конспектов сдавшей.',
+  cele:['Przywitać się i zapytać, gdzie była','Zapytać, co zwiedziła','Zapytać o nocleg','Zapytać o jedzenie','Zareagować i pożegnać się'],
+  zwroty:[['Słyszałem, że byłaś na urlopie.','Слышал, что ты была в отпуске.'],['Gdzie dokładnie byłaś i kiedy?','Где именно ты была и когда?'],['Co najbardziej ci się podobało?','Что тебе больше всего понравилось?'],['A gdzie spałaś? W hotelu?','А где ты ночевала? В отеле?'],['Jaka była twoja ulubiona potrawa?','Какое блюдо было твоим любимым?'],['Musimy kiedyś pojechać razem!','Надо как-нибудь съездить вместе!']],
+  wzor:'Ty: Cześć, Ewo! Słyszałem, że byłaś na urlopie za granicą. Gdzie dokładnie byłaś i kiedy?\nKoleżanka: Cześć! Byłam we Włoszech, w Toskanii, przez dwa tygodnie w lipcu.\nTy: Super! Jak spędzałaś tam czas? Co najbardziej ci się podobało?\nKoleżanka: Zwiedzałam Florencję i Sienę, dużo fotografowałam i próbowałam lokalnej kuchni.\nTy: Brzmi świetnie! A byłaś też na plaży?\nKoleżanka: Tak, kilka razy. Pływałam i spacerowałam wzdłuż wybrzeża.\nTy: Fajnie! A gdzie spałaś? W hotelu czy w apartamencie?\nKoleżanka: W małym hotelu blisko centrum, było bardzo czysto, a śniadanie było wliczone w cenę.\nTy: To musiało być wygodne! Jakie lokalne potrawy próbowałaś? Co smakowało ci najbardziej?\nKoleżanka: Jadłam risotto, pizzę i tiramisu. Najbardziej smakowało mi tiramisu!\nTy: Brzmi przepysznie! A myślisz, że kiedyś tam wrócisz?\nKoleżanka: Na pewno, bo jeszcze wiele miejsc chcę zobaczyć.\nTy: Cieszę się, że tak dobrze spędziłaś czas! Musimy kiedyś pojechać razem.',
+};

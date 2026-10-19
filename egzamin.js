@@ -105,7 +105,7 @@ function menu(){
   }
 
   h+=`<h3 class="egz-h">Ćwicz osobno</h3>`;
-  h+=karta('egz-book','Gramatyka — 8 typów zadań',GRAM_KOLEJNOSC.reduce((s,k)=>s+GRAMATYKA[k].zadania.length,0)+' zadań','EGZ.menuGram()');
+  h+=karta('egz-book','Gramatyka — 11 typów zadań',GRAM_KOLEJNOSC.reduce((s,k)=>s+GRAMATYKA[k].zadania.length,0)+' zadań','EGZ.menuGram()');
   h+=karta('egz-ear','Słuchanie','Nagrania czytane przez przeglądarkę','EGZ.menuSluch()');
   h+=karta('egz-pen','Pisanie','Szkielety form + samoocena','EGZ.menuPisanie()');
   if(S.bledy.length) h+=karta('egz-bolt','Powtórka błędów',S.bledy.length+' zadań',"EGZ.blok('bledy','')");
@@ -127,7 +127,7 @@ function przycisk(txt,fn,wyl){
 
 function menuGram(){
   wejdz('gram', menuGram);
-  let h='<div class="egz"><h3 class="egz-h">Poprawność gramatyczna</h3><div class="egz-sub">8 typów zadań. 45 minut, 30 punktów.</div>';
+  let h='<div class="egz"><h3 class="egz-h">Poprawność gramatyczna</h3><div class="egz-sub">11 typów zadań (na egzaminie 8–11 zadań). 45 minut, 30 punktów.</div>';
   for(const k of GRAM_KOLEJNOSC){
     const z=GRAMATYKA[k],s=S.gram[k],p=s&&(s.dobrze+s.zle)?Math.round(s.dobrze/(s.dobrze+s.zle)*100):null;
     const g=(s?.zrobione||0)>=z.zadania.length;

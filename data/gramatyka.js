@@ -283,6 +283,39 @@ const GRAMATYKA = {
   ]
 },
 
+// ---------- XI. Słowotwórstwo ----------
+'slowotworstwo': {
+  nr: 'XI', tytul: 'Transformacja słowotwórcza',
+  polecenie: 'Proszę wpisać wyraz utworzony od wyrazu w nawiasie (przymiotnik → przysłówek, stopień wyższy, rzeczownik odczasownikowy).',
+  interakcja: 'wpisz',
+  zadania: [
+    { zdanie: 'Ona mówi ___ po polsku. (dobry)', ok: 'dobrze',
+      wyjasnienie: 'przymiotnik → przysłówek: dobry → dobrze.' },
+    { zdanie: 'Ona tańczy ___ . (piękny)', ok: 'pięknie',
+      wyjasnienie: 'piękny → pięknie (-ny → -nie).' },
+    { zdanie: 'Dzisiaj pogoda jest ___ niż wczoraj. (zły)', ok: 'gorsza',
+      wyjasnienie: 'zły → gorszy; pogoda jest rodzaju żeńskiego: gorsza.' },
+    { zdanie: 'Mój brat jeździ ___ niż ja. (szybko)', ok: 'szybciej',
+      wyjasnienie: 'przysłówek w stopniu wyższym: szybko → szybciej.' },
+    { zdanie: 'Ten film był ___ niż książka. (ciekawy)', ok: 'ciekawszy',
+      wyjasnienie: 'film jest rodzaju męskiego: ciekawy → ciekawszy.' },
+    { zdanie: 'Mój dom jest ___ od Twojego. (duży)', ok: 'większy',
+      wyjasnienie: 'duży → większy (inny rdzeń).' },
+    { zdanie: 'To jest ___ restauracja w mieście. (dobry – stopień najwyższy)', ok: 'najlepsza',
+      wyjasnienie: 'stopień najwyższy: dobry → najlepszy; restauracja jest rodzaju żeńskiego: najlepsza.' },
+    { zdanie: 'Rozmawiam z kolegą ___ . (polski)', ok: 'po polsku',
+      wyjasnienie: 'język jako sposób mówienia: po polsku.' },
+    { zdanie: 'Bardzo lubię ___ . (gotować – rzeczownik)', ok: 'gotowanie',
+      wyjasnienie: 'czasownik → rzeczownik odczasownikowy: gotować → gotowanie.' },
+    { zdanie: 'Oliwia lubi ___ w morzu. (pływać – rzeczownik)', ok: 'pływanie',
+      wyjasnienie: 'pływać → pływanie (-ać → -anie); „lubić” + biernik: lubi pływanie.' },
+    { zdanie: 'Ewa zachowuje się bardzo ___ . (uprzejmy)', ok: 'uprzejmie',
+      wyjasnienie: 'uprzejmy → uprzejmie (przysłówek).' },
+    { zdanie: 'Tomek mówi głośno, a Ewa mówi jeszcze ___ . (głośno)', ok: 'głośniej',
+      wyjasnienie: 'głośno → głośniej (stopień wyższy przysłówka).' },
+  ]
+},
+
 };
 
-const GRAM_KOLEJNOSC = ['odmiana','zaimki','spojniki','stopniowanie','czasy','przeszly','pytania','parafraza','tryby','przyimki'];
+const GRAM_KOLEJNOSC = ['odmiana','zaimki','spojniki','stopniowanie','czasy','przeszly','pytania','parafraza','tryby','przyimki','slowotworstwo'];
