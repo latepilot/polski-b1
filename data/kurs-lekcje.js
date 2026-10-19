@@ -610,6 +610,8 @@ KURS_LEKCJE.L12 = {
     {zdanie:'Ona nie ___ (móc) przyjść, bo była chora.', ok:'mogła', wyjasnienie:'móc: mogła.'},
     {zdanie:'Dokąd ___ (iść — ty), kiedy cię spotkałem?', ok:'szedłeś', wyjasnienie:'iść: szedłem, szedłeś.'},
     {zdanie:'Wczoraj ___ na zakupach. (my — kobiety)', opcje:['byliśmy','byłyśmy'], ok:1, wyjasnienie:'только женщины: byłyśmy.'},
+    {zdanie:'Wczoraj ___ (wziąć — ja, kobieta) parasol.', ok:'wzięłam', wyjasnienie:'wziąć → wzięłam / wziąłem: у женского рода основа меняется (wzięła, wzięli).'},
+    {zdanie:'Wczoraj ___ (wziąć — ja, мужчина) parasol.', ok:'wziąłem', wyjasnienie:'wziąć → wziąłem (м.р.) / wzięłam (ж.р.).'},
   ]
 };
 
@@ -994,6 +996,7 @@ KURS_LEKCJE.L21 = {
     {zdanie:'Moja siostra śpiewa ___ niż ja.', opcje:['gorzej','gorsza','zły'], ok:0, wyjasnienie:'как поёт → наречие: gorzej.'},
     {zdanie:'Jutro przyjdę trochę ___ (późno).', ok:'później', wyjasnienie:'późno → później.'},
     {zdanie:'Zimą dni są ___ niż latem.', opcje:['krótkie','krótsze','najkrótsze'], ok:1, wyjasnienie:'сравнение с niż → krótsze.'},
+    {zdanie:'Marek jest ___ niż Piotr. (wesoły)', ok:'weselszy', wyjasnienie:'wesoły → weselszy (нерегулярно, без -ej-): weselszy, najweselszy.'},
   ]
 };
 
@@ -1166,5 +1169,7 @@ KURS_LEKCJE.L25 = {
     {zdanie:'Szanowni ___ ! Dziękujemy za przybycie.', opcje:['Państwo','Państwa','Państwu'], ok:0, wyjasnienie:'обращение: Szanowni Państwo.'},
     {zdanie:'Kupiłem prezent dla pani ___ (Kowalska).', ok:'Kowalskiej', wyjasnienie:'-ska склоняется как прилагательное: Kowalskiej.'},
     {zdanie:'Pracuję tu już pięć ___ (rok).', ok:'lat', wyjasnienie:'5 → lat.'},
+    {zdanie:'W ___ (ciasto) są jabłka.', ok:'cieście', wyjasnienie:'ciasto → w cieście (чередование ś/ć в предложном падеже).'},
+    {zdanie:'Mówię o ___ (błąd).', ok:'błędzie', wyjasnienie:'błąd → o błędzie (чередование ą ↔ ę и -dz-).'},
   ]
 };

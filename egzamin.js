@@ -577,7 +577,8 @@ function licz(cel){
   // Na egzaminie dozwolone ±10%. Słów ponad limit egzaminator już nie czyta.
   const dol=Math.ceil(cel*0.9), gor=Math.floor(cel*1.1);
   const e=el('egzLicznik');
-  e.textContent = n>gor ? n+' słów — больше '+gor+': дальше экзаменатор не читает'
+  e.textContent = n>cel*1.2 ? n+' słów — больше 120%: остаток текста не читают'
+    : n>gor ? n+' słów — больше '+gor+': теряешь баллы за объём'
     : n+' słów (cel: '+dol+'–'+gor+')';
   e.className='egz-count'+(n>gor?' egz-count-zle':n>=dol?' egz-count-ok':'');
 }

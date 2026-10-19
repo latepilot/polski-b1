@@ -595,6 +595,7 @@ KURS_TEMATY.T13 = {
     ['rezerwacja','бронь'],['miejsce przy oknie','место у окна'],['w jedną stronę','в одну сторону'],['tam i z powrotem','туда и обратно'],
     ['godziny szczytu','часы пик'],['prom','паром'],
     ['zagubiony bagaż','потерянный багаж'],['kwit bagażowy','багажная квитанция'],['biuro bagażu','бюро багажа'],['zgłosić zgubienie','заявить о потере'],
+    ['lęk przed lataniem','страх летать'],['turbulencje','турбулентность'],
   ],
   zwroty:[
     ['Poproszę bilet normalny do Krakowa, w jedną stronę.','Полный билет до Кракова в одну сторону, пожалуйста.'],
@@ -728,6 +729,7 @@ KURS_TEMATY.T16 = {
     ['pralnia','прачечная, химчистка'],['warsztat samochodowy','автосервис'],['mechanik','механик'],['zepsuć się','сломаться'],
     ['naprawić','починить'],['wymienić opony','поменять шины'],['stacja benzynowa','заправка (АЗС)'],['zatankować','заправиться, заправить машину'],
     ['wypożyczyć książkę','взять книгу (в библиотеке)'],['oddać książkę','вернуть книгу'],
+    ['pomoc drogowa','эвакуатор, техпомощь на дороге'],['laweta','эвакуатор (платформа)'],['awaria','поломка, авария (техническая)'],['pobocze','обочина'],['światła awaryjne','аварийная сигнализация'],
   ],
   zwroty:[
     ['Chciałbym założyć konto.','Я хотел бы открыть счёт.'],
@@ -863,6 +865,7 @@ KURS_TEMATY.T19 = {
     ['zepsuć się','сломаться'],['naprawić','починить'],['wprowadzić się','въехать (в квартиру)'],['wyprowadzić się','съехать (с квартиры)'],
     ['mieszkanie umeblowane','квартира с мебелью'],['okres wypowiedzenia','срок уведомления о расторжении'],['przedłużyć umowę','продлить договор'],
     ['kredyt hipoteczny','ипотека'],
+    ['serwis','сервисный центр'],['technik','мастер, техник'],['lodówka','холодильник'],['naprawa','ремонт (починка)'],
   ],
   zwroty:[
     ['Ile wynosi czynsz?','Какая арендная плата?'],
@@ -952,6 +955,7 @@ KURS_TEMATY.T21 = {
     ['cmentarz','кладбище'],['Święto Niepodległości','День независимости (11 ноября)'],['imieniny','именины'],
     ['ślub','бракосочетание, венчание'],['wesele','свадьба (праздник)'],['rocznica','годовщина'],['składać życzenia','поздравлять'],['zwyczaj','обычай'],['tradycja','традиция'],
     ['dzień wolny od pracy','выходной день'],['Tłusty Czwartek','Жирный четверг'],['pączki','пончики'],
+    ['przyjęcie świąteczne','праздничный приём, корпоратив'],['menu wegetariańskie','вегетарианское меню'],
   ],
   zwroty:[
     ['Wszystkiego najlepszego z okazji imienin!','Поздравляю с именинами!'],
@@ -1307,4 +1311,69 @@ KURS_TEMATY.T06.sytuacja3 = {
   cele:['Przywitać się i wyrazić radość ze spotkania','Zapytać o nowości, zauważyć pierścionek','Wyrazić radość i pogratulować','Zaprosić na kawę, uzgodnić dzień, godzinę i miejsce','Pożegnać się, pozdrowić narzeczonego'],
   zwroty:[['Tak dawno cię nie widziałem!','Так давно тебя не видел!'],['Świetnie wyglądasz!','Отлично выглядишь!'],['O, widzę, że masz piękny pierścionek!','О, вижу, у тебя красивое кольцо!'],['To wspaniała wiadomość! Gratuluję!','Какая чудесная новость! Поздравляю!'],['Masz ochotę na kawę?','Хочешь кофе?'],['Pozdrów ode mnie narzeczonego!','Передай привет жениху!']],
   wzor:'Ty: Cześć, Marto! Tak dawno cię nie widziałem!\nKoleżanka: Iwan! Co za niespodzianka!\nTy: Świetnie wyglądasz! A co ty tu robisz? Myślałem, że mieszkasz w Krakowie.\nKoleżanka: Bo mieszkam, ale przyjechałam na weekend do rodziców. A ty dalej pracujesz w tym samym studiu?\nTy: Tak, dalej. O, widzę, że masz na palcu piękny pierścionek!\nKoleżanka: No tak, zaręczyłam się miesiąc temu!\nTy: Naprawdę? To wspaniała wiadomość! Gratuluję ci, bardzo się cieszę! Jak on ma na imię?\nKoleżanka: Marek. Poznaliśmy się na kursie tańca.\nTy: Jak romantycznie! A kiedy bierzecie ślub?\nKoleżanka: W przyszłym roku, latem.\nTy: Chcę wszystko wiedzieć, ale niestety trochę się spieszę. Opowiem ci o sobie przy kawie. Masz ochotę na kawę?\nKoleżanka: Z przyjemnością! Kiedy masz czas?\nTy: Co robisz w sobotę po południu?\nKoleżanka: W sobotę niestety nie mogę.\nTy: Szkoda. A może w niedzielę? Znam nową kawiarnię przy rynku. Mają tam świetną kawę i ciasto.\nKoleżanka: W niedzielę mi pasuje. O której?\nTy: O piętnastej. Dasz mi swój numer telefonu?\nKoleżanka: Jasne, zapisz.\nTy: Będziemy w kontakcie. Do zobaczenia w niedzielę! Pozdrów ode mnie narzeczonego!\nKoleżanka: Dziękuję, pozdrowię. Cześć!',
+};
+
+// ------------------------------------------------------------------------
+// Z prawdziwych sesji (relacje zdających, 2026): monologi marzeń i opinii
+// oraz dialogi, których brakowało — kolejne warianty tematów (monolog3, sytuacja3…).
+// ------------------------------------------------------------------------
+KURS_TEMATY.T03.monolog2 = {
+  typ:'opinia',
+  temat:'Czy zgadza się Pan ze stwierdzeniem, że w życiu najważniejsza jest rodzina?',
+  plan:['Wstęp: czy się zgadzam','Argumenty: bezpieczeństwo, wartości, wspólny czas','Kontrargument: inne ważne rzeczy','Podsumowanie'],
+  pytania:['Kto jest dla Pana najważniejszy w rodzinie?','Jak często spotyka się Pan z rodziną?','Czy przyjaciele mogą zastąpić rodzinę?','Czego nauczył Pana ktoś z rodziny?'],
+  ru:'Монолог «согласны ли вы с утверждением» (пример из методички центра). Можно согласиться частично, главное — аргументы и пример из своей жизни.',
+  wzor:'Zgadzam się ze stwierdzeniem, że w życiu najważniejsza jest rodzina, chociaż nie jest to jedyna ważna rzecz. Po pierwsze, rodzina daje nam poczucie bezpieczeństwa. Kiedy mam problem, wiem, że żona, rodzice i siostra mnie wysłuchają, nawet jeśli mieszkają daleko. Po drugie, w rodzinie uczymy się wartości, na przykład szacunku i cierpliwości. Mój dziadek Michał nauczył mnie, że pracę trzeba wykonywać dokładnie i z sercem. Po trzecie, z rodziną spędzamy najpiękniejsze chwile: wakacje, święta i zwykłe niedzielne obiady. Z drugiej strony ważni są także przyjaciele i praca, bo dają nam rozwój i satysfakcję. Zdarza się też, że rodzina bywa trudna i potrzebny jest dystans. Mimo to uważam, że rodzina jest fundamentem życia. Dlatego staram się spędzać z żoną i córką jak najwięcej czasu, nawet kiedy mam dużo pracy.',
+};
+KURS_TEMATY.T06.monolog2 = {
+  typ:'opis',
+  temat:'Proszę scharakteryzować osobę, którą Pan podziwia. Proszę uzasadnić swój wybór.',
+  plan:['Wstęp: kim jest ta osoba i skąd ją znam','Wygląd i cechy charakteru z przykładami','Za co ją podziwiam','Podsumowanie: czego się od niej uczę'],
+  pytania:['Kto to jest?','Jak długo się znacie?','Jaka to osoba?','Za co Pan ją podziwia?'],
+  ru:'Монолог-описание человека (пример из методички центра). Каждую черту характера подтверди примером из жизни.',
+  wzor:'Osobą, którą podziwiam, jest moja żona Natalia. Poznaliśmy się kilkanaście lat temu w Petersburgu. Natalia jest spokojna, cierpliwa i bardzo odpowiedzialna. Podziwiam ją przede wszystkim za to, że potrafi pogodzić pracę zdalną z wychowywaniem córki. Na przykład kiedy przeprowadzaliśmy się do Polski, to ona załatwiła wszystkie dokumenty i znalazła szkołę dla Oliwii. Podziwiam też jej optymizm: nawet w trudnych sytuacjach mówi, że wszystko się ułoży, i zwykle ma rację. Poza tym świetnie gotuje i zawsze znajduje czas dla przyjaciół. Z wyglądu jest szczupłą kobietą o ciemnych włosach i ciepłym uśmiechu. Dzięki niej czuję, że mam oparcie. Uważam, że od takich ludzi można się wiele nauczyć, dlatego chciałbym być dla Natalii takim samym wsparciem, jakim ona jest dla mnie.',
+};
+KURS_TEMATY.T11.monolog3 = {
+  typ:'opinia',
+  temat:'Czy zgadza się Pan ze stwierdzeniem, że sport bez diety nie ma sensu?',
+  plan:['Wstęp: częściowo się zgadzam','Dlaczego dieta ma znaczenie','Dlaczego sport ma sens sam w sobie','Podsumowanie: najlepiej łączyć'],
+  pytania:['Czy trzyma Pan jakąś dietę?','Co Pan je przed treningiem i po nim?','Jaki sport Pan uprawia?','Co ważniejsze: sport czy jedzenie?'],
+  ru:'Монолог «согласны ли вы» (пример из методички). Хороший ход: согласиться частично и объяснить, в чём именно.',
+  wzor:'Częściowo zgadzam się ze stwierdzeniem, że sport bez diety nie ma sensu. Po pierwsze, jedzenie daje organizmowi energię. Kiedy jem słodycze i fast foody, na treningu szybko się męczę. Po drugie, jeśli ktoś chce schudnąć, sam ruch nie wystarczy: łatwo zjeść w pięć minut więcej, niż spali się w godzinę. Po trzecie, zdrowa dieta pomaga szybciej się regenerować. Z drugiej strony uważam, że sport ma sens sam w sobie, bo poprawia samopoczucie i sen, nawet kiedy dieta nie jest idealna. Ja nie trzymam żadnej diety, ale staram się jeść dużo warzyw i mało słodyczy. Trzy razy w tygodniu chodzę na nordic walking i dzięki temu czuję się lepiej, a córka mówi, że jestem weselszy. Podsumowując, najlepiej łączyć ruch ze zdrowym jedzeniem, ale nie trzeba być perfekcyjnym.',
+};
+KURS_TEMATY.T16.sytuacja2 = {
+  polecenie:'Jedzie Pan wynajętym samochodem do Krakowa, ale auto zepsuło się na autostradzie. Proszę zadzwonić po pomoc drogową: opisać, co się stało i gdzie Pan stoi, podać dane samochodu i zapytać, jak długo będzie Pan czekać.',
+  rola_ja:'kierowca',
+  rola_on:'dyspozytor pomocy drogowej',
+  ru:'Официальный звонок: Pan/Pani. Назови место (трасса, километр), что случилось, марку и номер, есть ли пострадавшие, и спроси время ожидания. Это один из примеров диалогов из методички центра.',
+  cele:['Przywitać się i zgłosić awarię','Powiedzieć, gdzie Pan stoi','Opisać, co się stało','Podać dane samochodu','Zapytać, jak długo będzie Pan czekać'],
+  zwroty:[['Zepsuł mi się samochód.','У меня сломалась машина.'],['Stoję na poboczu z włączonymi światłami awaryjnymi.','Стою на обочине с включённой аварийкой.'],['Silnik nagle zgasł.','Двигатель вдруг заглох.'],['Numer rejestracyjny to…','Регистрационный номер —…'],['Czy ktoś jest ranny?','Есть ли пострадавшие?'],['Jak długo będziemy czekać na pomoc?','Как долго нам ждать помощи?']],
+  wzor:'Dyspozytor: Pomoc drogowa, dzień dobry. Słucham.\nTy: Dzień dobry. Zepsuł mi się samochód i potrzebuję pomocy.\nDyspozytor: Gdzie Pan teraz jest?\nTy: Na autostradzie A1, w kierunku Katowic, przy kilometrze 245. Stoję na poboczu z włączonymi światłami awaryjnymi.\nDyspozytor: Co się stało?\nTy: Silnik nagle zgasł i na desce rozdzielczej zapaliła się czerwona lampka. Nie mogę go uruchomić.\nDyspozytor: Jaki to samochód?\nTy: Szary Volkswagen Golf, numer rejestracyjny GD 12345. To samochód wynajęty.\nDyspozytor: Czy ktoś jest ranny?\nTy: Nie, jestem z żoną i córką, wszyscy są cali.\nDyspozytor: Dobrze, wyślemy lawetę. Proszę nie wychodzić na jezdnię.\nTy: Rozumiem. Jak długo będziemy czekać?\nDyspozytor: Około czterdziestu minut.\nTy: Dobrze. Czy mogę prosić o numer, pod który zadzwonię, jeśli pomoc się spóźni?\nDyspozytor: Oczywiście. Numer to 800 123 123.\nTy: Dziękuję bardzo. Do widzenia.',
+};
+KURS_TEMATY.T19.sytuacja2 = {
+  polecenie:'W wynajmowanym mieszkaniu zepsuła się lodówka. Proszę zadzwonić do serwisu: opisać problem, podać adres, zapytać, kiedy technik może przyjść i ile będzie kosztowała naprawa.',
+  rola_ja:'klient',
+  rola_on:'pracownik serwisu',
+  ru:'Официальный звонок. Опиши неисправность (не холодит, шумит), назови адрес, договорись о времени и спроси цену. Пример диалога из методички центра.',
+  cele:['Przywitać się i zgłosić awarię','Opisać problem','Podać adres','Umówić termin wizyty technika','Zapytać o koszt naprawy'],
+  zwroty:[['Zepsuła mi się lodówka.','У меня сломался холодильник.'],['Lodówka nie chłodzi.','Холодильник не охлаждает.'],['Słychać dziwny hałas.','Слышен странный шум.'],['Kiedy technik może przyjść?','Когда может прийти мастер?'],['Czy możliwe jest po szesnastej?','Возможно ли после 16:00?'],['Ile będzie kosztowała naprawa?','Сколько будет стоить ремонт?']],
+  wzor:'Pracownik: Serwis AGD, dzień dobry. W czym mogę pomóc?\nTy: Dzień dobry. Zepsuła mi się lodówka. Potrzebuję technika.\nPracownik: Co dokładnie się dzieje?\nTy: Lodówka nie chłodzi, a w zamrażarce topi się lód. Wczoraj jeszcze działała, ale dzisiaj rano jest w środku ciepła. Słychać też dziwny hałas.\nPracownik: Jaka to marka i ile ma lat?\nTy: To lodówka Bosch, ma około pięciu lat. Należy do właściciela mieszkania, ale on poprosił, żebym sam wezwał serwis.\nPracownik: Rozumiem. Jaki jest adres?\nTy: Gdańsk, ulica Obrońców Wybrzeża 12, mieszkanie 48, czwarte piętro. Jest winda.\nPracownik: Technik może być u Pana jutro między dziesiątą a dwunastą.\nTy: Niestety jutro pracuję. Czy możliwe jest po szesnastej?\nPracownik: Dobrze, jutro o siedemnastej.\nTy: Ile będzie kosztowała naprawa?\nPracownik: Dojazd kosztuje osiemdziesiąt złotych, a cenę naprawy ustali technik na miejscu.\nTy: Dobrze, dziękuję. Mój numer telefonu to 600 123 456.\nPracownik: Zapisałem. Do jutra!',
+};
+KURS_TEMATY.T21.sytuacja2 = {
+  polecenie:'Musi Pan zorganizować świąteczne przyjęcie dla całej firmy. Proszę zadzwonić do restauracji i zapytać o ofertę: termin, liczbę osób, menu i cenę.',
+  rola_ja:'klient',
+  rola_on:'pracownik restauracji',
+  ru:'Официальный звонок. Назови дату, время, число людей, спроси о меню (в том числе без мяса), цене и попроси предложение на почту. Пример диалога из методички центра.',
+  cele:['Przywitać się i powiedzieć, w jakiej sprawie Pan dzwoni','Podać termin i liczbę osób','Zapytać o menu (także wegetariańskie)','Zapytać o cenę i napoje','Poprosić o ofertę mailem i podziękować'],
+  zwroty:[['Dzwonię w sprawie przyjęcia świątecznego dla firmy.','Звоню по поводу праздничного корпоратива.'],['Na piątek 18 grudnia, od osiemnastej.','На пятницу 18 декабря, с 18:00.'],['Czy macie wtedy wolną salę?','Есть ли у вас тогда свободный зал?'],['Czy jest opcja wegetariańska?','Есть ли вегетарианский вариант?'],['Czy w cenie są napoje?','Входят ли напитки в стоимость?'],['Czy mógłbym prosić o ofertę mailem?','Могу ли я попросить предложение по почте?']],
+  wzor:'Pracownik: Restauracja „Stary Młyn”, dzień dobry.\nTy: Dzień dobry. Dzwonię w sprawie przyjęcia świątecznego dla firmy. Chciałbym zapytać o Państwa ofertę.\nPracownik: Chętnie pomogę. Na kiedy planują Państwo przyjęcie?\nTy: Na piątek 18 grudnia, od osiemnastej do dwudziestej drugiej. Czy macie wtedy wolną salę?\nPracownik: Tak, mamy salę na pierwszym piętrze. Dla ilu osób?\nTy: Dla dwunastu osób.\nPracownik: Mamy dwa menu: tradycyjne polskie z barszczem i karpiem oraz bufet.\nTy: Poproszę o szczegóły. Czy jest też opcja wegetariańska? Dwie osoby nie jedzą mięsa.\nPracownik: Oczywiście, przygotujemy dania bez mięsa. Menu tradycyjne kosztuje sto sześćdziesiąt złotych za osobę, a bufet sto czterdzieści.\nTy: Czy w cenie są napoje?\nPracownik: Napoje bezalkoholowe tak, alkohol jest dodatkowo płatny.\nTy: Dobrze. Czy mógłbym prosić o ofertę mailem? Muszę jeszcze uzgodnić ją z szefem.\nPracownik: Oczywiście. Proszę podać adres.\nTy: Podaję, proszę zapisać. Dziękuję za informacje, odezwę się w tym tygodniu. Do widzenia.',
+};
+KURS_TEMATY.T13.sytuacja3 = {
+  polecenie:'Chce Pan namówić kolegę na wspólny wyjazd za granicę, ale kolega boi się latać. Proszę zaproponować wyjazd, wysłuchać jego obaw i znaleźć rozwiązanie.',
+  rola_ja:'przyjaciel',
+  rola_on:'kolega, który boi się latać',
+  ru:'Неформальный диалог: убеди друга, выслушай страх и предложи выход (поезд вместо самолёта). Пример диалога из методички центра.',
+  cele:['Zaproponować wspólny wyjazd','Zapytać, czego kolega się boi','Uspokoić go argumentami','Zaproponować inny środek transportu','Umówić się na odpowiedź'],
+  zwroty:[['Mam pomysł na wakacje.','У меня есть идея на отпуск.'],['Może pojedziemy razem do Włoch?','Может, поедем вместе в Италию?'],['A co dokładnie cię niepokoi?','А что именно тебя тревожит?'],['Samolot jest bezpieczniejszy niż samochód.','Самолёт безопаснее машины.'],['Możemy pojechać pociągiem.','Можем поехать на поезде.'],['Zastanów się i daj mi znać.','Подумай и дай мне знать.']],
+  wzor:'Ty: Cześć, Tomek! Mam pomysł na wakacje. Może pojedziemy razem do Włoch we wrześniu?\nKolega: Włochy? Brzmi super, ale boję się latać.\nTy: Rozumiem, wiele osób się boi. A co dokładnie cię niepokoi?\nKolega: Turbulencje i to, że nie mam nad niczym kontroli. Poza tym lot jest długi.\nTy: Z Gdańska do Rzymu leci się niecałe trzy godziny. To naprawdę krótko. A samolot jest statystycznie bezpieczniejszy niż samochód.\nKolega: Wiem, ale i tak się stresuję.\nTy: Mam inny pomysł. Możemy pojechać pociągiem i autobusem. To dłużej, ale po drodze zobaczylibyśmy Wiedeń i Wenecję.\nKolega: To brzmi lepiej. A ile to potrwa?\nTy: Około dwudziestu godzin, z przesiadkami. Możemy rozłożyć to na dwa dni i w drodze zwiedzać.\nKolega: Hm, a nie jest to za drogie?\nTy: Bilety kupimy z wyprzedzeniem, więc wyjdzie podobnie jak samolot. Zastanów się i daj mi znać do piątku.\nKolega: Dobrze, brzmi sensownie. Pomyślę.\nTy: Super! Zobaczysz, że będzie fajnie. Do piątku!',
 };
