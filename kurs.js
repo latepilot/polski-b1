@@ -416,6 +416,16 @@ const ZW_OPIS = [
   ['Atmosfera jest spokojna i wesoła.','Атмосфера спокойная и весёлая.'],
   ['Niestety nie widzę dokładnie, co to jest.','К сожалению, не вижу точно, что это.'],
   ['Sam chętnie bym tam pojechał.','Я бы и сам с удовольствием туда поехал.'],
+  ['Na zdjęciu widzę…','На фотографии я вижу…'],
+  ['Na zdjęciu są… osoby: …','На фотографии… человека: …'],
+  ['Oni przeprowadzają / robią / jedzą / rozmawiają…','Они проводят / делают / едят / разговаривают…'],
+  ['Przy stole / przy łóżku / przy oknie…','За столом / у кровати / у окна…'],
+  ['Nad stołem wiszą… / Obok stoi…','Над столом висят… / Рядом стоит…'],
+  ['Wszyscy mają na sobie…','На всех надето…'],
+  ['Być może…','Возможно…'],
+  ['Wydaje mi się, że…','Мне кажется, что…'],
+  ['Scena wygląda na poważną i spokojną.','Сцена выглядит серьёзной и спокойной.'],
+  ['Uważam, że praca lekarzy jest odpowiedzialna i stresująca.','Считаю, что работа врачей ответственная и стрессовая.'],
 ];
 const ZW_MONOLOG = [
   ['Na początku powiem o…','Сначала скажу о…'],
@@ -501,13 +511,16 @@ function mowa(id, co, n, i){
       <div class="kurs-karta-t">Proszę opisać zdjęcie: kto, gdzie, co robi, jak wygląda, jaka jest atmosfera.</div>
       <div class="kurs-karta-s">2–3 minuty. Od ogółu do szczegółu.</div></div>
       <div class="kurs-cel">Возьми любую фотографию с людьми в ситуации по теме «${esc(T.ru.toLowerCase())}». Подойдёт фото из твоей галереи или из поиска картинок по запросу <b>${esc(T.foto||T.tytul)}</b>.</div>
-      <h4 class="kurs-h4">План описания — всегда один и тот же</h4>
-      <ol class="kurs-ul"><li>Общее: что на фото, где это, сколько людей.</li>
-        <li>Люди: внешность, одежда, эмоции, кто они друг другу.</li>
-        <li>Что делают — настоящее время, несовершенный вид: siedzi, rozmawia, je.</li>
-        <li>Место и детали: что на переднем плане, на заднем, слева, справа.</li>
-        <li>Время года, погода, атмосфера, твоё предположение: chyba, wydaje mi się.</li>
-        <li>В конце — что-то от себя: <i>Sam chętnie bym tam pojechał.</i></li></ol>
+      <h4 class="kurs-h4">План описания из 7 шагов — для любой фотографии</h4>
+      <ol class="kurs-ul"><li><b>Вступление:</b> <i>Na zdjęciu widzę salę operacyjną / rodzinę / biuro.</i></li>
+        <li><b>Кто и где:</b> называй людей общими словами: <i>chirurdzy, pielęgniarki, zespół medyczny, pacjent / rodzice i dzieci / pracownicy / turyści</i>; сколько их и где они.</li>
+        <li><b>Что делают</b> (настоящее время): <i>przeprowadzają operację, podają kroplówkę, rozmawiają, jedzą, patrzą w ekran.</i></li>
+        <li><b>Пространство:</b> <i>na pierwszym planie, z lewej strony, pośrodku, w tle, przy łóżku / przy stole.</i></li>
+        <li><b>Внешность и предметы:</b> одежда, цвета, вещи: <i>maseczki, rękawiczki, niebieskie fartuchy, lampy operacyjne.</i></li>
+        <li><b>Настроение и догадки:</b> <i>Wydaje mi się, że… Być może… Scena wygląda na poważną i spokojną.</i></li>
+        <li><b>Своё мнение:</b> <i>Uważam, że praca lekarzy jest odpowiedzialna i stresująca. Sam chętnie bym…</i></li></ol>
+      <div class="kurs-cel">Схема работает и для незнакомой сцены (например, операционной): подставь свои слова вместо примеров. Не знаешь слово — опиши: <i>to jest rzecz, która…</i></div>
+      <button class="egz-play" onclick="KURS.opisZdjecia()">Образцы описаний (6 сцен) и перевод</button>
       <h4 class="kurs-h4">Обороты</h4>${lista(ZW_OPIS)}`;
   }
   else if(co==='pelny'){
@@ -923,6 +936,7 @@ function egzaminInfo(){
       <li><b>Диалог:</b> заказать столик в ресторане; успокоить подругу перед экзаменом; сообщить о потере багажа; заявить в полицию о краже телефона (описать его и назвать номер); пожаловаться подруге на плохой опыт в ресторане.</li>
       <li>На все эти темы в приложении есть образцы (в «Примерах сочинений» и в «Ещё вариант» на экранах говорения). Из других сессий и учебных наборов: фото в кафе; e-mail с просьбой о проекте ремонта комнаты; рассказ «Tajemnica starego domu»; приглашение коллегам на фотовыставку; объявление о поиске музыкантов в группу; письмо с поздравлением знакомому, защитившему докторскую; отчёт о первом дне на новой работе; e-mail двоюродному брату из нового города. Диалоги из методички центра: сломалась машина, холодильник, заказ ресторана для корпоратива, уговорить друга лететь.</li></ul>
     <button class="egz-play" onclick="KURS.tematyMonologow()">Банк тем для монолога (около 70)</button>
+    <button class="egz-play" onclick="KURS.opisZdjecia()">Описание фото: схема и образцы</button>
     <button class="egz-play" onclick="KURS.bohaterowie()">Мои герои и склонение их имён</button>
     <h4 class="kurs-h4">День экзамена · 5–6 декабря</h4>
     <ul class="kurs-ul">
@@ -1021,6 +1035,43 @@ const BANK_TEMATOW = [
     'Jak widzi Pan swoją przyszłość za dziesięć lat?',
     'Czy pies to najlepszy przyjaciel człowieka?']],
 ];
+const OPISY_FOTO = [
+  ['Операционная (пример из инструкции)',
+   'Na zdjęciu widzę salę operacyjną. Na pierwszym planie jest kilku lekarzy i pielęgniarek, czyli zespół medyczny. Przeprowadzają operację: jeden chirurg pochyla się nad pacjentem, a pielęgniarka podaje mu narzędzia. Pacjent leży na stole pośrodku zdjęcia, przykryty sterylnym zielonym materiałem. Z lewej strony stoi kroplówka, a nad stołem wiszą duże lampy operacyjne, które oświetlają pole operacyjne. W tle widzę aparaturę medyczną i monitory. Wszyscy mają na sobie niebieskie fartuchy, maseczki, czapki i rękawiczki. Wydaje mi się, że operacja jest poważna, ale wszyscy są skupieni i spokojni. Prawdopodobnie trwa już od dłuższego czasu. Uważam, że praca lekarzy jest bardzo odpowiedzialna i stresująca. Ja na pewno nie chciałbym znaleźć się na takim stole, ale cieszę się, że są ludzie, którzy ratują nam życie.',
+   'На фотографии я вижу операционную. На переднем плане несколько врачей и медсестёр, то есть медицинская бригада. Они проводят операцию: один хирург склоняется над пациентом, а медсестра подаёт ему инструменты. Пациент лежит на столе посередине фотографии, накрытый стерильным зелёным материалом. Слева стоит капельница, а над столом висят большие операционные лампы, которые освещают операционное поле. На заднем плане я вижу медицинскую аппаратуру и мониторы. На всех синие халаты, маски, шапочки и перчатки. Мне кажется, операция серьёзная, но все сосредоточены и спокойны. Вероятно, она идёт уже давно. Считаю, что работа врачей очень ответственная и стрессовая. Я бы точно не хотел оказаться на таком столе, но рад, что есть люди, которые спасают нам жизнь.'],
+  ['Друзья в кафе (реальное задание, июнь 2026)',
+   'Na zdjęciu widzę kawiarnię albo niewielką restaurację. Przy stoliku siedzą trzy osoby: dwie młode dziewczyny i chłopak. Jedzą burgery i frytki, rozmawiają i się śmieją. Na pierwszym planie, na stole, stoją talerze, szklanki z napojami i serwetki. Dziewczyna po lewej ma długie jasne włosy i żółtą bluzę, chłopak pośrodku nosi okulary i koszulę w kratkę, a dziewczyna po prawej ma ciemne włosy i czerwoną kurtkę. W tle widzę ladę, menu na ścianie i innych gości. Wydaje mi się, że to przyjaciele, którzy spotkali się po pracy albo po szkole. Atmosfera jest wesoła i swobodna. Uważam, że takie spotkania są ważne, bo pozwalają odpocząć i porozmawiać. Ja też lubię spotykać się z przyjaciółmi w kawiarni.',
+   'На фотографии я вижу кафе или небольшой ресторан. За столиком сидят трое: две молодые девушки и парень. Они едят бургеры и картошку фри, разговаривают и смеются. На переднем плане, на столе, стоят тарелки, стаканы с напитками и салфетки. У девушки слева длинные светлые волосы и жёлтая толстовка, парень посередине в очках и клетчатой рубашке, а у девушки справа тёмные волосы и красная куртка. На заднем плане я вижу стойку, меню на стене и других посетителей. Мне кажется, это друзья, которые встретились после работы или после учёбы. Атмосфера весёлая и непринуждённая. Считаю, что такие встречи важны, потому что позволяют отдохнуть и поговорить. Я тоже люблю встречаться с друзьями в кафе.'],
+  ['Люди в офисе (реальное задание, июнь 2026)',
+   'Na zdjęciu widzę duże biuro. Pracują w nim cztery osoby, czyli pracownicy firmy. Dwóch mężczyzn i dwie kobiety siedzą przy biurkach i patrzą w ekrany komputerów. Kobieta po lewej rozmawia przez telefon, a mężczyzna w środku robi notatki. Na pierwszym planie stoi biurko z laptopem, kubkiem kawy i stosem dokumentów. W tle widzę duże okno, szafę z segregatorami i rośliny. Wszyscy są ubrani elegancko: mężczyźni mają koszule, a kobiety żakiety. Wydaje mi się, że jest przedpołudnie i że wszyscy mają dużo pracy. Atmosfera jest spokojna i skupiona. Uważam, że praca w biurze może być męcząca, bo trzeba długo siedzieć. Ja na co dzień pracuję w studiu fotograficznym, więc znam takie dni.',
+   'На фотографии я вижу большой офис. В нём работают четыре человека, то есть сотрудники фирмы. Двое мужчин и две женщины сидят за столами и смотрят в экраны компьютеров. Женщина слева говорит по телефону, а мужчина посередине делает заметки. На переднем плане стоит стол с ноутбуком, чашкой кофе и стопкой документов. На заднем плане я вижу большое окно, шкаф с папками и растения. Все одеты элегантно: у мужчин рубашки, у женщин жакеты. Мне кажется, сейчас до полудня и у всех много работы. Атмосфера спокойная и сосредоточенная. Считаю, что работа в офисе может быть утомительной, потому что приходится долго сидеть. Я каждый день работаю в фотостудии, так что знаю такие дни.'],
+  ['Семья разговаривает по видеосвязи (реальное задание, июнь 2026)',
+   'Na zdjęciu widzę rodzinę, która rozmawia z kimś przez internet. Na kanapie siedzą rodzice i dwoje dzieci, chłopiec i dziewczynka. Przed nimi, na stoliku, stoi otwarty laptop. Wszyscy patrzą w ekran i się uśmiechają. Mama trzyma laptop, a tata macha ręką. Z lewej strony, w tle, widzę regał z książkami, a z prawej lampę i okno. Dzieci mają na sobie domowe ubrania, a rodzice swetry. Wydaje mi się, że rozmawiają z babcią albo dziadkiem, którzy mieszkają daleko. Atmosfera jest ciepła i radosna. Uważam, że wideorozmowy bardzo pomagają, kiedy rodzina mieszka w różnych miastach lub krajach. Sam często rozmawiam w ten sposób z rodzicami w Petersburgu.',
+   'На фотографии я вижу семью, которая разговаривает с кем-то по интернету. На диване сидят родители и двое детей, мальчик и девочка. Перед ними, на столике, стоит открытый ноутбук. Все смотрят в экран и улыбаются. Мама держит ноутбук, а папа машет рукой. Слева, на заднем плане, я вижу книжный стеллаж, а справа лампу и окно. На детях домашняя одежда, на родителях свитеры. Мне кажется, они разговаривают с бабушкой или дедушкой, которые живут далеко. Атмосфера тёплая и радостная. Считаю, что видеозвонки очень помогают, когда семья живёт в разных городах или странах. Я сам часто так разговариваю с родителями в Петербурге.'],
+  ['Туристы в горах (реальное задание, июнь 2026)',
+   'Na zdjęciu widzę grupę turystów w górach. Idą wąską ścieżką, a wokół nich są skały i zielone drzewa. Na pierwszym planie idą dwaj mężczyźni i kobieta z dużymi plecakami. Mają na sobie kurtki, długie spodnie i wygodne buty trekkingowe. Jeden z nich trzyma kijki. W tle widzę wysokie szczyty, a na niebie chmury. Wydaje mi się, że jest wiosna albo lato, bo pogoda jest dobra, ale chyba jest chłodno. Być może to wycieczka na cały dzień. Atmosfera jest spokojna, a turyści wyglądają na zmęczonych, ale zadowolonych. Uważam, że wędrówki po górach są zdrowe i pozwalają odpocząć od miasta. Sam chodzę na nordic walking, więc chętnie bym tam pojechał.',
+   'На фотографии я вижу группу туристов в горах. Они идут по узкой тропе, вокруг скалы и зелёные деревья. На переднем плане идут двое мужчин и женщина с большими рюкзаками. На них куртки, длинные брюки и удобные трекинговые ботинки. Один из них держит палки. На заднем плане я вижу высокие вершины, а в небе облака. Мне кажется, сейчас весна или лето, потому что погода хорошая, но, наверное, прохладно. Возможно, это поход на целый день. Атмосфера спокойная, а туристы выглядят уставшими, но довольными. Считаю, что походы в горы полезны и позволяют отдохнуть от города. Я сам хожу на скандинавскую ходьбу, поэтому с удовольствием поехал бы туда.'],
+  ['Приём у врача (реальное задание, июнь 2026)',
+   'Na zdjęciu widzę gabinet lekarski. Przy biurku siedzi lekarka w białym fartuchu, a naprzeciwko niej starsza pacjentka. Lekarka coś pisze na komputerze i rozmawia z pacjentką. Pacjentka ma siwe włosy i szary sweter, trzyma torebkę na kolanach i uważnie słucha. Na pierwszym planie widzę biurko z komputerem, dokumentami i długopisem. Z lewej strony stoi kozetka, a w tle szafa z lekami i plakat anatomiczny. Wydaje mi się, że to zwykła wizyta kontrolna. Atmosfera jest spokojna, ale pacjentka może się trochę denerwować. Uważam, że dobry lekarz powinien być cierpliwy i miły dla pacjentów. Ja zawsze wolę, kiedy lekarz dokładnie tłumaczy, co mi dolega.',
+   'На фотографии я вижу кабинет врача. За столом сидит врач-женщина в белом халате, а напротив неё пожилая пациентка. Врач что-то печатает на компьютере и разговаривает с пациенткой. У пациентки седые волосы и серый свитер, она держит сумку на коленях и внимательно слушает. На переднем плане я вижу стол с компьютером, документами и ручкой. Слева стоит кушетка, а на заднем плане шкаф с лекарствами и анатомический плакат. Мне кажется, это обычный контрольный приём. Атмосфера спокойная, но пациентка, возможно, немного волнуется. Считаю, что хороший врач должен быть терпеливым и вежливым с пациентами. Я всегда предпочитаю, когда врач подробно объясняет, что со мной не так.'],
+];
+
+// Образцы описания фотографии: схема из 7 шагов, 6 сцен с переводом.
+function opisZdjecia(){
+  wejdz('opis-zdjecia', opisZdjecia);
+  let h='<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">Описание фотографии · образцы</div>';
+  h+=`<div class="kurs-cel">Каждый образец идёт по схеме из 7 шагов: вступление → кто и где → что делают → пространство → внешность и предметы → догадки → своё мнение. Прочитай вслух, потом закрой текст и опиши ту же сцену сам. Образцы короткие (около 110 слов, чуть больше минуты): на экзамене говорить нужно 2–3 минуты, поэтому в своём ответе добавляй детали — больше предметов, цветов, догадок.</div>`;
+  OPISY_FOTO.forEach(([t,pl,ru],i)=>{
+    h+=`<details class="wz-bohater"><summary>${esc(t)}</summary>
+      <div class="egz-wzor kurs-wzor">${esc(pl)}</div>
+      <div class="wz-akcje"><button class="egz-chip" onclick="KURS.opisMow(${i})">Озвучить</button></div>
+      <h4 class="kurs-h4">Перевод</h4><div class="egz-wzor kurs-wzor">${esc(ru)}</div></details>`; });
+  h+='</div></div>';
+  el('contentWrap').innerHTML=h;
+  przycisk('← Назад', ()=>goBack());
+}
+const opisMow = i => mow(OPISY_FOTO[i][1]);
+
 function tematyMonologow(){
   wejdz('tematy-monologow', tematyMonologow);
   const wszystkie = BANK_TEMATOW.flatMap(g=>g[1]);
@@ -1090,5 +1141,5 @@ function kartaGlowna(){
 const ZW = {opis:ZW_OPIS, monolog:ZW_MONOLOG, sytuacja:ZW_SYTUACJA, ratunek:ZW_RATUNEK};
 
 return { dzien:dzienEkran, dalej:dalejDzien, mapa, otworz, przelacz, lekcja, cwiczenia, slowa, slowaCram, mowa, pisanie, mow,
-  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, tematyMonologow, losujTemat, bohaterowie, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
+  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, tematyMonologow, losujTemat, opisZdjecia, opisMow, bohaterowie, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
 })();
