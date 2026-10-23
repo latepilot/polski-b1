@@ -520,7 +520,7 @@ function mowa(id, co, n, i){
         <li><b>Настроение и догадки:</b> <i>Wydaje mi się, że… Być może… Scena wygląda na poważną i spokojną.</i></li>
         <li><b>Своё мнение:</b> <i>Uważam, że praca lekarzy jest odpowiedzialna i stresująca. Sam chętnie bym…</i></li></ol>
       <div class="kurs-cel">Схема работает и для незнакомой сцены (например, операционной): подставь свои слова вместо примеров. Не знаешь слово — опиши: <i>to jest rzecz, która…</i></div>
-      <button class="egz-play" onclick="KURS.opisZdjecia()">Образцы описаний (6 сцен) и перевод</button>
+      <button class="egz-play" onclick="KURS.opisZdjecia()">Образцы описаний (7 сцен) и перевод</button>
       <h4 class="kurs-h4">Обороты</h4>${lista(ZW_OPIS)}`;
   }
   else if(co==='pelny'){
@@ -935,6 +935,16 @@ function egzaminInfo(){
       <li><b>Монолог:</b> дом или квартира, где хотел бы жить; стоит ли пользоваться городскими велосипедами; как заботиться об окружающей среде; место мечты для поездки; что бы ты сделал, выиграв миллион злотых.</li>
       <li><b>Диалог:</b> заказать столик в ресторане; успокоить подругу перед экзаменом; сообщить о потере багажа; заявить в полицию о краже телефона (описать его и назвать номер); пожаловаться подруге на плохой опыт в ресторане.</li>
       <li>На все эти темы в приложении есть образцы (в «Примерах сочинений» и в «Ещё вариант» на экранах говорения). Из других сессий и учебных наборов: фото в кафе; e-mail с просьбой о проекте ремонта комнаты; рассказ «Tajemnica starego domu»; приглашение коллегам на фотовыставку; объявление о поиске музыкантов в группу; письмо с поздравлением знакомому, защитившему докторскую; отчёт о первом дне на новой работе; e-mail двоюродному брату из нового города. Диалоги из методички центра: сломалась машина, холодильник, заказ ресторана для корпоратива, уговорить друга лететь.</li></ul>
+    <h4 class="kurs-h4">Что было на экзамене 17 октября 2026 (рассказы сдававших)</h4>
+    <ul class="kurs-ul">
+      <li><b>Письмо:</b> объявление в газету (владелец ресторана приглашает на кулинарные мастер-классы) и e-mail подруге об отпуске; в другом наборе было эссе; в одном из наборов встречалось sprawozdanie. Образцы: «Warsztaty w restauracji» и «Urlop — e-mail do koleżanki».</li>
+      <li><b>Фото:</b> кафе, двое молодых парней за столиком, рядом съёмочная группа с профессиональной камерой и микрофоном на штанге. Образец в «Описание фото».</li>
+      <li><b>Монолог:</b> «Kim Pani jest z zawodu? Czy chciałaby Pani zmienić zawód?» и искусственный интеллект. Дополнительных вопросов экзаменаторы не задавали (две женщины: одна писала пометки, другая нет).</li>
+      <li><b>Диалог:</b> вы выезжаете из отеля, администратор спрашивает, довольны ли вы и что изменить или добавить; вы руководитель и берёте на работу водителя, расскажите об обязанностях. Образцы в «Ещё вариант» (темы «Wakacje i noclegi» и «Praca i zawody»).</li>
+      <li><b>Грамматика:</b> нужно выбрать <i>nim / niego / jego</i> после <i>zakochać się w</i> — правильно <b>w nim</b> (w niej), Miejscownik, не «w niego». 45 минут пролетели очень быстро: не зависай на трудном задании.</li>
+      <li><b>Чтение и аудирование:</b> чтение — выбрать из трёх вариантов и соотнести, тексты про искусственный интеллект; аудирование лёгкое, но на одном задании пришлось угадывать.</li>
+      <li><b>Бланк:</b> чистовика всего 2–3 страницы, черновика 2. Многие писали сразу набело. Если после чистовика идёт страница черновика, напиши <i>proszę sprawdzić tutaj</i>. Многие зачёркивали и рисовали стрелки: старайся писать аккуратно.</li>
+    </ul>
     <button class="egz-play" onclick="KURS.tematyMonologow()">Банк тем для монолога (около 70)</button>
     <button class="egz-play" onclick="KURS.opisZdjecia()">Описание фото: схема и образцы</button>
     <button class="egz-play" onclick="KURS.bohaterowie()">Мои герои и склонение их имён</button>
@@ -983,6 +993,7 @@ const BANK_TEMATOW = [
     'Czy jazda rowerem jest dobrym sposobem na poruszanie się po mieście?',
     'Jaki środek transportu wybiera Pan najczęściej? Dlaczego?']],
   ['Praca i nauka', [
+    'Kim jest Pan z zawodu? Czy chciałby Pan zmienić zawód?',
     'Jak wygląda Pana idealna praca?',
     'Jaka powinna być praca, żeby była dla Pana przyjemna?',
     'Jakie są wady i zalety pracy zdalnej? Proszę podać kilka przykładów.',
@@ -1024,6 +1035,7 @@ const BANK_TEMATOW = [
     'Czy reklama wpływa na Pana? Czy często kupuje Pan reklamowane produkty?',
     'Czy w niedzielę sklepy powinny być otwarte czy zamknięte?']],
   ['Technologie, media, społeczeństwo', [
+    'Czy sztuczna inteligencja pomaga ludziom, czy im zagraża?',
     'Czy telefon odgrywa ważną rolę w naszym życiu?',
     'Jaka jest rola technologii w naszym życiu?',
     'Czy woli Pan laptop czy komputer stacjonarny?',
@@ -1054,9 +1066,12 @@ const OPISY_FOTO = [
   ['Приём у врача (реальное задание, июнь 2026)',
    'Na zdjęciu widzę gabinet lekarski. Przy biurku siedzi lekarka w białym fartuchu, a naprzeciwko niej starsza pacjentka. Lekarka coś pisze na komputerze i rozmawia z pacjentką. Pacjentka ma siwe włosy i szary sweter, trzyma torebkę na kolanach i uważnie słucha. Na pierwszym planie widzę biurko z komputerem, dokumentami i długopisem. Z lewej strony stoi kozetka, a w tle szafa z lekami i plakat anatomiczny. Wydaje mi się, że to zwykła wizyta kontrolna. Atmosfera jest spokojna, ale pacjentka może się trochę denerwować. Uważam, że dobry lekarz powinien być cierpliwy i miły dla pacjentów. Ja zawsze wolę, kiedy lekarz dokładnie tłumaczy, co mi dolega.',
    'На фотографии я вижу кабинет врача. За столом сидит врач-женщина в белом халате, а напротив неё пожилая пациентка. Врач что-то печатает на компьютере и разговаривает с пациенткой. У пациентки седые волосы и серый свитер, она держит сумку на коленях и внимательно слушает. На переднем плане я вижу стол с компьютером, документами и ручкой. Слева стоит кушетка, а на заднем плане шкаф с лекарствами и анатомический плакат. Мне кажется, это обычный контрольный приём. Атмосфера спокойная, но пациентка, возможно, немного волнуется. Считаю, что хороший врач должен быть терпеливым и вежливым с пациентами. Я всегда предпочитаю, когда врач подробно объясняет, что со мной не так.'],
+  ['Съёмка в кафе (реальное задание, 17.10.2026)',
+   'Na zdjęciu widzę kawiarnię, w której kilka osób nagrywa film. Przy stoliku siedzą dwaj młodzi mężczyźni i rozmawiają przed kamerą. Obok stoi operator z dużą profesjonalną kamerą, a za mężczyznami stoi dziewczyna, która trzyma mikrofon na długim wysięgniku. Na stoliku widzę filiżanki z kawą, talerzyk z ciastem i laptop. Mężczyźni mają na sobie swetry i dżinsy, a dziewczyna czarną bluzę. W tle widzę ladę i półki z butelkami. Być może to film reklamowy albo program dla internetu. Wydaje mi się, że ekipa ma dużo pracy, ale wszyscy są skupieni. Atmosfera jest profesjonalna i spokojna. Uważam, że praca przy filmie jest ciekawa, ale wymaga cierpliwości. Sam na co dzień pracuję z aparatem i wiem, że przygotowanie zdjęć trwa bardzo długo.',
+   'На фотографии я вижу кафе, в котором несколько человек снимают фильм. За столиком сидят двое молодых мужчин и разговаривают перед камерой. Рядом стоит оператор с большой профессиональной камерой, а за мужчинами стоит девушка, которая держит микрофон на длинной штанге. На столике я вижу чашки с кофе, блюдце с пирожным и ноутбук. На мужчинах свитеры и джинсы, на девушке чёрная толстовка. На заднем плане я вижу стойку и полки с бутылками. Возможно, это рекламный ролик или программа для интернета. Мне кажется, у съёмочной группы много работы, но все сосредоточены. Атмосфера профессиональная и спокойная. Считаю, что работа над фильмом интересная, но требует терпения. Я сам каждый день работаю с фотоаппаратом и знаю, что подготовка кадров занимает очень много времени.'],
 ];
 
-// Образцы описания фотографии: схема из 7 шагов, 6 сцен с переводом.
+// Образцы описания фотографии: схема из 7 шагов, 7 сцен с переводом.
 function opisZdjecia(){
   wejdz('opis-zdjecia', opisZdjecia);
   let h='<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">Описание фотографии · образцы</div>';

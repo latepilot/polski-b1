@@ -221,6 +221,7 @@ KURS_TEMATY.T05 = {
     ['awans','повышение'],['stracić pracę','потерять работу'],['emerytura','пенсия'],['zmienić pracę','сменить работу'],
     ['zespół','команда (на работе), коллектив'],['zebranie','совещание'],['klient','клиент'],
     ['fotograf','фотограф'],['zdjęcie','фотография, снимок'],['sesja zdjęciowa','фотосессия, съёмка'],['bank zdjęć','фотобанк, фотосток'],['obróbka zdjęć','обработка фотографий'],
+    ['kierowca','водитель'],['zatrudnić','нанять, принять на работу'],['premia','премия'],['towar','товар'],['dostawa','доставка'],['magazyn','склад'],['przestrzegać przepisów','соблюдать правила'],
   ],
   zwroty:[
     ['Pracuję jako fotograf w studiu fotograficznym.','Работаю фотографом в фотостудии.'],
@@ -549,6 +550,7 @@ KURS_TEMATY.T12 = {
     ['obraz','картина'],['zwiedzać','осматривать (достопримечательности)'],['przewodnik','экскурсовод; путеводитель'],['audioprzewodnik','аудиогид'],
     ['wstęp wolny','вход бесплатный'],['wstęp płatny','вход платный'],['wzruszający','трогательный'],['nudny','скучный'],['zabawny','смешной'],
     ['robić wrażenie na (+ Msc.)','производить впечатление на'],['polecać (komu co)','рекомендовать'],
+    ['kamera','камера'],['operator','оператор'],['mikrofon','микрофон'],['wysięgnik','штанга (для микрофона)'],['ekipa filmowa','съёмочная группа'],
   ],
   zwroty:[
     ['Ostatnio byłem w kinie na filmie…','Недавно был в кино на фильме…'],
@@ -640,6 +642,7 @@ KURS_TEMATY.T14 = {
     ['ze śniadaniem','с завтраком'],['recepcja','ресепшн'],['zameldować się','заселиться (в отель)'],['wymeldować się','выселиться (из отеля)'],
     ['doba','сутки'],['widok na morze','вид на море'],['pamiątka','сувенир'],['biuro podróży','турагентство'],
     ['słonecznie','солнечно'],['deszczowo','дождливо'],['zmienna pogoda','переменчивая погода'],['mieć szczęście z pogodą','повезти с погодой'],
+    ['oddać klucz','сдать ключ'],['recepcjonistka','администратор (женщина)'],['pobyt','пребывание'],['wypożyczalnia rowerów','прокат велосипедов'],['uwagi','замечания, пожелания'],
   ],
   zwroty:[
     ['Chciałbym zarezerwować pokój dwuosobowy na trzy noce.','Хочу забронировать двухместный номер на три ночи.'],
@@ -1519,4 +1522,35 @@ KURS_TEMATY.T14.sytuacja3 = {
   cele:['Przywitać się i zapytać, gdzie była','Zapytać, co zwiedziła','Zapytać o nocleg','Zapytać o jedzenie','Zareagować i pożegnać się'],
   zwroty:[['Słyszałem, że byłaś na urlopie.','Слышал, что ты была в отпуске.'],['Gdzie dokładnie byłaś i kiedy?','Где именно ты была и когда?'],['Co najbardziej ci się podobało?','Что тебе больше всего понравилось?'],['A gdzie spałaś? W hotelu?','А где ты ночевала? В отеле?'],['Jaka była twoja ulubiona potrawa?','Какое блюдо было твоим любимым?'],['Musimy kiedyś pojechać razem!','Надо как-нибудь съездить вместе!']],
   wzor:'Ty: Cześć, Ewo! Słyszałem, że byłaś na urlopie za granicą. Gdzie dokładnie byłaś i kiedy?\nKoleżanka: Cześć! Byłam we Włoszech, w Toskanii, przez dwa tygodnie w lipcu.\nTy: Super! Jak spędzałaś tam czas? Co najbardziej ci się podobało?\nKoleżanka: Zwiedzałam Florencję i Sienę, dużo fotografowałam i próbowałam lokalnej kuchni.\nTy: Brzmi świetnie! A byłaś też na plaży?\nKoleżanka: Tak, kilka razy. Pływałam i spacerowałam wzdłuż wybrzeża.\nTy: Fajnie! A gdzie spałaś? W hotelu czy w apartamencie?\nKoleżanka: W małym hotelu blisko centrum, było bardzo czysto, a śniadanie było wliczone w cenę.\nTy: To musiało być wygodne! Jakie lokalne potrawy próbowałaś? Co smakowało ci najbardziej?\nKoleżanka: Jadłam risotto, pizzę i tiramisu. Najbardziej smakowało mi tiramisu!\nTy: Brzmi przepysznie! A myślisz, że kiedyś tam wrócisz?\nKoleżanka: Na pewno, bo jeszcze wiele miejsc chcę zobaczyć.\nTy: Cieszę się, że tak dobrze spędziłaś czas! Musimy kiedyś pojechać razem.',
+};
+
+// ------------------------------------------------------------------------
+// Z prawdziwej sesji 17.10.2026 (relacje zdających): zawód, hotel, kierowca
+// oraz dialogi, których brakowało — kolejne warianty tematów (monolog3, sytuacja3…).
+// ------------------------------------------------------------------------
+KURS_TEMATY.T05.monolog3 = {
+  typ:'opis',
+  temat:'Kim jest Pan z zawodu? Czy chciałby Pan zmienić zawód?',
+  plan:['Wstęp: kim jestem z zawodu','Moje obowiązki w pracy','Co lubię i co mi przeszkadza','Czy chciałbym zmienić zawód — dlaczego tak lub nie','Podsumowanie'],
+  pytania:['Co należy do Pana obowiązków?','Co lubi Pan w swojej pracy?','Czy chciałby Pan pracować w innym zawodzie?','Jaki zawód wybrałaby Pana córka?'],
+  ru:'Реальная тема 17.10.2026 (рассказ сдававшей). Схема: профессия → обязанности → плюсы и минусы → хотел бы сменить или нет (с причиной). Образец построен на жизни Ивана.',
+  wzor:'Z zawodu jestem fotografem. Pracuję w studiu we Wrzeszczu i robię zdjęcia dla banków zdjęć, czyli dla stron, na których firmy kupują fotografie. Do moich obowiązków należy przygotowanie sceny, ustawianie świateł, robienie zdjęć i obróbka na komputerze. Lubię tę pracę, ponieważ jest kreatywna i nigdy nie jest nudna. Są też minusy: czasem pracuję do późna i dużo siedzę przed komputerem. Z wykształcenia jestem inżynierem, ale nie chciałbym wracać do dawnego zawodu. Nie myślę o zmianie pracy, bo cieszę się z tego, co robię. Gdybym jednak mógł coś zmienić, otworzyłbym własne studio. Podsumowując, jestem zadowolony ze swojego zawodu i chętnie rozwijam się w tej dziedzinie.',
+};
+KURS_TEMATY.T14.sytuacja4 = {
+  polecenie:'Wyjeżdża Pan z hotelu i rozmawia z recepcjonistką. Proszę oddać klucz, powiedzieć, czy był Pan zadowolony z pobytu, i zaproponować, co w hotelu warto zmienić, a co dodać.',
+  rola_ja:'gość hotelu',
+  rola_on:'recepcjonistka',
+  ru:'Реальный диалог 17.10.2026 (рассказ сдававшей). Выполни все пункты: оценка пребывания, что изменить, что добавить, и вежливое прощание. Обращайся к администратору на «Pani».',
+  cele:['Przywitać się i oddać klucz','Powiedzieć, czy był Pan zadowolony z pobytu','Zaproponować, co zmienić','Zaproponować, co dodać','Podziękować i pożegnać się'],
+  zwroty:[['Chciałbym się wymeldować.','Хотел бы выписаться.'],['Oddaję klucz do pokoju numer…','Сдаю ключ от номера…'],['Ogólnie jestem bardzo zadowolony.','В целом я очень доволен.'],['Warto poprawić internet.','Стоит улучшить интернет.'],['Dobrym pomysłem byłby basen.','Хорошей идеей был бы бассейн.'],['Przydałaby się wypożyczalnia rowerów.','Пригодился бы прокат велосипедов.']],
+  wzor:'Recepcjonistka: Dzień dobry. Wymeldowuje się Pan?\nTy: Dzień dobry. Tak, oddaję klucz do pokoju numer dwieście dwanaście.\nRecepcjonistka: Dziękuję. Czy był Pan zadowolony z pobytu w naszym hotelu?\nTy: Tak, ogólnie jestem bardzo zadowolony. Pokój był czysty i cichy, a śniadania były pyszne.\nRecepcjonistka: Cieszę się. Co według Pana warto zmienić w naszym hotelu?\nTy: Myślę, że warto poprawić internet, bo wieczorem działał bardzo wolno. Poza tym w pokoju było trochę za zimno.\nRecepcjonistka: Rozumiem, dziękuję za uwagi. A co Pana zdaniem warto dodać?\nTy: Dobrym pomysłem byłby mały basen albo sauna, bo po całym dniu zwiedzania chętnie bym odpoczął. Przydałaby się też wypożyczalnia rowerów.\nRecepcjonistka: To bardzo cenne propozycje. Czy poleci Pan nasz hotel znajomym?\nTy: Oczywiście, na pewno poleciłbym go rodzinie i przyjaciołom.\nRecepcjonistka: Dziękujemy i zapraszamy ponownie!\nTy: Dziękuję bardzo. Do widzenia!',
+};
+KURS_TEMATY.T05.sytuacja2 = {
+  polecenie:'Jest Pan kierownikiem firmy i zatrudnia nowego kierowcę. Proszę opowiedzieć mu o jego obowiązkach: godzinach pracy, trasach, samochodzie, pensji i zasadach.',
+  rola_ja:'kierownik',
+  rola_on:'nowy kierowca',
+  ru:'Реальный диалог 17.10.2026 (рассказ сдававшей): ты руководитель и берёшь водителя. Обращайся на «Pan». Расскажи про график, маршруты, машину, зарплату, правила и закончи пожеланием.',
+  cele:['Przywitać się i przedstawić','Opowiedzieć o godzinach i trasach','Powiedzieć o samochodzie','Podać wynagrodzenie','Wyjaśnić zasady i pożegnać się'],
+  zwroty:[['Cieszę się, że będzie Pan z nami pracował.','Рад, что вы будете у нас работать.'],['Do Pana obowiązków należy…','В ваши обязанности входит…'],['Pracuje Pan od poniedziałku do piątku.','Вы работаете с понедельника по пятницу.'],['Dostaje Pan premię za terminowe dostawy.','Вы получаете премию за своевременную доставку.'],['Proszę przestrzegać przepisów.','Прошу соблюдать правила.'],['Gdyby był problem, proszę zadzwonić.','Если будет проблема, прошу позвонить.']],
+  wzor:'Kierowca: Dzień dobry, jestem nowym kierowcą.\nTy: Dzień dobry, bardzo się cieszę, że będzie Pan z nami pracował. Opowiem Panu o Pana obowiązkach.\nKierowca: Dziękuję. Słucham.\nTy: Pracuje Pan od poniedziałku do piątku, od ósmej do szesnastej. Rano odbiera Pan towar z magazynu, a potem rozwozi go do klientów w Gdańsku i okolicy.\nKierowca: Jakim samochodem będę jeździł?\nTy: Firmowym vanem. Proszę co tydzień sprawdzać olej i opony, a wieczorem tankować samochód.\nKierowca: A jak wygląda wynagrodzenie?\nTy: Pensja wynosi cztery tysiące pięćset złotych netto miesięcznie, a za terminowe dostawy dostaje Pan premię.\nKierowca: Rozumiem. Czy są jakieś zasady, o których powinienem wiedzieć?\nTy: Tak, ważne jest, żeby przestrzegać przepisów drogowych i dbać o towar. Jeśli będzie jakiś problem, proszę od razu zadzwonić do mnie.\nKierowca: Dobrze, dziękuję za informacje.\nTy: Cieszę się. Zaczynamy od jutra o ósmej. Powodzenia!',
 };
