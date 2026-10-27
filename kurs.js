@@ -946,6 +946,7 @@ function egzaminInfo(){
       <li><b>Бланк:</b> чистовика всего 2–3 страницы, черновика 2. Многие писали сразу набело. Если после чистовика идёт страница черновика, напиши <i>proszę sprawdzić tutaj</i>. Многие зачёркивали и рисовали стрелки: старайся писать аккуратно.</li>
     </ul>
     <button class="egz-play" onclick="KURS.tematyMonologow()">Банк тем для монолога (около 70)</button>
+    <button class="egz-play" onclick="STRUKTURY.ekran()">Структуры письменных форм (зубрить)</button>
     <button class="egz-play" onclick="KURS.opisZdjecia()">Описание фото: схема и образцы</button>
     <button class="egz-play" onclick="KURS.bohaterowie()">Мои герои и склонение их имён</button>
     <h4 class="kurs-h4">День экзамена · 5–6 декабря</h4>

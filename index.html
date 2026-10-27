@@ -737,6 +737,17 @@ input, textarea { font-family: inherit; }
 .slow-cram .slow-tak{background:var(--primary);border:2px solid var(--primary);color:#fff}
 .slow-info{text-align:center}
 
+/* ===================== STRUKTURY FORM (struktury.js) ===================== */
+.str .str-krok{margin:12px 0;padding:12px 12px 4px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
+.str .str-gora{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-bottom:6px}
+.str .str-n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:13px;font-weight:700;flex:none}
+.str .str-nazwa{font-weight:700;font-size:16px;color:var(--text-dark)}
+.str .str-opis{font-size:13px;color:var(--text-light)}
+.str.str-ukryj .kurs-pl{filter:blur(7px);cursor:pointer;user-select:none;transition:filter .15s}
+.str.str-ukryj .kurs-pl.str-odkryte{filter:none;user-select:auto}
+.str.str-plan .kurs-przyklady{display:none}
+.str.str-plan .str-krok{padding-bottom:10px}
+
 /* ===================== WZORY WYPRACOWAŃ (wzory.js) ===================== */
 .wz .wz-akcje{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
 .wz .wz-akcje .wz-wyb{border-color:var(--primary);background:var(--selected-bg);color:var(--primary)}
@@ -2266,6 +2277,11 @@ function startWzory() {
   WZORY.ekran();
 }
 
+function startStruktury() {
+  state.phase = 'struktury';
+  STRUKTURY.ekran();
+}
+
 function startPersonalEdit() {
   ekran('moje-edycja', function() { state.phase = 'personal-edit'; renderPersonalEdit(); });
   state.phase = 'personal-edit';
@@ -2582,6 +2598,7 @@ function render() {
   else if (state.phase === 'kurs' && typeof KURS !== 'undefined') KURS.dzien();
   else if (state.phase === 'slownik' && typeof SLOWNIK !== 'undefined') SLOWNIK.ekran();
   else if (state.phase === 'wzory' && typeof WZORY !== 'undefined') WZORY.ekran();
+  else if (state.phase === 'struktury' && typeof STRUKTURY !== 'undefined') STRUKTURY.ekran();
   else renderTree();
 }
 
@@ -2654,6 +2671,15 @@ function renderTree() {
     html += '<div class="skill-info"><div class="skill-name">Słownik egzaminu</div>';
     html += '<div class="skill-desc">' + sk.opis + '</div></div>';
     html += '<div class="skill-status active-txt">→ Cram</div></div>';
+  }
+  // Struktury form pisemnych — plany do zakucia na pamięć (struktury.js)
+  if (typeof STRUKTURY !== 'undefined') {
+    var st = STRUKTURY.kartaGlowna();
+    html += '<div class="skill-card ' + (st.zrobione ? 'completed' : 'available') + '" onclick="startStruktury()" style="margin-bottom:10px;border-left-color:var(--primary);">';
+    html += '<div class="skill-icon">' + svgIcon(st.zrobione ? 'icon-check' : 'icon-pencil') + '</div>';
+    html += '<div class="skill-info"><div class="skill-name">Struktury pisania</div>';
+    html += '<div class="skill-desc">' + st.opis + '</div></div>';
+    html += '<div class="skill-status active-txt">→ Zakuwaj</div></div>';
   }
   // Wzory wypracowań — przykładowe teksty do przepisywania (wzory.js)
   if (typeof WZORY !== 'undefined') {
@@ -3956,6 +3982,8 @@ render();
 <script src="data/slownik-pisanie.js"></script>
 <script src="slownik.js"></script>
 <script src="wzory.js"></script>
+<script src="data/struktury.js"></script>
+<script src="struktury.js"></script>
 <script>
 // Ekran główny narysował się, zanim doszły kurs i słownik — dorysuj ich karty.
 if (state.phase === 'tree') { try { renderTree(); } catch (e) {} }

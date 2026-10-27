@@ -110,6 +110,8 @@ function ekranGlowny(){
   krotkieW().forEach(w=>h += karta(w));
   h += '<h3 class="egz-h">Длинные формы · 160–175 слов</h3>';
   dlugieW().forEach(w=>h += karta(w));
+  if(typeof STRUKTURY!=='undefined') h += `<div class="egz-card" onclick="STRUKTURY.ekran()"><div class="egz-ico">${ik('egz-pen')}</div>
+    <div class="egz-body"><div class="egz-t">Структуры форм — зубрить план</div><div class="egz-d">Скелет и обороты для каждой письменной формы</div></div><div class="egz-meta">→</div></div>`;
   if(typeof KURS!=='undefined') h += `<div class="egz-card" onclick="KURS.egzaminInfo()"><div class="egz-ico">${ik('egz-target')}</div>
     <div class="egz-body"><div class="egz-t">Как проходит письменный экзамен</div><div class="egz-d">Объём ±10%, черновик, время, оформление</div></div><div class="egz-meta">→</div></div>`;
   h += `<details class="wz-bohater"><summary>Кто герой сочинений</summary><ul class="kurs-ul">${BOHATER.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
