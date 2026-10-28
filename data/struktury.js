@@ -56,9 +56,9 @@ const STRUKTURY_DANE = [
 { id:'pozdrowienia', formula:'Место и дата → Обращение → Откуда и как там → Что делаешь → Когда вернёшься → Подпись', uklad:UKL_KARTKA,
   ru:'Открытка с отдыха: откуда пишешь, какая погода, чем занимаешься, когда возвращаешься.',
   plan:[
-  ['Miejsce i data','Место и дата',[['Sopot, 10 lipca','Сопот, 10 июля']]],
+  ['Miejsce i data','Место и дата',[['Ubud, 10 lipca','Убуд, 10 июля']]],
   ['Zwrot (wołacz!)','Обращение',[['Droga Ewo!','Дорогая Эва!'],['Cześć, Ewo!','Привет, Эва!']]],
-  ['Skąd i jak jest','Откуда и как там',[['Serdeczne pozdrowienia znad morza!','Сердечный привет с моря!'],['Pogoda jest piękna, codziennie świeci słońce.','Погода прекрасная, каждый день светит солнце.']]],
+  ['Skąd i jak jest','Откуда и как там',[['Serdeczne pozdrowienia z Bali!','Сердечный привет с Бали!'],['Pogoda jest piękna, codziennie świeci słońce.','Погода прекрасная, каждый день светит солнце.']]],
   ['Co robisz','Что делаешь',[['Pływam, spaceruję i zwiedzam.','Плаваю, гуляю и осматриваю достопримечательности.'],['Odpoczywam i nabieram sił.','Отдыхаю и набираюсь сил.']]],
   ['Kiedy wracasz i podpis','Когда возвращаешься, подпись',[['Wracam w sobotę.','Возвращаюсь в субботу.'],['Szkoda, że Cię tu nie ma!','Жаль, что тебя здесь нет!'],['Do zobaczenia!','До встречи!']]],
 ]},
