@@ -162,8 +162,8 @@ function dzienEkran(n){
     <div class="egz-body"><div class="egz-t">Словарь экзамена</div><div class="egz-d">Все слова и фразы курса — карточки Cram</div></div><div class="egz-meta">→</div></div>`;
   h+=`<div class="egz-card" onclick="KURS.egzaminInfo()"><div class="egz-ico">${ik('egz-target')}</div>
     <div class="egz-body"><div class="egz-t">Как проходит экзамен</div><div class="egz-d">Письмо, устная часть и день экзамена — советы экзаменаторов</div></div><div class="egz-meta">→</div></div>`;
-  h+=`<div class="egz-card" onclick="KURS.claudeInfo()"><div class="egz-ico">${ik('egz-ear')}</div>
-    <div class="egz-body"><div class="egz-t">Как заниматься с Claude</div><div class="egz-d">Говорение голосом и проверка письма</div></div><div class="egz-meta">→</div></div>`;
+  h+=`<div class="egz-card" onclick="KURS.opisFoto()"><div class="egz-ico">${ik('egz-bolt')}</div>
+    <div class="egz-body"><div class="egz-t">Шпаргалка: описание фото</div><div class="egz-d">Универсальный план из 7 шагов для любой картинки</div></div><div class="egz-meta">→</div></div>`;
   h+='</div>';
   el('contentWrap').innerHTML=h;
   el('bottomWrap').style.display='none';
@@ -520,6 +520,7 @@ function mowa(id, co, n, i){
         <li><b>Настроение и догадки:</b> <i>Wydaje mi się, że… Być może… Scena wygląda na poważną i spokojną.</i></li>
         <li><b>Своё мнение:</b> <i>Uważam, że praca lekarzy jest odpowiedzialna i stresująca. Sam chętnie bym…</i></li></ol>
       <div class="kurs-cel">Схема работает и для незнакомой сцены (например, операционной): подставь свои слова вместо примеров. Не знаешь слово — опиши: <i>to jest rzecz, która…</i></div>
+      <button class="egz-play" onclick="KURS.opisFoto()">Шпаргалка: универсальный план с фразами</button>
       <button class="egz-play" onclick="KURS.opisZdjecia()">Образцы описаний (7 сцен) и перевод</button>
       <h4 class="kurs-h4">Обороты</h4>${lista(ZW_OPIS)}`;
   }
@@ -947,7 +948,8 @@ function egzaminInfo(){
     </ul>
     <button class="egz-play" onclick="KURS.tematyMonologow()">Банк тем для монолога (около 70)</button>
     <button class="egz-play" onclick="STRUKTURY.ekran()">Структуры письменных форм (зубрить)</button>
-    <button class="egz-play" onclick="KURS.opisZdjecia()">Описание фото: схема и образцы</button>
+    <button class="egz-play" onclick="KURS.opisFoto()">Описание фото: шпаргалка с планом</button>
+    <button class="egz-play" onclick="KURS.opisZdjecia()">Описание фото: образцы с переводом</button>
     <button class="egz-play" onclick="KURS.bohaterowie()">Мои герои и склонение их имён</button>
     <h4 class="kurs-h4">День экзамена · 5–6 декабря</h4>
     <ul class="kurs-ul">
@@ -968,6 +970,112 @@ function egzaminInfo(){
       <li><b>Неофициальное письмо:</b> поблагодари за письмо или извинись, что долго не писал → содержание → предложи встречу, спроси, что слышно, попроси ответить. Прощание: <i>Całuję, Ucałowania, Buziaki, Pozdrawiam</i>; в официальном: <i>Z wyrazami szacunku, Z poważaniem, Łączę wyrazy szacunku</i>.</li></ul></details>
   </div></div>`;
   przycisk('← День '+nrBiezacy(), ()=>dzienEkran());
+}
+
+// ========================================================================
+// SZPARGAŁKA: opis zdjęcia — jeden uniwersalny plan z 7 kroków, który pasuje
+// do każdego obrazka na egzaminie ustnym (zadanie 1). Kroki z gotowymi
+// zwrotami, szablon 12 zdań, mini-słownik, pułapki i rozkład czasu.
+// ========================================================================
+const FOTO_KROKI = [
+ ['Wstęp','Вступление: что на фото и где',[
+  ['Na zdjęciu widzę…','На фотографии я вижу…'],
+  ['Zdjęcie przedstawia…','На фотографии изображено…'],
+  ['To zdjęcie zostało zrobione w restauracji / w parku / w biurze.','Фото сделано в ресторане / в парке / в офисе.'],
+  ['Wygląda na to, że to jest…','Похоже, что это…']]],
+ ['Kto','Люди: сколько, кто они',[
+  ['Na zdjęciu są trzy osoby: dwie kobiety i mężczyzna.','На фото три человека: две женщины и мужчина.'],
+  ['Widzę grupę młodych ludzi / rodzinę / turystów.','Я вижу группу молодых людей / семью / туристов.'],
+  ['To chyba przyjaciele / koledzy z pracy / lekarz i pacjentka.','Это, наверное, друзья / коллеги / врач и пациентка.'],
+  ['Mężczyzna po lewej jest młody, a kobieta obok niego starsza.','Мужчина слева молодой, а женщина рядом с ним старше.']]],
+ ['Co robią','Что делают (настоящее время, несовершенный вид)',[
+  ['Oni rozmawiają / jedzą / piją kawę / pracują.','Они разговаривают / едят / пьют кофе / работают.'],
+  ['Kobieta patrzy w ekran komputera.','Женщина смотрит в экран компьютера.'],
+  ['Mężczyzna trzyma w ręku telefon i się uśmiecha.','Мужчина держит в руке телефон и улыбается.'],
+  ['W tle ktoś idzie / czeka / czyta.','На заднем плане кто-то идёт / ждёт / читает.']]],
+ ['Gdzie','Расположение: планы и стороны',[
+  ['Na pierwszym planie widzę…','На переднем плане я вижу…'],
+  ['W tle jest / są…','На заднем плане есть…'],
+  ['Pośrodku zdjęcia stoi…','Посередине фото стоит…'],
+  ['Po lewej stronie siedzi… / Z prawej strony stoi…','Слева сидит… / Справа стоит…'],
+  ['Na górze / na dole zdjęcia jest…','Вверху / внизу фотографии есть…'],
+  ['obok, przed, za, między, nad, pod','рядом, перед, за, между, над, под']]],
+ ['Wygląd i przedmioty','Внешность, одежда, вещи',[
+  ['Ma na sobie niebieską koszulę i ciemne spodnie.','На нём синяя рубашка и тёмные брюки.'],
+  ['Ma długie, jasne włosy i nosi okulary.','У неё длинные светлые волосы, она носит очки.'],
+  ['Na stole stoją filiżanki, talerze i laptop.','На столе стоят чашки, тарелки и ноутбук.'],
+  ['Na ścianie wisi obraz / zegar / plakat.','На стене висит картина / часы / плакат.'],
+  ['Ubranie jest w kratkę / w paski / jednokolorowe.','Одежда в клетку / в полоску / однотонная.']]],
+ ['Atmosfera i przypuszczenia','Настроение и догадки',[
+  ['Wydaje mi się, że…','Мне кажется, что…'],
+  ['Chyba… / Prawdopodobnie… / Być może…','Наверное… / Вероятно… / Возможно…'],
+  ['Atmosfera jest miła / wesoła / spokojna / napięta.','Атмосфера приятная / весёлая / спокойная / напряжённая.'],
+  ['Wszyscy wyglądają na zadowolonych / zmęczonych.','Все выглядят довольными / уставшими.'],
+  ['Chyba jest lato / wieczór, bo…','Наверное, сейчас лето / вечер, потому что…']]],
+ ['Opinia','Своё мнение и итог',[
+  ['Uważam, że…','Считаю, что…'],
+  ['To zdjęcie mi się podoba, ponieważ…','Эта фотография мне нравится, потому что…'],
+  ['Sam chętnie bym tam pojechał / spróbował…','Я бы и сам с удовольствием туда поехал / попробовал…'],
+  ['Podsumowując, na zdjęciu widzę…','Подводя итог, на фотографии я вижу…']]],
+];
+const FOTO_SZABLON = [
+  ['Na zdjęciu widzę ___ (miejsce).','1 · что и где'],
+  ['Są tam ___ osoby: ___.','2 · сколько и кто'],
+  ['Pierwsza osoba ___ (co robi), a druga ___.','3 · что делают'],
+  ['Na pierwszym planie ___.','4 · передний план'],
+  ['W tle ___.','4 · задний план'],
+  ['Z lewej strony ___, a z prawej strony ___.','4 · стороны'],
+  ['___ ma na sobie ___.','5 · одежда'],
+  ['Na ___ (stole / ścianie) ___ (stoi / wisi / leży) ___.','5 · предметы'],
+  ['Wydaje mi się, że ___ (kim są, co się dzieje).','6 · догадка'],
+  ['Prawdopodobnie jest ___, ponieważ ___.','6 · время года или суток и причина'],
+  ['Atmosfera jest ___.','6 · настроение'],
+  ['Uważam, że ___. / Sam ___.','7 · мнение и личное']];
+const FOTO_SLOWNIK = [
+ ['Ludzie / Люди',[['mężczyzna','мужчина'],['kobieta','женщина'],['dziewczyna / chłopak','девушка / парень'],['dziecko (dzieci)','ребёнок (дети)'],['starszy pan / starsza pani','пожилой мужчина / женщина'],['para','пара'],['rodzina','семья'],['grupa przyjaciół','группа друзей'],['turyści','туристы'],['lekarz / pielęgniarka','врач / медсестра'],['kelner / kucharz','официант / повар'],['klient / sprzedawca','клиент / продавец']]],
+ ['Czynności / Действия',[['rozmawiać','разговаривать'],['jeść / pić','есть / пить'],['pracować','работать'],['patrzeć na…','смотреть на…'],['trzymać w ręku','держать в руке'],['uśmiechać się','улыбаться'],['siedzieć / stać','сидеть / стоять'],['iść / spacerować','идти / гулять'],['czytać / pisać','читать / писать'],['czekać na…','ждать…'],['robić zdjęcie','делать фото'],['bawić się','играть, веселиться']]],
+ ['Nastrój / Настроение',[['uśmiechnięty','улыбающийся'],['zadowolony','довольный'],['szczęśliwy','счастливый'],['zmęczony','уставший'],['zamyślony','задумчивый'],['zaskoczony','удивлённый'],['poważny','серьёзный'],['zestresowany','напряжённый']]],
+ ['Wygląd i ubranie / Внешность и одежда',[['wysoki / niski','высокий / низкий'],['szczupły','стройный'],['młody / starszy','молодой / пожилой'],['długie / krótkie włosy','длинные / короткие волосы'],['ciemne / jasne / siwe włosy','тёмные / светлые / седые волосы'],['okulary','очки'],['sweter / bluza','свитер / толстовка'],['koszula / kurtka','рубашка / куртка'],['spodnie / dżinsy','брюки / джинсы'],['sukienka / czapka','платье / шапка']]],
+ ['Miejsce i przedmioty / Место и вещи',[['pokój / sala','комната / зал'],['stół / krzesło','стол / стул'],['okno / drzwi','окно / дверь'],['lampa','лампа'],['kanapa','диван'],['laptop / telefon','ноутбук / телефон'],['torba / plecak','сумка / рюкзак'],['kwiaty','цветы'],['obraz / plakat','картина / плакат'],['półka / szafa','полка / шкаф']]],
+ ['Pora i pogoda / Время и погода',[['rano / wieczorem','утром / вечером'],['latem / zimą','летом / зимой'],['jest słonecznie','солнечно'],['jest pochmurno','пасмурно'],['pada deszcz','идёт дождь'],['jest ciepło / zimno','тепло / холодно']]],
+];
+let fotoTrybAkt = 'wszystko';
+function opisFoto(){
+  wejdz('opis-foto', opisFoto);
+  const btn = (k,txt) => `<button class="egz-chip ${fotoTrybAkt===k?'wz-wyb':''}" onclick="KURS.fotoTryb('${k}')">${txt}</button>`;
+  let h = '<div class="egz kurs wz"><div class="egz-ex"><div class="egz-hint">Шпаргалка: описание фотографии</div>';
+  h += `<div class="kurs-karta"><div class="kurs-karta-n">План для любой картинки</div>
+    <div class="kurs-karta-t">Вступление → Кто → Что делают → Где → Вид и вещи → Догадки → Мнение</div></div>
+    <div class="kurs-cel"><b>5 минут</b> на подготовку: запиши ключевые слова к каждому шагу. Говорить <b>2–3 минуты</b> (150–200 слов): на шаги 1–2 по 20 секунд, на шаги 3–5 по 30–40 секунд, на 6–7 около 30. <b>Не молчи.</b> Не знаешь слово: <i>to jest rzecz, która…</i></div>
+    <div class="wz-akcje">${btn('wszystko','Всё видно')}${btn('ukryj','Скрыть польский')}${btn('plan','Только план')}</div>
+    <div class="str str-${fotoTrybAkt}" id="fotoTresc">`;
+  FOTO_KROKI.forEach(([naz,opis,fr],i)=>{
+    h += `<div class="str-krok"><div class="str-gora"><span class="str-n">${i+1}</span><span class="str-nazwa">${esc(naz)}</span><span class="str-opis">${esc(opis)}</span></div>
+      <div class="kurs-przyklady">${fr.map(([pl,ru])=>`<div class="kurs-pr"><span class="kurs-pl" onclick="KURS.fotoDotknij(this)">${esc(pl)}</span><span class="kurs-ru">${esc(ru)}</span></div>`).join('')}</div></div>`; });
+  h += '</div>';
+  h += `<h4 class="kurs-h4">Каркас из 12 предложений</h4>
+    <div class="kurs-cel">Подставляй слова вместо <b>___</b>. Если сказал все 12, ты уже наговорил около 150 слов.</div>
+    <ol class="kurs-ul">${FOTO_SZABLON.map(([pl,ru])=>`<li><span class="kurs-pl" onclick="KURS.mow(this.textContent)">${esc(pl)}</span> <span class="kurs-ru">${esc(ru)}</span></li>`).join('')}</ol>`;
+  h += `<h4 class="kurs-h4">Не забудь</h4><ul class="kurs-ul">
+    <li>Всё в <b>настоящем времени</b> и несовершенном виде: <i>Kobieta pije kawę</i>, а не «wypiła».</li>
+    <li><i>Na zdjęciu</i> и <i>po lewej stronie</i> — Miejscownik; <i>z lewej strony</i> — Dopełniacz.</li>
+    <li><i>Ma na sobie</i> + Biernik: <i>ma na sobie niebieską koszulę</i>. <i>Wygląda na</i> + Biernik: <i>wygląda na zmęczoną</i>.</li>
+    <li>Чего не видишь, говори как догадку: <i>chyba, wydaje mi się, prawdopodobnie</i>. Не называй придуманное фактом.</li>
+    <li>Закончил рано — добавь детали из шагов 4–6 (ещё один предмет, цвет, ещё одна догадка), а не молчи.</li></ul>
+    <h4 class="kurs-h4">Проверь себя перед «dziękuję»</h4>
+    <ul class="kurs-ul"><li>Сказал, что на фото и где это?</li><li>Назвал людей и что они делают (минимум 2)?</li><li>Назвал 3 предмета и 2 плана (передний, задний)?</li><li>Сказал одну догадку и одно настроение?</li><li>Закончил мнением или личной фразой?</li></ul>`;
+  FOTO_SLOWNIK.forEach(([naz,sl])=>{ h += `<details class="wz-bohater"><summary>${esc(naz)}</summary>${lista(sl)}</details>`; });
+  h += `<div class="wz-akcje"><button class="egz-chip" onclick="KURS.opisZdjecia()">Образцы описаний (7 сцен)</button>
+    <button class="egz-chip" onclick="KURS.stoper(180,'Описание фото')">Засечь 3 минуты</button></div><div class="kurs-timer" id="kursTimer"></div>`;
+  h += '</div></div>';
+  el('contentWrap').innerHTML = h;
+  przycisk('← Назад', ()=>goBack());
+}
+function fotoTryb(k){ fotoTrybAkt = k; opisFoto(); }
+function fotoDotknij(span){
+  const box = el('fotoTresc');
+  if(box && box.classList.contains('str-ukryj') && !span.classList.contains('str-odkryte')){ span.classList.add('str-odkryte'); return; }
+  mow(span.textContent);
 }
 
 // Bank pytań do monologu — do ćwiczenia głosem z Claude lub samodzielnie z timerem.
@@ -1157,5 +1265,5 @@ function kartaGlowna(){
 const ZW = {opis:ZW_OPIS, monolog:ZW_MONOLOG, sytuacja:ZW_SYTUACJA, ratunek:ZW_RATUNEK};
 
 return { dzien:dzienEkran, dalej:dalejDzien, mapa, otworz, przelacz, lekcja, cwiczenia, slowa, slowaCram, mowa, pisanie, mow,
-  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, tematyMonologow, losujTemat, opisZdjecia, opisMow, bohaterowie, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
+  kopiujMowe, kopiujPrace, licz, znak, stoper, stoperModul, claudeInfo, egzaminInfo, tematyMonologow, losujTemat, opisZdjecia, opisMow, opisFoto, fotoTryb, fotoDotknij, bohaterowie, kartaGlowna, nrDzisiaj, nrBiezacy, ZW };
 })();
