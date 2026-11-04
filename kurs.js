@@ -513,11 +513,11 @@ function mowa(id, co, n, i){
       <div class="kurs-cel">Возьми любую фотографию с людьми в ситуации по теме «${esc(T.ru.toLowerCase())}». Подойдёт фото из твоей галереи или из поиска картинок по запросу <b>${esc(T.foto||T.tytul)}</b>.</div>
       <h4 class="kurs-h4">План описания из 7 шагов — для любой фотографии</h4>
       <ol class="kurs-ul"><li><b>Вступление:</b> <i>Na zdjęciu widzę salę operacyjną / rodzinę / biuro.</i></li>
-        <li><b>Кто и где:</b> называй людей общими словами: <i>chirurdzy, pielęgniarki, zespół medyczny, pacjent / rodzice i dzieci / pracownicy / turyści</i>; сколько их и где они.</li>
-        <li><b>Что делают</b> (настоящее время): <i>przeprowadzają operację, podają kroplówkę, rozmawiają, jedzą, patrzą w ekran.</i></li>
         <li><b>Пространство:</b> <i>na pierwszym planie, z lewej strony, pośrodku, w tle, przy łóżku / przy stole.</i></li>
+        <li><b>Настроение и догадки:</b> <i>Atmosfera jest… Wydaje mi się, że… Być może… Scena wygląda na poważną i spokojną.</i></li>
+        <li><b>Кто:</b> называй людей общими словами: <i>chirurdzy, pielęgniarki, zespół medyczny, pacjent / rodzice i dzieci / pracownicy / turyści</i>; сколько их.</li>
+        <li><b>Что делают</b> (настоящее время): <i>przeprowadzają operację, podają kroplówkę, rozmawiają, jedzą, patrzą w ekran.</i></li>
         <li><b>Внешность и предметы:</b> одежда, цвета, вещи: <i>maseczki, rękawiczki, niebieskie fartuchy, lampy operacyjne.</i></li>
-        <li><b>Настроение и догадки:</b> <i>Wydaje mi się, że… Być może… Scena wygląda na poważną i spokojną.</i></li>
         <li><b>Своё мнение:</b> <i>Uważam, że praca lekarzy jest odpowiedzialna i stresująca. Sam chętnie bym…</i></li></ol>
       <div class="kurs-cel">Схема работает и для незнакомой сцены (например, операционной): подставь свои слова вместо примеров. Не знаешь слово — опиши: <i>to jest rzecz, która…</i></div>
       <button class="egz-play" onclick="KURS.opisFoto()">Шпаргалка: универсальный план с фразами</button>
@@ -983,6 +983,19 @@ const FOTO_KROKI = [
   ['Zdjęcie przedstawia…','На фотографии изображено…'],
   ['To zdjęcie zostało zrobione w restauracji / w parku / w biurze.','Фото сделано в ресторане / в парке / в офисе.'],
   ['Wygląda na to, że to jest…','Похоже, что это…']]],
+ ['Gdzie','Расположение: планы и стороны',[
+  ['Na pierwszym planie widzę…','На переднем плане я вижу…'],
+  ['W tle jest / są…','На заднем плане есть…'],
+  ['Pośrodku zdjęcia stoi…','Посередине фото стоит…'],
+  ['Po lewej stronie siedzi… / Z prawej strony stoi…','Слева сидит… / Справа стоит…'],
+  ['Na górze / na dole zdjęcia jest…','Вверху / внизу фотографии есть…'],
+  ['obok, przed, za, między, nad, pod','рядом, перед, за, между, над, под']]],
+ ['Atmosfera i przypuszczenia','Настроение и догадки',[
+  ['Wydaje mi się, że…','Мне кажется, что…'],
+  ['Chyba… / Prawdopodobnie… / Być może…','Наверное… / Вероятно… / Возможно…'],
+  ['Atmosfera jest miła / wesoła / spokojna / napięta.','Атмосфера приятная / весёлая / спокойная / напряжённая.'],
+  ['Wszyscy wyglądają na zadowolonych / zmęczonych.','Все выглядят довольными / уставшими.'],
+  ['Chyba jest lato / wieczór, bo…','Наверное, сейчас лето / вечер, потому что…']]],
  ['Kto','Люди: сколько, кто они',[
   ['Na zdjęciu są trzy osoby: dwie kobiety i mężczyzna.','На фото три человека: две женщины и мужчина.'],
   ['Widzę grupę młodych ludzi / rodzinę / turystów.','Я вижу группу молодых людей / семью / туристов.'],
@@ -993,25 +1006,12 @@ const FOTO_KROKI = [
   ['Kobieta patrzy w ekran komputera.','Женщина смотрит в экран компьютера.'],
   ['Mężczyzna trzyma w ręku telefon i się uśmiecha.','Мужчина держит в руке телефон и улыбается.'],
   ['W tle ktoś idzie / czeka / czyta.','На заднем плане кто-то идёт / ждёт / читает.']]],
- ['Gdzie','Расположение: планы и стороны',[
-  ['Na pierwszym planie widzę…','На переднем плане я вижу…'],
-  ['W tle jest / są…','На заднем плане есть…'],
-  ['Pośrodku zdjęcia stoi…','Посередине фото стоит…'],
-  ['Po lewej stronie siedzi… / Z prawej strony stoi…','Слева сидит… / Справа стоит…'],
-  ['Na górze / na dole zdjęcia jest…','Вверху / внизу фотографии есть…'],
-  ['obok, przed, za, między, nad, pod','рядом, перед, за, между, над, под']]],
  ['Wygląd i przedmioty','Внешность, одежда, вещи',[
   ['Ma na sobie niebieską koszulę i ciemne spodnie.','На нём синяя рубашка и тёмные брюки.'],
   ['Ma długie, jasne włosy i nosi okulary.','У неё длинные светлые волосы, она носит очки.'],
   ['Na stole stoją filiżanki, talerze i laptop.','На столе стоят чашки, тарелки и ноутбук.'],
   ['Na ścianie wisi obraz / zegar / plakat.','На стене висит картина / часы / плакат.'],
   ['Ubranie jest w kratkę / w paski / jednokolorowe.','Одежда в клетку / в полоску / однотонная.']]],
- ['Atmosfera i przypuszczenia','Настроение и догадки',[
-  ['Wydaje mi się, że…','Мне кажется, что…'],
-  ['Chyba… / Prawdopodobnie… / Być może…','Наверное… / Вероятно… / Возможно…'],
-  ['Atmosfera jest miła / wesoła / spokojna / napięta.','Атмосфера приятная / весёлая / спокойная / напряжённая.'],
-  ['Wszyscy wyglądają na zadowolonych / zmęczonych.','Все выглядят довольными / уставшими.'],
-  ['Chyba jest lato / wieczór, bo…','Наверное, сейчас лето / вечер, потому что…']]],
  ['Opinia','Своё мнение и итог',[
   ['Uważam, że…','Считаю, что…'],
   ['To zdjęcie mi się podoba, ponieważ…','Эта фотография мне нравится, потому что…'],
@@ -1020,16 +1020,16 @@ const FOTO_KROKI = [
 ];
 const FOTO_SZABLON = [
   ['Na zdjęciu widzę ___ (miejsce).','1 · что и где'],
-  ['Są tam ___ osoby: ___.','2 · сколько и кто'],
-  ['Pierwsza osoba ___ (co robi), a druga ___.','3 · что делают'],
-  ['Na pierwszym planie ___.','4 · передний план'],
-  ['W tle ___.','4 · задний план'],
-  ['Z lewej strony ___, a z prawej strony ___.','4 · стороны'],
-  ['___ ma na sobie ___.','5 · одежда'],
-  ['Na ___ (stole / ścianie) ___ (stoi / wisi / leży) ___.','5 · предметы'],
-  ['Wydaje mi się, że ___ (kim są, co się dzieje).','6 · догадка'],
-  ['Prawdopodobnie jest ___, ponieważ ___.','6 · время года или суток и причина'],
-  ['Atmosfera jest ___.','6 · настроение'],
+  ['Na pierwszym planie ___.','2 · передний план'],
+  ['W tle ___.','2 · задний план'],
+  ['Z lewej strony ___, a z prawej strony ___.','2 · стороны'],
+  ['Atmosfera jest ___.','3 · настроение'],
+  ['Wydaje mi się, że ___ (kim są, co się dzieje).','3 · догадка'],
+  ['Prawdopodobnie jest ___, ponieważ ___.','3 · время года или суток и причина'],
+  ['Są tam ___ osoby: ___.','4 · сколько и кто'],
+  ['Pierwsza osoba ___ (co robi), a druga ___.','5 · что делают'],
+  ['___ ma na sobie ___.','6 · одежда'],
+  ['Na ___ (stole / ścianie) ___ (stoi / wisi / leży) ___.','6 · предметы'],
   ['Uważam, że ___. / Sam ___.','7 · мнение и личное']];
 const FOTO_SLOWNIK = [
  ['Ludzie / Люди',[['mężczyzna','мужчина'],['kobieta','женщина'],['dziewczyna / chłopak','девушка / парень'],['dziecko (dzieci)','ребёнок (дети)'],['starszy pan / starsza pani','пожилой мужчина / женщина'],['para','пара'],['rodzina','семья'],['grupa przyjaciół','группа друзей'],['turyści','туристы'],['lekarz / pielęgniarka','врач / медсестра'],['kelner / kucharz','официант / повар'],['klient / sprzedawca','клиент / продавец']]],
@@ -1045,8 +1045,8 @@ function opisFoto(){
   const btn = (k,txt) => `<button class="egz-chip ${fotoTrybAkt===k?'wz-wyb':''}" onclick="KURS.fotoTryb('${k}')">${txt}</button>`;
   let h = '<div class="egz kurs wz"><div class="egz-ex"><div class="egz-hint">Шпаргалка: описание фотографии</div>';
   h += `<div class="kurs-karta"><div class="kurs-karta-n">План для любой картинки</div>
-    <div class="kurs-karta-t">Вступление → Кто → Что делают → Где → Вид и вещи → Догадки → Мнение</div></div>
-    <div class="kurs-cel"><b>5 минут</b> на подготовку: запиши ключевые слова к каждому шагу. Говорить <b>2–3 минуты</b> (150–200 слов): на шаги 1–2 по 20 секунд, на шаги 3–5 по 30–40 секунд, на 6–7 около 30. <b>Не молчи.</b> Не знаешь слово: <i>to jest rzecz, która…</i></div>
+    <div class="kurs-karta-t">Вступление → Где → Догадки → Кто → Что делают → Вид и вещи → Мнение</div></div>
+    <div class="kurs-cel"><b>5 минут</b> на подготовку: запиши ключевые слова к каждому шагу. Говорить <b>2–3 минуты</b> (150–200 слов): на вступление около 20 секунд, на каждый из остальных шагов по 25–35 секунд. <b>Не молчи.</b> Не знаешь слово: <i>to jest rzecz, która…</i></div>
     <div class="wz-akcje">${btn('wszystko','Всё видно')}${btn('ukryj','Скрыть польский')}${btn('plan','Только план')}</div>
     <div class="str str-${fotoTrybAkt}" id="fotoTresc">`;
   FOTO_KROKI.forEach(([naz,opis,fr],i)=>{
@@ -1061,9 +1061,9 @@ function opisFoto(){
     <li><i>Na zdjęciu</i> и <i>po lewej stronie</i> — Miejscownik; <i>z lewej strony</i> — Dopełniacz.</li>
     <li><i>Ma na sobie</i> + Biernik: <i>ma na sobie niebieską koszulę</i>. <i>Wygląda na</i> + Biernik: <i>wygląda na zmęczoną</i>.</li>
     <li>Чего не видишь, говори как догадку: <i>chyba, wydaje mi się, prawdopodobnie</i>. Не называй придуманное фактом.</li>
-    <li>Закончил рано — добавь детали из шагов 4–6 (ещё один предмет, цвет, ещё одна догадка), а не молчи.</li></ul>
+    <li>Закончил рано — добавь детали из шагов 2, 3 и 6 (ещё один предмет, цвет, ещё одна догадка), а не молчи.</li></ul>
     <h4 class="kurs-h4">Проверь себя перед «dziękuję»</h4>
-    <ul class="kurs-ul"><li>Сказал, что на фото и где это?</li><li>Назвал людей и что они делают (минимум 2)?</li><li>Назвал 3 предмета и 2 плана (передний, задний)?</li><li>Сказал одну догадку и одно настроение?</li><li>Закончил мнением или личной фразой?</li></ul>`;
+    <ul class="kurs-ul"><li>Сказал, что на фото?</li><li>Назвал передний и задний план и стороны?</li><li>Сказал настроение и одну догадку?</li><li>Назвал людей и что они делают (минимум 2)?</li><li>Назвал 3 предмета и одежду?</li><li>Закончил мнением или личной фразой?</li></ul>`;
   FOTO_SLOWNIK.forEach(([naz,sl])=>{ h += `<details class="wz-bohater"><summary>${esc(naz)}</summary>${lista(sl)}</details>`; });
   h += `<div class="wz-akcje"><button class="egz-chip" onclick="KURS.opisZdjecia()">Образцы описаний (7 сцен)</button>
     <button class="egz-chip" onclick="KURS.stoper(180,'Описание фото')">Засечь 3 минуты</button></div><div class="kurs-timer" id="kursTimer"></div>`;
@@ -1158,33 +1158,33 @@ const BANK_TEMATOW = [
 ];
 const OPISY_FOTO = [
   ['Операционная (пример из инструкции)',
-   'Na zdjęciu widzę salę operacyjną. Na pierwszym planie jest kilku lekarzy i pielęgniarek, czyli zespół medyczny. Przeprowadzają operację: jeden chirurg pochyla się nad pacjentem, a pielęgniarka podaje mu narzędzia. Pacjent leży na stole pośrodku zdjęcia, przykryty sterylnym zielonym materiałem. Z lewej strony stoi kroplówka, a nad stołem wiszą duże lampy operacyjne, które oświetlają pole operacyjne. W tle widzę aparaturę medyczną i monitory. Wszyscy mają na sobie niebieskie fartuchy, maseczki, czapki i rękawiczki. Wydaje mi się, że operacja jest poważna, ale wszyscy są skupieni i spokojni. Prawdopodobnie trwa już od dłuższego czasu. Uważam, że praca lekarzy jest bardzo odpowiedzialna i stresująca. Ja na pewno nie chciałbym znaleźć się na takim stole, ale cieszę się, że są ludzie, którzy ratują nam życie.',
-   'На фотографии я вижу операционную. На переднем плане несколько врачей и медсестёр, то есть медицинская бригада. Они проводят операцию: один хирург склоняется над пациентом, а медсестра подаёт ему инструменты. Пациент лежит на столе посередине фотографии, накрытый стерильным зелёным материалом. Слева стоит капельница, а над столом висят большие операционные лампы, которые освещают операционное поле. На заднем плане я вижу медицинскую аппаратуру и мониторы. На всех синие халаты, маски, шапочки и перчатки. Мне кажется, операция серьёзная, но все сосредоточены и спокойны. Вероятно, она идёт уже давно. Считаю, что работа врачей очень ответственная и стрессовая. Я бы точно не хотел оказаться на таком столе, но рад, что есть люди, которые спасают нам жизнь.'],
+   'Na zdjęciu widzę salę operacyjną. Na pierwszym planie jest kilku lekarzy i kilka pielęgniarek, pośrodku leży pacjent, a z lewej strony stoi kroplówka. W tle widzę aparaturę medyczną i monitory, a nad stołem wiszą duże lampy operacyjne. Atmosfera jest poważna, ale spokojna. Wydaje mi się, że operacja jest trudna i trwa już od dłuższego czasu. Na zdjęciu jest zespół medyczny: chirurdzy, pielęgniarki i pacjent. Przeprowadzają operację: jeden chirurg pochyla się nad pacjentem, a pielęgniarka podaje mu narzędzia. Wszyscy mają na sobie niebieskie fartuchy, maseczki, czapki i rękawiczki, a pacjent jest przykryty sterylnym zielonym materiałem. Uważam, że praca lekarzy jest bardzo odpowiedzialna i stresująca. Ja na pewno nie chciałbym znaleźć się na takim stole, ale cieszę się, że są ludzie, którzy ratują nam życie.',
+   'На фотографии я вижу операционную. На переднем плане несколько врачей и медсестёр, посередине лежит пациент, а слева стоит капельница. На заднем плане я вижу медицинскую аппаратуру и мониторы, а над столом висят большие операционные лампы. Атмосфера серьёзная, но спокойная. Мне кажется, операция сложная и идёт уже давно. На фотографии медицинская бригада: хирурги, медсёстры и пациент. Они проводят операцию: один хирург склоняется над пациентом, а медсестра подаёт ему инструменты. На всех синие халаты, маски, шапочки и перчатки, а пациент накрыт стерильным зелёным материалом. Считаю, что работа врачей очень ответственная и стрессовая. Я бы точно не хотел оказаться на таком столе, но рад, что есть люди, которые спасают нам жизнь.'],
   ['Друзья в кафе (реальное задание, июнь 2026)',
-   'Na zdjęciu widzę kawiarnię albo niewielką restaurację. Przy stoliku siedzą trzy osoby: dwie młode dziewczyny i chłopak. Jedzą burgery i frytki, rozmawiają i się śmieją. Na pierwszym planie, na stole, stoją talerze, szklanki z napojami i serwetki. Dziewczyna po lewej ma długie jasne włosy i żółtą bluzę, chłopak pośrodku nosi okulary i koszulę w kratkę, a dziewczyna po prawej ma ciemne włosy i czerwoną kurtkę. W tle widzę ladę, menu na ścianie i innych gości. Wydaje mi się, że to przyjaciele, którzy spotkali się po pracy albo po szkole. Atmosfera jest wesoła i swobodna. Uważam, że takie spotkania są ważne, bo pozwalają odpocząć i porozmawiać. Ja też lubię spotykać się z przyjaciółmi w kawiarni.',
-   'На фотографии я вижу кафе или небольшой ресторан. За столиком сидят трое: две молодые девушки и парень. Они едят бургеры и картошку фри, разговаривают и смеются. На переднем плане, на столе, стоят тарелки, стаканы с напитками и салфетки. У девушки слева длинные светлые волосы и жёлтая толстовка, парень посередине в очках и клетчатой рубашке, а у девушки справа тёмные волосы и красная куртка. На заднем плане я вижу стойку, меню на стене и других посетителей. Мне кажется, это друзья, которые встретились после работы или после учёбы. Атмосфера весёлая и непринуждённая. Считаю, что такие встречи важны, потому что позволяют отдохнуть и поговорить. Я тоже люблю встречаться с друзьями в кафе.'],
+   'Na zdjęciu widzę kawiarnię albo niewielką restaurację. Na pierwszym planie, przy stoliku, siedzą trzy osoby, a na stole stoją talerze, szklanki i serwetki. W tle widzę ladę, menu na ścianie i innych gości. Atmosfera jest wesoła i swobodna. Wydaje mi się, że to przyjaciele, którzy spotkali się po pracy albo po szkole. Są to dwie młode dziewczyny i chłopak. Jedzą burgery i frytki, rozmawiają i się śmieją. Dziewczyna po lewej ma długie jasne włosy i żółtą bluzę, chłopak pośrodku nosi okulary i koszulę w kratkę, a dziewczyna po prawej ma ciemne włosy i czerwoną kurtkę. Uważam, że takie spotkania są ważne, bo pozwalają odpocząć i porozmawiać. Ja też lubię spotykać się z przyjaciółmi w kawiarni.',
+   'На фотографии я вижу кафе или небольшой ресторан. На переднем плане за столиком сидят трое, а на столе стоят тарелки, стаканы и салфетки. На заднем плане я вижу стойку, меню на стене и других посетителей. Атмосфера весёлая и непринуждённая. Мне кажется, это друзья, которые встретились после работы или после учёбы. Это две молодые девушки и парень. Они едят бургеры и картошку фри, разговаривают и смеются. У девушки слева длинные светлые волосы и жёлтая толстовка, парень посередине в очках и клетчатой рубашке, а у девушки справа тёмные волосы и красная куртка. Считаю, что такие встречи важны, потому что позволяют отдохнуть и поговорить. Я тоже люблю встречаться с друзьями в кафе.'],
   ['Люди в офисе (реальное задание, июнь 2026)',
-   'Na zdjęciu widzę duże biuro. Pracują w nim cztery osoby, czyli pracownicy firmy. Dwóch mężczyzn i dwie kobiety siedzą przy biurkach i patrzą w ekrany komputerów. Kobieta po lewej rozmawia przez telefon, a mężczyzna w środku robi notatki. Na pierwszym planie stoi biurko z laptopem, kubkiem kawy i stosem dokumentów. W tle widzę duże okno, szafę z segregatorami i rośliny. Wszyscy są ubrani elegancko: mężczyźni mają koszule, a kobiety żakiety. Wydaje mi się, że jest przedpołudnie i że wszyscy mają dużo pracy. Atmosfera jest spokojna i skupiona. Uważam, że praca w biurze może być męcząca, bo trzeba długo siedzieć. Ja na co dzień pracuję w studiu fotograficznym, więc znam takie dni.',
-   'На фотографии я вижу большой офис. В нём работают четыре человека, то есть сотрудники фирмы. Двое мужчин и две женщины сидят за столами и смотрят в экраны компьютеров. Женщина слева говорит по телефону, а мужчина посередине делает заметки. На переднем плане стоит стол с ноутбуком, чашкой кофе и стопкой документов. На заднем плане я вижу большое окно, шкаф с папками и растения. Все одеты элегантно: у мужчин рубашки, у женщин жакеты. Мне кажется, сейчас до полудня и у всех много работы. Атмосфера спокойная и сосредоточенная. Считаю, что работа в офисе может быть утомительной, потому что приходится долго сидеть. Я каждый день работаю в фотостудии, так что знаю такие дни.'],
+   'Na zdjęciu widzę duże biuro. Na pierwszym planie stoi biurko z laptopem, kubkiem kawy i stosem dokumentów. W tle widzę duże okno, szafę z segregatorami i rośliny. Atmosfera jest spokojna i skupiona. Wydaje mi się, że jest przedpołudnie i że wszyscy mają dużo pracy. W biurze pracują cztery osoby, czyli pracownicy firmy: dwóch mężczyzn i dwie kobiety. Siedzą przy biurkach i patrzą w ekrany komputerów. Kobieta po lewej rozmawia przez telefon, a mężczyzna w środku robi notatki. Wszyscy są ubrani elegancko: mężczyźni mają koszule, a kobiety żakiety. Uważam, że praca w biurze może być męcząca, bo trzeba długo siedzieć. Ja na co dzień pracuję w studiu fotograficznym, więc znam takie dni.',
+   'На фотографии я вижу большой офис. На переднем плане стоит стол с ноутбуком, чашкой кофе и стопкой документов. На заднем плане я вижу большое окно, шкаф с папками и растения. Атмосфера спокойная и сосредоточенная. Мне кажется, сейчас до полудня и у всех много работы. В офисе работают четыре человека, то есть сотрудники фирмы: двое мужчин и две женщины. Они сидят за столами и смотрят в экраны компьютеров. Женщина слева говорит по телефону, а мужчина посередине делает заметки. Все одеты элегантно: у мужчин рубашки, у женщин жакеты. Считаю, что работа в офисе может быть утомительной, потому что приходится долго сидеть. Я каждый день работаю в фотостудии, так что знаю такие дни.'],
   ['Семья разговаривает по видеосвязи (реальное задание, июнь 2026)',
-   'Na zdjęciu widzę rodzinę, która rozmawia z kimś przez internet. Na kanapie siedzą rodzice i dwoje dzieci, chłopiec i dziewczynka. Przed nimi, na stoliku, stoi otwarty laptop. Wszyscy patrzą w ekran i się uśmiechają. Mama trzyma laptop, a tata macha ręką. Z lewej strony, w tle, widzę regał z książkami, a z prawej lampę i okno. Dzieci mają na sobie domowe ubrania, a rodzice swetry. Wydaje mi się, że rozmawiają z babcią albo dziadkiem, którzy mieszkają daleko. Atmosfera jest ciepła i radosna. Uważam, że wideorozmowy bardzo pomagają, kiedy rodzina mieszka w różnych miastach lub krajach. Sam często rozmawiam w ten sposób z rodzicami w Petersburgu.',
-   'На фотографии я вижу семью, которая разговаривает с кем-то по интернету. На диване сидят родители и двое детей, мальчик и девочка. Перед ними, на столике, стоит открытый ноутбук. Все смотрят в экран и улыбаются. Мама держит ноутбук, а папа машет рукой. Слева, на заднем плане, я вижу книжный стеллаж, а справа лампу и окно. На детях домашняя одежда, на родителях свитеры. Мне кажется, они разговаривают с бабушкой или дедушкой, которые живут далеко. Атмосфера тёплая и радостная. Считаю, что видеозвонки очень помогают, когда семья живёт в разных городах или странах. Я сам часто так разговариваю с родителями в Петербурге.'],
+   'Na zdjęciu widzę salon w domu. Na kanapie siedzi kilka osób, a przed nimi, na stoliku, stoi otwarty laptop. Z lewej strony, w tle, widzę regał z książkami, a z prawej lampę i okno. Atmosfera jest ciepła i radosna. Wydaje mi się, że rozmawiają z babcią albo dziadkiem, którzy mieszkają daleko. To rodzice i dwoje dzieci, chłopiec i dziewczynka. Wszyscy patrzą w ekran i się uśmiechają. Mama trzyma laptop, a tata macha ręką. Dzieci mają na sobie domowe ubrania, a rodzice swetry. Uważam, że wideorozmowy bardzo pomagają, kiedy rodzina mieszka w różnych miastach lub krajach. Sam często rozmawiam w ten sposób z rodzicami w Petersburgu.',
+   'На фотографии я вижу гостиную в доме. На диване сидят несколько человек, а перед ними на столике стоит открытый ноутбук. Слева, на заднем плане, я вижу книжный стеллаж, а справа лампу и окно. Атмосфера тёплая и радостная. Мне кажется, они разговаривают с бабушкой или дедушкой, которые живут далеко. Это родители и двое детей, мальчик и девочка. Все смотрят в экран и улыбаются. Мама держит ноутбук, а папа машет рукой. На детях домашняя одежда, на родителях свитеры. Считаю, что видеозвонки очень помогают, когда семья живёт в разных городах или странах. Я сам часто так разговариваю с родителями в Петербурге.'],
   ['Туристы в горах (реальное задание, июнь 2026)',
-   'Na zdjęciu widzę grupę turystów w górach. Idą wąską ścieżką, a wokół nich są skały i zielone drzewa. Na pierwszym planie idą dwaj mężczyźni i kobieta z dużymi plecakami. Mają na sobie kurtki, długie spodnie i wygodne buty trekkingowe. Jeden z nich trzyma kijki. W tle widzę wysokie szczyty, a na niebie chmury. Wydaje mi się, że jest wiosna albo lato, bo pogoda jest dobra, ale chyba jest chłodno. Być może to wycieczka na cały dzień. Atmosfera jest spokojna, a turyści wyglądają na zmęczonych, ale zadowolonych. Uważam, że wędrówki po górach są zdrowe i pozwalają odpocząć od miasta. Sam chodzę na nordic walking, więc chętnie bym tam pojechał.',
-   'На фотографии я вижу группу туристов в горах. Они идут по узкой тропе, вокруг скалы и зелёные деревья. На переднем плане идут двое мужчин и женщина с большими рюкзаками. На них куртки, длинные брюки и удобные трекинговые ботинки. Один из них держит палки. На заднем плане я вижу высокие вершины, а в небе облака. Мне кажется, сейчас весна или лето, потому что погода хорошая, но, наверное, прохладно. Возможно, это поход на целый день. Атмосфера спокойная, а туристы выглядят уставшими, но довольными. Считаю, что походы в горы полезны и позволяют отдохнуть от города. Я сам хожу на скандинавскую ходьбу, поэтому с удовольствием поехал бы туда.'],
+   'Na zdjęciu widzę grupę turystów w górach. Na pierwszym planie widzę trzy osoby z dużymi plecakami, a wokół nich skały i zielone drzewa. W tle są wysokie szczyty i chmury na niebie. Atmosfera jest spokojna. Wydaje mi się, że jest wiosna albo lato, bo pogoda jest dobra, ale chyba jest chłodno. Być może to wycieczka na cały dzień. Są to dwaj mężczyźni i kobieta. Idą wąską ścieżką i rozmawiają, a wyglądają na zmęczonych, ale zadowolonych. Mają na sobie kurtki, długie spodnie i wygodne buty trekkingowe, a jeden z nich trzyma kijki. Uważam, że wędrówki po górach są zdrowe i pozwalają odpocząć od miasta. Sam chodzę na nordic walking, więc chętnie bym tam pojechał.',
+   'На фотографии я вижу группу туристов в горах. На переднем плане я вижу трёх человек с большими рюкзаками, а вокруг них скалы и зелёные деревья. На заднем плане высокие вершины и облака в небе. Атмосфера спокойная. Мне кажется, сейчас весна или лето, потому что погода хорошая, но, наверное, прохладно. Возможно, это поход на целый день. Это двое мужчин и женщина. Они идут по узкой тропе и разговаривают, а выглядят уставшими, но довольными. На них куртки, длинные брюки и удобные трекинговые ботинки, а один из них держит палки. Считаю, что походы в горы полезны и позволяют отдохнуть от города. Я сам хожу на скандинавскую ходьбу, поэтому с удовольствием поехал бы туда.'],
   ['Приём у врача (реальное задание, июнь 2026)',
-   'Na zdjęciu widzę gabinet lekarski. Przy biurku siedzi lekarka w białym fartuchu, a naprzeciwko niej starsza pacjentka. Lekarka coś pisze na komputerze i rozmawia z pacjentką. Pacjentka ma siwe włosy i szary sweter, trzyma torebkę na kolanach i uważnie słucha. Na pierwszym planie widzę biurko z komputerem, dokumentami i długopisem. Z lewej strony stoi kozetka, a w tle szafa z lekami i plakat anatomiczny. Wydaje mi się, że to zwykła wizyta kontrolna. Atmosfera jest spokojna, ale pacjentka może się trochę denerwować. Uważam, że dobry lekarz powinien być cierpliwy i miły dla pacjentów. Ja zawsze wolę, kiedy lekarz dokładnie tłumaczy, co mi dolega.',
-   'На фотографии я вижу кабинет врача. За столом сидит врач-женщина в белом халате, а напротив неё пожилая пациентка. Врач что-то печатает на компьютере и разговаривает с пациенткой. У пациентки седые волосы и серый свитер, она держит сумку на коленях и внимательно слушает. На переднем плане я вижу стол с компьютером, документами и ручкой. Слева стоит кушетка, а на заднем плане шкаф с лекарствами и анатомический плакат. Мне кажется, это обычный контрольный приём. Атмосфера спокойная, но пациентка, возможно, немного волнуется. Считаю, что хороший врач должен быть терпеливым и вежливым с пациентами. Я всегда предпочитаю, когда врач подробно объясняет, что со мной не так.'],
+   'Na zdjęciu widzę gabinet lekarski. Na pierwszym planie widzę biurko z komputerem, dokumentami i długopisem, a przy nim dwie osoby. Z lewej strony stoi kozetka, a w tle szafa z lekami i plakat anatomiczny. Atmosfera jest spokojna, ale pacjentka może się trochę denerwować. Wydaje mi się, że to zwykła wizyta kontrolna. To lekarka i starsza pacjentka. Lekarka siedzi przy biurku, coś pisze na komputerze i rozmawia z pacjentką, a pacjentka siedzi naprzeciwko i uważnie słucha. Lekarka ma na sobie biały fartuch. Pacjentka ma siwe włosy, na sobie szary sweter, a na kolanach trzyma torebkę. Uważam, że dobry lekarz powinien być cierpliwy i miły dla pacjentów. Ja zawsze wolę, kiedy lekarz dokładnie tłumaczy, co mi dolega.',
+   'На фотографии я вижу кабинет врача. На переднем плане я вижу стол с компьютером, документами и ручкой, а за ним двух человек. Слева стоит кушетка, а на заднем плане шкаф с лекарствами и анатомический плакат. Атмосфера спокойная, но пациентка, возможно, немного волнуется. Мне кажется, это обычный контрольный приём. Это врач-женщина и пожилая пациентка. Врач сидит за столом, что-то печатает на компьютере и разговаривает с пациенткой, а пациентка сидит напротив и внимательно слушает. На враче белый халат. У пациентки седые волосы, на ней серый свитер, а на коленях она держит сумку. Считаю, что хороший врач должен быть терпеливым и вежливым с пациентами. Я всегда предпочитаю, когда врач подробно объясняет, что со мной не так.'],
   ['Съёмка в кафе (реальное задание, 17.10.2026)',
-   'Na zdjęciu widzę kawiarnię, w której kilka osób nagrywa film. Przy stoliku siedzą dwaj młodzi mężczyźni i rozmawiają przed kamerą. Obok stoi operator z dużą profesjonalną kamerą, a za mężczyznami stoi dziewczyna, która trzyma mikrofon na długim wysięgniku. Na stoliku widzę filiżanki z kawą, talerzyk z ciastem i laptop. Mężczyźni mają na sobie swetry i dżinsy, a dziewczyna czarną bluzę. W tle widzę ladę i półki z butelkami. Być może to film reklamowy albo program dla internetu. Wydaje mi się, że ekipa ma dużo pracy, ale wszyscy są skupieni. Atmosfera jest profesjonalna i spokojna. Uważam, że praca przy filmie jest ciekawa, ale wymaga cierpliwości. Sam na co dzień pracuję z aparatem i wiem, że przygotowanie zdjęć trwa bardzo długo.',
-   'На фотографии я вижу кафе, в котором несколько человек снимают фильм. За столиком сидят двое молодых мужчин и разговаривают перед камерой. Рядом стоит оператор с большой профессиональной камерой, а за мужчинами стоит девушка, которая держит микрофон на длинной штанге. На столике я вижу чашки с кофе, блюдце с пирожным и ноутбук. На мужчинах свитеры и джинсы, на девушке чёрная толстовка. На заднем плане я вижу стойку и полки с бутылками. Возможно, это рекламный ролик или программа для интернета. Мне кажется, у съёмочной группы много работы, но все сосредоточены. Атмосфера профессиональная и спокойная. Считаю, что работа над фильмом интересная, но требует терпения. Я сам каждый день работаю с фотоаппаратом и знаю, что подготовка кадров занимает очень много времени.'],
+   'Na zdjęciu widzę kawiarnię, w której kilka osób nagrywa film. Na pierwszym planie, przy stoliku, siedzą dwaj młodzi mężczyźni, a na stoliku stoją filiżanki z kawą, talerzyk z ciastem i laptop. Obok stoi kamera na statywie, a w tle widzę ladę i półki z butelkami. Atmosfera jest profesjonalna i spokojna. Być może to film reklamowy albo program dla internetu. Wydaje mi się, że ekipa ma dużo pracy, ale wszyscy są skupieni. Oprócz dwóch mężczyzn widzę operatora, który stoi przy kamerze, i dziewczynę, która trzyma mikrofon na długim wysięgniku. Mężczyźni rozmawiają przed kamerą, a operator ich nagrywa. Mężczyźni mają na sobie swetry i dżinsy, a dziewczyna czarną bluzę. Uważam, że praca przy filmie jest ciekawa, ale wymaga cierpliwości. Sam na co dzień pracuję z aparatem i wiem, że przygotowanie zdjęć trwa bardzo długo.',
+   'На фотографии я вижу кафе, в котором несколько человек снимают фильм. На переднем плане за столиком сидят двое молодых мужчин, а на столике стоят чашки с кофе, блюдце с пирожным и ноутбук. Рядом стоит камера на штативе, а на заднем плане я вижу стойку и полки с бутылками. Атмосфера профессиональная и спокойная. Возможно, это рекламный ролик или программа для интернета. Мне кажется, у съёмочной группы много работы, но все сосредоточены. Кроме двух мужчин, я вижу оператора, который стоит у камеры, и девушку, которая держит микрофон на длинной штанге. Мужчины разговаривают перед камерой, а оператор их снимает. На мужчинах свитеры и джинсы, на девушке чёрная толстовка. Считаю, что работа над фильмом интересная, но требует терпения. Я сам каждый день работаю с фотоаппаратом и знаю, что подготовка кадров занимает очень много времени.'],
 ];
 
 // Образцы описания фотографии: схема из 7 шагов, 7 сцен с переводом.
 function opisZdjecia(){
   wejdz('opis-zdjecia', opisZdjecia);
   let h='<div class="egz kurs"><div class="egz-ex"><div class="egz-hint">Описание фотографии · образцы</div>';
-  h+=`<div class="kurs-cel">Каждый образец идёт по схеме из 7 шагов: вступление → кто и где → что делают → пространство → внешность и предметы → догадки → своё мнение. Прочитай вслух, потом закрой текст и опиши ту же сцену сам. Образцы короткие (около 110 слов, чуть больше минуты): на экзамене говорить нужно 2–3 минуты, поэтому в своём ответе добавляй детали — больше предметов, цветов, догадок.</div>`;
+  h+=`<div class="kurs-cel">Каждый образец идёт по схеме из 7 шагов: вступление → где → настроение и догадки → кто → что делают → внешность и предметы → своё мнение. Прочитай вслух, потом закрой текст и опиши ту же сцену сам. Образцы короткие (около 110 слов, чуть больше минуты): на экзамене говорить нужно 2–3 минуты, поэтому в своём ответе добавляй детали — больше предметов, цветов, догадок.</div>`;
   OPISY_FOTO.forEach(([t,pl,ru],i)=>{
     h+=`<details class="wz-bohater"><summary>${esc(t)}</summary>
       <div class="egz-wzor kurs-wzor">${esc(pl)}</div>
