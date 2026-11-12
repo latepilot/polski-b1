@@ -184,6 +184,8 @@ let PERS_VOCAB = [
   {id: 188, pl: 'cofnąć (cofnąć decyzję — cofnąć zegarek o godzinę — cofnąć samochód o metr — cofnąć się o krok)', ru: 'отменить / перевести назад / сдать назад / отступить — с się (отменить решение — перевести часы на час назад — сдать машину на метр назад — отступить на шаг)'},
   {id: 189, pl: 'przynajmniej (przynajmniej spróbuj — potrzebuję przynajmniej godziny — mogłeś przynajmniej zadzwonić)', ru: 'по крайней мере / хотя бы / как минимум (по крайней мере, попробуй — мне нужен как минимум час — мог бы хотя бы позвонить)'},
   {id: 190, pl: 'wbrew + celownik (wbrew logice — wbrew przepisom — wbrew moim oczekiwaniom)', ru: 'вопреки + дат. п. (вопреки логике — вопреки правилам — вопреки моим ожиданиям)'},
+  {id: 191, pl: 'obojętnie (obojętnie, co wybierzesz — obojętnie kiedy przyjdziesz — odpowiedział obojętnie)', ru: 'всё равно / неважно / безразлично (всё равно, что ты выберешь — неважно, когда придёшь — ответил равнодушно)'},
+  {id: 192, pl: 'oboje (oboje pracujemy — oboje rodzice — oboje jesteśmy zmęczeni)', ru: 'оба (о мужчине и женщине) (мы оба работаем — оба родителя — мы оба устали)'},
 ];
 function nextPersId() {
   var maxId = 0;
