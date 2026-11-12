@@ -183,6 +183,7 @@ let PERS_VOCAB = [
   {id: 187, pl: 'gatunek (ulubiony gatunek muzyki — dobry gatunek mięsa — gatunek zagrożony wyginięciem)', ru: 'жанр / сорт / вид — биологический (любимый музыкальный жанр — хороший сорт мяса — вид под угрозой вымирания)'},
   {id: 188, pl: 'cofnąć (cofnąć decyzję — cofnąć zegarek o godzinę — cofnąć samochód o metr — cofnąć się o krok)', ru: 'отменить / перевести назад / сдать назад / отступить — с się (отменить решение — перевести часы на час назад — сдать машину на метр назад — отступить на шаг)'},
   {id: 189, pl: 'przynajmniej (przynajmniej spróbuj — potrzebuję przynajmniej godziny — mogłeś przynajmniej zadzwonić)', ru: 'по крайней мере / хотя бы / как минимум (по крайней мере, попробуй — мне нужен как минимум час — мог бы хотя бы позвонить)'},
+  {id: 190, pl: 'wbrew + celownik (wbrew logice — wbrew przepisom — wbrew moim oczekiwaniom)', ru: 'вопреки + дат. п. (вопреки логике — вопреки правилам — вопреки моим ожиданиям)'},
 ];
 function nextPersId() {
   var maxId = 0;
